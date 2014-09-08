@@ -1,0 +1,57 @@
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/teal"
+    android:showDividers="middle"
+    android:divider="?android:dividerHorizontal"
+    android:dividerPadding="8dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Button
+        style="?android:borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="OverviewActivity"
+        android:id="@+id/bOverview"
+        android:background="#00000000" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="AddExpenseActivity"
+        android:id="@+id/bAddExpense"
+        android:background="#00000000" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="AddIncomeActivity"
+        android:id="@+id/bAddIncome"
+        android:layout_gravity="center_horizontal"
+        android:background="#00000000" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="HistoryActivity"
+        android:background="#00000000"
+        android:id="@+id/bHistory"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SettingsActivity"
+        android:id="@+id/bSettings"
+        android:layout_gravity="center_horizontal"
+        android:background="#00000000" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="UserDetailsActivity"
+        android:id="@+id/bUserDetails"
+        android:layout_gravity="center_horizontal"
+        android:background="#00000000" />
+</LinearLayout>

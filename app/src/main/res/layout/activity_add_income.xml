@@ -1,0 +1,117 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="myexpenses.ng2.com.myexpenses.Activities.AddIncomeActivity">
+
+
+        <TextView
+            android:id="@+id/tviamount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="46dp"
+            android:text="Amount:"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/blue"
+
+            />
+
+
+        <EditText
+            android:id="@+id/etiamount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/tviamount"
+            android:layout_marginRight="36dp" />
+
+        <TextView
+            android:id="@+id/tvisource"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tviamount"
+            android:layout_alignStart="@+id/tviamount"
+            android:layout_below="@+id/tviamount"
+            android:layout_marginTop="48dp"
+            android:text="Source:"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/blue" />
+
+
+        <EditText
+            android:id="@+id/etisource"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/tvisource"
+            android:layout_marginRight="36dp" />
+
+        <TextView
+            android:id="@+id/tvidate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tvisource"
+            android:layout_alignStart="@+id/tvisource"
+            android:layout_below="@+id/tvisource"
+            android:layout_marginTop="48dp"
+            android:text="Date"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/blue" />
+
+
+        <ImageButton
+            android:id="@+id/ibiCalendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tvidate"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="36dp" />
+
+        <LinearLayout
+            android:id="@+id/llButtons"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvidate"
+            android:layout_marginTop="120dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/biOK"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="7dp"
+                android:layout_weight="1"
+                android:background="@color/OrangeRed"
+                android:text="Ok" />
+
+            <Button
+                android:id="@+id/biCancel"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:layout_weight="1"
+                android:background="@color/OrangeRed"
+                android:text="Cancel" />
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+</ScrollView>

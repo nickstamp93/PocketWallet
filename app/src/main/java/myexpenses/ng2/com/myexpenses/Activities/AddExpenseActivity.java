@@ -185,4 +185,8 @@ public class AddExpenseActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void dokimi(){
+        
+    }
 }

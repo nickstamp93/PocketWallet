@@ -1,5 +1,7 @@
 package myexpenses.ng2.com.myexpenses.Activities;
 
+//this is a comment for github
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;

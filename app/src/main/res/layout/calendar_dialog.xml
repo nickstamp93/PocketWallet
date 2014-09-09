@@ -3,21 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/tvDDate"
-    android:text="Press the Date plz"
-    android:textAppearance="?android:attr/textAppearanceLarge"
-    android:gravity="center"
-    android:textColor="@color/Red"
-    
-    />
+
 
   <CalendarView
       android:layout_width="match_parent"
       android:layout_height="420dp"
-      android:layout_below="@+id/tvDDate"
       android:id="@+id/cvdialog"
       android:firstDayOfWeek="2"
       >

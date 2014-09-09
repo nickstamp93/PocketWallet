@@ -107,7 +107,8 @@ public class AddIncomeActivity extends Activity {
         ibCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialog=new CalendarDialog(AddIncomeActivity.this);
+                dialog=new CalendarDialog();
+                dialog.show(getFragmentManager(),"Calendar Dialog");
             }
         });
 

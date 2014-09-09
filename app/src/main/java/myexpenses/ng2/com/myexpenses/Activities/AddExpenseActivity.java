@@ -122,7 +122,8 @@ public class AddExpenseActivity extends Activity {
             @Override
             public void onClick(View view) {
 
-               dialog=new CalendarDialog(AddExpenseActivity.this);
+                dialog = new CalendarDialog();
+                dialog.show(getFragmentManager(),"Calendar Dialog");
 
 
             }

@@ -178,7 +178,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         return getReadableDatabase().rawQuery("SELECT * FROM "+Table_Expense + " ORDER BY "+ Key_EPrice + order,null);
 
     }
-    
+
  //return a cursor which contains the tuples of table expense with Date equal to parameter date
     public Cursor getExpensesByDate(String date){
 

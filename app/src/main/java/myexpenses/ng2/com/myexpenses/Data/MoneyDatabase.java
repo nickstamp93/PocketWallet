@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -91,6 +92,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
 
     }
 
+    //return a ArrayList with IncomeItem that contains all of the tuples in table Incomes
     public ArrayList<IncomeItem> getAllIncomes(){
 
         ArrayList<IncomeItem> incomes=new ArrayList<IncomeItem>();
@@ -119,7 +121,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         return incomes;
 
     }
-
+//return a ArrayList with ExpenseItem that contains all of the tuples in table Expenses
     public ArrayList<ExpenseItem> getAllExpenses(){
 
         ArrayList<ExpenseItem> expenses=new ArrayList<ExpenseItem>();
@@ -153,10 +155,44 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         return expenses;
     }
 
-    //return a cursor which contains the whole database (select *)
+    //return a cursor which contains the whole table expense (select *)
     public Cursor getCursorExpense() {
+
         return getReadableDatabase().rawQuery("SELECT * FROM " + Table_Expense,
                 null);
     }
+
+    //return a cursor which contains the tuples with Category equal to the parameter category of table Expenses
+    public Cursor getExpensesByCategory(String category){
+
+        return getReadableDatabase().rawQuery("SELECT * FROM "+ Table_Expense + " WHERE " + Key_ECategory + " LIKE " + "'"+category+"'" ,
+                null);
+    }
+
+  //return a cursor which contains the table expense order by price depended on variable asc (ASC-DESC)
+    public Cursor getExpensesByPriceOrder(boolean asc){
+        String order=" ASC";
+        if(!asc){
+            order=" DESC";
+        }
+        return getReadableDatabase().rawQuery("SELECT * FROM "+Table_Expense + " ORDER BY "+ Key_EPrice + order,null);
+
+    }
+    
+ //return a cursor which contains the tuples of table expense with Date equal to parameter date
+    public Cursor getExpensesByDate(String date){
+
+       return getReadableDatabase().rawQuery("SELECT * FROM "+ Table_Expense + " WHERE " + Key_EDate + " LIKE " + "'"+date+"'",
+               null);
+    }
+
+ //return a cursor which contains the tuples of table expense between of parameter date1 and parameter date2
+    public Cursor getExpensesByDateToDate(String date1,String date2){
+
+        return getReadableDatabase().rawQuery("SELECT * FROM "+Table_Expense + " WHERE " + Key_EDate + " >= " + "'"+date1 +"'"+ " AND "+ Key_EDate +
+                        " <= "+ "'"+date2+"'",
+                null);
+    }
+
 
 }

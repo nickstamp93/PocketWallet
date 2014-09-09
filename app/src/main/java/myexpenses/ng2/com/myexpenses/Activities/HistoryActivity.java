@@ -27,6 +27,7 @@ public class HistoryActivity extends Activity {
 
         db = new MoneyDatabase(getApplicationContext());
         c = db.getCursorExpense();
+
         startManagingCursor(c);
         adapter = new HistoryListViewAdapter(getApplicationContext() , c);
 

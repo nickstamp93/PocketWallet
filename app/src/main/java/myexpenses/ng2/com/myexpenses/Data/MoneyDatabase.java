@@ -73,11 +73,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         values.put(Key_EPrice,expense.getPrice());
         values.put(Key_ENotes,expense.getNotes());
         values.put(Key_EReceive, expense.getReceive());
-        //Need to check this
-        /*
-        if(photo) {
-            values.put(Key_EReceive, expense.getReceive());
-                  }*/
+
         mydb.insert(Table_Expense,null,values);
 
     }

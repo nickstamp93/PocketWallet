@@ -2,6 +2,8 @@ package myexpenses.ng2.com.myexpenses.Utils;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +47,17 @@ public class HistoryListViewAdapter extends CursorAdapter{
         tvPrice.setText(cursor.getString(3) + " €");
         tvDate.setText(cursor.getString(2));
         tvCategory.setText(cursor.getString(1));
+      /*
+      //take from cursor the blob and then convert it to bitmap and finally add it to ImageView ivCategory (Cursor.getBlob(columnIndex))
+        byte[] image=cursor.getBlob(5);
+        if(image==null){
+            ivCategory.setImageResource(R.drawable.food);
+        }else {
+            Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+            ivCategory.setImageBitmap(bitmap);
+        }
+       */
+
         if(cursor.getString(1).equals("Food")){
             ivCategory.setImageResource(R.drawable.food);
         }else if(cursor.getString(1).equals("Personal")){
@@ -54,6 +67,7 @@ public class HistoryListViewAdapter extends CursorAdapter{
         }else if(cursor.getString(1).equals("Drinks")){
             ivCategory.setImageResource(R.drawable.drinks);
         }
+
         tvNotes.setText(cursor.getString(4));
         return view;
     }
@@ -76,6 +90,15 @@ public class HistoryListViewAdapter extends CursorAdapter{
         tvPrice.setText(cursor.getString(3) + " €");
         tvDate.setText(cursor.getString(2));
         tvCategory.setText(cursor.getString(1));
+        /*
+        byte[] image=cursor.getBlob(5);
+        if(image==null){
+            ivCategory.setImageResource(R.drawable.food);
+        }else {
+            Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+            ivCategory.setImageBitmap(bitmap);
+        }*/
+
         if(cursor.getString(1).equals("Food")){
             ivCategory.setImageResource(R.drawable.food);
         }else if(cursor.getString(1).equals("Personal")){

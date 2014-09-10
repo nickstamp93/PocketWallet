@@ -26,8 +26,7 @@ public class ExpenseItem {
        this.date=date;
    }
 
-    //Convert from bitmap to byte array we do that because we need to insert it to database (blob)
-    //TODO if there is null in Bitmap what we do?
+
    public void setReceive(Bitmap photo){
        ByteArrayOutputStream stream =new ByteArrayOutputStream();
        photo.compress(Bitmap.CompressFormat.PNG,0,stream);

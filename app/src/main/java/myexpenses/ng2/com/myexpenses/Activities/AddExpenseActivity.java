@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -31,13 +32,13 @@ public class AddExpenseActivity extends Activity {
 
   private Button Ok,Cancel;
   private ImageButton Calendar,Camera;
- // private TextView Price;
+
   private EditText Notes,Price;
   private ImageView Photo;
   private Spinner Categories;
   private MoneyDatabase mydb;
   private ExpenseItem item;
-  //private double user_price;
+
   private boolean image;
   private  CalendarDialog dialog;
 
@@ -98,14 +99,8 @@ public class AddExpenseActivity extends Activity {
                    item.setReceive(bm);
                }
                mydb.InsertExpense(item);
-               ArrayList<ExpenseItem> expenses=mydb.getAllExpenses();
-
-                  for(int i=0; i<expenses.size(); i++){
-                      ExpenseItem expense=expenses.get(i);
-                      Log.i("Expense",expense.getCategories() + " "+ expense.getDate() + " " + expense.getPrice() + " " +expense.getNotes());
-                  }
-
-              // mydb.close();
+               mydb.close();
+               finish();
 
               }
             }
@@ -132,13 +127,8 @@ public class AddExpenseActivity extends Activity {
         Camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent i=new Intent();
+
                 Intent i=new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                /*
-                i.setType("image/*"); //method setType specifies that this intent will handle one type of data
-                i.setAction(Intent.ACTION_GET_CONTENT);
-                i.addCategory(Intent.CATEGORY_OPENABLE);
-                */
                 startActivityForResult(i,REQUEST_CODE);
             }
         });
@@ -149,23 +139,15 @@ public class AddExpenseActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        InputStream stream=null;
-        if(requestCode==REQUEST_CODE && resultCode==Activity.RESULT_OK){
-
-            try{
-             if(bm!=null){
-                 bm.recycle();
-             }
-             stream=getContentResolver().openInputStream(data.getData());
-             bm= BitmapFactory.decodeStream(stream);
-             Photo.setImageBitmap(bm);
-             image=true;
-
-            }catch (FileNotFoundException e){
-              e.printStackTrace();
+        if(requestCode==REQUEST_CODE && resultCode==RESULT_OK){
+            if(data!=null){
+                image=true;
+                bm=(Bitmap)data.getExtras().get("data");
+                Photo.setImageBitmap(bm);
             }
 
         }
+
     }
 
     @Override
@@ -187,7 +169,5 @@ public class AddExpenseActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void dokimi(){
-        
-    }
+
 }

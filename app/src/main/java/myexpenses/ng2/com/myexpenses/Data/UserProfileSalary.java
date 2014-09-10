@@ -25,8 +25,8 @@ public class UserProfileSalary extends UserProfile {
     private Date nextPaymentDate;
 
     //constructor
-    public UserProfileSalary(String username, float savings, float balance, boolean bonus, float salary, String salFreq, String npd) {
-        super(username, savings, balance);
+    public UserProfileSalary(String username, float savings, float balance, boolean bonus, float salary, String salFreq, String npd , String currency) {
+        super(username, savings, balance , currency);
 
         this.bonus = bonus;
         this.salary = salary;

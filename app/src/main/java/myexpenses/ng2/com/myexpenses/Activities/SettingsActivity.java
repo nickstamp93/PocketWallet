@@ -13,8 +13,11 @@ import android.widget.TextView;
 import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Utils.CurrencyDialog;
 import myexpenses.ng2.com.myexpenses.Utils.DateFormatDialog;
+import myexpenses.ng2.com.myexpenses.Utils.SharedPrefsManager;
 
 public class SettingsActivity extends Activity {
+
+    SharedPrefsManager manager;
 
     TextView tvDateFormat , tvCurrency , tvCategories , tvRateApp , tvAbout;
     LinearLayout llDateFormat , llCurrency , llCategories;
@@ -24,6 +27,8 @@ public class SettingsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+        manager = new SharedPrefsManager(getApplicationContext());
 
         initUI();
 
@@ -56,6 +61,11 @@ public class SettingsActivity extends Activity {
         llDateFormat = (LinearLayout) findViewById(R.id.llDateFormat);
         llCurrency = (LinearLayout) findViewById(R.id.llCurrency);
         llCategories = (LinearLayout) findViewById(R.id.llCategories);
+
+
+        tvDateFormat.setText(manager.getPrefsDateFormat());
+        tvCurrency.setText(manager.getPrefsCurrency());
+
     }
 
     private View.OnClickListener clickListener = new View.OnClickListener() {

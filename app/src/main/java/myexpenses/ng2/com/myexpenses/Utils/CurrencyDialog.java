@@ -24,6 +24,8 @@ import myexpenses.ng2.com.myexpenses.R;
  */
 public class CurrencyDialog extends DialogFragment {
 
+    SharedPrefsManager manager;
+
     Button bEuro,bDollar,bYen,bPound,bSwissFranc,bRupee;
     TextView tvCurrency;
     Dialog dialog;
@@ -68,6 +70,9 @@ public class CurrencyDialog extends DialogFragment {
     private View.OnClickListener listener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+
+            manager = new SharedPrefsManager(getActivity().getApplicationContext());
+
             switch (v.getId()){
                 case R.id.bEuro:
                     tvCurrency.setText(getResources().getString(R.string.currency_euro));
@@ -88,6 +93,11 @@ public class CurrencyDialog extends DialogFragment {
                     tvCurrency.setText(getResources().getString(R.string.currency_swiss_franc));
                     break;
             }
+
+            manager.startEditing();
+            manager.setPrefsCurrency(tvCurrency.getText().toString());
+            manager.commit();
+
             dismiss();
         }
     };

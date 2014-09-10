@@ -125,6 +125,8 @@ public class UserDetailsActivity extends Activity {
                     manager.setPrefsSalary(salary);
                     manager.setPrefsSalFreq(salFreq);
                     manager.setPrefsNpd(nextPaymentDate);
+                    manager.setPrefsDateFormat("dd-MM-yyyy");
+                    manager.setPrefsCurrency("€");
 
                     manager.commit();
 

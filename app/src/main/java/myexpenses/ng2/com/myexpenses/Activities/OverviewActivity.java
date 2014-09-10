@@ -80,16 +80,17 @@ public class OverviewActivity extends Activity {
         float savings = manager.getPrefsSavings();
         float balance = manager.getPrefsBalance();
         String nextPaymentDate = manager.getPrefsNpd();
+        String currency = manager.getPrefsCurrency();
 
         if (onSalary) {
             float salary = manager.getPrefsSalary();
             boolean bonus = manager.getPrefsBonus();
             String salFreq = manager.getPrefsSalFreq();
 
-            profile = new UserProfileSalary(username, savings, balance, bonus, salary, salFreq, nextPaymentDate);
+            profile = new UserProfileSalary(username, savings, balance, bonus, salary, salFreq, nextPaymentDate , currency);
             ((UserProfileSalary) profile).show();
         } else {
-            profile = new UserProfile(username, savings, balance);
+            profile = new UserProfile(username, savings, balance , currency);
         }
     }
 
@@ -134,7 +135,7 @@ public class OverviewActivity extends Activity {
     //fill the xml elements attributes with the user details
     private void refreshUI() {
         tvUsername.setText(profile.getUsername());
-        tvBalance.setText(String.valueOf(profile.getBalance()));
+        tvBalance.setText(String.valueOf(profile.getBalance()) + " " + profile.getCurrency());
         tvSavings.setText(String.valueOf(profile.getSavings()));
 
         if (profile instanceof UserProfileSalary) {
@@ -162,5 +163,10 @@ public class OverviewActivity extends Activity {
             startActivity(new Intent(getApplicationContext(), AddExpenseActivity.class));
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }

@@ -20,9 +20,14 @@ import myexpenses.ng2.com.myexpenses.R;
 public class HistoryListViewAdapter extends CursorAdapter{
 
     LayoutInflater inflater;
+    SharedPrefsManager manager;
+    String currency;
 
     public HistoryListViewAdapter(Context context, Cursor c) {
         super(context, c);
+        manager = new SharedPrefsManager(context);
+        currency = manager.getPrefsCurrency();
+
     }
 
     @Override
@@ -44,7 +49,7 @@ public class HistoryListViewAdapter extends CursorAdapter{
         tvNotes.setTypeface(typeface);
 
 
-        tvPrice.setText(cursor.getString(3) + " €");
+        tvPrice.setText(cursor.getString(3) + " " + currency);
         tvDate.setText(cursor.getString(2));
         tvCategory.setText(cursor.getString(1));
       /*
@@ -87,7 +92,7 @@ public class HistoryListViewAdapter extends CursorAdapter{
         tvCategory.setTypeface(typeface);
         tvNotes.setTypeface(typeface);
 
-        tvPrice.setText(cursor.getString(3) + " €");
+        tvPrice.setText(cursor.getString(3) + " " + currency);
         tvDate.setText(cursor.getString(2));
         tvCategory.setText(cursor.getString(1));
         /*

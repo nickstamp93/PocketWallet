@@ -12,12 +12,15 @@ public class UserProfile {
     private float savings;
     //user current balance
     private float balance;
+    //preferred currency
+    private String currency;
 
     //constructor
-    public UserProfile(String username, float savings, float balance) {
+    public UserProfile(String username, float savings, float balance , String currency) {
         this.username = username;
         this.savings = savings;
         this.balance = balance;
+        this.currency = currency;
     }
 
     /**
@@ -50,4 +53,11 @@ public class UserProfile {
     }
 
 
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
 }

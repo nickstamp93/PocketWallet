@@ -23,6 +23,8 @@ public class SharedPrefsManager {
     private static final String PREFS_SAVINGS = "savings";
     private static final String PREFS_SAL_FREQ = "salFreq";
     private static final String PREFS_NPD = "nextPaymentDate";
+    private static final String PREFS_DATE_FORMAT = "dateFormat";
+    private static final String PREFS_CURRENCY = "currency";
 
     //the SharedPreferences and Editor objects
     SharedPreferences prefs;
@@ -83,6 +85,14 @@ public class SharedPrefsManager {
         return prefs.getString(PREFS_NPD, "01-01-2014");
     }
 
+    public String getPrefsDateFormat(){
+        return prefs.getString(PREFS_DATE_FORMAT , "dd-MM-yyyy");
+    }
+
+    public String getPrefsCurrency(){
+        return prefs.getString(PREFS_CURRENCY , "€");
+    }
+
 
     public void setPrefsIsProfile(boolean isProfile) {
         editor.putBoolean(PREFS_IS_PROFILE, isProfile);
@@ -120,4 +130,10 @@ public class SharedPrefsManager {
         editor.putString(PREFS_NPD, npd);
     }
 
+    public void setPrefsDateFormat(String dateFormat) {
+        editor.putString(PREFS_DATE_FORMAT , dateFormat);
+    }
+    public void setPrefsCurrency(String currency) {
+        editor.putString(PREFS_CURRENCY , currency);
+    }
 }

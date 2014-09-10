@@ -69,26 +69,22 @@ public class AddIncomeActivity extends Activity {
            boolean ok=true;
            double amount=0;
            String source,date;
+          //get the price of the income if it has problem a Toast appear and say to correct it
            try{
                amount=Double.parseDouble(etAmount.getText().toString());
            }catch (NumberFormatException e){
                ok=false;
                Toast.makeText(getApplicationContext(),"Plz Press a numerical in Price and not a character",Toast.LENGTH_LONG).show();
            }
-
+            //if we took the price correctly we continue to retrieve the other information of the income item
            if(ok){
                date=dialog.getDate();
                source=etSource.getText().toString();
-
+           //then we add the income to our database we close it and we finish the activity
                income=new IncomeItem(amount,date,source);
                db.InsertIncome(income);
-               ArrayList<IncomeItem> incomes=db.getAllIncomes();
-              // db.close();
-
-               for(int i=0; i<incomes.size(); i++){
-                   IncomeItem income=incomes.get(i);
-                   Log.i("Nikos",income.getId()+" " +income.getAmount() + " "+ income.getDate() + " " + income.getSource());
-               }
+               db.close();
+               finish();
 
            }
 

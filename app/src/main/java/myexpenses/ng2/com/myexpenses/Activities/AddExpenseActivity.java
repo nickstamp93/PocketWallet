@@ -30,12 +30,12 @@ import myexpenses.ng2.com.myexpenses.Utils.CalendarDialog;
 
 public class AddExpenseActivity extends Activity {
 
-  private Button Ok,Cancel;
-  private ImageButton Calendar,Camera;
+  private Button bOk,bCancel;
+  private ImageButton ibCalendar,ibCamera;
 
-  private EditText Notes,Price;
-  private ImageView Photo;
-  private Spinner Categories;
+  private EditText etNotes,etPrice;
+  private ImageView ivPhoto;
+  private Spinner sCategories;
   private MoneyDatabase mydb;
   private ExpenseItem item;
 
@@ -65,39 +65,43 @@ public class AddExpenseActivity extends Activity {
 
     private void initUi(){
 
-      Ok=(Button) findViewById(R.id.bOK);
-      Cancel=(Button) findViewById(R.id.bCancel);
-      Calendar=(ImageButton) findViewById(R.id.ibCalendar);
-      Camera=(ImageButton) findViewById(R.id.ibCamera);
-      Price=(EditText) findViewById(R.id.etPrice);
-      Notes=(EditText) findViewById(R.id.etNotes);
-      Photo=(ImageView) findViewById(R.id.ivReceive);
-      Categories=(Spinner) findViewById(R.id.sCategories);
+      bOk=(Button) findViewById(R.id.bOK);
+      bCancel=(Button) findViewById(R.id.bCancel);
+      ibCalendar=(ImageButton) findViewById(R.id.ibCalendar);
+      ibCamera=(ImageButton) findViewById(R.id.ibCamera);
+      etPrice=(EditText) findViewById(R.id.etPrice);
+      etNotes=(EditText) findViewById(R.id.etNotes);
+      ivPhoto=(ImageView) findViewById(R.id.ivReceive);
+      sCategories=(Spinner) findViewById(R.id.sCategories);
 
     }
 
     private void initListeners(){
-        Ok.setOnClickListener(new View.OnClickListener() {
+        bOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 boolean ok=true;
                 double price=0;
                 String category,notes,date;
+                //get the price of the expense if it has problem a Toast appear and say to correct it
                 try {
-                    price = Double.parseDouble(String.valueOf(Price.getText()));
+                    price = Double.parseDouble(String.valueOf(etPrice.getText()));
                 }catch (NumberFormatException e){
                     ok=false;
                     Toast.makeText(getApplicationContext(),"Plz Press a numerical in Price and not a character",Toast.LENGTH_LONG).show();
                 }
+                //if we took the price correctly we continue to retrieve the other information of the expense
               if(ok){
 
-               category=Categories.getSelectedItem().toString();
-               notes=Notes.getText().toString();
+               category=sCategories.getSelectedItem().toString();
+               notes=etNotes.getText().toString();
                date=dialog.getDate();
                item=new ExpenseItem(category,notes,price,date);
+                //if we took a picture using the image button camera we set to the ExpenseItem expense the byte array
                if(image){
                    item.setReceive(bm);
                }
+                //then we add the expense to our database we close it and we finish the activity
                mydb.InsertExpense(item);
                mydb.close();
                finish();
@@ -106,14 +110,14 @@ public class AddExpenseActivity extends Activity {
             }
         });
 
-        Cancel.setOnClickListener(new View.OnClickListener() {
+        bCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
             finish();
             }
         });
 
-        Calendar.setOnClickListener(new View.OnClickListener() {
+        ibCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -124,10 +128,11 @@ public class AddExpenseActivity extends Activity {
             }
         });
 
-        Camera.setOnClickListener(new View.OnClickListener() {
+        ibCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                 //when we press the image button ibCamera we have access to the camera of the phone and we save the picture
+                //to the ImageView ivPhoto
                 Intent i=new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(i,REQUEST_CODE);
             }
@@ -143,7 +148,7 @@ public class AddExpenseActivity extends Activity {
             if(data!=null){
                 image=true;
                 bm=(Bitmap)data.getExtras().get("data");
-                Photo.setImageBitmap(bm);
+                ivPhoto.setImageBitmap(bm);
             }
 
         }

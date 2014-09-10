@@ -65,6 +65,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         mydb=this.getWritableDatabase();
     }
 
+//we take from parameter expense all the attributes we create a tuple in table Expense
     public void InsertExpense(ExpenseItem expense){
 
         ContentValues values=new ContentValues();
@@ -78,6 +79,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
 
     }
 
+    //we take from parameter income all the attributes we create a tuple in table Income
     public void InsertIncome(IncomeItem income){
 
         ContentValues values=new ContentValues();
@@ -182,7 +184,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
                null);
     }
 
- //return a cursor which contains the tuples of table expense between of parameter date1 and parameter date2
+ //return a cursor which contains the tuples of table expense with date between of parameter date1 and parameter date2
     public Cursor getExpensesByDateToDate(String date1,String date2){
 
         return getReadableDatabase().rawQuery("SELECT * FROM "+Table_Expense + " WHERE " + Key_EDate + " >= " + "'"+date1 +"'"+ " AND "+ Key_EDate +

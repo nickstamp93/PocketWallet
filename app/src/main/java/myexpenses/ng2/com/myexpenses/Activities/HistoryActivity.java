@@ -33,8 +33,10 @@ public class HistoryActivity extends Activity {
 
         lv.setAdapter(adapter);
 
-    }
 
+
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

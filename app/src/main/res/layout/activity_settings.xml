@@ -39,25 +39,25 @@
                 android:clickable="true"
                 android:orientation="vertical"
                 android:padding="5dp"
-                android:id="@+id/llDateFormat">
+                android:id="@+id/llReminder">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="left"
                     android:padding="5dp"
-                    android:text="Date Format"
+                    android:text="Daily Reminder"
                     android:textColor="#000000"
                     android:textSize="22dp" />
 
                 <TextView
-                    android:id="@+id/tvDateFormat"
+                    android:id="@+id/tvReminder"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:gravity="left"
                     android:padding="5dp"
-                    android:text="dd/MM/yyyy"
+                    android:text="Disabled"
                     android:textSize="20dp" />
 
 

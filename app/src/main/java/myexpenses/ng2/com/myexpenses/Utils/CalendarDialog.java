@@ -20,22 +20,31 @@ import myexpenses.ng2.com.myexpenses.R;
  */
 public class CalendarDialog extends DialogFragment {
 
+    //dialog UI elements
     private Button bOk,bCancel;
     private CalendarView cv;
 
+    //dialog variable
     private Dialog dialog;
+    //string var for the date chosen
     private String date;
+    //context
     private Context context;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
+        //get the parent activity context
         context=getActivity();
 
+        //init dialog
         dialog=new Dialog(context);
+        //and remove title feature
         dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        //set the dialog content view
         dialog.setContentView(R.layout.calendar_dialog);
 
+        //get current time , to set the dialog's initial values
         Time now=new Time();
         now.setToNow();
         date=now.monthDay+"-"+now.month+"-"+now.year;
@@ -46,12 +55,14 @@ public class CalendarDialog extends DialogFragment {
         return dialog;
     }
 
+    //initialize UI elements
     private void initUI(){
         bOk=(Button)dialog.findViewById(R.id.bdOk);
         bCancel=(Button) dialog.findViewById(R.id.bdCancel);
         cv=(CalendarView) dialog.findViewById(R.id.cvdialog);
     }
 
+    //define listeners
     private void initListeners(){
         bOk.setOnClickListener(new View.OnClickListener() {
             @Override

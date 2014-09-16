@@ -11,14 +11,16 @@
     <string name="title_activity_user_details">UserDetailsActivity</string>
     <string name="title_activity_overview">OverviewActivity</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_reminder_settings">ReminderSettingsActivity</string>
     <string name="action_add_expense">Add Expense</string>
+
     <string-array name="expenses_category">
         <item>Food</item>
         <item>Drinks</item>
         <item>Personal</item>
         <item>Clothing</item>
     </string-array>
-    <string-array name="date_formats" >
+    <string-array name="date_formats">
         <item>dd/MM/yyyy</item>
         <item>MM/dd/yyyy</item>
         <item>dd/MM/yy</item>
@@ -28,11 +30,13 @@
         <item>yy/dd/MM</item>
         <item>yy/MM/dd</item>
     </string-array>
+
     <string name="currency_euro">€</string>
     <string name="currency_dollar">$</string>
     <string name="currency_yen">¥</string>
     <string name="currency_pound">£</string>
     <string name="currency_swiss_franc">CHF</string>
     <string name="currency_rupee">₹</string>
+    <string name="title_activity_main_activity2">MainActivity2</string>
 
 </resources>

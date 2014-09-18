@@ -12,6 +12,7 @@
             <item android:id="@+id/sub_action_1"
                 android:orderInCategory="1"
                 android:title="Sub 1"
+                android:icon="@drawable/filter"
                 />
         </menu>
     </item>

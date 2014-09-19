@@ -60,6 +60,7 @@
         android:id="@+id/tvDate"
         android:textColor="@color/blue"
         android:layout_toStartOf="@+id/etPrice"
+        android:layout_toLeftOf="@+id/etPrice"
         android:layout_marginTop="45dp"
         android:layout_marginRight="45dp"
         android:layout_below="@+id/sCategories"
@@ -84,6 +85,7 @@
         android:layout_marginTop="20dp"
         android:textColor="@color/blue"
         android:layout_toStartOf="@+id/etPrice"
+        android:layout_toLeftOf="@+id/etPrice"
         android:layout_below="@+id/ibCalendar"
         android:layout_alignLeft="@+id/tvDate"
         android:layout_alignStart="@+id/tvDate"
@@ -115,6 +117,7 @@
         android:weightSum="2"
         android:layout_below="@+id/ivReceive"
         android:layout_toStartOf="@+id/ivReceive"
+        android:layout_toLeftOf="@+id/ivReceive"
         android:layout_alignRight="@+id/ibCamera"
         android:layout_alignEnd="@+id/ibCamera">
         <TextView

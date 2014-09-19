@@ -4,5 +4,11 @@
     <item android:id="@+id/action_addExpense"
         android:title="@string/action_add_expense"
         android:orderInCategory="100"
+        android:icon="@drawable/ic_action_new"
+        android:showAsAction="always" />
+    <item android:id="@+id/action_settings"
+        android:title="@string/action_settings"
+        android:icon="@drawable/ic_action_settings"
+        android:orderInCategory="1"
         android:showAsAction="always" />
 </menu>

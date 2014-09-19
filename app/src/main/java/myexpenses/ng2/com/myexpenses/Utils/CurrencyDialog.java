@@ -24,27 +24,40 @@ import myexpenses.ng2.com.myexpenses.R;
  */
 public class CurrencyDialog extends DialogFragment {
 
+    //Shared Preferences Manager
     SharedPrefsManager manager;
 
+    //Dialog's UI elements
     Button bEuro,bDollar,bYen,bPound,bSwissFranc,bRupee;
+    //parent activity's textview
     TextView tvCurrency;
+    //dialog variable
     Dialog dialog;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        //get a new dialog instance
         dialog = new Dialog(getActivity());
 
+        //remove the dialog feature
         dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+
+        //set content view of dialog
         dialog.setContentView(R.layout.dialog_currency);
 
+        //initialize UI
         initUI();
 
+        //initialize listeners
         initListeners();
+
+        manager = new SharedPrefsManager(getActivity().getApplicationContext());
 
         return dialog;
 
     }
 
+    //initialize UI
     private void initUI(){
 
         bEuro = (Button) dialog.findViewById(R.id.bEuro);
@@ -54,10 +67,12 @@ public class CurrencyDialog extends DialogFragment {
         bSwissFranc = (Button) dialog.findViewById(R.id.bSwissFranc);
         bRupee = (Button) dialog.findViewById(R.id.bRupee);
 
+        //parent activity
         tvCurrency = (TextView) getActivity().findViewById(R.id.tvCurrency);
 
     }
 
+    //initialize listeners
     private void initListeners(){
         bEuro.setOnClickListener(listener);
         bDollar.setOnClickListener(listener);
@@ -71,8 +86,8 @@ public class CurrencyDialog extends DialogFragment {
         @Override
         public void onClick(View v) {
 
-            manager = new SharedPrefsManager(getActivity().getApplicationContext());
 
+            //switch the parent's textview according to user choice
             switch (v.getId()){
                 case R.id.bEuro:
                     tvCurrency.setText(getResources().getString(R.string.currency_euro));
@@ -94,10 +109,12 @@ public class CurrencyDialog extends DialogFragment {
                     break;
             }
 
+            //and save new user choice to user preferences file
             manager.startEditing();
             manager.setPrefsCurrency(tvCurrency.getText().toString());
             manager.commit();
 
+            //dismiss dialog after a new choice has been made
             dismiss();
         }
     };

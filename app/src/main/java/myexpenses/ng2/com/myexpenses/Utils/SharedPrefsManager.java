@@ -2,6 +2,14 @@ package myexpenses.ng2.com.myexpenses.Utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
+
+import java.text.DateFormat;
+import java.text.FieldPosition;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Nikos on 7/31/2014.
@@ -23,8 +31,9 @@ public class SharedPrefsManager {
     private static final String PREFS_SAVINGS = "savings";
     private static final String PREFS_SAL_FREQ = "salFreq";
     private static final String PREFS_NPD = "nextPaymentDate";
-    private static final String PREFS_DATE_FORMAT = "dateFormat";
     private static final String PREFS_CURRENCY = "currency";
+    private static final String PREFS_REMINDER_TIME = "reminderTime";
+    private static final String PREFS_REMINDER = "reminder";
 
     //the SharedPreferences and Editor objects
     SharedPreferences prefs;
@@ -46,7 +55,7 @@ public class SharedPrefsManager {
     }
 
     /**
-     * Below are the setter and getter for each attribute
+     * Below are the setters and getters for each attribute
      */
 
     public boolean getPrefsIsProfile() {
@@ -85,14 +94,39 @@ public class SharedPrefsManager {
         return prefs.getString(PREFS_NPD, "01-01-2014");
     }
 
-    public String getPrefsDateFormat(){
-        return prefs.getString(PREFS_DATE_FORMAT , "dd-MM-yyyy");
-    }
-
     public String getPrefsCurrency(){
         return prefs.getString(PREFS_CURRENCY , "€");
     }
 
+    public boolean getPrefsReminder(){
+        return prefs.getBoolean(PREFS_REMINDER , false);
+    }
+
+    public String getPrefsReminderTime(){
+        //get the saved time
+        String time = prefs.getString(PREFS_REMINDER_TIME , "20:00");
+
+        //format the saved time to the format "kk:mm"
+        int hour , minute;
+        String vars[] = time.split(":");
+        hour = Integer.valueOf(vars[0]);
+        minute = Integer.valueOf(vars[1]);
+
+        Calendar c = Calendar.getInstance();
+
+        Date dTime = new Date(c.getTimeInMillis());
+        dTime.setHours(hour);
+        dTime.setMinutes(minute);
+
+        SimpleDateFormat format = new SimpleDateFormat("kk:mm");
+
+        String formated = format.format(dTime);
+
+        //return the new formated time string
+        return formated;
+
+
+    }
 
     public void setPrefsIsProfile(boolean isProfile) {
         editor.putBoolean(PREFS_IS_PROFILE, isProfile);
@@ -130,10 +164,17 @@ public class SharedPrefsManager {
         editor.putString(PREFS_NPD, npd);
     }
 
-    public void setPrefsDateFormat(String dateFormat) {
-        editor.putString(PREFS_DATE_FORMAT , dateFormat);
-    }
     public void setPrefsCurrency(String currency) {
         editor.putString(PREFS_CURRENCY , currency);
     }
+
+    public void setPrefsReminder(boolean reminder){
+        editor.putBoolean(PREFS_REMINDER , reminder);
+    }
+
+    public void setPrefsReminderTime(int hour , int minute){
+        editor.putString(PREFS_REMINDER_TIME , hour + ":" + minute);
+    }
+
+
 }

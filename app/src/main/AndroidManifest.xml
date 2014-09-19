@@ -3,6 +3,7 @@
     package="myexpenses.ng2.com.myexpenses" >
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
 
     <application
@@ -13,6 +14,11 @@
         <activity
             android:name=".Activities.OverviewActivity"
             android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".Activities.AddExpenseActivity"
@@ -35,13 +41,23 @@
             android:label="@string/title_activity_user_details" >
         </activity>
         <activity
-            android:name=".MainActivity"
-            android:label="@string/title_activity_main" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:name=".Activities.ReminderSettingsActivity"
+            android:label="@string/title_activity_reminder_settings" >
+        </activity>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <receiver
+            android:name=".BroadcastReceivers.ReminderReceiver"
+            android:enabled="true" >
+        </receiver>
+
+        <service
+            android:name=".Utils.AlarmService"
+            android:enabled="true" >
+        </service>
+
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main_activity2" >
         </activity>
     </application>
 

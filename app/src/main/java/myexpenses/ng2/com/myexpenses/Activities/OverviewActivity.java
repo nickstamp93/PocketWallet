@@ -4,6 +4,8 @@ package myexpenses.ng2.com.myexpenses.Activities;
 //this is a comment without being collaborator
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 
 import myexpenses.ng2.com.myexpenses.Data.UserProfile;
 import myexpenses.ng2.com.myexpenses.Data.UserProfileSalary;
+import myexpenses.ng2.com.myexpenses.MainActivity;
 import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Utils.SharedPrefsManager;
 
@@ -23,17 +26,22 @@ public class OverviewActivity extends Activity {
     //SharedPrefsManager object
     private SharedPrefsManager manager;
 
+    private PendingIntent pendingIntent;
+
     //UserProfile object
     UserProfile profile;
 
     //View objects for the XML management
     TextView tvBalance, tvSavings, tvDays, tvUsername;
 
+    Intent myIntent;
+
+    AlarmManager alarmManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overview);
-
 
         //init UI elements
         initUI();
@@ -162,11 +170,10 @@ public class OverviewActivity extends Activity {
         if (id == R.id.action_addExpense) {
             startActivity(new Intent(getApplicationContext(), AddExpenseActivity.class));
         }
+        if (id == R.id.action_settings) {
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        }
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onBackPressed() {
-        finish();
-    }
 }

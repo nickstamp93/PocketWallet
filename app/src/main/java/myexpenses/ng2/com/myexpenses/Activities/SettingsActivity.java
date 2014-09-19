@@ -3,24 +3,24 @@ package myexpenses.ng2.com.myexpenses.Activities;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Utils.CurrencyDialog;
-import myexpenses.ng2.com.myexpenses.Utils.DateFormatDialog;
 import myexpenses.ng2.com.myexpenses.Utils.SharedPrefsManager;
 
 public class SettingsActivity extends Activity {
 
+    //Shared Preferences Manager , to have access
     SharedPrefsManager manager;
 
-    TextView tvDateFormat , tvCurrency , tvCategories , tvRateApp , tvAbout;
-    LinearLayout llDateFormat , llCurrency , llCategories;
+    //UI elements
+    TextView tvCurrency , tvCategories , tvRateApp , tvAbout , tvReminder;
+    LinearLayout llReminder , llCurrency , llCategories;
 
 
     @Override
@@ -30,20 +30,27 @@ public class SettingsActivity extends Activity {
 
         manager = new SharedPrefsManager(getApplicationContext());
 
+        //initialize UI
         initUI();
 
+        //initialize listeners
         initListeners();
-
-//        Typeface typeface = Typeface.createFromAsset(getAssets() , "fonts/font_exo2.otf");
-//
-//        tvDateFormat.setTypeface(typeface);
-//        tvCurrency.setTypeface(typeface);
-//        tvCategories.setTypeface(typeface);
-
     }
 
+    //on restarting the activity , the Reminder option might have changed
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if(manager.getPrefsReminder()){
+            tvReminder.setText(manager.getPrefsReminderTime());
+        }else{
+            tvReminder.setText("Disabled");
+        }
+    }
+
+    //initialize the UI listeners
     private void initListeners() {
-        llDateFormat.setOnClickListener(clickListener);
+        llReminder.setOnClickListener(clickListener);
         llCurrency.setOnClickListener(clickListener);
         llCategories.setOnClickListener(clickListener);
 
@@ -51,36 +58,49 @@ public class SettingsActivity extends Activity {
 
     }
 
+
+    //Initialize UI and set initial values values
     private void initUI(){
-        tvDateFormat = (TextView) findViewById(R.id.tvDateFormat);
+        tvReminder = (TextView) findViewById(R.id.tvReminder);
         tvCurrency = (TextView) findViewById(R.id.tvCurrency);
         tvCategories = (TextView) findViewById(R.id.tvCategories);
         tvRateApp = (TextView) findViewById(R.id.tvRateApp);
         tvAbout = (TextView) findViewById(R.id.tvAbout);
 
-        llDateFormat = (LinearLayout) findViewById(R.id.llDateFormat);
         llCurrency = (LinearLayout) findViewById(R.id.llCurrency);
         llCategories = (LinearLayout) findViewById(R.id.llCategories);
+        llReminder = (LinearLayout) findViewById(R.id.llReminder);
 
 
-        tvDateFormat.setText(manager.getPrefsDateFormat());
         tvCurrency.setText(manager.getPrefsCurrency());
+        if(manager.getPrefsReminder()){
+            tvReminder.setText(manager.getPrefsReminderTime());
+        }else{
+            tvReminder.setText("Disabled");
+        }
 
     }
 
+    //listener for all UI elements
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             switch (v.getId()){
-                case R.id.llDateFormat:
-                    new DateFormatDialog().show(getFragmentManager(),"DateDialog");
+                case R.id.llReminder:
+                        //start the activity for configuring the daily reminder
+                        startActivity(new Intent(getApplicationContext() , ReminderSettingsActivity.class));
                     break;
                 case R.id.llCurrency:
-                    new CurrencyDialog().show(getFragmentManager() , "Dialog");
+                        //open a dialog for changing global Currency
+                        new CurrencyDialog().show(getFragmentManager() , "Currency Dialog");
                     break;
                 case R.id.llCategories:
+                    //start activity for managing(adding/deleting) categories
                     break;
                 case R.id.tvAbout:
+
+                    //open a dialog with info about us , libraries , version etc
+
                     // 1. Instantiate an AlertDialog.Builder with its constructor
                     AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
 
@@ -105,22 +125,4 @@ public class SettingsActivity extends Activity {
         }
     };
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.settings, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }

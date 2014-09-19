@@ -4,16 +4,15 @@
 
     <item
         android:id="@+id/actionFilters"
-        android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/action_settings">
 
-        <menu>
-            <item android:id="@+id/sub_action_1"
-                android:orderInCategory="1"
-                android:title="Sub 1"
-                />
-        </menu>
     </item>
 
+    <item android:id="@+id/Filters"
+        android:showAsAction="never"
+        android:title="Filters">
+        </item>
+
 </menu>
+

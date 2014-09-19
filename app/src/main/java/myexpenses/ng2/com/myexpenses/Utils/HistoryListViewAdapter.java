@@ -115,4 +115,10 @@ public class HistoryListViewAdapter extends CursorAdapter{
         }
         tvNotes.setText(cursor.getString(4));
     }
+
+    @Override
+    public void changeCursor(Cursor cursor) {
+
+        super.changeCursor(cursor);
+    }
 }

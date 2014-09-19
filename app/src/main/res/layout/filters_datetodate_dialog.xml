@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="From:"
+        android:textColor="@color/DarkRed"
+        android:id="@+id/tvFrom"
+        android:textSize="25sp"
+
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="To:"
+        android:textColor="@color/DarkRed"
+        android:layout_below="@+id/tvFrom"
+        android:id="@+id/tvTo"
+        android:textSize="25sp"
+        android:layout_marginTop="25dp"
+        />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/tvDTDFrom"
+        android:text="No chosen"
+        android:layout_alignParentTop="true"
+
+        android:layout_marginRight="100dp"
+        android:layout_marginTop="8dp"
+        android:layout_alignTop="@+id/tvFrom"
+        android:layout_alignRight="@+id/bDTDFrom"
+        android:textSize="15sp"
+        />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="No chosen"
+        android:id="@+id/tvDTDTo"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/tvTo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="185dp"
+        android:textSize="15sp"
+        />
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="45dp"
+        android:id="@+id/bDTDFrom"
+        android:text="Date"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/bDTDFrom"
+        android:layout_marginRight="45dp"
+        android:layout_marginTop="15dp"
+        android:id="@+id/bDTDTo"
+        android:text="Date"
+
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_below="@+id/tvTo"
+        android:layout_marginTop="30dp"
+        >
+
+        <Button
+            android:layout_width="120dp"
+            android:layout_height="60dp"
+            android:id="@+id/bDTDOk"
+            android:layout_marginLeft="30dp"
+            android:text="Ok"
+
+            />
+
+        <Button
+            android:layout_width="120dp"
+            android:layout_height="60dp"
+            android:id="@+id/bDTDCancel"
+            android:layout_marginLeft="30dp"
+            android:text="Cancel"
+            />
+        </LinearLayout>
+
+
+</RelativeLayout>

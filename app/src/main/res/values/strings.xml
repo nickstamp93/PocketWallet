@@ -18,6 +18,7 @@
         <item>Personal</item>
         <item>Clothing</item>
     </string-array>
+
     <string-array name="date_formats" >
         <item>dd/MM/yyyy</item>
         <item>MM/dd/yyyy</item>
@@ -28,6 +29,16 @@
         <item>yy/dd/MM</item>
         <item>yy/MM/dd</item>
     </string-array>
+
+    <string-array name="filters" >
+        <item>Standar</item>
+        <item>Choose a category</item>
+        <item>Choose the order of the items depended on price</item>
+        <item>Choose a date</item>
+        <item>Choose a date until one other date</item>
+        <item>From the newest expense to oldest</item>
+    </string-array>
+
     <string name="currency_euro">€</string>
     <string name="currency_dollar">$</string>
     <string name="currency_yen">¥</string>

@@ -96,6 +96,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         ArrayList<IncomeItem> incomes=new ArrayList<IncomeItem>();
         Cursor c=mydb.rawQuery("SELECT * FROM "+ Table_Income,null);
 
+
         int iRow=c.getColumnIndex(Key_Iid);
         int iAmount=c.getColumnIndex(Key_IAmount);
         int iSource=c.getColumnIndex(Key_ISource);
@@ -124,6 +125,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
 
         ArrayList<ExpenseItem> expenses=new ArrayList<ExpenseItem>();
         Cursor c=mydb.rawQuery("SELECT * FROM " + Table_Expense,null);
+
 
        int eRow=c.getColumnIndex(Key_EId);
        int eCategory=c.getColumnIndex(Key_ECategory);
@@ -187,9 +189,84 @@ public class MoneyDatabase extends SQLiteOpenHelper {
  //return a cursor which contains the tuples of table expense with date between of parameter date1 and parameter date2
     public Cursor getExpensesByDateToDate(String date1,String date2){
 
-        return getReadableDatabase().rawQuery("SELECT * FROM "+Table_Expense + " WHERE " + Key_EDate + " >= " + "'"+date1 +"'"+ " AND "+ Key_EDate +
-                        " <= "+ "'"+date2+"'",
-                null);
+        String DateFrom[]=date1.split("-");
+        String DateTo[]=date2.split("-");
+        String reformedDateFrom=DateFrom[2]+"-"+DateFrom[1]+"-"+DateFrom[0];
+        String reformedDateTo=DateTo[2]+"-"+DateTo[1]+"-"+DateTo[0];
+        ArrayList<String> Valid=new ArrayList<String>();
+
+         Log.i("Reformed DateFrom",reformedDateFrom);
+        Log.i("Reformed DateTo",reformedDateTo);
+
+        Cursor c=mydb.rawQuery("SELECT "+ Key_EDate + " FROM " + Table_Expense ,null);
+        if(c!=null){
+
+            for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
+
+                String date=c.getString(c.getColumnIndex(Key_EDate));
+
+                String tokens[]=date.split("-");
+                String reformedDate=tokens[2]+"-"+tokens[1]+"-"+tokens[0];
+              //  Log.i("Date from cursor reformed= ",reformedDate);
+
+                if(compareDates(reformedDateFrom,reformedDateTo,reformedDate) ){
+                    Valid.add(date);
+                 }
+
+            }
+
+
+        }
+
+        StringBuilder sb=new StringBuilder();
+        if(Valid.size()>0) {
+            for (int i = 0; i < Valid.size() - 1; i++) {
+                sb.append("'" + Valid.get(i) + "'" + ",");
+            }
+            sb.append("'" + Valid.get(Valid.size() - 1) + "'");
+         }
+
+        return getReadableDatabase().rawQuery("SELECT * "+ " FROM " + Table_Expense + " WHERE " + Key_EDate + " IN " +"("+sb.toString()+")"
+                ,null );
+    }
+
+    public Cursor getExpensesFromNewsestToOldest(){
+        return getReadableDatabase().rawQuery("SELECT * FROM "+Table_Expense + " ORDER BY "+ Key_EId + " DESC",null);
+    }
+
+
+    private boolean compareDates(String from,String to,String date){
+
+        String dateTokens[]=date.split("-");
+        String fromTokens[]=from.split("-");
+        String toTokens[]=to.split("-");
+
+        int size;
+        int dateValues[],fromValues[],toValues[];
+
+        size=dateTokens.length;
+        dateValues=new int[size];
+        fromValues=new int[size];
+        toValues=new int[size];
+
+        for (int i=0; i<size; i++){
+
+            dateValues[i]=Integer.parseInt(dateTokens[i]);
+            fromValues[i]=Integer.parseInt(fromTokens[i]);
+            toValues[i]=Integer.parseInt(toTokens[i]);
+
+        }
+
+        for(int i=0; i<size; i++){
+
+            if(dateValues[i]<fromValues[i] || dateValues[i]>toValues[i]){
+                return false;
+            }
+
+        }
+
+        return true;
+
     }
 
 

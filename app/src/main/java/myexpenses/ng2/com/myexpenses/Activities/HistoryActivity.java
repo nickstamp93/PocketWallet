@@ -9,6 +9,7 @@ import android.widget.ListView;
 
 import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
 import myexpenses.ng2.com.myexpenses.R;
+import myexpenses.ng2.com.myexpenses.Utils.FiltersDialog;
 import myexpenses.ng2.com.myexpenses.Utils.HistoryListViewAdapter;
 
 public class HistoryActivity extends Activity {
@@ -35,6 +36,12 @@ public class HistoryActivity extends Activity {
 
     }
 
+    public void refreshList(Cursor cursor){
+        adapter.changeCursor(cursor);
+        adapter.notifyDataSetChanged();
+    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -51,6 +58,10 @@ public class HistoryActivity extends Activity {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
+        }else if(id==R.id.Filters){
+
+            new FiltersDialog().show(getFragmentManager(),"Filters dialog");
+
         }
         return super.onOptionsItemSelected(item);
     }

@@ -2,6 +2,7 @@ package myexpenses.ng2.com.myexpenses.Activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,6 +28,7 @@ public class AddIncomeActivity extends Activity {
     private MoneyDatabase db;
     private IncomeItem income;
     private CalendarDialog dialog;
+    private String date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,17 @@ public class AddIncomeActivity extends Activity {
         } catch (SQLException e) {
             Toast.makeText(getApplicationContext(), "Problem with our database", Toast.LENGTH_SHORT).show();
         }
+        Time now=new Time();
+        now.setToNow();
+        String day=now.monthDay+"",month=now.month+"";
+        //date=now.monthDay+"-"+now.month+"-"+now.year;
+        if(now.monthDay<10){
+            day="0"+now.monthDay;
+        }
+         if(now.month<10){
+            month="0"+now.month;
+        }
+        date=now.year+"-"+month+"-"+day;
     }
 
 
@@ -68,7 +81,7 @@ public class AddIncomeActivity extends Activity {
            public void onClick(View view) {
            boolean ok=true;
            double amount=0;
-           String source,date;
+           String source;
           //get the price of the income if it has problem a Toast appear and say to correct it
            try{
                amount=Double.parseDouble(etAmount.getText().toString());
@@ -78,7 +91,7 @@ public class AddIncomeActivity extends Activity {
            }
             //if we took the price correctly we continue to retrieve the other information of the income item
            if(ok){
-               date=dialog.getDate();
+
                source=etSource.getText().toString();
            //then we add the income to our database we close it and we finish the activity
                income=new IncomeItem(amount,date,source);
@@ -103,7 +116,7 @@ public class AddIncomeActivity extends Activity {
         ibCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialog=new CalendarDialog();
+                dialog=new CalendarDialog(false);
                 dialog.show(getFragmentManager(),"Calendar Dialog");
             }
         });
@@ -112,6 +125,9 @@ public class AddIncomeActivity extends Activity {
 
     }
 
+    public void setIncomeDate(String date){
+        this.date=date;
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

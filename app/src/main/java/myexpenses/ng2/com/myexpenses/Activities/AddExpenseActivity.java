@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,7 +28,17 @@ import myexpenses.ng2.com.myexpenses.Data.ExpenseItem;
 import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
 import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Utils.CalendarDialog;
-
+/*
+Future Modules
+1)Credit or Cash on Expenses
+2)Diagrams-Pites probably library
+3)Repeat some of the expenses
+4)SubCategories
+5)User add a Category
+6)Pattern custom
+7)Switch on History Activity Income-Expense with filters (Toggle Button)
+8)Filters change in DropDown Menu in ActionBar
+ */
 public class AddExpenseActivity extends Activity {
 
   private Button bOk,bCancel;
@@ -44,6 +55,7 @@ public class AddExpenseActivity extends Activity {
 
   private final int REQUEST_CODE=1;
   private Bitmap bm;
+  private String date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +73,19 @@ public class AddExpenseActivity extends Activity {
         }catch (SQLException e){
             Toast.makeText(getApplicationContext(),"Problem with our database",Toast.LENGTH_SHORT).show();
         }
+
+        Time now=new Time();
+        now.setToNow();
+        String day=now.monthDay+"",month=now.month+"";
+        //date=now.monthDay+"-"+now.month+"-"+now.year;
+        if(now.monthDay<10){
+            day="0"+now.monthDay;
+        }
+        if(now.month<10){
+            month="0"+now.month;
+        }
+        date=now.year+"-"+month+"-"+day;
+
     }
 
     private void initUi(){
@@ -82,7 +107,7 @@ public class AddExpenseActivity extends Activity {
             public void onClick(View view) {
                 boolean ok=true;
                 double price=0;
-                String category,notes,date;
+                String category,notes;
                 //get the price of the expense if it has problem a Toast appear and say to correct it
                 try {
                     price = Double.parseDouble(String.valueOf(etPrice.getText()));
@@ -95,7 +120,6 @@ public class AddExpenseActivity extends Activity {
 
                category=sCategories.getSelectedItem().toString();
                notes=etNotes.getText().toString();
-               date=dialog.getDate();
                item=new ExpenseItem(category,notes,price,date);
                 //if we took a picture using the image button camera we set to the ExpenseItem expense the byte array
                if(image){
@@ -121,7 +145,7 @@ public class AddExpenseActivity extends Activity {
             @Override
             public void onClick(View view) {
 
-                dialog = new CalendarDialog();
+                dialog = new CalendarDialog(true);
                 dialog.show(getFragmentManager(),"Calendar Dialog");
 
 
@@ -172,6 +196,11 @@ public class AddExpenseActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    public void setDate(String date){
+        this.date=date;
     }
 
 

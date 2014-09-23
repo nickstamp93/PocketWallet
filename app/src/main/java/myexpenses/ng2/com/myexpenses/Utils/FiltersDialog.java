@@ -25,7 +25,7 @@ import myexpenses.ng2.com.myexpenses.R;
 /**
  * Created by Vromia on 14/9/2014.
  */
-public class FiltersDialog extends DialogFragment implements FiltersCategoryDialog.Category,FiltersPriceOrderDialog.PriceOrder,FiltersDateDialog.Date,FiltersDateToDateDialog.DatetoDate {
+public class FiltersDialog extends DialogFragment implements FiltersCategoryDialog.Category,FiltersPriceOrderDialog.PriceOrder,FiltersDateDialog.Date {
 
     private ListView lv;
     private Dialog dialog;
@@ -117,17 +117,17 @@ public class FiltersDialog extends DialogFragment implements FiltersCategoryDial
                     case 3:
                         onPause();
                         chosenCategory=4;
-                        FiltersDateDialog Ddialog=new FiltersDateDialog();
-                        Ddialog.setTargetFragment(FiltersDialog.this,0);
-                        Ddialog.show(getFragmentManager(),"FiltersDate Dialog");
+                       // FiltersDateDialog Ddialog=new FiltersDateDialog();
+                       // Ddialog.setTargetFragment(FiltersDialog.this,0);
+                       // Ddialog.show(getFragmentManager(),"FiltersDate Dialog");
                         break;
 
                     case 4:
                         onPause();
                         chosenCategory=5;
-                        FiltersDateToDateDialog DTDdialog=new FiltersDateToDateDialog();
-                        DTDdialog.setTargetFragment(FiltersDialog.this,0);
-                        DTDdialog.show(getFragmentManager(),"FiltersDatetoDate Dialog");
+                      //  FiltersDateToDateDialog DTDdialog=new FiltersDateToDateDialog();
+                       // DTDdialog.setTargetFragment(FiltersDialog.this,0);
+                      //  DTDdialog.show(getFragmentManager(),"FiltersDatetoDate Dialog");
                         break;
 
                     case 5:
@@ -157,11 +157,7 @@ public class FiltersDialog extends DialogFragment implements FiltersCategoryDial
     public void getDateFromDialogFragment(String date) {
         this.date=date;
     }
-    @Override
-    public void getDatetoDateFromDialogFragment(String from, String to) {
-       this.from=from;
-       this.to=to;
-    }
+
 
     @Override
     public void onDismiss(DialogInterface dialog) {
@@ -226,7 +222,7 @@ public class FiltersDialog extends DialogFragment implements FiltersCategoryDial
                 break;
 
             case 6:
-                cursor=db.getExpensesFromNewsestToOldest();
+                cursor=db.getExpensesFromNewestToOldest();
                 dialog.dismiss();
 
 

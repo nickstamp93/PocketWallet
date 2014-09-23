@@ -182,7 +182,10 @@ public class MoneyDatabase extends SQLiteOpenHelper {
  //return a cursor which contains the tuples of table expense with Date equal to parameter date
     public Cursor getExpensesByDate(String date){
 
-       return getReadableDatabase().rawQuery("SELECT * FROM "+ Table_Expense + " WHERE " + Key_EDate + " LIKE " + "'"+date+"'",
+        String dateTokens[]=date.split("-");
+        String reformedDate=dateTokens[2]+"-"+dateTokens[1]+"-"+dateTokens[0];
+
+       return getReadableDatabase().rawQuery("SELECT * FROM "+ Table_Expense + " WHERE " + Key_EDate + " LIKE " + "'"+reformedDate+"'",
                null);
     }
 
@@ -193,12 +196,17 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         String DateTo[]=date2.split("-");
         String reformedDateFrom=DateFrom[2]+"-"+DateFrom[1]+"-"+DateFrom[0];
         String reformedDateTo=DateTo[2]+"-"+DateTo[1]+"-"+DateTo[0];
+
+        return getReadableDatabase().rawQuery("SELECT * FROM "+Table_Expense+ " WHERE "+ Key_EDate + ">=" + "'"+reformedDateFrom+"'" +
+        " AND " + Key_EDate + "<="+ "'"+reformedDateTo+"'" ,null);
+
+        /*
         ArrayList<String> Valid=new ArrayList<String>();
 
          Log.i("Reformed DateFrom",reformedDateFrom);
         Log.i("Reformed DateTo",reformedDateTo);
 
-        Cursor c=mydb.rawQuery("SELECT "+ Key_EDate + " FROM " + Table_Expense ,null);
+        Cursor c= getReadableDatabase().rawQuery("SELECT * " + " FROM " + Table_Expense ,null);
         if(c!=null){
 
             for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
@@ -228,13 +236,16 @@ public class MoneyDatabase extends SQLiteOpenHelper {
 
         return getReadableDatabase().rawQuery("SELECT * "+ " FROM " + Table_Expense + " WHERE " + Key_EDate + " IN " +"("+sb.toString()+")"
                 ,null );
+                */
     }
 
-    public Cursor getExpensesFromNewsestToOldest(){
-        return getReadableDatabase().rawQuery("SELECT * FROM "+Table_Expense + " ORDER BY "+ Key_EId + " DESC",null);
+    public Cursor getExpensesFromNewestToOldest(){
+
+   return getReadableDatabase().rawQuery("SELECT * FROM "+Table_Expense+ " ORDER BY "+Key_EDate+" DESC"
+                ,null);
     }
 
-
+/*
     private boolean compareDates(String from,String to,String date){
 
         String dateTokens[]=date.split("-");
@@ -267,6 +278,44 @@ public class MoneyDatabase extends SQLiteOpenHelper {
 
         return true;
 
+    }
+    */
+
+    public Cursor getCursorIncomes(){
+        return getReadableDatabase().rawQuery("SELECT * FROM " + Table_Income,
+                null);
+    }
+
+    public Cursor getIncomesBySource(String source){
+
+        return getReadableDatabase().rawQuery("SELECT * FROM "+ Table_Income + " WHERE " + Key_ISource + "=" +"'"+source+"'",null );
+
+    }
+
+    public Cursor getIncomeByDate(String date){
+
+        String dateTokens[]=date.split("-");
+        String reformedDate=dateTokens[2]+"-"+dateTokens[1]+"-"+dateTokens[0];
+
+        return getReadableDatabase().rawQuery("SELECT * FROM "+ Table_Income + " WHERE " + Key_IDate + " LIKE " + "'"+reformedDate+"'",
+                null);
+    }
+
+    public Cursor getIncomeByNewestToOldest(){
+
+        return getReadableDatabase().rawQuery("SELECT * FROM "+Table_Income+ " ORDER BY "+Key_IDate+" DESC"
+                ,null);
+    }
+
+    public Cursor getIncomeByDateToDate(String date1,String date2){
+
+        String DateFrom[]=date1.split("-");
+        String DateTo[]=date2.split("-");
+        String reformedDateFrom=DateFrom[2]+"-"+DateFrom[1]+"-"+DateFrom[0];
+        String reformedDateTo=DateTo[2]+"-"+DateTo[1]+"-"+DateTo[0];
+
+        return getReadableDatabase().rawQuery("SELECT * FROM "+Table_Income+ " WHERE "+ Key_IDate + ">=" + "'"+reformedDateFrom+"'" +
+                " AND " + Key_IDate + "<="+ "'"+reformedDateTo+"'" ,null);
     }
 
 

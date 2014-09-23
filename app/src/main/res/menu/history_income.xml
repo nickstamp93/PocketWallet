@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/IncomeFilters"
+        android:title="Filters"
+        android:showAsAction="always"
+       >
+
+        <menu>
+            <item
+                android:id="@+id/IncomeStandar"
+                android:title="Standar"
+                />
+
+            <item
+                android:id="@+id/IncomeSource"
+                android:title="Source"
+                />
+
+            <item
+                android:id="@+id/IncomeDate"
+                android:title="Date"
+                />
+           <item
+               android:id="@+id/IncomeDTD"
+               android:title="Date to Date"
+               />
+
+            <item
+                android:id="@+id/IncomeNTO"
+                android:title="Newest Income to oldest"
+                />
+
+
+
+
+        </menu>
+
+
+       </item>
+<item
+    android:id="@+id/toggleButton"
+    android:title="Expenses"
+    android:showAsAction="always"
+    />
+
+</menu>

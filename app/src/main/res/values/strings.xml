@@ -37,11 +37,11 @@
 
     <string-array name="filters" >
         <item>Standar</item>
-        <item>Choose a category</item>
-        <item>Choose the order of the items depended on price</item>
-        <item>Choose a date</item>
-        <item>Choose a date until one other date</item>
-        <item>From the newest expense to oldest</item>
+        <item>Category</item>
+        <item>Order depended on price</item>
+        <item>Date</item>
+        <item>Date to Date</item>
+        <item>Newest expense to oldest</item>
     </string-array>
 
 

@@ -1,0 +1,59 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="myexpenses.ng2.com.myexpenses.Activities.HistoryActivity">
+
+    <item
+        android:id="@+id/actionFilters"
+        android:showAsAction="never"
+        android:title="@string/action_settings">
+
+    </item>
+
+    <item android:id="@+id/Filters"
+        android:showAsAction="always"
+        android:title="Filters"
+        >
+
+        <menu>
+            <item
+                android:id="@+id/FiltersStandar"
+                android:title="Standar"
+                />
+
+            <item
+                android:id="@+id/FiltersCategory"
+                android:title="Category"
+                />
+
+            <item
+                android:id="@+id/OrderPrice"
+                android:title="Order depended on price"
+                />
+            <item
+                android:id="@+id/FiltersDate"
+                android:title="Date"
+                />
+
+            <item
+                android:id="@+id/FiltersDTD"
+                android:title="Date to Date"
+                />
+
+            <item
+                android:id="@+id/FiltersNTO"
+                android:title="Newest expense to oldest"
+                />
+
+
+            </menu>
+        </item>
+
+    <item
+        android:id="@+id/toggleButton"
+        android:title="Income"
+        android:showAsAction="always"
+
+        />
+
+</menu>
+

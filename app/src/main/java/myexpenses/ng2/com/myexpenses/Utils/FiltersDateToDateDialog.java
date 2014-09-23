@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import myexpenses.ng2.com.myexpenses.Activities.HistoryActivity;
 import myexpenses.ng2.com.myexpenses.R;
 
 /**
@@ -22,11 +23,11 @@ public class FiltersDateToDateDialog extends DialogFragment implements FiltersDa
     private Dialog dialog;
     private String from,to;
     private FiltersDateDialog fdialog;
-    private boolean flag;
-    private DatetoDate dtd;
+    private boolean flag,expense;
 
-    public interface DatetoDate{
-        public void getDatetoDateFromDialogFragment(String from,String to);
+
+    public FiltersDateToDateDialog(boolean expense){
+        this.expense=expense;
     }
 
 
@@ -52,11 +53,8 @@ public class FiltersDateToDateDialog extends DialogFragment implements FiltersDa
         tvFrom=(TextView) dialog.findViewById(R.id.tvDTDFrom);
         tvTo=(TextView) dialog.findViewById(R.id.tvDTDTo);
 
-        fdialog=new FiltersDateDialog();
+        fdialog=new FiltersDateDialog(false,expense);
         fdialog.setTargetFragment(FiltersDateToDateDialog.this,0);
-
-
-        dtd=(DatetoDate) getTargetFragment();
 
     }
 
@@ -93,8 +91,13 @@ public class FiltersDateToDateDialog extends DialogFragment implements FiltersDa
                 if(to==null || from==null || reformedDateFrom.compareTo(reformedDateTo)>=0 ){
                     Toast.makeText(getActivity(),"Problem with your dates plz check them and try again",Toast.LENGTH_LONG).show();
                 }else{
-                    dtd.getDatetoDateFromDialogFragment(from,to);
-                    getTargetFragment().onResume();
+
+                    HistoryActivity activity=(HistoryActivity) getActivity();
+                    if(expense) {
+                        activity.saveFiltersDateToDate(from, to);
+                    }else{
+                        activity.saveIncomeFiltersDateToDate(from,to);
+                    }
                     dialog.dismiss();
 
                 }

@@ -53,4 +53,24 @@ public class FilterAdapter extends ArrayAdapter<String> {
         return convertView;
 
     }
+
+    @Override
+    public View getDropDownView(int position, View convertView, ViewGroup parent) {
+        String filter=getItem(position);
+        ViewHolder viewHolder;
+
+        if(convertView==null){
+            viewHolder=new ViewHolder();
+            convertView= LayoutInflater.from(getContext()).inflate(R.layout.filters_dialog_item,parent,false);
+
+            viewHolder.tvfilters=(TextView)convertView.findViewById(R.id.tvFilters);
+            convertView.setTag(viewHolder);
+        }else{
+            viewHolder=(ViewHolder)convertView.getTag();
+        }
+
+        viewHolder.tvfilters.setText(filter);
+
+        return convertView;
+    }
 }

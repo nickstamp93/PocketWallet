@@ -18,6 +18,5 @@ public class ReminderReceiver extends BroadcastReceiver {
         Intent service = new Intent(context , AlarmService.class);
         context.startService(service);
 
-
     }
 }

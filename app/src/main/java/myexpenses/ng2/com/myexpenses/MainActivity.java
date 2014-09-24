@@ -10,6 +10,7 @@ import android.widget.Button;
 
 import myexpenses.ng2.com.myexpenses.Activities.AddExpenseActivity;
 import myexpenses.ng2.com.myexpenses.Activities.AddIncomeActivity;
+import myexpenses.ng2.com.myexpenses.Activities.CategoriesManagerActivity;
 import myexpenses.ng2.com.myexpenses.Activities.HistoryActivity;
 import myexpenses.ng2.com.myexpenses.Activities.OverviewActivity;
 import myexpenses.ng2.com.myexpenses.Activities.SettingsActivity;
@@ -18,7 +19,7 @@ import myexpenses.ng2.com.myexpenses.R;
 
 public class MainActivity extends Activity {
 
-    Button bOverview,bAddIncome,bAddExpense , bSettings , bHistory , bUserDetails;
+    Button bOverview,bAddIncome,bAddExpense , bSettings , bHistory , bUserDetails , bCategories;
 
 
     @Override
@@ -37,6 +38,7 @@ public class MainActivity extends Activity {
         bHistory = (Button) findViewById(R.id.bHistory);
         bSettings = (Button) findViewById(R.id.bSettings);
         bUserDetails = (Button) findViewById(R.id.bUserDetails);
+        bCategories = (Button) findViewById(R.id.bCategories);
 
         bOverview.setOnClickListener(actClickListener);
         bAddIncome.setOnClickListener(actClickListener);
@@ -44,6 +46,7 @@ public class MainActivity extends Activity {
         bHistory.setOnClickListener(actClickListener);
         bSettings.setOnClickListener(actClickListener);
         bUserDetails.setOnClickListener(actClickListener);
+        bCategories.setOnClickListener(actClickListener);
     }
 
     private View.OnClickListener actClickListener = new View.OnClickListener() {
@@ -67,6 +70,9 @@ public class MainActivity extends Activity {
                     break;
                 case R.id.bUserDetails:
                     startActivity(new Intent(getApplicationContext() , UserDetailsActivity.class));
+                    break;
+                case R.id.bCategories:
+                    startActivity(new Intent(getApplicationContext() , CategoriesManagerActivity.class));
                     break;
             }
         }

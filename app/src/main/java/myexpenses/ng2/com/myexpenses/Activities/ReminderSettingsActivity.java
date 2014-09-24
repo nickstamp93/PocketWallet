@@ -124,7 +124,6 @@ public class ReminderSettingsActivity extends Activity {
         }
     };
 
-
     //function to set the next notification
     //according to preferred time
     public void setAlarm(){
@@ -151,7 +150,6 @@ public class ReminderSettingsActivity extends Activity {
         calendar.set(Calendar.MINUTE, minute);
         calendar.set(Calendar.SECOND, 0);
 
-
         //create an intent with the notification service
         myIntent = new Intent(ReminderSettingsActivity.this , ReminderReceiver.class);
 
@@ -166,6 +164,5 @@ public class ReminderSettingsActivity extends Activity {
         Log.i("nikos" , "alarm set for " + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH) + "-" + calendar.get(Calendar.YEAR)
                 + "  " + hour + ":" + minute);
     }
-
 
 }

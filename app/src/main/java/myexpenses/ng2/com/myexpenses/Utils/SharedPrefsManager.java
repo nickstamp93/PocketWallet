@@ -34,6 +34,8 @@ public class SharedPrefsManager {
     private static final String PREFS_CURRENCY = "currency";
     private static final String PREFS_REMINDER_TIME = "reminderTime";
     private static final String PREFS_REMINDER = "reminder";
+    private static final String PREFS_ISPASSWORD = "ispassword";
+    private static final String PREFS_PASSWORD = "password";
 
     //the SharedPreferences and Editor objects
     SharedPreferences prefs;
@@ -128,6 +130,14 @@ public class SharedPrefsManager {
 
     }
 
+    public boolean getPrefsIsPassword(){
+        return prefs.getBoolean(PREFS_ISPASSWORD , false);
+    }
+
+    public String getPrefsPassword(){
+        return prefs.getString(PREFS_PASSWORD , "0000");
+    }
+
     public void setPrefsIsProfile(boolean isProfile) {
         editor.putBoolean(PREFS_IS_PROFILE, isProfile);
     }
@@ -174,6 +184,14 @@ public class SharedPrefsManager {
 
     public void setPrefsReminderTime(int hour , int minute){
         editor.putString(PREFS_REMINDER_TIME , hour + ":" + minute);
+    }
+
+    public void setPrefsIsPassword(boolean isPassword){
+        editor.putBoolean(PREFS_ISPASSWORD , isPassword);
+    }
+
+    public void setPrefsPassword(String password){
+        editor.putString(PREFS_PASSWORD , password);
     }
 
 

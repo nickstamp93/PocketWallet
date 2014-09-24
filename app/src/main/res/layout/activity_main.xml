@@ -54,4 +54,12 @@
         android:id="@+id/bUserDetails"
         android:layout_gravity="center_horizontal"
         android:background="#00000000" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Categories"
+        android:id="@+id/bCategories"
+        android:layout_gravity="center_horizontal"
+        android:background="#00000000" />
 </LinearLayout>

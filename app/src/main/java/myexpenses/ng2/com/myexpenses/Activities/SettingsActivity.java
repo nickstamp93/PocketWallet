@@ -19,8 +19,8 @@ public class SettingsActivity extends Activity {
     SharedPrefsManager manager;
 
     //UI elements
-    TextView tvCurrency , tvCategories , tvRateApp , tvAbout , tvReminder;
-    LinearLayout llReminder , llCurrency , llCategories;
+    TextView tvCurrency , tvCategories , tvRateApp , tvAbout , tvReminder , tvPassword;
+    LinearLayout llReminder , llCurrency , llCategories , llPassword;
 
 
     @Override
@@ -53,6 +53,7 @@ public class SettingsActivity extends Activity {
         llReminder.setOnClickListener(clickListener);
         llCurrency.setOnClickListener(clickListener);
         llCategories.setOnClickListener(clickListener);
+        llPassword.setOnClickListener(clickListener);
 
         tvAbout.setOnClickListener(clickListener);
 
@@ -66,11 +67,12 @@ public class SettingsActivity extends Activity {
         tvCategories = (TextView) findViewById(R.id.tvCategories);
         tvRateApp = (TextView) findViewById(R.id.tvRateApp);
         tvAbout = (TextView) findViewById(R.id.tvAbout);
+        tvPassword = (TextView) findViewById(R.id.tvPassword);
 
         llCurrency = (LinearLayout) findViewById(R.id.llCurrency);
         llCategories = (LinearLayout) findViewById(R.id.llCategories);
         llReminder = (LinearLayout) findViewById(R.id.llReminder);
-
+        llPassword = (LinearLayout) findViewById(R.id.llPassword);
 
         tvCurrency.setText(manager.getPrefsCurrency());
         if(manager.getPrefsReminder()){
@@ -78,6 +80,13 @@ public class SettingsActivity extends Activity {
         }else{
             tvReminder.setText("Disabled");
         }
+        if(manager.getPrefsIsPassword()){
+            tvPassword.setText("Enabled");
+        }else{
+            tvPassword.setText("Disabled");
+        }
+
+
 
     }
 
@@ -93,6 +102,9 @@ public class SettingsActivity extends Activity {
                 case R.id.llCurrency:
                         //open a dialog for changing global Currency
                         new CurrencyDialog().show(getFragmentManager() , "Currency Dialog");
+                    break;
+                case R.id.llPassword:
+                    startActivity(new Intent(getApplicationContext() , PasswordSettingsActivity.class));
                     break;
                 case R.id.llCategories:
                     //start activity for managing(adding/deleting) categories

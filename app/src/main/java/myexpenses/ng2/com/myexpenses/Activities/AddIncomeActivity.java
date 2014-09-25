@@ -34,9 +34,22 @@ public class AddIncomeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_income);
+
+        initBasicVariables();
         initUI();
         initListeners();
 
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.add_income, menu);
+        return true;
+    }
+
+    private void initBasicVariables(){
         db=new MoneyDatabase(AddIncomeActivity.this);
         try {
             db.openDatabase();
@@ -46,22 +59,14 @@ public class AddIncomeActivity extends Activity {
         Time now=new Time();
         now.setToNow();
         String day=now.monthDay+"",month=now.month+"";
-        //date=now.monthDay+"-"+now.month+"-"+now.year;
+
         if(now.monthDay<10){
             day="0"+now.monthDay;
         }
-         if(now.month<10){
+        if(now.month<10){
             month="0"+now.month;
         }
         date=now.year+"-"+month+"-"+day;
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.add_income, menu);
-        return true;
     }
 
     private void initUI(){

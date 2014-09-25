@@ -21,15 +21,15 @@ import myexpenses.ng2.com.myexpenses.R;
  *  The magic behind this is the setTag() method which lets us attach an arbitrary object onto a View object, which is how we save
  *  the already inflated View for future reuse.
  */
-public class FilterAdapter extends ArrayAdapter<String> {
+public class SpinnerAdapter extends ArrayAdapter<String> {
 
     private static class ViewHolder{
         TextView tvfilters;
     }
 
 
-    public FilterAdapter(Context context,ArrayList<String> filters){
-        super(context, R.layout.filters_dialog_item,filters);
+    public SpinnerAdapter(Context context, ArrayList<String> filters){
+        super(context, R.layout.spinner_item,filters);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class FilterAdapter extends ArrayAdapter<String> {
 
         if(convertView==null){
             viewHolder=new ViewHolder();
-            convertView= LayoutInflater.from(getContext()).inflate(R.layout.filters_dialog_item,parent,false);
+            convertView= LayoutInflater.from(getContext()).inflate(R.layout.spinner_item,parent,false);
 
             viewHolder.tvfilters=(TextView)convertView.findViewById(R.id.tvFilters);
             convertView.setTag(viewHolder);
@@ -61,7 +61,7 @@ public class FilterAdapter extends ArrayAdapter<String> {
 
         if(convertView==null){
             viewHolder=new ViewHolder();
-            convertView= LayoutInflater.from(getContext()).inflate(R.layout.filters_dialog_item,parent,false);
+            convertView= LayoutInflater.from(getContext()).inflate(R.layout.spinner_item,parent,false);
 
             viewHolder.tvfilters=(TextView)convertView.findViewById(R.id.tvFilters);
             convertView.setTag(viewHolder);

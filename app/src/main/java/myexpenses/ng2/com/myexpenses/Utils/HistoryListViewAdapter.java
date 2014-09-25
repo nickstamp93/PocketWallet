@@ -2,8 +2,6 @@ package myexpenses.ng2.com.myexpenses.Utils;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +38,7 @@ public class HistoryListViewAdapter extends CursorAdapter{
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view=null;
         if(expense) {
-             view = inflater.inflate(R.layout.list_item_history, parent, false);
+             view = inflater.inflate(R.layout.list_expense_item_history, parent, false);
 
             TextView tvPrice = (TextView) view.findViewById(R.id.tvPrice);
             TextView tvDate = (TextView) view.findViewById(R.id.tvDate);
@@ -57,11 +55,13 @@ public class HistoryListViewAdapter extends CursorAdapter{
 
 
             tvPrice.setText(cursor.getString(3) + " " + currency);
+            //We take the date from the cursor we reformed it and we add it to TextView tvDate. We do that cause the format of
+            //date in MoneyDatabase is YYYY-MM-DD and we want the user to see it like DD-MM-YYYY
             String date=cursor.getString(2);
             String dateTokens[]=date.split("-");
             String reformedDate=dateTokens[2]+"-"+dateTokens[1]+"-"+dateTokens[0];
             tvDate.setText(reformedDate);
-            //tvDate.setText(cursor.getString(2));
+
 
             tvCategory.setText(cursor.getString(1));
       /*
@@ -99,7 +99,8 @@ public class HistoryListViewAdapter extends CursorAdapter{
             tvSource.setTypeface(typeface);
 
             tvIncome.setText(cursor.getString(1)+currency);
-            //tvDate.setText(cursor.getString(3));
+            //We take the date from the cursor we reformed it and we add it to TextView tvDate. We do that cause the format of
+            //date in MoneyDatabase is YYYY-MM-DD and we want the user to see it like DD-MM-YYYY
             String date=cursor.getString(3);
             String dateTokens[]=date.split("-");
             String reformedDate=dateTokens[2]+"-"+dateTokens[1]+"-"+dateTokens[0];
@@ -128,11 +129,13 @@ public class HistoryListViewAdapter extends CursorAdapter{
             tvNotes.setTypeface(typeface);
 
             tvPrice.setText(cursor.getString(3) + " " + currency);
+            //We take the date from the cursor we reformed it and we add it to TextView tvDate. We do that cause the format of
+            //date in MoneyDatabase is YYYY-MM-DD and we want the user to see it like DD-MM-YYYY
             String date=cursor.getString(2);
             String dateTokens[]=date.split("-");
             String reformedDate=dateTokens[2]+"-"+dateTokens[1]+"-"+dateTokens[0];
             tvDate.setText(reformedDate);
-          //  tvDate.setText(cursor.getString(2));
+
             tvCategory.setText(cursor.getString(1));
         /*
         byte[] image=cursor.getBlob(5);
@@ -165,7 +168,8 @@ public class HistoryListViewAdapter extends CursorAdapter{
             tvSource.setTypeface(typeface);
 
             tvIncome.setText(cursor.getString(1)+currency);
-            //tvDate.setText(cursor.getString(3));
+            //We take the date from the cursor we reformed it and we add it to TextView tvDate. We do that cause the format of
+            //date in MoneyDatabase is YYYY-MM-DD and we want the user to see it like DD-MM-YYYY
             String date=cursor.getString(3);
             String dateTokens[]=date.split("-");
             String reformedDate=dateTokens[2]+"-"+dateTokens[1]+"-"+dateTokens[0];

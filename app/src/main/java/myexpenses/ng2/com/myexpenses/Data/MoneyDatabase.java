@@ -90,70 +90,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
 
     }
 
-    //return a ArrayList with IncomeItem that contains all of the tuples in table Incomes
-    public ArrayList<IncomeItem> getAllIncomes(){
 
-        ArrayList<IncomeItem> incomes=new ArrayList<IncomeItem>();
-        Cursor c=mydb.rawQuery("SELECT * FROM "+ Table_Income,null);
-
-
-        int iRow=c.getColumnIndex(Key_Iid);
-        int iAmount=c.getColumnIndex(Key_IAmount);
-        int iSource=c.getColumnIndex(Key_ISource);
-        int iDate=c.getColumnIndex(Key_IDate);
-
-        if(c!=null){
-
-            for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
-
-               int id=Integer.parseInt(c.getString(iRow));
-               double amount=Double.parseDouble(c.getString(iAmount));
-               String source=c.getString(iSource);
-               String date=c.getString(iDate);
-               IncomeItem income=new IncomeItem(amount,date,source);
-               income.setId(id);
-               incomes.add(income);
-
-            }
-
-        }
-        return incomes;
-
-    }
-//return a ArrayList with ExpenseItem that contains all of the tuples in table Expenses
-    public ArrayList<ExpenseItem> getAllExpenses(){
-
-        ArrayList<ExpenseItem> expenses=new ArrayList<ExpenseItem>();
-        Cursor c=mydb.rawQuery("SELECT * FROM " + Table_Expense,null);
-
-
-       int eRow=c.getColumnIndex(Key_EId);
-       int eCategory=c.getColumnIndex(Key_ECategory);
-       int eDate=c.getColumnIndex(Key_EDate);
-       int ePrice=c.getColumnIndex(Key_EPrice);
-       int eNotes=c.getColumnIndex(Key_ENotes);
-
-       if(c!=null){
-
-           for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
-
-            int id=Integer.parseInt(c.getString(eRow));
-            String category=c.getString(eCategory);
-            String date=c.getString(eDate);
-            double price=Double.parseDouble(c.getString(ePrice));
-            String notes=c.getString(eNotes);
-
-            ExpenseItem expense=new ExpenseItem(category,notes,price,date);
-            expense.setId(id);
-            expenses.add(expense);
-
-           }
-
-       }
-
-
-        return expenses;
-    }
 
     //return a cursor which contains the whole table expense (select *)
     public Cursor getCursorExpense() {
@@ -200,98 +137,28 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         return getReadableDatabase().rawQuery("SELECT * FROM "+Table_Expense+ " WHERE "+ Key_EDate + ">=" + "'"+reformedDateFrom+"'" +
         " AND " + Key_EDate + "<="+ "'"+reformedDateTo+"'" ,null);
 
-        /*
-        ArrayList<String> Valid=new ArrayList<String>();
 
-         Log.i("Reformed DateFrom",reformedDateFrom);
-        Log.i("Reformed DateTo",reformedDateTo);
-
-        Cursor c= getReadableDatabase().rawQuery("SELECT * " + " FROM " + Table_Expense ,null);
-        if(c!=null){
-
-            for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
-
-                String date=c.getString(c.getColumnIndex(Key_EDate));
-
-                String tokens[]=date.split("-");
-                String reformedDate=tokens[2]+"-"+tokens[1]+"-"+tokens[0];
-              //  Log.i("Date from cursor reformed= ",reformedDate);
-
-                if(compareDates(reformedDateFrom,reformedDateTo,reformedDate) ){
-                    Valid.add(date);
-                 }
-
-            }
-
-
-        }
-
-        StringBuilder sb=new StringBuilder();
-        if(Valid.size()>0) {
-            for (int i = 0; i < Valid.size() - 1; i++) {
-                sb.append("'" + Valid.get(i) + "'" + ",");
-            }
-            sb.append("'" + Valid.get(Valid.size() - 1) + "'");
-         }
-
-        return getReadableDatabase().rawQuery("SELECT * "+ " FROM " + Table_Expense + " WHERE " + Key_EDate + " IN " +"("+sb.toString()+")"
-                ,null );
-                */
     }
-
+//return a cursor which contains the tuples of table expense order by the date
     public Cursor getExpensesFromNewestToOldest(){
 
    return getReadableDatabase().rawQuery("SELECT * FROM "+Table_Expense+ " ORDER BY "+Key_EDate+" DESC"
                 ,null);
     }
 
-/*
-    private boolean compareDates(String from,String to,String date){
 
-        String dateTokens[]=date.split("-");
-        String fromTokens[]=from.split("-");
-        String toTokens[]=to.split("-");
-
-        int size;
-        int dateValues[],fromValues[],toValues[];
-
-        size=dateTokens.length;
-        dateValues=new int[size];
-        fromValues=new int[size];
-        toValues=new int[size];
-
-        for (int i=0; i<size; i++){
-
-            dateValues[i]=Integer.parseInt(dateTokens[i]);
-            fromValues[i]=Integer.parseInt(fromTokens[i]);
-            toValues[i]=Integer.parseInt(toTokens[i]);
-
-        }
-
-        for(int i=0; i<size; i++){
-
-            if(dateValues[i]<fromValues[i] || dateValues[i]>toValues[i]){
-                return false;
-            }
-
-        }
-
-        return true;
-
-    }
-    */
-
+//return a cursor which contains all the tuples of table income
     public Cursor getCursorIncomes(){
         return getReadableDatabase().rawQuery("SELECT * FROM " + Table_Income,
                 null);
     }
-
+//return a cursor which contains all the tuples of table income with Source = to parameter source
     public Cursor getIncomesBySource(String source){
 
         return getReadableDatabase().rawQuery("SELECT * FROM "+ Table_Income + " WHERE " + Key_ISource + "=" +"'"+source+"'",null );
 
     }
-
+    //return a cursor which contains the tuples of table income with Date equal to parameter date
     public Cursor getIncomeByDate(String date){
 
         String dateTokens[]=date.split("-");
@@ -300,13 +167,13 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         return getReadableDatabase().rawQuery("SELECT * FROM "+ Table_Income + " WHERE " + Key_IDate + " LIKE " + "'"+reformedDate+"'",
                 null);
     }
-
+    //return a cursor which contains the tuples of table income order by the date
     public Cursor getIncomeByNewestToOldest(){
 
         return getReadableDatabase().rawQuery("SELECT * FROM "+Table_Income+ " ORDER BY "+Key_IDate+" DESC"
                 ,null);
     }
-
+    //return a cursor which contains the tuples of table income with date between of parameter date1 and parameter date2
     public Cursor getIncomeByDateToDate(String date1,String date2){
 
         String DateFrom[]=date1.split("-");

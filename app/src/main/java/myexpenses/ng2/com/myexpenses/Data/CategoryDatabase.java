@@ -6,7 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import myexpenses.ng2.com.myexpenses.Utils.FiltersCategoryDialog;
+import java.util.ArrayList;
+
 
 /**
  * Created by Nikos on 9/23/2014.
@@ -72,6 +73,30 @@ public class CategoryDatabase extends SQLiteOpenHelper {
 
     public Cursor getAllCategories(){
         return getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_CATEGORIES , null);
+    }
+
+    //Get all the categories of database returned in a ArrayList
+    public ArrayList<String> getCategories(){
+        Cursor c=getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_CATEGORIES , null);
+        ArrayList<String> categories=new ArrayList<String>();
+
+        int Catrow=c.getColumnIndex(COLUMN_NAME);
+
+        if(c!=null){
+
+            for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
+
+                String category=c.getString(Catrow);
+                categories.add(category);
+
+            }
+
+        }
+        return categories;
+    }
+
+    public void closeDB(){
+        getReadableDatabase().close();
     }
 
 }

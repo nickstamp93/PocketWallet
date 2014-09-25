@@ -8,7 +8,7 @@
         android:layout_height="match_parent"
         android:id="@+id/tvFilters"
         android:textColor="@color/BlueViolet"
-        android:textSize="22sp"
+        android:textSize="15sp"
         android:gravity="center"
         android:typeface="monospace"
         />

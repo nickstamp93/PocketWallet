@@ -3,10 +3,8 @@ package myexpenses.ng2.com.myexpenses.Activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.format.Time;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,19 +13,18 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import myexpenses.ng2.com.myexpenses.Data.CategoryDatabase;
 import myexpenses.ng2.com.myexpenses.Data.ExpenseItem;
 import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
 import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Utils.CalendarDialog;
+import myexpenses.ng2.com.myexpenses.Utils.SpinnerAdapter;
+
 /*
 Future Modules
 1)Credit or Cash on Expenses
@@ -48,6 +45,7 @@ public class AddExpenseActivity extends Activity {
   private ImageView ivPhoto;
   private Spinner sCategories;
   private MoneyDatabase mydb;
+  private CategoryDatabase cdb;
   private ExpenseItem item;
 
   private boolean image;
@@ -61,23 +59,33 @@ public class AddExpenseActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_expense);
+
+        initBasicVariables();
         initUi();
         initListeners();
 
-        image=false;
 
 
+
+
+    }
+
+    private void initBasicVariables(){
+        cdb=new CategoryDatabase(AddExpenseActivity.this);
         mydb=new MoneyDatabase(AddExpenseActivity.this);
+
         try {
             mydb.openDatabase();
         }catch (SQLException e){
             Toast.makeText(getApplicationContext(),"Problem with our database",Toast.LENGTH_SHORT).show();
         }
+        image=false;
+
 
         Time now=new Time();
         now.setToNow();
         String day=now.monthDay+"",month=now.month+"";
-        //date=now.monthDay+"-"+now.month+"-"+now.year;
+        //Check if the day and month is <10 to add a leading zero in front of them
         if(now.monthDay<10){
             day="0"+now.monthDay;
         }
@@ -85,6 +93,8 @@ public class AddExpenseActivity extends Activity {
             month="0"+now.month;
         }
         date=now.year+"-"+month+"-"+day;
+
+
 
     }
 
@@ -98,6 +108,14 @@ public class AddExpenseActivity extends Activity {
       etNotes=(EditText) findViewById(R.id.etNotes);
       ivPhoto=(ImageView) findViewById(R.id.ivReceive);
       sCategories=(Spinner) findViewById(R.id.sCategories);
+
+        //get from CategoryDatabase all the categories and save them in to an ArrayList
+         ArrayList<String>   allCategories= cdb.getCategories();
+        //Initialize the SpinnerAdapter
+         SpinnerAdapter adapter=new SpinnerAdapter(AddExpenseActivity.this,allCategories);
+        //Set the adapter of spinner item to be all the categories from CategoryDatabase
+         sCategories.setAdapter(adapter);
+         cdb.closeDB();
 
     }
 

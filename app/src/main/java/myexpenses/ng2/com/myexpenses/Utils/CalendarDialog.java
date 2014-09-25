@@ -33,6 +33,7 @@ public class CalendarDialog extends DialogFragment {
     private String date;
     //context
     private Context context;
+    //boolean variable to check if the CalendarDialog is called from AddExpenseActivity or AddIncomeActivity
     private boolean expense;
 
     public CalendarDialog(boolean expense){
@@ -57,7 +58,7 @@ public class CalendarDialog extends DialogFragment {
         Time now=new Time();
         now.setToNow();
         String day=now.monthDay+"",month=now.month+"";
-        //date=now.monthDay+"-"+now.month+"-"+now.year;
+        //Check if the day and month is <10 to add a leading zero in front of them
         if(now.monthDay<10){
             day="0"+now.monthDay;
         } if(now.month<10){
@@ -85,11 +86,16 @@ public class CalendarDialog extends DialogFragment {
             public void onClick(View view) {
 
                 Toast.makeText(context,"Process Finished, the date that you chose is "+date ,Toast.LENGTH_SHORT).show();
+           //if expense is true it means that the dialog is called from AddExpenseActivity otherwise from AddIncomeActivity
                 if(expense) {
                     AddExpenseActivity act = (AddExpenseActivity) getActivity();
+                    //before this dialog is closed we call the method setDate from AddExpenseActivity to initialize
+                    //the date
                     act.setDate(date);
                 }else{
                     AddIncomeActivity act=(AddIncomeActivity) getActivity();
+                    //before this dialog is closed we call the method setIncomeDate from AddIncomeActivity to initialize
+                    //the date
                     act.setIncomeDate(date);
                 }
                 dialog.dismiss();
@@ -99,7 +105,7 @@ public class CalendarDialog extends DialogFragment {
         bCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //date="No one";
+
                 Toast.makeText(context,"Process Canceled",Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
@@ -108,18 +114,16 @@ public class CalendarDialog extends DialogFragment {
         cv.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView calendarView, int year, int month, int dayOfMonth) {
-                //date=dayOfMonth+"-"+month+"-"+year;
-                String day=dayOfMonth+"",mon=month+"";
-                //date=now.monthDay+"-"+now.month+"-"+now.year;
 
-                Log.i("Month=", mon);
+                String day=dayOfMonth+"",mon=month+"";
+                //Check if the day and month is <10 to add a leading zero in front of them
                 if(Integer.parseInt(day)<10){
                     day="0"+dayOfMonth;
                 }
                  if(Integer.parseInt(mon)<10){
                     mon="0"+month;
                 }
-                //date=now.year+"-"+now.month+"-"+day;
+
                 date=year+"-"+mon+"-"+day;
                 Toast.makeText(context,"Selected Date\n\n"+date,Toast.LENGTH_LONG).show();
             }

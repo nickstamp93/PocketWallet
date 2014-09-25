@@ -25,10 +25,6 @@ public class HistoryActivity extends Activity  {
     private Cursor c;
     private MoneyDatabase db;
     private ListView lv;
-
-  // private String filters[] ;
-  //  private FilterAdapter Fadapter;
-  //  private int firstAppearance=0;
     private AlertDialog dialog=null;
     private boolean switcher =true;
     private Menu menu;
@@ -59,63 +55,46 @@ public class HistoryActivity extends Activity  {
         lv.setAdapter(adapter);
 
     }
-
+// Refresh the view of HistoryActivity using different cursor
     public void refreshList(Cursor cursor){
         adapter.changeCursor(cursor);
         adapter.notifyDataSetChanged();
     }
 
-
-
-/*
-  private void setFilters(){
-
-      ActionBar actionBar=getActionBar();
-      actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-
-      filters=getResources().getStringArray(R.array.filters);
-      ArrayList<String> entries=new ArrayList<String>();
-
-      for (int i=0; i<filters.length; i++){
-          entries.add(filters[i]);
-      }
-
-      Fadapter=new FilterAdapter(getApplicationContext(),entries);
-      SpinnerAdapter spinnerAdapter;
-
-
-   //   actionBar.setListNavigationCallbacks(Fadapter,this);
-
-
-
-  }*/
-
+//This method is called by FiltersDateDialog when the dialog is about to close and set the cursor of HistoryActivity to be all
+//the expenses in specific date(parameter)
  public void saveExpenseFiltersDate(String date){
      c=db.getExpensesByDate(date);
      refreshList(c);
  }
 
+
+ //This method is called by FiltersDateDialog\ when the dialog is about to close and set the cursor of HistoryActivity to be all
+//the incomes in specific date(parameter)
  public void saveIncomeFiltersDate(String date){
      c=db.getIncomeByDate(date);
      refreshList(c);
  }
 
-
+//This method is called by FiltersDateToDateDialog when the dialog is about to close and set the cursor of HistoryActivity to be all
+//the expenses with date between parameters from and to
  public void saveFiltersDateToDate(String from,String to){
      c=db.getExpensesByDateToDate(from,to);
      refreshList(c);
  }
 
+//This method is called by FiltersDateToDateDialog when the dialog is about to close and set the cursor of HistoryActivity to be all
+//the incomes with date between parameters from and to
  public void saveIncomeFiltersDateToDate(String from,String to){
      c=db.getIncomeByDateToDate(from,to);
      refreshList(c);
  }
-
+//Dismiss the field Dialog dialog
     public void dismissDialog(){
         dialog.dismiss();
 
     }
-
+//We keep in a variable the actionBar Menu so we can process it
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -126,7 +105,8 @@ public class HistoryActivity extends Activity  {
     }
 
 
-
+//All the menu items with their listeners. More specific the drop down menu for filtering expenses and incomes and also
+//the toggle button to change view in HistoryActivity between the expenses and incomes.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -257,12 +237,14 @@ public class HistoryActivity extends Activity  {
                 c=db.getIncomeByNewestToOldest();
                 refreshList(c);
                 break;
-
+           //When the toggleButton is pressed we check the boolean variable switcher.If it is true it means that we are in
+           //Expenses so we change the variable switcher we clear the menu and add the Income Menu and the standar cursor
+           //for the income items. To do that we need to create new adapter and set the ListView to have this adapter. The
+           //same thing happens when we are in Incomes. Finally we use 2 menu xml history_expense - history_income to change
+           //the menus between Expenses and Incomes, in both menu there is a item with the same id (toggleButton)
             case R.id.toggleButton:
 
                 if(switcher){
-
-
                     switcher=false;
                     menu.clear();
                     getMenuInflater().inflate(R.menu.history_income, menu);
@@ -272,7 +254,6 @@ public class HistoryActivity extends Activity  {
                     lv.setAdapter(adapter);
 
                 }else{
-
                     switcher=true;
                     menu.clear();
                     getMenuInflater().inflate(R.menu.history_expense,menu);
@@ -290,122 +271,5 @@ public class HistoryActivity extends Activity  {
 
         return super.onOptionsItemSelected(item);
     }
-/*
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-
-        MenuItem filters= menu.getItem(1);
-        SubMenu subMenu=filters.getSubMenu();
-        MenuItem category=subMenu.getItem(1);
-        MenuItem price=subMenu.getItem(2);
-        MenuItem nto=subMenu.getItem(5);
-        if(!switcher){
-            category.setTitle("Source");
-            price.setTitle("Order depended on amount");
-            nto.setTitle("Newest Income to oldest");
-        }else{
-            category.setTitle("Category");
-            price.setTitle("Order depended on price");
-            nto.setTitle("Newest Expense to oldest");
-        }
-
-
-        return true;
-
-    }*/
-    /*
-    @Override
-    public boolean onNavigationItemSelected(int position, long l) {
-
-        final AlertDialog.Builder builder=new AlertDialog.Builder(this);
-        Log.i("Listener","bike");
-
-
-        switch (position){
-
-            case 0:
-                if(firstAppearance!=0){
-                    c=db.getCursorExpense();
-                    this.refreshList(c);
-                }
-                break;
-
-            case 1:
-                Log.i("Categories","Mpainei");
-                firstAppearance=1;
-
-                final String categories[]=getResources().getStringArray(R.array.expenses_category);
-                CharSequence[] items=new CharSequence[categories.length];
-                for (int i=0; i<categories.length; i++){
-                    items[i]=categories[i];
-                }
-                builder.setTitle("Choose a Category");
-
-                builder.setItems(items, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int item) {
-
-
-                            String chosenCategory = categories[item];
-                            Log.i("Item =", chosenCategory);
-                            c = db.getExpensesByCategory(chosenCategory);
-                            refreshList(c);
-                            dialogInterface.dismiss();
-                            dismissDialog();
-
-
-                    }
-                });
-                   dialog=builder.create();
-                   dialog.show();
-                   Log.i("Category","Still active");
-                 break;
-
-            case 2:
-                firstAppearance=1;
-                final CharSequence[] orderItems={"Ascending","Declining"};
-                builder.setTitle("Order of items depended on price");
-                builder.setSingleChoiceItems(orderItems,-1,new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int pos) {
-                        boolean asc=false;
-                        if(pos==0){
-                           asc=true;
-                        }
-                        c=db.getExpensesByPriceOrder(asc);
-                        refreshList(c);
-                        dialogInterface.dismiss();
-
-                    }
-                });
-                AlertDialog dialog1=builder.create();
-                dialog1.show();
-                break;
-
-            case 3:
-                firstAppearance=1;
-                FiltersDateDialog DDialog=new FiltersDateDialog(true);
-                DDialog.show(getFragmentManager(),"FiltersDate Dialog");
-                break;
-
-            case 4:
-                firstAppearance=1;
-                FiltersDateToDateDialog DTDDialog=new FiltersDateToDateDialog();
-                DTDDialog.show(getFragmentManager(),"FiltersDateToDaTE Dialog");
-                break;
-
-            case 5:
-                firstAppearance=1;
-                c=db.getExpensesFromNewestToOldest();
-                refreshList(c);
-                break;
-
-
-
-        }
-
-        return true;
-    }
-*/
 
 }

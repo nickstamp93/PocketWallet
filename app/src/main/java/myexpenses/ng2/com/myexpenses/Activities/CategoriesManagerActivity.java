@@ -24,11 +24,16 @@ import myexpenses.ng2.com.myexpenses.MainActivity;
 import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Utils.AddCategoryDialog;
 
+//activity managind the categories
 public class CategoriesManagerActivity extends Activity {
 
+    //listview
     ListView lv;
+    //cursor
     Cursor c;
+    //database
     CategoryDatabase db;
+    //adapter
     MyAdapter adapter;
 
 
@@ -37,14 +42,19 @@ public class CategoriesManagerActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories_manager);
 
+        //init db
         db = new CategoryDatabase(getApplicationContext());
 
+        //init cursor
         c = db.getAllCategories();
 
+        //init lv
         lv = (ListView) findViewById(R.id.lvCategories);
 
+        //init adapter
         adapter = new MyAdapter(getApplicationContext() , c);
 
+        //set the adapter to the listview
         lv.setAdapter(adapter);
 
     }
@@ -65,12 +75,14 @@ public class CategoriesManagerActivity extends Activity {
         int id = item.getItemId();
 
         if (id == R.id.action_addCategory) {
+            //on action bar add category , launch add category dialog
             new AddCategoryDialog().show(getFragmentManager() , "Add Category");
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    //refresh listview
     public void refreshList(){
         c.requery();
         adapter.notifyDataSetChanged();
@@ -79,21 +91,26 @@ public class CategoriesManagerActivity extends Activity {
 
     private class MyAdapter extends CursorAdapter{
 
+        //layout inflater
         LayoutInflater inflater;
 
+        //constructor
         public MyAdapter(Context context , Cursor c){
             super(context , c);
         }
 
         @Override
         public View newView(Context context, final Cursor cursor, ViewGroup parent) {
+            //create a new view from the 'list_item_categories.xml'
             inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
             View newView = inflater.inflate(R.layout.list_item_categories , parent , false);
 
+            //init UI elements from this particular view
             ImageView ivIcon = (ImageView) newView.findViewById(R.id.ivIcon);
             TextView tvName = (TextView) newView.findViewById(R.id.tvName);
             ImageButton ibDelete = (ImageButton) newView.findViewById(R.id.ibDelete);
 
+            //and fill them with the correct values from the db's cursor
             final String name = cursor.getString(1);
             tvName.setText(name);
 
@@ -106,7 +123,7 @@ public class CategoriesManagerActivity extends Activity {
                 }
             });
 
-
+            //set the correct icon for each category
             if(name.equals("Food")){
                 ivIcon.setImageResource(R.drawable.food);
             }else if(name.equals("Drinks")){
@@ -117,16 +134,18 @@ public class CategoriesManagerActivity extends Activity {
                 ivIcon.setImageResource(R.drawable.clothing);
             }
 
-
+            //return the newly created view
             return newView;
         }
 
         @Override
         public void bindView(View view, Context context,final Cursor cursor) {
+            //init the view's UI elements
             ImageView ivIcon = (ImageView) view.findViewById(R.id.ivIcon);
             TextView tvName = (TextView) view.findViewById(R.id.tvName);
             ImageButton ibDelete = (ImageButton) view.findViewById(R.id.ibDelete);
 
+            //and update them with the correct values
             final String name = cursor.getString(1);
             tvName.setText(name);
 
@@ -139,6 +158,7 @@ public class CategoriesManagerActivity extends Activity {
                 }
             });
 
+            //and the right icon
             if(name.equals("Food")){
                 ivIcon.setImageResource(R.drawable.food);
             }else if(name.equals("Drinks")){
@@ -149,8 +169,6 @@ public class CategoriesManagerActivity extends Activity {
                 ivIcon.setImageResource(R.drawable.clothing);
             }
         }
-
-
     }
 
 }

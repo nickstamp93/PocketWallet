@@ -64,10 +64,6 @@ public class AddExpenseActivity extends Activity {
         initUi();
         initListeners();
 
-
-
-
-
     }
 
     private void initBasicVariables(){
@@ -93,8 +89,6 @@ public class AddExpenseActivity extends Activity {
             month="0"+now.month;
         }
         date=now.year+"-"+month+"-"+day;
-
-
 
     }
 

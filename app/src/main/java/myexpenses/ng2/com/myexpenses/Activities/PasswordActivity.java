@@ -13,10 +13,14 @@ import android.widget.Toast;
 import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Utils.SharedPrefsManager;
 
+//Activity for the user to enter the password for the app to unlock
 public class PasswordActivity extends Activity {
 
+    //number buttons
     private Button b1,b2,b3,b4,b5,b6,b7,b8,b9,b0,bOk;
+    //password edit text
     private EditText etPassword;
+    //shared prefs manager
     SharedPrefsManager manager;
 
     @Override
@@ -24,14 +28,18 @@ public class PasswordActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password);
 
+        //init manager
         manager = new SharedPrefsManager(getApplicationContext());
 
+        //init UI
         initUI();
 
+        //init listeners
         initListeners();
 
     }
 
+    //init UI
     private void initUI(){
         b1 = (Button) findViewById(R.id.b1);
         b2 = (Button) findViewById(R.id.b2);
@@ -48,6 +56,7 @@ public class PasswordActivity extends Activity {
         etPassword = (EditText) findViewById(R.id.etPassword);
     }
 
+    //init listeners
     private void initListeners(){
         b1.setOnClickListener(listener);
         b2.setOnClickListener(listener);
@@ -62,24 +71,34 @@ public class PasswordActivity extends Activity {
         bOk.setOnClickListener(listener);
     }
 
+    //buttons listener
     private View.OnClickListener listener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            //get the password text so far
             String text = etPassword.getText().toString();
+
+            //if Ok was clicked
             if(v.getId() == R.id.bOk){
                 //check if password is right
                 if(manager.getPrefsPassword().equals(text)){
                     //correct password
+                    //launch overview activity
                     Intent intent = new Intent(getApplicationContext() , OverviewActivity.class);
                     startActivity(intent);
+                    //and destroy this one
                     finish();
                 }else{
                     //wrong password
+                    //warn the user
                     Toast.makeText(getApplicationContext() , "Wrong Password" , Toast.LENGTH_SHORT).show();
+                    //clear the password edit text
                     etPassword.setText("");
                 }
             }else {
                 //else a number was clicked
+
+                //append the clicked number to the current password
                 text += ((Button) v).getText().toString();
                 etPassword.setText(text);
             }

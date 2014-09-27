@@ -91,8 +91,6 @@ public class AddExpenseActivity extends Activity {
         }
         date=now.year+"-"+month+"-"+day;
 
-
-
     }
 
     private void initUi(){

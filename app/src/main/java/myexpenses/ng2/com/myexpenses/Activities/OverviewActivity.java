@@ -26,17 +26,11 @@ public class OverviewActivity extends Activity {
     //SharedPrefsManager object
     private SharedPrefsManager manager;
 
-    private PendingIntent pendingIntent;
-
     //UserProfile object
     UserProfile profile;
 
     //View objects for the XML management
     TextView tvBalance, tvSavings, tvDays, tvUsername;
-
-    Intent myIntent;
-
-    AlarmManager alarmManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +44,7 @@ public class OverviewActivity extends Activity {
         checkUserProfile();
 
         //if profile is on salary , must update its money status
-        //this is if the user opened the app after a payment has occured
+        //this is if the user opened the app after a payment has occurred
         if (profile instanceof UserProfileSalary) {
             ((UserProfileSalary) profile).updateMoneyStatus();
             //and refresh the UI accordingly
@@ -132,6 +126,7 @@ public class OverviewActivity extends Activity {
         tvDays = (TextView) findViewById(R.id.tvDays);
         tvUsername = (TextView) findViewById(R.id.tvUsername);
 
+        //set a font for the text views
         Typeface typeface = Typeface.createFromAsset(getAssets() , "fonts/font_exo2.otf");
         tvDays.setTypeface(typeface);
         tvBalance.setTypeface(typeface);
@@ -140,7 +135,7 @@ public class OverviewActivity extends Activity {
 
     }
 
-    //fill the xml elements attributes with the user details
+    //refresh UI according to preference file
     private void refreshUI() {
         tvUsername.setText(profile.getUsername());
         tvBalance.setText(String.valueOf(profile.getBalance()) + " " + profile.getCurrency());

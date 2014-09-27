@@ -20,17 +20,16 @@ import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Utils.SharedPrefsManager;
 import myexpenses.ng2.com.myexpenses.Utils.TimeDialog;
 
-/**
- * Created by Nikos on 9/12/2014.
- */
 public class ReminderSettingsActivity extends Activity {
 
     //Shared Preferences Manager
     SharedPrefsManager manager;
 
     //UI elements
-    LinearLayout llTime , llAdapt;
+    LinearLayout llTime ;
+    //check box reminder
     CheckBox chbReminder ;
+    //text view for reminder
     TextView tvReminderTime;
 
     //variables needed for the the notification via the alarm manager
@@ -43,6 +42,7 @@ public class ReminderSettingsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reminder_settings);
 
+        //init manager
         manager = new SharedPrefsManager(getApplicationContext());
 
         //initialize UI
@@ -54,7 +54,7 @@ public class ReminderSettingsActivity extends Activity {
 
     }
 
-    //initialize UI and initial values according to user preferences
+    //init UI
     private void initUI() {
         llTime = (LinearLayout) findViewById(R.id.llTime);
 
@@ -63,6 +63,8 @@ public class ReminderSettingsActivity extends Activity {
 
         chbReminder = (CheckBox) findViewById(R.id.chbReminder);
 
+
+        //init according to user prefs
         chbReminder.setChecked(manager.getPrefsReminder());
 
         if(!manager.getPrefsReminder()){
@@ -72,7 +74,7 @@ public class ReminderSettingsActivity extends Activity {
 
     }
 
-    //initialize UI Listeners
+    //init listeners
     private void initListeners() {
         llTime.setOnClickListener(listener);
 
@@ -99,7 +101,7 @@ public class ReminderSettingsActivity extends Activity {
                     //notify the user about reminder status
                     if(isChecked){
                         Toast.makeText(getApplicationContext() , "Daily Reminder activated\nNext reminder at " + manager.getPrefsReminderTime() , Toast.LENGTH_SHORT).show();
-
+                        //enable the notification
                         setAlarm();
 
                     }else{
@@ -111,7 +113,7 @@ public class ReminderSettingsActivity extends Activity {
         }
     };
 
-    //listener
+    //click listener
     private View.OnClickListener listener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -153,10 +155,10 @@ public class ReminderSettingsActivity extends Activity {
         //create an intent with the notification service
         myIntent = new Intent(ReminderSettingsActivity.this , ReminderReceiver.class);
 
-        //and a pending intent
+        //and a pending intent containing the previous intent
         pendingIntent = PendingIntent.getBroadcast(ReminderSettingsActivity.this, 0, myIntent, 0);
 
-        //create an alarm manager instance
+        //create an alarm manager instance (alarm manager , repeating notifications)
         alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
         //set next notification at the above date-time , service starts every 24 hours
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP , calendar.getTimeInMillis(), 24*60*60*1000 , pendingIntent);

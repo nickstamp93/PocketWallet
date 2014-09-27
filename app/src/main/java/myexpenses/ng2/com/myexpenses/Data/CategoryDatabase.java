@@ -12,6 +12,7 @@ import java.util.ArrayList;
 /**
  * Created by Nikos on 9/23/2014.
  */
+//database containing categories
 public class CategoryDatabase extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
@@ -36,6 +37,7 @@ public class CategoryDatabase extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_DATABASE);
 
+        //insert the initial categories
         db.execSQL("insert into " + TABLE_CATEGORIES + "(" + COLUMN_ID + ","
                 + COLUMN_NAME + ") values(1,'Food')");
         db.execSQL("insert into " + TABLE_CATEGORIES + "(" + COLUMN_ID + ","
@@ -49,9 +51,10 @@ public class CategoryDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        //nothing for now
     }
 
+    //insert a category given its name
     public void insertCategory(String name){
         ContentValues values=new ContentValues();
 
@@ -61,16 +64,18 @@ public class CategoryDatabase extends SQLiteOpenHelper {
 
     }
 
+    //delete a category by name
     public void deleteCategory(String name)
     {
         // Define 'where' part of query.
         String selection = COLUMN_NAME + " LIKE ?";
-        // Specify arguments in placeholder order.
+        // Specify arguments
         String[] selectionArgs = { name };
-        // Issue SQL statement.
+        // execute
         getWritableDatabase().delete(TABLE_CATEGORIES, selection, selectionArgs);
     }
 
+    //return a cursor with all categories
     public Cursor getAllCategories(){
         return getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_CATEGORIES , null);
     }

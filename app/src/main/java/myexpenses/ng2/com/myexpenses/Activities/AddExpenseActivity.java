@@ -31,10 +31,10 @@ Future Modules
 2)Diagrams-Pites probably library
 3)Repeat some of the expenses
 4)SubCategories
-5)User add a Category
-6)Pattern custom
-7)Switch on History Activity Income-Expense with filters (Toggle Button)
-8)Filters change in DropDown Menu in ActionBar
+5)User add a Category DONE
+6)Pattern custom DONE
+7)Switch on History Activity Income-Expense with filters (Toggle Button) DONE
+8)Filters change in DropDown Menu in ActionBar DONE
  */
 public class AddExpenseActivity extends Activity {
 
@@ -63,9 +63,6 @@ public class AddExpenseActivity extends Activity {
         initBasicVariables();
         initUi();
         initListeners();
-
-
-
 
 
     }

@@ -1,9 +1,11 @@
 package myexpenses.ng2.com.myexpenses.Data;
 
+import java.io.Serializable;
+
 /**
  * Created by Nikos on 7/26/2014.
  */
-public class IncomeItem {
+public class IncomeItem implements Serializable {
 
    private double amount;
    private int id;

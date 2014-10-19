@@ -4,14 +4,21 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import myexpenses.ng2.com.myexpenses.Data.ExpenseItem;
+import myexpenses.ng2.com.myexpenses.Data.IncomeItem;
 import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
 import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Utils.FiltersDateDialog;
@@ -53,6 +60,35 @@ public class HistoryActivity extends Activity  {
         adapter.setTheView(true);
 
         lv.setAdapter(adapter);
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+                c.moveToPosition(position);
+
+                if(switcher) {
+                    Intent processExpense=new Intent(HistoryActivity.this,AddExpenseActivity.class);
+                    ExpenseItem expense=new ExpenseItem(c.getString(1),c.getString(4),Double.parseDouble(c.getString(3)),c.getString(2));
+                    expense.setId(Integer.parseInt(c.getString(0)));
+                    processExpense.putExtra("Expense",expense);
+                    startActivity(processExpense);
+                }else{
+                    IncomeItem income=new IncomeItem(Double.parseDouble(c.getString(1)),c.getString(3),c.getString(2));
+                   // bundle.putSerializable("Income",income);
+                   // process.putExtra("Income",income);
+                }
+
+               // process.p
+
+              //  bundle.p
+
+                Log.i("Listener",c.getString(1)+"-"+c.getString(2)+"-"+c.getString(3));
+
+
+
+            }
+        });
 
     }
 // Refresh the view of HistoryActivity using different cursor

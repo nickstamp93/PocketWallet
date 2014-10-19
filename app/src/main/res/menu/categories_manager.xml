@@ -6,4 +6,9 @@
         android:orderInCategory="100"
         android:icon="@drawable/ic_action_new"
         android:showAsAction="always" />
+
+    <item android:id="@+id/action_switcher"
+          android:title="INCOME"
+          android:showAsAction="always"/>
+
 </menu>

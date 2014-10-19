@@ -2,7 +2,6 @@ package myexpenses.ng2.com.myexpenses.Activities;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,27 +13,27 @@ import android.widget.CursorAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
-import java.util.zip.Inflater;
-
 import myexpenses.ng2.com.myexpenses.Data.CategoryDatabase;
-import myexpenses.ng2.com.myexpenses.MainActivity;
 import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Utils.AddCategoryDialog;
+import myexpenses.ng2.com.myexpenses.Utils.DeleteCategoryDialog;
 
 //activity managind the categories
 public class CategoriesManagerActivity extends Activity {
 
     //listview
-    ListView lv;
+    private ListView lv;
     //cursor
-    Cursor c;
+    private Cursor c;
     //database
-    CategoryDatabase db;
+    private CategoryDatabase db;
     //adapter
-    MyAdapter adapter;
+    private MyAdapter adapter;
+
+    private boolean expense;
+    private DeleteCategoryDialog deleteCatDialog;
 
 
     @Override
@@ -45,14 +44,16 @@ public class CategoriesManagerActivity extends Activity {
         //init db
         db = new CategoryDatabase(getApplicationContext());
 
+        expense=true;
+
         //init cursor
-        c = db.getAllCategories();
+        c = db.getAllCategories(expense);
 
         //init lv
         lv = (ListView) findViewById(R.id.lvCategories);
 
         //init adapter
-        adapter = new MyAdapter(getApplicationContext() , c);
+        adapter = new MyAdapter(getApplicationContext() , c,true);
 
         //set the adapter to the listview
         lv.setAdapter(adapter);
@@ -63,6 +64,7 @@ public class CategoriesManagerActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+      //  this.menu=menu;
         getMenuInflater().inflate(R.menu.categories_manager, menu);
         return true;
     }
@@ -73,18 +75,32 @@ public class CategoriesManagerActivity extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
+       //TODO need to work the dialog in difference case between income and expense categories
         if (id == R.id.action_addCategory) {
             //on action bar add category , launch add category dialog
             new AddCategoryDialog().show(getFragmentManager() , "Add Category");
+        }else if(id==R.id.action_switcher){
+            if(expense){
+                expense=false;
+                item.setTitle("EXPENSE");
+                adapter.setExpense(expense);
+                c=db.getAllCategories(expense);
+                refreshList(c);
+            }else{
+                expense=true;
+                item.setTitle("INCOME");
+                adapter.setExpense(expense);
+                c=db.getAllCategories(expense);
+                refreshList(c);
+            }
         }
 
         return super.onOptionsItemSelected(item);
     }
 
     //refresh listview
-    public void refreshList(){
-        c.requery();
+    public void refreshList(Cursor c){
+        adapter.changeCursor(c);
         adapter.notifyDataSetChanged();
 
     }
@@ -92,11 +108,13 @@ public class CategoriesManagerActivity extends Activity {
     private class MyAdapter extends CursorAdapter{
 
         //layout inflater
-        LayoutInflater inflater;
+         private LayoutInflater inflater;
+         private boolean expense;
 
         //constructor
-        public MyAdapter(Context context , Cursor c){
+        public MyAdapter(Context context , Cursor c,boolean expense){
             super(context , c);
+            this.expense=expense;
         }
 
         @Override
@@ -117,7 +135,11 @@ public class CategoriesManagerActivity extends Activity {
             ibDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    db.deleteCategory(name);
+
+
+                   deleteCatDialog=new DeleteCategoryDialog(name,expense);
+                   deleteCatDialog.show(getFragmentManager(),"Delete");
+
                     cursor.requery();
                     notifyDataSetChanged();
                 }
@@ -152,7 +174,10 @@ public class CategoriesManagerActivity extends Activity {
             ibDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    db.deleteCategory(name);
+
+                    deleteCatDialog=new DeleteCategoryDialog(name,expense);
+                    deleteCatDialog.show(getFragmentManager(),"Delete");
+
                     cursor.requery();
                     notifyDataSetChanged();
                 }
@@ -169,6 +194,11 @@ public class CategoriesManagerActivity extends Activity {
                 ivIcon.setImageResource(R.drawable.clothing);
             }
         }
+        public void setExpense(boolean expense){
+            this.expense=expense;
+        }
     }
+
+
 
 }

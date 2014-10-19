@@ -10,6 +10,7 @@ import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import myexpenses.ng2.com.myexpenses.Data.ExpenseItem;
 import myexpenses.ng2.com.myexpenses.R;
 
 /**
@@ -178,9 +179,5 @@ public class HistoryListViewAdapter extends CursorAdapter{
         }
     }
 
-    @Override
-    public void changeCursor(Cursor cursor) {
 
-        super.changeCursor(cursor);
-    }
 }

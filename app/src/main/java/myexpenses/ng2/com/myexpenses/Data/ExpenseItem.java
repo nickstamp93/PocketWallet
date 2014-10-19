@@ -3,12 +3,13 @@ package myexpenses.ng2.com.myexpenses.Data;
 import android.graphics.Bitmap;
 
 import java.io.ByteArrayOutputStream;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Nikos on 7/26/2014.
  */
-public class ExpenseItem {
+public class ExpenseItem implements Serializable {
 
    private int id;
    private String categories,notes,date;

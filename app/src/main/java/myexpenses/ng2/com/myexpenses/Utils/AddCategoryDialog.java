@@ -76,7 +76,7 @@ public class AddCategoryDialog extends DialogFragment{
                     if(name.trim().length() > 0){
                         //open category db and store it there
                         CategoryDatabase db = new CategoryDatabase(getActivity());
-                        db.insertCategory(name);
+                        db.insertExpenseCategory(name);
                         db.close();
 
                         //notify user
@@ -96,10 +96,11 @@ public class AddCategoryDialog extends DialogFragment{
             }
         }
     };
-
+/*
     @Override
     public void onDismiss(DialogInterface dialog) {
         //on dialog dismiss refresh the categories list
         ((CategoriesManagerActivity)getActivity()).refreshList();
     }
+    */
 }

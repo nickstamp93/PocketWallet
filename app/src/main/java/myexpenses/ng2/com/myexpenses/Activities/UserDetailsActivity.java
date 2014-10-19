@@ -1,7 +1,9 @@
 package myexpenses.ng2.com.myexpenses.Activities;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -46,6 +48,9 @@ public class UserDetailsActivity extends Activity {
 
         //init the Listeners
         initListeners();
+
+        initValues();
+
     }
 
     //init the UI Views
@@ -65,6 +70,26 @@ public class UserDetailsActivity extends Activity {
         radioGroup = (RadioGroup) findViewById(R.id.rgFrequency);
 
         llSalary = (LinearLayout) findViewById(R.id.llSalary);
+
+    }
+
+    private void initValues(){
+
+        manager = new SharedPrefsManager(getApplicationContext());
+
+        etUsername.setText(manager.getPrefsUsername());
+        etSavings.setText(String.valueOf(manager.getPrefsSavings()));
+        etBalance.setText(String.valueOf(manager.getPrefsBalance()));
+        chbSalary.setChecked(manager.getPrefsOnSalary());
+        chbBonus.setChecked(manager.getPrefsBonus());
+        String salFreq = manager.getPrefsSalFreq();
+        if(salFreq.equalsIgnoreCase("monthly")){
+            radioGroup.check(R.id.rbMonthly);
+        }else{
+            radioGroup.check(R.id.rbWeekly);
+        }
+        etSalary.setText(String.valueOf(manager.getPrefsSalary()));
+
 
     }
 
@@ -110,7 +135,6 @@ public class UserDetailsActivity extends Activity {
                         break;
                     }
                     //if form is complete , store these data to the shared prefs file
-                    manager = new SharedPrefsManager(getApplicationContext());
                     manager.startEditing();
 
                     getDataFromXml();

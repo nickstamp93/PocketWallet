@@ -3,6 +3,7 @@ package myexpenses.ng2.com.myexpenses.Activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import myexpenses.ng2.com.myexpenses.R;
@@ -20,6 +21,9 @@ public class LauncherPickerActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        boolean isPass = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("pref_key_password" , false);
+
+        /*
         //init the manager
         manager = new SharedPrefsManager(getApplicationContext());
 
@@ -28,6 +32,11 @@ public class LauncherPickerActivity extends Activity {
             intent = new Intent(getApplicationContext() , PasswordActivity.class);
         }else{
             //else launch the default Overview Activity
+            intent = new Intent(getApplicationContext() , OverviewActivity.class);
+        }*/
+        if(isPass){
+            intent = new Intent(getApplicationContext() , PasswordActivity.class);
+        }else{
             intent = new Intent(getApplicationContext() , OverviewActivity.class);
         }
 

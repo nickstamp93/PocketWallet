@@ -122,10 +122,10 @@ public class SharedPrefsManager {
 
         SimpleDateFormat format = new SimpleDateFormat("kk:mm");
 
-        String formated = format.format(dTime);
+        String formatted = format.format(dTime);
 
-        //return the new formated time string
-        return formated;
+        //return the new formatted time string
+        return formatted;
 
 
     }

@@ -2,7 +2,10 @@ package myexpenses.ng2.com.myexpenses.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -81,7 +84,8 @@ public class PasswordActivity extends Activity {
             //if Ok was clicked
             if(v.getId() == R.id.bOk){
                 //check if password is right
-                if(manager.getPrefsPassword().equals(text)){
+                //if(manager.getPrefsPassword().equals(text)){
+                  if(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("pref_key_password_value" , "").equals(text)){
                     //correct password
                     //launch overview activity
                     Intent intent = new Intent(getApplicationContext() , OverviewActivity.class);

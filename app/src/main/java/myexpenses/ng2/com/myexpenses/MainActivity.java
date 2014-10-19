@@ -2,6 +2,7 @@ package myexpenses.ng2.com.myexpenses;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,13 +15,17 @@ import myexpenses.ng2.com.myexpenses.Activities.CategoriesManagerActivity;
 import myexpenses.ng2.com.myexpenses.Activities.HistoryActivity;
 import myexpenses.ng2.com.myexpenses.Activities.OverviewActivity;
 import myexpenses.ng2.com.myexpenses.Activities.SettingsActivity;
+import myexpenses.ng2.com.myexpenses.Activities.SettingsActivity2;
 import myexpenses.ng2.com.myexpenses.Activities.UserDetailsActivity;
+import myexpenses.ng2.com.myexpenses.ColorPicker.ColorPickerDialog;
 import myexpenses.ng2.com.myexpenses.R;
+import myexpenses.ng2.com.myexpenses.Utils.LetterImageView;
 
 public class MainActivity extends Activity {
 
-    Button bOverview,bAddIncome,bAddExpense , bSettings , bHistory , bUserDetails , bCategories;
+    Button bOverview,bAddIncome,bAddExpense , bSettings , bHistory , bUserDetails , bCategories , bSettings2 , bColorPicker;
 
+    LetterImageView iv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +44,12 @@ public class MainActivity extends Activity {
         bSettings = (Button) findViewById(R.id.bSettings);
         bUserDetails = (Button) findViewById(R.id.bUserDetails);
         bCategories = (Button) findViewById(R.id.bCategories);
+        bSettings2 = (Button) findViewById(R.id.bSettings2);
+        bColorPicker = (Button) findViewById(R.id.bColorPicker);
+        iv = (LetterImageView) findViewById(R.id.liv);
+        iv.setOval(true);
+        iv.setmBackgroundPaint(Color.RED);
+        iv.setLetter('H');
 
         bOverview.setOnClickListener(actClickListener);
         bAddIncome.setOnClickListener(actClickListener);
@@ -47,6 +58,8 @@ public class MainActivity extends Activity {
         bSettings.setOnClickListener(actClickListener);
         bUserDetails.setOnClickListener(actClickListener);
         bCategories.setOnClickListener(actClickListener);
+        bSettings2.setOnClickListener(actClickListener);
+        bColorPicker.setOnClickListener(actClickListener);
     }
 
     private View.OnClickListener actClickListener = new View.OnClickListener() {
@@ -73,6 +86,16 @@ public class MainActivity extends Activity {
                     break;
                 case R.id.bCategories:
                     startActivity(new Intent(getApplicationContext() , CategoriesManagerActivity.class));
+                    break;
+                case R.id.bSettings2:
+                    startActivity(new Intent(getApplicationContext() , SettingsActivity2.class));
+                    break;
+                case R.id.bColorPicker:
+                    int[] mColor = new int[]{Color.RED , Color.BLUE , Color.GREEN , Color.BLACK , Color.CYAN , Color.DKGRAY , Color.GRAY
+                            , Color.LTGRAY , Color.MAGENTA , Color.YELLOW};
+                    ColorPickerDialog dialog = ColorPickerDialog.newInstance(R.string.color_picker_default_title ,mColor , 0  , 5 , ColorPickerDialog.SIZE_LARGE);
+                    dialog.setSelectedColor(Color.RED);
+                    dialog.show(getFragmentManager() , "Color Picker");
                     break;
             }
         }

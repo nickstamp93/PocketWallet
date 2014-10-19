@@ -69,7 +69,7 @@ public class PasswordSettingsActivity extends Activity {
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            new PasswordDialog().show(getFragmentManager() , "Password Dialog");
+            //new PasswordDialog().show(getFragmentManager() , "Password Dialog");
         }
     };
 

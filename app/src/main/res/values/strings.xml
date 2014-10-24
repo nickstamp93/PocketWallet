@@ -73,12 +73,12 @@
         <item>#cccccc</item>
         <item>#888888</item>
     </string-array>
+
     <string name="color_picker_default_title">Select a Color</string>
     <!-- Content description for a color square. -->
     <string name="color_swatch_description">Color <xliff:g id="color_index" example="14">%1$d</xliff:g></string>
     <!-- Content description for a selected color square. -->
     <string name="color_swatch_description_selected">Color <xliff:g id="color_index" example="14">%1$d</xliff:g> selected</string>
-
     <string name="currency_euro">€</string>
     <string name="currency_dollar">$</string>
     <string name="currency_yen">¥</string>
@@ -110,5 +110,7 @@
     <string name="pref_title_data">Database</string>
     <string name="pref_title_delete_income">Delete Income History</string>
     <string name="pref_title_delete_expense">Delete expense history</string>
+    <string name="title_activity_transparent">TransparentActivity</string>
+    <string name="pref_title_theme">App Theme</string>
 
 </resources>

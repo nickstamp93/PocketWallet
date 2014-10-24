@@ -1,6 +1,9 @@
 package myexpenses.ng2.com.myexpenses.Activities;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.Fragment;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,15 +12,26 @@ import android.preference.DialogPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
+import android.widget.Toast;
 
+import com.doomonafireball.betterpickers.radialtimepicker.RadialPickerLayout;
+import com.doomonafireball.betterpickers.radialtimepicker.RadialTimePickerDialog;
+
+import java.util.Calendar;
 import java.util.prefs.Preferences;
 
+import myexpenses.ng2.com.myexpenses.BroadcastReceivers.ReminderReceiver;
 import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Utils.PasswordDialog;
+import myexpenses.ng2.com.myexpenses.Utils.SharedPrefsManager;
 
-public class SettingsActivity2 extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class SettingsActivity2 extends PreferenceActivity
+        implements SharedPreferences.OnSharedPreferenceChangeListener {
 
 
     @Override
@@ -25,7 +39,6 @@ public class SettingsActivity2 extends PreferenceActivity implements SharedPrefe
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.preferences);
-
 
         initSummary(getPreferenceScreen());
 
@@ -36,6 +49,21 @@ public class SettingsActivity2 extends PreferenceActivity implements SharedPrefe
         screen = (Preference) findPreference("pref_key_profile");
         i = new Intent(this , UserDetailsActivity.class);
         screen.setIntent(i);
+
+        screen = (Preference) findPreference("pref_key_reminder_time");
+        screen.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+
+                startActivity(new Intent(SettingsActivity2.this, TransparentActivity.class));
+//                act = new TransparentActivity(SettingsActivity2.this);
+//                Calendar c = Calendar.getInstance();
+//                RadialTimePickerDialog timeDialog = RadialTimePickerDialog.newInstance(SettingsActivity2.this, c.getTime().getHours(), c.getTime().getMinutes(), true);
+//                timeDialog.show(i.getSupportFragmentManager() , "Nikos");
+
+                return false;
+            }
+        });
 
         screen = (Preference) findPreference("pref_key_about");
         screen.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -134,12 +162,16 @@ public class SettingsActivity2 extends PreferenceActivity implements SharedPrefe
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
-
-
         if(key.equals("pref_key_password")
                 && sharedPreferences.getString("pref_key_password_value", "").equals("")
                 && sharedPreferences.getBoolean("pref_key_password" , false)){
             ((PasswordDialog)findPreference("pref_key_password_value")).show();
+        }
+        if(key.equals("pref_key_reminder") && sharedPreferences.getBoolean("pref_key_reminder",false)){
+            SharedPrefsManager manager = new SharedPrefsManager(getApplicationContext());
+            Toast.makeText(getApplicationContext(), "Daily Reminder activated\nNext reminder at " + manager.getPrefsReminderTime(), Toast.LENGTH_SHORT).show();
+
+            setAlarm();
         }
         updatePrefSummary(findPreference(key));
 
@@ -156,7 +188,6 @@ public class SettingsActivity2 extends PreferenceActivity implements SharedPrefe
         }
     }
 
-
     private void updatePrefSummary(Preference p) {
 
         if (p.getKey().equals("pref_key_currency")) {
@@ -164,5 +195,51 @@ public class SettingsActivity2 extends PreferenceActivity implements SharedPrefe
             p.setSummary(listPref.getEntry());
         }
     }
+
+
+    public void setAlarm(){
+        PendingIntent pendingIntent;
+        Intent myIntent;
+        AlarmManager alarmManager;
+        SharedPrefsManager manager = new SharedPrefsManager(getApplicationContext());
+
+        //get calendar instance
+        Calendar calendar = Calendar.getInstance();
+
+        Log.i("nikos", "instance date:" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH) + "-" + calendar.get(Calendar.YEAR)
+                + "  " + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE));
+
+        //get the preferred time from the preferences file
+        String[] time = manager.getPrefsReminderTime().split(":");
+        int hour = Integer.parseInt(time[0]);
+        int minute = Integer.parseInt(time[1]);
+
+        //if this time has passed in the day , set the next notification for tomorrow , same time
+        if(hour < calendar.get(Calendar.HOUR_OF_DAY) || hour == calendar.get(Calendar.HOUR_OF_DAY) && minute <= calendar.get(Calendar.MINUTE)){
+            calendar.add(Calendar.DATE , 1);
+            Log.i("nikos" , "date changed: " + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH) + "-" + calendar.get(Calendar.YEAR)
+                    + "  " + calendar.get(Calendar.HOUR_OF_DAY) + ":" + minute);
+        }
+
+        //set the calendar instance to the right date and time
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, 0);
+
+        //create an intent with the notification service
+        myIntent = new Intent(getApplicationContext() , ReminderReceiver.class);
+
+        //and a pending intent containing the previous intent
+        pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, myIntent, 0);
+
+        //create an alarm manager instance (alarm manager , repeating notifications)
+        alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+        //set next notification at the above date-time , service starts every 24 hours
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP , calendar.getTimeInMillis(), 24*60*60*1000 , pendingIntent);
+
+        Log.i("nikos", "alarm set for " + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH) + "-" + calendar.get(Calendar.YEAR)
+                + "  " + hour + ":" + minute);
+    }
+
 
 }

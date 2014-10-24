@@ -4,178 +4,170 @@
     android:layout_height="match_parent"
     tools:context="myexpenses.ng2.com.myexpenses.Activities.AddExpenseActivity">
 
-
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    >
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Categories"
-        android:textColor="@color/blue"
-        android:id="@+id/tvCategories"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-
-    <Spinner
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/sCategories"
-        android:layout_below="@+id/tvCategories"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/tvCategories"
-        android:layout_alignEnd="@+id/tvCategories"
-        />
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="5"
-        android:id="@+id/etPrice"
-        android:textColor="@color/blue"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="15dp"
-
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Date"
-        android:id="@+id/tvDate"
-        android:textColor="@color/blue"
-        android:layout_toStartOf="@+id/etPrice"
-        android:layout_toLeftOf="@+id/etPrice"
-        android:layout_marginTop="45dp"
-        android:layout_marginRight="45dp"
-        android:layout_below="@+id/sCategories"
-        android:layout_alignRight="@+id/sCategories"
-        android:layout_alignEnd="@+id/sCategories" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="55dp"
-        android:id="@+id/ibCalendar"
-        android:layout_alignTop="@+id/tvDate"
-        android:layout_alignRight="@+id/etPrice"
-        android:layout_alignEnd="@+id/etPrice" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Photo/Receive"
-        android:id="@+id/tvPhoto"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/blue"
-        android:layout_toStartOf="@+id/etPrice"
-        android:layout_toLeftOf="@+id/etPrice"
-        android:layout_below="@+id/ibCalendar"
-        android:layout_alignLeft="@+id/tvDate"
-        android:layout_alignStart="@+id/tvDate"
-        android:layout_alignParentLeft="true"
-        />
-
-    <ImageView
-        android:layout_width="130dp"
-        android:layout_height="130dp"
-        android:id="@+id/ivReceive"
-        android:layout_below="@+id/ibCalendar"
-        android:layout_toRightOf="@+id/tvPhoto"
-        android:layout_toEndOf="@+id/tvPhoto"
-        android:src="@drawable/ic_action_camera" />
-
-    <ImageButton
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/ibCamera"
-        android:layout_alignTop="@+id/tvPhoto"
-        android:layout_toRightOf="@+id/ivReceive"
-        android:layout_toEndOf="@+id/ivReceive" />
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/llNotes"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        android:layout_below="@+id/ivReceive"
-        android:layout_toStartOf="@+id/ivReceive"
-        android:layout_toLeftOf="@+id/ivReceive"
-        android:layout_alignRight="@+id/ibCamera"
-        android:layout_alignEnd="@+id/ibCamera">
         <TextView
+            android:id="@+id/tvCategories"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Notes"
-            android:textColor="@color/blue"
             android:layout_alignParentLeft="true"
-            android:layout_marginTop="10dp"
-            android:id="@+id/tvNotes"
-            android:layout_weight="1"
-            />
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="Categories"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/blue" />
+
+
+        <Spinner
+            android:id="@+id/sCategories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/tvCategories"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignRight="@+id/tvCategories"
+            android:layout_below="@+id/tvCategories" />
 
         <EditText
+            android:id="@+id/etPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/etNotes"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:text="Your notes"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="15dp"
+            android:text="5"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/blue"
+
             />
 
+        <TextView
+            android:id="@+id/tvDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/sCategories"
+            android:layout_alignRight="@+id/sCategories"
+            android:layout_below="@+id/sCategories"
+            android:layout_marginRight="45dp"
+            android:layout_marginTop="45dp"
+            android:layout_toLeftOf="@+id/etPrice"
+            android:layout_toStartOf="@+id/etPrice"
+            android:text="Date"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/blue" />
 
-        </LinearLayout>
+        <ImageButton
+            android:id="@+id/ibCalendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/etPrice"
+            android:layout_alignRight="@+id/etPrice"
+            android:layout_alignTop="@+id/tvDate"
+            android:layout_marginRight="55dp" />
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/llButtons"
-        android:orientation="horizontal"
-        android:layout_below="@+id/llNotes"
-        android:layout_marginTop="20dp"
-        android:weightSum="2"
-        >
+        <TextView
+            android:id="@+id/tvPhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tvDate"
+            android:layout_alignParentLeft="true"
+            android:layout_alignStart="@+id/tvDate"
+            android:layout_below="@+id/ibCalendar"
+            android:layout_marginTop="20dp"
+            android:layout_toLeftOf="@+id/etPrice"
+            android:layout_toStartOf="@+id/etPrice"
+            android:text="Photo/Receive"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/blue" />
 
-      <Button
-          android:layout_width="fill_parent"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          android:text="Ok"
-          android:background="@color/OrangeRed"
-          android:id="@+id/bOK"
-          android:layout_marginRight="7dp"
-          />
+        <ImageView
+            android:id="@+id/ivReceive"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_below="@+id/ibCalendar"
+            android:layout_toEndOf="@+id/tvPhoto"
+            android:layout_toRightOf="@+id/tvPhoto"
+            android:src="@drawable/ic_action_camera" />
 
-        <Button
+        <ImageButton
+            android:id="@+id/ibCamera"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Cancel"
-            android:background="@color/OrangeRed"
-            android:id="@+id/bCancel"
-            android:layout_marginLeft="7dp"
-            />
+            android:layout_alignTop="@+id/tvPhoto"
+            android:layout_toEndOf="@+id/ivReceive"
+            android:layout_toRightOf="@+id/ivReceive" />
+
+        <LinearLayout
+            android:id="@+id/llNotes"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/ibCamera"
+            android:layout_alignRight="@+id/ibCamera"
+            android:layout_below="@+id/ivReceive"
+            android:layout_toLeftOf="@+id/ivReceive"
+            android:layout_toStartOf="@+id/ivReceive"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/tvNotes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:text="Notes"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/blue" />
+
+            <EditText
+                android:id="@+id/etNotes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:text="Your notes" />
 
 
         </LinearLayout>
 
-</RelativeLayout>
+        <LinearLayout
+            android:id="@+id/llButtons"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/llNotes"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/bOK"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="7dp"
+                android:layout_weight="1"
+                android:background="@color/OrangeRed"
+                android:text="Ok" />
+
+            <Button
+                android:id="@+id/bCancel"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:layout_weight="1"
+                android:background="@color/OrangeRed"
+                android:text="Cancel" />
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </ScrollView>

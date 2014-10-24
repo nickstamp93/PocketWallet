@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
@@ -16,8 +17,11 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import myexpenses.ng2.com.myexpenses.Data.CategoryDatabase;
 import myexpenses.ng2.com.myexpenses.Data.ExpenseItem;
@@ -42,7 +46,7 @@ TO DO LIST
 3)method to delete all expenses and all incomes to MoneyDatabase
 4)Custom dialog to handle categories and tuples when you delete a category
  */
-public class AddExpenseActivity extends Activity {
+public class AddExpenseActivity extends FragmentActivity {
 
     private Button bOk, bCancel;
     private ImageButton ibCalendar, ibCamera;
@@ -198,8 +202,13 @@ public class AddExpenseActivity extends Activity {
             @Override
             public void onClick(View view) {
 
-                dialog = new CalendarDialog(true);
-                dialog.show(getFragmentManager(), "Calendar Dialog");
+//                dialog = new CalendarDialog(true);
+//                dialog.show(getFragmentManager(), "Calendar Dialog");
+
+                Calendar c = Calendar.getInstance();
+                CalendarDatePickerDialog d = CalendarDatePickerDialog.newInstance(listener ,
+                        c.get(Calendar.YEAR) , c.get(Calendar.MONTH) , c.get(Calendar.DAY_OF_MONTH));
+                d.show(getSupportFragmentManager() , "Calendar Dialog");
 
 
             }
@@ -216,6 +225,24 @@ public class AddExpenseActivity extends Activity {
         });
 
     }
+
+    private CalendarDatePickerDialog.OnDateSetListener listener = new CalendarDatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(CalendarDatePickerDialog calendarDatePickerDialog, int i, int i2, int i3) {
+            String month,day;
+            if(i2<10){
+                month = "0" + i2;
+            }else{
+                month = String.valueOf(i2);
+            }
+            if(i3<10){
+                day = "0" + i3;
+            }else{
+                day = String.valueOf(i3);
+            }
+            date = i + "-" + month + "-" + day;
+        }
+    };
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

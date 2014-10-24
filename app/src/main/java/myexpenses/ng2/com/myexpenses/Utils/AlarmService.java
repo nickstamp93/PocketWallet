@@ -6,6 +6,8 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 
 import myexpenses.ng2.com.myexpenses.Activities.OverviewActivity;
 import myexpenses.ng2.com.myexpenses.MainActivity;
@@ -42,8 +44,8 @@ public class AlarmService extends Service {
         //when service starts , open the preference file
         prefsManager = new SharedPrefsManager(getApplicationContext());
         //if the daily reminder is enabled then go on to the procedure
-        if(prefsManager.getPrefsReminder()) {
-
+        //if(prefsManager.getPrefsReminder()) {
+        if(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean("pref_key_reminder",false)){
             //get the notification service from the system
             manager = (NotificationManager) this.getApplicationContext().getSystemService(this.getApplicationContext().NOTIFICATION_SERVICE);
             //create an intent to be  used on click notification

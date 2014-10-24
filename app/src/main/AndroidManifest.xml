@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -78,6 +79,11 @@
         <activity
             android:name=".Activities.SettingsActivity2"
             android:label="@string/title_activity_settings_activity2" >
+        </activity>
+        <activity
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:name=".Activities.TransparentActivity"
+            android:label="@string/title_activity_transparent" >
         </activity>
     </application>
 

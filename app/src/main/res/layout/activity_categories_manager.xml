@@ -2,4 +2,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/lvCategories"></ListView>
+    android:id="@+id/lvCategories"
+    android:background="@color/teal"
+    android:focusable="true"
+    >
+    ></ListView>

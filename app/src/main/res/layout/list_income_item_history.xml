@@ -3,6 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+    <myexpenses.ng2.com.myexpenses.Utils.LetterImageView
+        android:id="@+id/livhistoryincome"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerVertical="true"
+        />
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -13,7 +22,7 @@
         android:textColor="#ff0000"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+       />
 
     <TextView
         android:layout_width="wrap_content"
@@ -21,12 +30,13 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Date"
         android:id="@+id/tvHDate"
-        android:layout_marginTop="27dp"
-        android:layout_marginLeft="220dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginRight="30dp"
         android:layout_below="@+id/tvHIncome"
         android:textSize="20sp"
         android:textColor="#ff7f00"
+
         />
 
     <TextView
@@ -34,6 +44,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Source"
+        android:layout_toRightOf="@+id/livhistoryincome"
         android:id="@+id/tvHSource"
         android:textColor="#006400"
         android:textSize="20sp"

@@ -12,6 +12,7 @@ import android.widget.Button;
 import myexpenses.ng2.com.myexpenses.Activities.AddExpenseActivity;
 import myexpenses.ng2.com.myexpenses.Activities.AddIncomeActivity;
 import myexpenses.ng2.com.myexpenses.Activities.CategoriesManagerActivity;
+import myexpenses.ng2.com.myexpenses.Activities.CreateCategoryActivity;
 import myexpenses.ng2.com.myexpenses.Activities.HistoryActivity;
 import myexpenses.ng2.com.myexpenses.Activities.OverviewActivity;
 import myexpenses.ng2.com.myexpenses.Activities.SettingsActivity;
@@ -23,7 +24,7 @@ import myexpenses.ng2.com.myexpenses.Utils.LetterImageView;
 
 public class MainActivity extends Activity {
 
-    Button bOverview,bAddIncome,bAddExpense , bSettings , bHistory , bUserDetails , bCategories , bSettings2 , bColorPicker;
+    Button bOverview,bAddIncome,bAddExpense , bSettings , bHistory , bUserDetails , bCategories , bSettings2 , bColorPicker,bCreateCategory;
 
     LetterImageView iv;
 
@@ -46,6 +47,7 @@ public class MainActivity extends Activity {
         bCategories = (Button) findViewById(R.id.bCategories);
         bSettings2 = (Button) findViewById(R.id.bSettings2);
         bColorPicker = (Button) findViewById(R.id.bColorPicker);
+        bCreateCategory=(Button) findViewById(R.id.bCreateCategory);
         iv = (LetterImageView) findViewById(R.id.liv);
         iv.setOval(true);
         iv.setmBackgroundPaint(Color.RED);
@@ -60,6 +62,7 @@ public class MainActivity extends Activity {
         bCategories.setOnClickListener(actClickListener);
         bSettings2.setOnClickListener(actClickListener);
         bColorPicker.setOnClickListener(actClickListener);
+        bCreateCategory.setOnClickListener(actClickListener);
     }
 
     private View.OnClickListener actClickListener = new View.OnClickListener() {
@@ -93,9 +96,12 @@ public class MainActivity extends Activity {
                 case R.id.bColorPicker:
                     int[] mColor = new int[]{Color.RED , Color.BLUE , Color.GREEN , Color.BLACK , Color.CYAN , Color.DKGRAY , Color.GRAY
                             , Color.LTGRAY , Color.MAGENTA , Color.YELLOW};
-                    ColorPickerDialog dialog = ColorPickerDialog.newInstance(R.string.color_picker_default_title ,mColor , 0  , 5 , ColorPickerDialog.SIZE_LARGE);
+                    ColorPickerDialog dialog = ColorPickerDialog.newInstance(R.string.color_picker_default_title ,mColor , 0  , 5 , ColorPickerDialog.SIZE_SMALL);
                     dialog.setSelectedColor(Color.RED);
                     dialog.show(getFragmentManager() , "Color Picker");
+                    break;
+                case R.id.bCreateCategory:
+                    startActivity(new Intent(getApplicationContext(), CreateCategoryActivity.class));
                     break;
             }
         }

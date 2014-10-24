@@ -79,6 +79,10 @@
             android:name=".Activities.SettingsActivity2"
             android:label="@string/title_activity_settings_activity2" >
         </activity>
+        <activity
+            android:name=".Activities.CreateCategoryActivity"
+            android:label="@string/title_activity_create_category" >
+        </activity>
     </application>
 
 </manifest>

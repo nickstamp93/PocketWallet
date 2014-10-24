@@ -10,6 +10,7 @@ import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import myexpenses.ng2.com.myexpenses.Data.CategoryDatabase;
 import myexpenses.ng2.com.myexpenses.Data.ExpenseItem;
 import myexpenses.ng2.com.myexpenses.R;
 
@@ -22,11 +23,13 @@ public class HistoryListViewAdapter extends CursorAdapter{
     SharedPrefsManager manager;
     String currency;
     private boolean expense;
+    private CategoryDatabase cdb;
 
     public HistoryListViewAdapter(Context context, Cursor c) {
         super(context, c);
         manager = new SharedPrefsManager(context);
         currency = manager.getPrefsCurrency();
+        cdb=new CategoryDatabase(context);
 
     }
 
@@ -45,7 +48,8 @@ public class HistoryListViewAdapter extends CursorAdapter{
             TextView tvDate = (TextView) view.findViewById(R.id.tvDate);
             TextView tvCategory = (TextView) view.findViewById(R.id.tvCategory);
             TextView tvNotes = (TextView) view.findViewById(R.id.tvNotes);
-            ImageView ivCategory = (ImageView) view.findViewById(R.id.ivCategory);
+            LetterImageView liv=(LetterImageView) view.findViewById(R.id.livhistory);
+           // ImageView ivCategory = (ImageView) view.findViewById(R.id.ivCategory);
 
             Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/font_exo2.otf");
 
@@ -65,6 +69,14 @@ public class HistoryListViewAdapter extends CursorAdapter{
 
 
             tvCategory.setText(cursor.getString(1));
+
+            int color=cdb.getColorFromCategory(cursor.getString(1),expense);
+            char letter=cdb.getLetterFromCategory(cursor.getString(1),expense);
+            liv.setOval(true);
+            liv.setLetter(letter);
+            liv.setmBackgroundPaint(color);
+
+
       /*
       //take from cursor the blob and then convert it to bitmap and finally add it to ImageView ivCategory (Cursor.getBlob(columnIndex))
         byte[] image=cursor.getBlob(5);
@@ -75,7 +87,7 @@ public class HistoryListViewAdapter extends CursorAdapter{
             ivCategory.setImageBitmap(bitmap);
         }
        */
-
+/*
             if (cursor.getString(1).equals("Food")) {
                 ivCategory.setImageResource(R.drawable.food);
             } else if (cursor.getString(1).equals("Personal")) {
@@ -85,6 +97,7 @@ public class HistoryListViewAdapter extends CursorAdapter{
             } else if (cursor.getString(1).equals("Drinks")) {
                 ivCategory.setImageResource(R.drawable.drinks);
             }
+            */
 
             tvNotes.setText(cursor.getString(4));
         }else{
@@ -93,13 +106,15 @@ public class HistoryListViewAdapter extends CursorAdapter{
             TextView tvIncome=(TextView) view.findViewById(R.id.tvHIncome);
             TextView tvDate=(TextView) view.findViewById(R.id.tvHDate);
             TextView tvSource=(TextView) view.findViewById(R.id.tvHSource);
+            LetterImageView liv=(LetterImageView) view.findViewById(R.id.livhistoryincome);
+
 
             Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/font_exo2.otf");
             tvIncome.setTypeface(typeface);
             tvDate.setTypeface(typeface);
             tvSource.setTypeface(typeface);
 
-            tvIncome.setText(cursor.getString(1)+currency);
+            tvIncome.setText(cursor.getString(1) + currency);
             //We take the date from the cursor we reformed it and we add it to TextView tvDate. We do that cause the format of
             //date in MoneyDatabase is YYYY-MM-DD and we want the user to see it like DD-MM-YYYY
             String date=cursor.getString(3);
@@ -107,7 +122,14 @@ public class HistoryListViewAdapter extends CursorAdapter{
             String reformedDate=dateTokens[2]+"-"+dateTokens[1]+"-"+dateTokens[0];
             tvDate.setText(reformedDate);
 
-            tvSource.setText("Source:"+"\n"+cursor.getString(2));
+            tvSource.setText(cursor.getString(2));
+
+            int color=cdb.getColorFromCategory(cursor.getString(2),expense);
+            char letter=cdb.getLetterFromCategory(cursor.getString(2),expense);
+            liv.setOval(true);
+            liv.setLetter(letter);
+            liv.setmBackgroundPaint(color);
+
 
         }
         return view;
@@ -121,7 +143,8 @@ public class HistoryListViewAdapter extends CursorAdapter{
             TextView tvDate = (TextView) view.findViewById(R.id.tvDate);
             TextView tvCategory = (TextView) view.findViewById(R.id.tvCategory);
             TextView tvNotes = (TextView) view.findViewById(R.id.tvNotes);
-            ImageView ivCategory = (ImageView) view.findViewById(R.id.ivCategory);
+            LetterImageView liv=(LetterImageView) view.findViewById(R.id.livhistory);
+           // ImageView ivCategory = (ImageView) view.findViewById(R.id.ivCategory);
 
             Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/font_exo2.otf");
             tvPrice.setTypeface(typeface);
@@ -146,6 +169,7 @@ public class HistoryListViewAdapter extends CursorAdapter{
             Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
             ivCategory.setImageBitmap(bitmap);
         }*/
+            /*
 
             if (cursor.getString(1).equals("Food")) {
                 ivCategory.setImageResource(R.drawable.food);
@@ -156,12 +180,21 @@ public class HistoryListViewAdapter extends CursorAdapter{
             } else if (cursor.getString(1).equals("Drinks")) {
                 ivCategory.setImageResource(R.drawable.drinks);
             }
+            */
             tvNotes.setText(cursor.getString(4));
+
+
+            int color=cdb.getColorFromCategory(cursor.getString(1),expense);
+            char letter=cdb.getLetterFromCategory(cursor.getString(1),expense);
+            liv.setOval(true);
+            liv.setLetter(letter);
+            liv.setmBackgroundPaint(color);
         }
         else{
             TextView tvIncome=(TextView) view.findViewById(R.id.tvHIncome);
             TextView tvDate=(TextView) view.findViewById(R.id.tvHDate);
             TextView tvSource=(TextView) view.findViewById(R.id.tvHSource);
+            LetterImageView liv=(LetterImageView) view.findViewById(R.id.livhistory);
 
             Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/font_exo2.otf");
             tvIncome.setTypeface(typeface);
@@ -175,7 +208,13 @@ public class HistoryListViewAdapter extends CursorAdapter{
             String dateTokens[]=date.split("-");
             String reformedDate=dateTokens[2]+"-"+dateTokens[1]+"-"+dateTokens[0];
             tvDate.setText(reformedDate);
-            tvSource.setText("Source:"+"\n"+cursor.getString(2));
+            tvSource.setText(cursor.getString(2));
+
+            int color=cdb.getColorFromCategory(cursor.getString(2),expense);
+            char letter=cdb.getLetterFromCategory(cursor.getString(2),expense);
+            liv.setOval(true);
+            liv.setLetter(letter);
+            liv.setmBackgroundPaint(color);
         }
     }
 

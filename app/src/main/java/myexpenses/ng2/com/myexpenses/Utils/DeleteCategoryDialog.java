@@ -17,6 +17,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import myexpenses.ng2.com.myexpenses.Activities.CategoriesManagerActivity;
+import myexpenses.ng2.com.myexpenses.Activities.CreateCategoryActivity;
 import myexpenses.ng2.com.myexpenses.Data.CategoryDatabase;
 import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
 import myexpenses.ng2.com.myexpenses.R;
@@ -110,13 +111,19 @@ public class DeleteCategoryDialog extends DialogFragment {
                     mdb.close();
                     cdb.deleteCategory(delCategory, expense);
 
+
+/*
                     CategoriesManagerActivity activity = (CategoriesManagerActivity) getActivity();
+                    activity.deleteHappen();
                     activity.refreshList(cdb.getAllCategories(expense));
+                    */
                     cdb.close();
                     Toast.makeText(getActivity(), "All the data with category " + delCategory + " have been updated to "+newCategory, Toast.LENGTH_SHORT).show();
 
 
                     dialog.dismiss();
+                    getActivity().finish();
+
 
                 } else {
                     Log.i("OK", "!Checked");
@@ -124,13 +131,20 @@ public class DeleteCategoryDialog extends DialogFragment {
                     mdb.close();
                     cdb.deleteCategory(delCategory, expense);
 
+
+
+                    /*
                     CategoriesManagerActivity activity = (CategoriesManagerActivity) getActivity();
+                    activity.deleteHappen();
                     activity.refreshList(cdb.getAllCategories(expense));
                     cdb.close();
+                    */
 
                     Toast.makeText(getActivity(), "All the data with category " + delCategory + " have been deleted", Toast.LENGTH_SHORT).show();
 
                     dialog.dismiss();
+                    getActivity().finish();
+
 
                 }
 

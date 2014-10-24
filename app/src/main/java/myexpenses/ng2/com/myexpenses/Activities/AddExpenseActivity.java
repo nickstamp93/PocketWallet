@@ -40,7 +40,11 @@ TO DO LIST
 1)Create a table for income categories DONE
 2)Switch categories in CategoriesManagerActivity DONE but need to fix some methods
 3)method to delete all expenses and all incomes to MoneyDatabase
-4)Custom dialog to handle categories and tuples when you delete a category
+4)Custom dialog to handle categories and tuples when you delete a category DONE
+5)Create addCategoryActivity (EditText namecat button to choose color for category,ll to change the starting letter for category and preview
+for the result.
+6)Change categoryDatabase, add to tables color and letter
+7) Process categories add functions to change the categories
  */
 public class AddExpenseActivity extends Activity {
 

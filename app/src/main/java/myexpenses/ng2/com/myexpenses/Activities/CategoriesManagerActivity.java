@@ -2,6 +2,7 @@ package myexpenses.ng2.com.myexpenses.Activities;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -19,6 +21,7 @@ import myexpenses.ng2.com.myexpenses.Data.CategoryDatabase;
 import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Utils.AddCategoryDialog;
 import myexpenses.ng2.com.myexpenses.Utils.DeleteCategoryDialog;
+import myexpenses.ng2.com.myexpenses.Utils.LetterImageView;
 
 //activity managind the categories
 public class CategoriesManagerActivity extends Activity {
@@ -33,6 +36,8 @@ public class CategoriesManagerActivity extends Activity {
     private MyAdapter adapter;
 
     private boolean expense;
+    private boolean delete;//there was a problem when you delete a category because on Listener we move the cursor but the variable c is on
+    //the old cursor so we need it to refresh him (Difficult problem Solved)
     private DeleteCategoryDialog deleteCatDialog;
 
 
@@ -45,9 +50,11 @@ public class CategoriesManagerActivity extends Activity {
         db = new CategoryDatabase(getApplicationContext());
 
         expense=true;
+       // delete=false;
 
         //init cursor
         c = db.getAllCategories(expense);
+
 
         //init lv
         lv = (ListView) findViewById(R.id.lvCategories);
@@ -57,6 +64,26 @@ public class CategoriesManagerActivity extends Activity {
 
         //set the adapter to the listview
         lv.setAdapter(adapter);
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                /*
+                if(delete){
+                    refreshList(c=db.getAllCategories(expense));
+                }*/
+                   c.moveToPosition(i);
+
+                    Intent updateCat=new Intent(CategoriesManagerActivity.this,CreateCategoryActivity.class);
+                    updateCat.putExtra("Name",c.getString(1));
+                    updateCat.putExtra("Color",Integer.parseInt(c.getString(2)));
+                    updateCat.putExtra("Letter",c.getString(3));
+                    updateCat.putExtra("Id",Integer.parseInt(c.getString(0)));
+                    updateCat.putExtra("Expense",expense);
+                    startActivity(updateCat);
+
+            }
+        });
 
     }
 
@@ -78,7 +105,11 @@ public class CategoriesManagerActivity extends Activity {
        //TODO need to work the dialog in difference case between income and expense categories
         if (id == R.id.action_addCategory) {
             //on action bar add category , launch add category dialog
-            new AddCategoryDialog().show(getFragmentManager() , "Add Category");
+          //  new AddCategoryDialog().show(getFragmentManager() , "Add Category");
+            Intent CreateCategory=new Intent(CategoriesManagerActivity.this,CreateCategoryActivity.class);
+            CreateCategory.putExtra("Expense",expense);
+            startActivity(CreateCategory);
+
         }else if(id==R.id.action_switcher){
             if(expense){
                 expense=false;
@@ -104,7 +135,11 @@ public class CategoriesManagerActivity extends Activity {
         adapter.notifyDataSetChanged();
 
     }
-
+/*
+    public void deleteHappen(){
+        delete=true;
+    }
+*/
     private class MyAdapter extends CursorAdapter{
 
         //layout inflater
@@ -124,14 +159,25 @@ public class CategoriesManagerActivity extends Activity {
             View newView = inflater.inflate(R.layout.list_item_categories , parent , false);
 
             //init UI elements from this particular view
-            ImageView ivIcon = (ImageView) newView.findViewById(R.id.ivIcon);
+           // ImageView ivIcon = (ImageView) newView.findViewById(R.id.ivIcon);
+            LetterImageView liv=(LetterImageView) newView.findViewById(R.id.livcat);
             TextView tvName = (TextView) newView.findViewById(R.id.tvName);
-            ImageButton ibDelete = (ImageButton) newView.findViewById(R.id.ibDelete);
+          //  ImageButton ibDelete = (ImageButton) newView.findViewById(R.id.ibDelete);
 
             //and fill them with the correct values from the db's cursor
             final String name = cursor.getString(1);
             tvName.setText(name);
 
+            String sletter=cursor.getString(3);
+            char cletter=sletter.charAt(0);
+            int color=Integer.parseInt(cursor.getString(2));
+
+            liv.setOval(true);
+            liv.setmBackgroundPaint(color);
+            liv.setLetter(cletter);
+
+
+/*
             ibDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -144,7 +190,8 @@ public class CategoriesManagerActivity extends Activity {
                     notifyDataSetChanged();
                 }
             });
-
+            */
+/*
             //set the correct icon for each category
             if(name.equals("Food")){
                 ivIcon.setImageResource(R.drawable.food);
@@ -155,6 +202,7 @@ public class CategoriesManagerActivity extends Activity {
             }else if(name.equals("Clothing")){
                 ivIcon.setImageResource(R.drawable.clothing);
             }
+            */
 
             //return the newly created view
             return newView;
@@ -163,14 +211,26 @@ public class CategoriesManagerActivity extends Activity {
         @Override
         public void bindView(View view, Context context,final Cursor cursor) {
             //init the view's UI elements
-            ImageView ivIcon = (ImageView) view.findViewById(R.id.ivIcon);
+          // ImageView ivIcon = (ImageView) view.findViewById(R.id.ivIcon);
+            LetterImageView liv=(LetterImageView) view.findViewById(R.id.livcat);
             TextView tvName = (TextView) view.findViewById(R.id.tvName);
-            ImageButton ibDelete = (ImageButton) view.findViewById(R.id.ibDelete);
+            //ImageButton ibDelete = (ImageButton) view.findViewById(R.id.ibDelete);
+
 
             //and update them with the correct values
             final String name = cursor.getString(1);
             tvName.setText(name);
 
+
+            String sletter=cursor.getString(3);
+            char cletter=sletter.charAt(0);
+            int color=Integer.parseInt(cursor.getString(2));
+
+            liv.setOval(true);
+            liv.setmBackgroundPaint(color);
+            liv.setLetter(cletter);
+
+/*
             ibDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -182,7 +242,8 @@ public class CategoriesManagerActivity extends Activity {
                     notifyDataSetChanged();
                 }
             });
-
+            */
+/*
             //and the right icon
             if(name.equals("Food")){
                 ivIcon.setImageResource(R.drawable.food);
@@ -193,6 +254,7 @@ public class CategoriesManagerActivity extends Activity {
             }else if(name.equals("Clothing")){
                 ivIcon.setImageResource(R.drawable.clothing);
             }
+            */
         }
         public void setExpense(boolean expense){
             this.expense=expense;
@@ -201,4 +263,10 @@ public class CategoriesManagerActivity extends Activity {
 
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        c.requery();
+        adapter.notifyDataSetChanged();
+    }
 }

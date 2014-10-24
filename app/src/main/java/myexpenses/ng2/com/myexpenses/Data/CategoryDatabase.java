@@ -36,7 +36,6 @@ public class CategoryDatabase extends SQLiteOpenHelper {
     private static final String CREATE_INCOME_CATEGORIES = "CREATE TABLE " + TABLE_INCOME_CATEGORIES + " (" +
             COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_INAME + " TEXT NOT NULL," + COLUMN_ICOLOR + " INTEGER," + COLUMN_ILETTER + " TEXT NOT NULL)";
 
-
     public CategoryDatabase(Context context) {
 
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -80,9 +81,15 @@
             android:label="@string/title_activity_settings_activity2" >
         </activity>
         <activity
-            android:name=".Activities.CreateCategoryActivity"
-            android:label="@string/title_activity_create_category" >
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:name=".Activities.TransparentActivity"
+            android:label="@string/title_activity_transparent" >
+
         </activity>
+        <activity android:name=".Activities.CreateCategoryActivity"
+            android:label="CreateCategoryActivity" >
+            </activity>
+
     </application>
 
 </manifest>

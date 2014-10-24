@@ -110,6 +110,9 @@
     <string name="pref_title_data">Database</string>
     <string name="pref_title_delete_income">Delete Income History</string>
     <string name="pref_title_delete_expense">Delete expense history</string>
+    <string name="title_activity_transparent">TransparentActivity</string>
+    <string name="pref_title_theme">App Theme</string>
     <string name="title_activity_create_category">CreateCategoryActivity</string>
+
 
 </resources>

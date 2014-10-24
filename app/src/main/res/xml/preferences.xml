@@ -35,6 +35,9 @@
             android:key="pref_key_categories"
             android:title="@string/pref_title_categories" />
 
+        <Preference android:key="pref_key_theme"
+            android:title="@string/pref_title_theme" />
+
     </PreferenceCategory>
     <PreferenceCategory
         android:key="pref_key_data_settings"
@@ -53,7 +56,6 @@
 
             <Preference android:key="pref_key_delete_expense"
                 android:title="@string/pref_title_delete_expense" />
-
 
         </PreferenceScreen>
 

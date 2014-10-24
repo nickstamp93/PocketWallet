@@ -90,7 +90,6 @@ public class UserDetailsActivity extends Activity {
         }
         etSalary.setText(String.valueOf(manager.getPrefsSalary()));
 
-
     }
 
     //init the Listeners

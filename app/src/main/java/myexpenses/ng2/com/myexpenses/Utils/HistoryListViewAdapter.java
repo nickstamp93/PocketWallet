@@ -76,7 +76,7 @@ public class HistoryListViewAdapter extends CursorAdapter{
 
             int color=cdb.getColorFromCategory(cursor.getString(1),expense);
             char letter=cdb.getLetterFromCategory(cursor.getString(1),expense);
-            liv.setOval(true);
+            //liv.setOval(true);
             liv.setLetter(letter);
             liv.setmBackgroundPaint(color);
 
@@ -130,7 +130,7 @@ public class HistoryListViewAdapter extends CursorAdapter{
 
             int color=cdb.getColorFromCategory(cursor.getString(2),expense);
             char letter=cdb.getLetterFromCategory(cursor.getString(2),expense);
-            liv.setOval(true);
+            //liv.setOval(true);
             liv.setLetter(letter);
             liv.setmBackgroundPaint(color);
 

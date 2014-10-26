@@ -4,8 +4,6 @@ package myexpenses.ng2.com.myexpenses.Activities;
 //this is a comment without being collaborator
 
 import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -51,6 +49,7 @@ public class OverviewActivity extends Activity {
             refreshUI();
         }
 
+
     }
 
     //checks if a user profile already exists(practically if the app launches for the first time)
@@ -89,10 +88,10 @@ public class OverviewActivity extends Activity {
             boolean bonus = manager.getPrefsBonus();
             String salFreq = manager.getPrefsSalFreq();
 
-            profile = new UserProfileSalary(username, savings, balance, bonus, salary, salFreq, nextPaymentDate , currency);
+            profile = new UserProfileSalary(username, savings, balance, bonus, salary, salFreq, nextPaymentDate, currency);
             ((UserProfileSalary) profile).show();
         } else {
-            profile = new UserProfile(username, savings, balance , currency);
+            profile = new UserProfile(username, savings, balance, currency);
         }
     }
 
@@ -127,7 +126,7 @@ public class OverviewActivity extends Activity {
         tvUsername = (TextView) findViewById(R.id.tvUsername);
 
         //set a font for the text views
-        Typeface typeface = Typeface.createFromAsset(getAssets() , "fonts/font_exo2.otf");
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/font_exo2.otf");
         tvDays.setTypeface(typeface);
         tvBalance.setTypeface(typeface);
         tvSavings.setTypeface(typeface);

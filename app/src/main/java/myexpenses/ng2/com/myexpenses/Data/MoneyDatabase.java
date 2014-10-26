@@ -177,6 +177,16 @@ public class MoneyDatabase extends SQLiteOpenHelper {
                 , null);
     }
 
+    public Cursor getIncomeByAmountOrder(boolean asc){
+        String order = " ASC";
+        if (!asc) {
+            order = " DESC";
+        }
+        return getReadableDatabase().rawQuery("SELECT * FROM " + Table_Income + " ORDER BY " + Key_IAmount + order, null);
+
+    }
+
+
     //return a cursor which contains the tuples of table income with date between of parameter date1 and parameter date2
     public Cursor getIncomeByDateToDate(String date1, String date2) {
 
@@ -204,11 +214,28 @@ public class MoneyDatabase extends SQLiteOpenHelper {
 
     }
 
+    public void UpdateIncome(IncomeItem income){
+        ContentValues values = new ContentValues();
+        values.put(Key_ISource,income.getSource());
+        values.put(Key_IAmount,income.getAmount());
+        values.put(Key_IDate,income.getDate());
+
+        getReadableDatabase().update(Table_Income,values,Key_Iid+" = "+income.getId(),null);
+
+    }
+
     public void deleteExpense(int id) {
 
         getReadableDatabase().delete(Table_Expense, Key_EId + "=" + id, null);
 
     }
+
+    public void deleteIncome(int id){
+
+        getReadableDatabase().delete(Table_Income, Key_Iid + "=" + id, null);
+
+    }
+
 
     public void deleteTuplesDependedOnCategory(String category, boolean expense) {
 

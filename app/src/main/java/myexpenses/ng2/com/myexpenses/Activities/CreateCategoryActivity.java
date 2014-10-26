@@ -128,7 +128,7 @@ public class CreateCategoryActivity extends Activity {
                     } else {
                         //If he gave then we take the name and the color and we display them in the LetterImageView.
                         //Default value of color is red so even if the user doesn't select color we don't have problem.
-                        String newCat = etName.getText().toString();
+                        String newCat = etName.getText().toString().toUpperCase();
 
                         letter = newCat.toUpperCase().charAt(0);
 
@@ -161,8 +161,8 @@ public class CreateCategoryActivity extends Activity {
                         if (cdb.checkIfNameExists(name, expense) && id==-1) {
                             Toast.makeText(getApplicationContext(), "There is already a category with this name plz try again", Toast.LENGTH_LONG).show();
                         } else {
-
-                            letter=name.charAt(0);
+                            String newCat = etName.getText().toString().toUpperCase();
+                            letter=newCat.charAt(0);
                             String sletter = String.valueOf(letter);
 
                             color=dialog.getSelectedColor();

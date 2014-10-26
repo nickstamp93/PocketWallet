@@ -13,44 +13,115 @@
         tools:context="myexpenses.ng2.com.myexpenses.Activities.AddIncomeActivity">
 
 
-        <TextView
-            android:id="@+id/tviamount"
-            android:layout_width="wrap_content"
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="46dp"
-            android:text="Amount:"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/blue"
+            android:id="@+id/llIncomeAmount"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:layout_marginTop="15dp"
+            >
 
-            />
+            <TextView
+                android:id="@+id/tviamount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Amount:"
+                android:paddingLeft="10dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/blue"
+                android:layout_weight="0.3"
 
+                />
+            <EditText
+                android:id="@+id/etiamount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Enter amount"
+                android:layout_weight="0.7"
+                android:textColor="#000000"
+                android:ems="10"
+                android:gravity="center"
 
-        <EditText
-            android:id="@+id/etiamount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/tviamount"
-            android:layout_marginRight="36dp" />
+               />
 
-        <TextView
-            android:id="@+id/tvisource"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/tviamount"
-            android:layout_alignStart="@+id/tviamount"
-            android:layout_below="@+id/tviamount"
-            android:layout_marginTop="48dp"
-            android:text="Source:"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/blue" />
+            </LinearLayout>
 
 
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/llIncomeSource"
+    android:orientation="horizontal"
+    android:layout_below="@+id/llIncomeAmount"
+    android:layout_marginTop="30dp"
+    android:weightSum="1"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvIncomeSource"
+        android:text="Source:"
+        android:layout_gravity="center"
+
+
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/blue" />
+
+
+    <Spinner
+        android:id="@+id/sIncomeCategories"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+
+
+        />
+
+
+</LinearLayout>
+
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/llIncomeDate"
+    android:layout_below="@+id/llIncomeSource"
+    android:orientation="horizontal"
+    android:layout_marginTop="40dp"
+    android:weightSum="1"
+
+
+    >
+
+   <TextView
+    android:id="@+id/tvidate"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Date"
+    android:textAppearance="?android:attr/textAppearanceLarge"
+    android:textColor="@color/blue"
+       android:layout_weight="0.6"
+       />
+
+
+
+    <ImageButton
+        android:id="@+id/ibiCalendar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.4"
+
+        />
+
+    </LinearLayout>
+
+
+<!--
         <EditText
             android:id="@+id/etisource"
             android:layout_width="wrap_content"
@@ -59,35 +130,18 @@
             android:layout_alignParentRight="true"
             android:layout_alignTop="@+id/tvisource"
             android:layout_marginRight="36dp" />
-
-        <TextView
-            android:id="@+id/tvidate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/tvisource"
-            android:layout_alignStart="@+id/tvisource"
-            android:layout_below="@+id/tvisource"
-            android:layout_marginTop="48dp"
-            android:text="Date"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/blue" />
+-->
 
 
-        <ImageButton
-            android:id="@+id/ibiCalendar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/tvidate"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="36dp" />
+
+
 
         <LinearLayout
             android:id="@+id/llButtons"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvidate"
-            android:layout_marginTop="120dp"
+            android:layout_below="@+id/llIncomeDate"
+            android:layout_marginTop="60dp"
             android:orientation="horizontal"
             android:weightSum="2">
 

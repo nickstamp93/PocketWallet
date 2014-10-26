@@ -90,6 +90,12 @@
             android:label="CreateCategoryActivity" >
             </activity>
 
+        <activity android:name=".Utils.FiltersDateToDateActivity"
+            android:label="FiltersDateToDate">
+
+            </activity>
+
+
     </application>
 
 </manifest>

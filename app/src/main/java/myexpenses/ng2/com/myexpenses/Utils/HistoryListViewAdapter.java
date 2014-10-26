@@ -37,6 +37,10 @@ public class HistoryListViewAdapter extends CursorAdapter{
         this.expense=expense;
     }
 
+    public void closeCDB(){
+        cdb.close();
+    }
+
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -194,7 +198,7 @@ public class HistoryListViewAdapter extends CursorAdapter{
             TextView tvIncome=(TextView) view.findViewById(R.id.tvHIncome);
             TextView tvDate=(TextView) view.findViewById(R.id.tvHDate);
             TextView tvSource=(TextView) view.findViewById(R.id.tvHSource);
-            LetterImageView liv=(LetterImageView) view.findViewById(R.id.livhistory);
+            LetterImageView liv=(LetterImageView) view.findViewById(R.id.livhistoryincome);
 
             Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/font_exo2.otf");
             tvIncome.setTypeface(typeface);

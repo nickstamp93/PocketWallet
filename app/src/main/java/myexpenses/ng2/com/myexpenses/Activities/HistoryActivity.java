@@ -7,34 +7,43 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+
+import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
+
+import java.util.Calendar;
 
 import myexpenses.ng2.com.myexpenses.Data.ExpenseItem;
 import myexpenses.ng2.com.myexpenses.Data.IncomeItem;
 import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
 import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Utils.FiltersDateDialog;
-import myexpenses.ng2.com.myexpenses.Utils.FiltersDateToDateDialog;
+import myexpenses.ng2.com.myexpenses.Utils.FiltersDateToDateActivity;
 import myexpenses.ng2.com.myexpenses.Utils.HistoryListViewAdapter;
 
 
-public class HistoryActivity extends Activity  {
+public class HistoryActivity extends FragmentActivity {
 
     private HistoryListViewAdapter adapter;
     private Cursor c;
     private MoneyDatabase db;
     private ListView lv;
     private AlertDialog dialog=null;
-    private boolean switcher =true;
+    private boolean switcher =true,update=false;
     private Menu menu;
+    private CalendarDatePickerDialog Cdialog;
+
+    private static int result=1;
+    private Calendar calendar;
+
 
 
 
@@ -66,6 +75,8 @@ public class HistoryActivity extends Activity  {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
                 c.moveToPosition(position);
+                update=true;
+                stopManagingCursor(c);
 
                 if(switcher) {
                     Intent processExpense=new Intent(HistoryActivity.this,AddExpenseActivity.class);
@@ -74,14 +85,15 @@ public class HistoryActivity extends Activity  {
                     processExpense.putExtra("Expense",expense);
                     startActivity(processExpense);
                 }else{
+                    Intent processIncome=new Intent(HistoryActivity.this,AddIncomeActivity.class);
                     IncomeItem income=new IncomeItem(Double.parseDouble(c.getString(1)),c.getString(3),c.getString(2));
-                   // bundle.putSerializable("Income",income);
-                   // process.putExtra("Income",income);
+                    income.setId(Integer.parseInt(c.getString(0)));
+                    processIncome.putExtra("Income",income);
+                    startActivity(processIncome);
+
                 }
 
-               // process.p
 
-              //  bundle.p
 
                 Log.i("Listener",c.getString(1)+"-"+c.getString(2)+"-"+c.getString(3));
 
@@ -209,13 +221,21 @@ public class HistoryActivity extends Activity  {
                 break;
 
             case R.id.FiltersDate:
-                FiltersDateDialog DDialog=new FiltersDateDialog(true,true);
-                DDialog.show(getFragmentManager(),"FiltersDate Dialog");
+               calendar = Calendar.getInstance();
+               Cdialog = CalendarDatePickerDialog.newInstance(dListener ,
+                        calendar.get(Calendar.YEAR) , calendar.get(Calendar.MONTH) , calendar.get(Calendar.DAY_OF_MONTH));
+                Cdialog.show(getSupportFragmentManager(),"Date Filter");
+               // FiltersDateDialog DDialog=new FiltersDateDialog(true,true);
+                //DDialog.show(getFragmentManager(),"FiltersDate Dialog");
                 break;
 
             case R.id.FiltersDTD:
-                FiltersDateToDateDialog DTDDialog=new FiltersDateToDateDialog(true);
-                DTDDialog.show(getFragmentManager(),"FiltersDateToDaTE Dialog");
+               // FiltersDateToDateDialog DTDDialog=new FiltersDateToDateDialog(true);
+                //DTDDialog.show(getFragmentManager(),"FiltersDateToDaTE Dialog");
+
+                stopManagingCursor(c);
+                Intent ExpenseFilterDTD=new Intent(HistoryActivity.this,FiltersDateToDateActivity.class);
+                startActivityForResult(ExpenseFilterDTD,result);
                 break;
 
             case R.id.FiltersNTO:
@@ -229,12 +249,35 @@ public class HistoryActivity extends Activity  {
                 break;
 
             case R.id.IncomeSource:
+
+                final String sources[]={"Company","External Source"};
+                CharSequence [] Csources=new CharSequence[sources.length];
+                for(int i=0; i<sources.length; i++){
+                    Csources[i]=sources[i];
+                }
+                builder.setTitle("Choose a Source");
+
+                builder.setItems(Csources,new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String chosenCategory= sources[i];
+                        c=db.getIncomesBySource(chosenCategory);
+                        refreshList(c);
+                        dialogInterface.dismiss();
+                    }
+                });
+
+                dialog=builder.create();
+                dialog.show();
+                break;
+                /*
                 final EditText source=new EditText(this);
                 source.setHint("Source");
                 source.setSingleLine(true);
 
                 LinearLayout ll=new LinearLayout(this);
                 ll.setOrientation(LinearLayout.VERTICAL);
+
                 ll.addView(source);
                 builder.setTitle("Write the source of the income");
                 builder.setView(ll);
@@ -257,22 +300,52 @@ public class HistoryActivity extends Activity  {
 
                 dialog=builder.create();
                 dialog.show();
-                break;
+                break;*/
 
             case R.id.IncomeDate:
-                FiltersDateDialog dDialog=new FiltersDateDialog(true,false);
-                dDialog.show(getFragmentManager(),"Date Income Filters Dialog");
+              //  FiltersDateDialog dDialog=new FiltersDateDialog(true,false);
+               // dDialog.show(getFragmentManager(),"Date Income Filters Dialog");
+                calendar = Calendar.getInstance();
+                Cdialog = CalendarDatePickerDialog.newInstance(dListener ,
+                      calendar.get(Calendar.YEAR) , calendar.get(Calendar.MONTH) , calendar.get(Calendar.DAY_OF_MONTH));
+                Cdialog.show(getSupportFragmentManager(),"Date Filter");
+
                 break;
 
             case R.id.IncomeDTD:
-                FiltersDateToDateDialog dtdDialog=new FiltersDateToDateDialog(false);
-                dtdDialog.show(getFragmentManager(),"Date to Date Income Filters Dialog");
+                stopManagingCursor(c);
+                Intent IncomeFilterDTD=new Intent(HistoryActivity.this,FiltersDateToDateActivity.class);
+                startActivityForResult(IncomeFilterDTD,result);
+              //  FiltersDateToDateDialog dtdDialog=new FiltersDateToDateDialog(false);
+                //dtdDialog.show(getFragmentManager(),"Date to Date Income Filters Dialog");
                 break;
 
             case R.id.IncomeNTO:
                 c=db.getIncomeByNewestToOldest();
                 refreshList(c);
                 break;
+
+            case R.id.IncomeAmount:
+                final CharSequence[] Items={"Ascending","Declining"};
+                builder.setTitle("Order of items depended on price");
+                builder.setSingleChoiceItems(Items,-1,new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int pos) {
+                        boolean asc=false;
+                        if(pos==0){
+                            asc=true;
+                        }
+                        c=db.getIncomeByAmountOrder(asc);
+                        refreshList(c);
+                        dialogInterface.dismiss();
+
+                    }
+                });
+                dialog=builder.create();
+                dialog.show();
+
+                break;
+
            //When the toggleButton is pressed we check the boolean variable switcher.If it is true it means that we are in
            //Expenses so we change the variable switcher we clear the menu and add the Income Menu and the standar cursor
            //for the income items. To do that we need to create new adapter and set the ListView to have this adapter. The
@@ -285,6 +358,7 @@ public class HistoryActivity extends Activity  {
                     menu.clear();
                     getMenuInflater().inflate(R.menu.history_income, menu);
                     c=db.getCursorIncomes();
+                    adapter.closeCDB();
                     adapter=new HistoryListViewAdapter(getApplicationContext(),c);
                     adapter.setTheView(switcher);
                     lv.setAdapter(adapter);
@@ -294,6 +368,7 @@ public class HistoryActivity extends Activity  {
                     menu.clear();
                     getMenuInflater().inflate(R.menu.history_expense,menu);
                     c=db.getCursorExpense();
+                    adapter.closeCDB();
                     adapter=new HistoryListViewAdapter(getApplicationContext(),c);
                     adapter.setTheView(switcher);
                     lv.setAdapter(adapter);
@@ -306,6 +381,63 @@ public class HistoryActivity extends Activity  {
 
 
         return super.onOptionsItemSelected(item);
+    }
+
+     private CalendarDatePickerDialog.OnDateSetListener dListener=new CalendarDatePickerDialog.OnDateSetListener() {
+         @Override
+         public void onDateSet(CalendarDatePickerDialog calendarDatePickerDialog, int i, int i2, int i3) {
+             String month,day,date;
+             if(i2<10){
+                 month = "0" + i2;
+             }else{
+                 month = String.valueOf(i2);
+             }
+             if(i3<10){
+                 day = "0" + i3;
+             }else{
+                 day = String.valueOf(i3);
+             }
+             date = day+"-"+month+"-"+i;
+             if(switcher){
+                 saveExpenseFiltersDate(date);
+
+             }else{
+               saveIncomeFiltersDate(date);
+             }
+
+         }
+     };
+
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==result){
+            if(resultCode==Activity.RESULT_OK){
+
+                String from=data.getStringExtra("From");
+                String to=data.getStringExtra("To");
+
+                if(switcher){
+                  saveFiltersDateToDate(from,to);
+                }else {
+                    saveIncomeFiltersDateToDate(from,to);
+                }
+
+
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(update){
+            Log.i("Resume","requery");
+            update=false;
+            c.requery();
+        }
     }
 
 }

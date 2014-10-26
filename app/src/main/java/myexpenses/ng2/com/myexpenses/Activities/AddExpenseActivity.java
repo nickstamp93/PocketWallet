@@ -46,9 +46,12 @@ TO DO LIST
 3)method to delete all expenses and all incomes to MoneyDatabase
 4)Custom dialog to handle categories and tuples when you delete a category DONE
 5)Create addCategoryActivity (EditText namecat button to choose color for category,ll to change the starting letter for category and preview
-for the result.
-6)Change categoryDatabase, add to tables color and letter
-7) Process categories add functions to change the categories
+for the result. DONE
+6)Change categoryDatabase, add to tables color and letter DONE
+7) Process categories add functions to change the categories DONE
+8)Add a filter feature amount in income
+9) Fix some features in income (history List View Adapter and also update an income)
+10)Fix the dialog for filters date and date-to-date
  */
 public class AddExpenseActivity extends FragmentActivity {
 
@@ -63,13 +66,17 @@ public class AddExpenseActivity extends FragmentActivity {
     private ExpenseItem item;
 
     private boolean image;
-    private CalendarDialog dialog;
+  //  private CalendarDialog dialog;
 
     private final int REQUEST_CODE = 1;
     private Bitmap bm;
     private String date;
     private int id;
     private boolean update;
+
+    private Calendar c;
+    private  CalendarDatePickerDialog d;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +115,20 @@ public class AddExpenseActivity extends FragmentActivity {
         update = false;
 
 
+           c = Calendar.getInstance();
+           d = CalendarDatePickerDialog.newInstance(listener ,
+             c.get(Calendar.YEAR) , c.get(Calendar.MONTH) , c.get(Calendar.DAY_OF_MONTH));
+
+        String day=c.get(Calendar.DAY_OF_MONTH)+"";
+        String month=c.get(Calendar.MONTH)+"";
+        if(c.get(Calendar.DAY_OF_MONTH)<10){
+            day = "0" +c.get(Calendar.DAY_OF_MONTH) ;
+        }
+        if(c.get(Calendar.MONTH)<10){
+            month = "0" +c.get(Calendar.MONTH) ;
+        }
+
+/*
         Time now = new Time();
         now.setToNow();
         String day = now.monthDay + "", month = now.month + "";
@@ -117,8 +138,9 @@ public class AddExpenseActivity extends FragmentActivity {
         }
         if (now.month < 10) {
             month = "0" + now.month;
-        }
-        date = now.year + "-" + month + "-" + day;
+        }*/
+
+        date = c.get(Calendar.YEAR) + "-" + month + "-" + day;
 
     }
 
@@ -126,8 +148,17 @@ public class AddExpenseActivity extends FragmentActivity {
         cdb = new CategoryDatabase(AddExpenseActivity.this);
         etPrice.setText(item.getPrice() + "");
         etNotes.setText(item.getNotes());
-        sCategories.setSelection(cdb.getPositionFromValue(item.getCategories()));
+        sCategories.setSelection(cdb.getPositionFromValue(item.getCategories(),true));
         cdb.close();
+
+        String tokens[]=item.getDate().split("-");
+        int day=Integer.parseInt(tokens[2]);
+        int month=Integer.parseInt(tokens[1]);
+        int year=Integer.parseInt(tokens[0]);
+
+        d= CalendarDatePickerDialog.newInstance(listener ,
+                year , month , day);
+        date=year+"-"+month+"-"+day;
 
     }
 
@@ -144,7 +175,7 @@ public class AddExpenseActivity extends FragmentActivity {
         sCategories = (Spinner) findViewById(R.id.sCategories);
 
         //get from CategoryDatabase all the categories and save them in to an ArrayList
-        ArrayList<String> allCategories = cdb.getExpenseCategories();
+        ArrayList<String> allCategories = cdb.getExpenseCategories(true);
         //Initialize the SpinnerAdapter
         SpinnerAdapter adapter = new SpinnerAdapter(AddExpenseActivity.this, allCategories);
         //Set the adapter of spinner item to be all the categories from CategoryDatabase
@@ -181,12 +212,13 @@ public class AddExpenseActivity extends FragmentActivity {
                         if(!update){
                             //then we add the expense to our database we close it and we finish the activity
                             mydb.InsertExpense(item);
+
                         }else{
                             item.setId(id);
                             mydb.UpdateExpense(item);
                         }
-
                         mydb.close();
+
                         finish();
                     }
 
@@ -209,9 +241,7 @@ public class AddExpenseActivity extends FragmentActivity {
 //                dialog = new CalendarDialog(true);
 //                dialog.show(getFragmentManager(), "Calendar Dialog");
 
-                Calendar c = Calendar.getInstance();
-                CalendarDatePickerDialog d = CalendarDatePickerDialog.newInstance(listener ,
-                        c.get(Calendar.YEAR) , c.get(Calendar.MONTH) , c.get(Calendar.DAY_OF_MONTH));
+
                 d.show(getSupportFragmentManager() , "Calendar Dialog");
 
 

@@ -33,6 +33,10 @@
                 android:title="Newest Income to oldest"
                 />
 
+            <item
+                android:id="@+id/IncomeAmount"
+                android:title="Order depended on amount"
+                />
 
 
 

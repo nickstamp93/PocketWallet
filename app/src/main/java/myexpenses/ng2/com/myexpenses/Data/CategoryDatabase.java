@@ -151,11 +151,18 @@ public class CategoryDatabase extends SQLiteOpenHelper {
     }
 
     //Get all the categories of database returned in a ArrayList
-    public ArrayList<String> getExpenseCategories() {
-        Cursor c = getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_EXPENSE_CATEGORIES, null);
+    public ArrayList<String> getExpenseCategories(boolean expense) {
+        Cursor c;
+        int Catrow;
         ArrayList<String> categories = new ArrayList<String>();
+        if(expense) {
+            c = getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_EXPENSE_CATEGORIES, null);
+            Catrow = c.getColumnIndex(COLUMN_ENAME);
+        }else{
+            c = getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_INCOME_CATEGORIES, null);
+            Catrow=c.getColumnIndex(COLUMN_INAME);
 
-        int Catrow = c.getColumnIndex(COLUMN_ENAME);
+        }
 
         if (c != null) {
 
@@ -170,10 +177,15 @@ public class CategoryDatabase extends SQLiteOpenHelper {
         return categories;
     }
 
-    public int getPositionFromValue(String category) {
+    public int getPositionFromValue(String category,boolean expense) {
 
         int pos = 0;
-        Cursor c = getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_EXPENSE_CATEGORIES, null);
+        Cursor c;
+        if(expense) {
+            c = getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_EXPENSE_CATEGORIES, null);
+        }else {
+            c = getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_INCOME_CATEGORIES, null);
+        }
         if (c != null) {
 
             for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {

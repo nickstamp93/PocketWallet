@@ -14,6 +14,7 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
+import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -191,8 +192,11 @@ public class SettingsActivity2 extends PreferenceActivity
     private void updatePrefSummary(Preference p) {
 
         if (p.getKey().equals("pref_key_currency")) {
-            ListPreference listPref = (ListPreference) p;
-            p.setSummary(listPref.getEntry());
+            ListPreference pref = (ListPreference) p;
+            pref.setSummary(pref.getValue());
+        }else if(p.getKey().equals("pref_key_reminder_time")){
+            String sum = new SharedPrefsManager(getApplicationContext()).getPrefsReminderTime();
+            p.setSummary(sum);
         }
     }
 
@@ -235,7 +239,7 @@ public class SettingsActivity2 extends PreferenceActivity
         //create an alarm manager instance (alarm manager , repeating notifications)
         alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
         //set next notification at the above date-time , service starts every 24 hours
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP , calendar.getTimeInMillis(), 24*60*60*1000 , pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC , calendar.getTimeInMillis(), 24*60*60*1000 , pendingIntent);
 
         Log.i("nikos", "alarm set for " + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH) + "-" + calendar.get(Calendar.YEAR)
                 + "  " + hour + ":" + minute);

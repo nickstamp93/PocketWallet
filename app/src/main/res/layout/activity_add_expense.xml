@@ -1,173 +1,265 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="myexpenses.ng2.com.myexpenses.Activities.AddExpenseActivity">
+    android:layout_height="match_parent">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin">
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tvCategories"
-            android:layout_width="wrap_content"
+            android:id="@+id/tvPrice"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:text="Categories"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/blue" />
+            android:gravity="center"
+            android:text="Undefined"
+            android:textAppearance="?android:textAppearanceLarge" />
 
+        <TextView
+            style="@style/Headline"
+            android:text="Category" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="2dp"
+            android:layout_marginBottom="3dp"
+            android:background="@drawable/line_seperator" />
 
         <Spinner
             android:id="@+id/sCategories"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/tvCategories"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignRight="@+id/tvCategories"
-            android:layout_below="@+id/tvCategories" />
-
-        <EditText
-            android:id="@+id/etPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="15dp"
-            android:text="5"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/blue"
-
-            />
-
-        <TextView
-            android:id="@+id/tvDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/sCategories"
-            android:layout_alignRight="@+id/sCategories"
-            android:layout_below="@+id/sCategories"
-            android:layout_marginRight="45dp"
-            android:layout_marginTop="45dp"
-            android:layout_toLeftOf="@+id/etPrice"
-            android:layout_toStartOf="@+id/etPrice"
-            android:text="Date"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/blue" />
-
-        <ImageButton
-            android:id="@+id/ibCalendar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/etPrice"
-            android:layout_alignRight="@+id/etPrice"
-            android:layout_alignTop="@+id/tvDate"
-            android:layout_marginRight="55dp" />
-
-        <TextView
-            android:id="@+id/tvPhoto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/tvDate"
-            android:layout_alignParentLeft="true"
-            android:layout_alignStart="@+id/tvDate"
-            android:layout_below="@+id/ibCalendar"
-            android:layout_marginTop="20dp"
-            android:layout_toLeftOf="@+id/etPrice"
-            android:layout_toStartOf="@+id/etPrice"
-            android:text="Photo/Receive"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/blue" />
-
-        <ImageView
-            android:id="@+id/ivReceive"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            android:layout_below="@+id/ibCalendar"
-            android:layout_toEndOf="@+id/tvPhoto"
-            android:layout_toRightOf="@+id/tvPhoto"
-            android:src="@drawable/ic_action_camera" />
-
-        <ImageButton
-            android:id="@+id/ibCamera"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/tvPhoto"
-            android:layout_toEndOf="@+id/ivReceive"
-            android:layout_toRightOf="@+id/ivReceive" />
+            android:layout_marginBottom="30dp" />
 
         <LinearLayout
-            android:id="@+id/llNotes"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/ibCamera"
-            android:layout_alignRight="@+id/ibCamera"
-            android:layout_below="@+id/ivReceive"
-            android:layout_toLeftOf="@+id/ivReceive"
-            android:layout_toStartOf="@+id/ivReceive"
+            android:layout_marginBottom="30dp"
             android:orientation="horizontal"
-            android:weightSum="2">
+            android:weightSum="5">
 
             <TextView
-                android:id="@+id/tvNotes"
+                style="@style/Headline"
+                android:layout_weight="2"
+                android:text="Date" />
+
+            <EditText
+                android:id="@+id/etDate"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:editable="false"
+                android:text="1234567890"
+                android:focusable="false" />
+
+            <ImageButton
+                android:id="@+id/ibCalendar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <TextView
+                style="@style/Headline"
+                android:layout_weight="1"
+                android:text="Notes" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:lines="2"
+                android:hint="Enter some notes..."/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</ScrollView>
+
+
+    <!--
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin">
+
+            <TextView
+                android:id="@+id/tvCategories"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:text="Notes"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="Categories"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/blue" />
 
+
+            <Spinner
+                android:id="@+id/sCategories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/tvCategories"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignRight="@+id/tvCategories"
+                android:layout_below="@+id/tvCategories" />
+
             <EditText
-                android:id="@+id/etNotes"
+                android:id="@+id/etPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:text="Your notes" />
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="15dp"
+                android:text="5"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/blue"
 
+                />
 
-        </LinearLayout>
+            <TextView
+                android:id="@+id/tvDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/sCategories"
+                android:layout_alignRight="@+id/sCategories"
+                android:layout_below="@+id/sCategories"
+                android:layout_marginRight="45dp"
+                android:layout_marginTop="45dp"
+                android:layout_toLeftOf="@+id/etPrice"
+                android:layout_toStartOf="@+id/etPrice"
+                android:text="Date"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/blue" />
 
-        <LinearLayout
-            android:id="@+id/llButtons"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/llNotes"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal"
-            android:weightSum="2">
+            <ImageButton
+                android:id="@+id/ibCalendar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/etPrice"
+                android:layout_alignRight="@+id/etPrice"
+                android:layout_alignTop="@+id/tvDate"
+                android:layout_marginRight="55dp" />
 
-            <Button
-                android:id="@+id/bOK"
+            <TextView
+                android:id="@+id/tvPhoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/tvDate"
+                android:layout_alignParentLeft="true"
+                android:layout_alignStart="@+id/tvDate"
+                android:layout_below="@+id/ibCalendar"
+                android:layout_marginTop="20dp"
+                android:layout_toLeftOf="@+id/etPrice"
+                android:layout_toStartOf="@+id/etPrice"
+                android:text="Photo/Receive"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/blue" />
+
+            <ImageView
+                android:id="@+id/ivReceive"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_below="@+id/ibCalendar"
+                android:layout_toEndOf="@+id/tvPhoto"
+                android:layout_toRightOf="@+id/tvPhoto"
+                android:src="@drawable/ic_action_camera" />
+
+            <ImageButton
+                android:id="@+id/ibCamera"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="7dp"
-                android:layout_weight="1"
-                android:background="@color/OrangeRed"
-                android:text="Ok" />
+                android:layout_alignTop="@+id/tvPhoto"
+                android:layout_toEndOf="@+id/ivReceive"
+                android:layout_toRightOf="@+id/ivReceive" />
 
-            <Button
-                android:id="@+id/bCancel"
+            <LinearLayout
+                android:id="@+id/llNotes"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="7dp"
-                android:layout_weight="1"
-                android:background="@color/OrangeRed"
-                android:text="Cancel" />
+                android:layout_alignEnd="@+id/ibCamera"
+                android:layout_alignRight="@+id/ibCamera"
+                android:layout_below="@+id/ivReceive"
+                android:layout_toLeftOf="@+id/ivReceive"
+                android:layout_toStartOf="@+id/ivReceive"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/tvNotes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:text="Notes"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/blue" />
+
+                <EditText
+                    android:id="@+id/etNotes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:text="Your notes" />
 
 
-        </LinearLayout>
+            </LinearLayout>
 
-    </RelativeLayout>
+            <LinearLayout
+                android:id="@+id/llButtons"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/llNotes"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
 
-</ScrollView>
+                <Button
+                    android:id="@+id/bOK"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="7dp"
+                    android:layout_weight="1"
+                    android:background="@color/OrangeRed"
+                    android:text="Ok" />
+
+                <Button
+                    android:id="@+id/bCancel"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_weight="1"
+                    android:background="@color/OrangeRed"
+                    android:text="Cancel" />
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+        -->

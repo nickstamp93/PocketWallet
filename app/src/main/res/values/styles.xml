@@ -4,9 +4,45 @@
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="AppThemeDark" parent="android:Theme.Holo">
+        <item name="android:windowBackground">@color/black</item>
+        <item name="android:colorBackground">@color/black</item>
+        <item name="android:actionBarStyle">@style/customActionBar</item>
+        <item name="android:textColor">@color/Orange</item>
+    </style>
+
+    <style name="customActionBar" parent="android:Widget.Holo.ActionBar.Solid" >
+        <item name="android:background">@color/Gray</item>
+        <item name="android:backgroundStacked">@color/Gray</item>
+        <item name="android:backgroundSplit">@color/Gray</item>
+    </style>
+
     <style name="Theme.Transparent" parent="android:Theme">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowIsFloating">true</item>
     </style>
+    <style name="Headline" parent="android:Theme.Holo.Light.DarkActionBar" >
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
+        <item name="android:textStyle">bold|italic</item>
+        <item name="android:padding">10dp</item>
+    </style>
+    <style name="UserDetailsEditText" parent="android:Theme.Holo.Light.DarkActionBar" >
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:ems">10</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:selectAllOnFocus">true</item>
+    </style>
+    <style name="ButtonStyleBottom" >
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
 
+
+    </style>
 </resources>

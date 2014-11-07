@@ -64,7 +64,6 @@ public class UserDetailsActivity extends Activity {
         etSavings = (EditText) findViewById(R.id.etSavings);
         etBalance = (EditText) findViewById(R.id.etBalance);
 
-        chbBonus = (CheckBox) findViewById(R.id.chbBonus);
         chbSalary = (CheckBox) findViewById(R.id.chbSalary);
 
         radioGroup = (RadioGroup) findViewById(R.id.rgFrequency);
@@ -81,7 +80,6 @@ public class UserDetailsActivity extends Activity {
         etSavings.setText(String.valueOf(manager.getPrefsSavings()));
         etBalance.setText(String.valueOf(manager.getPrefsBalance()));
         chbSalary.setChecked(manager.getPrefsOnSalary());
-        chbBonus.setChecked(manager.getPrefsBonus());
         String salFreq = manager.getPrefsSalFreq();
         if(salFreq.equalsIgnoreCase("monthly")){
             radioGroup.check(R.id.rbMonthly);
@@ -113,10 +111,6 @@ public class UserDetailsActivity extends Activity {
             for (int i = 0; i < radioGroup.getChildCount(); i++) {
                 View view = radioGroup.getChildAt(i);
                 view.setEnabled(isChecked);
-            }
-            chbBonus.setEnabled(isChecked);
-            if (!isChecked) {
-                chbBonus.setChecked(false);
             }
         }
     };
@@ -192,7 +186,6 @@ public class UserDetailsActivity extends Activity {
         username = etUsername.getText().toString();
         savings = Float.parseFloat(etSavings.getText().toString());
         onSalary = chbSalary.isChecked();
-        bonus = chbBonus.isChecked();
         balance = Float.parseFloat(etBalance.getText().toString());
 
         if (onSalary) {

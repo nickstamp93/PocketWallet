@@ -65,7 +65,7 @@ public class SharedPrefsManager {
     }
 
     public String getPrefsUsername() {
-        return prefs.getString(PREFS_USERNAME, "User");
+        return prefs.getString(PREFS_USERNAME, "");
     }
 
     public float getPrefsSavings() {

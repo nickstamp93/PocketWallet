@@ -10,6 +10,7 @@
             android:dialogTitle="Select Currency"
             android:entries="@array/currency_entries"
             android:entryValues="@array/currency_values"
+            android:defaultValue="European Euro(€)"
             android:key="pref_key_currency"
             android:title="@string/pref_title_currency" />
 
@@ -36,7 +37,7 @@
             android:title="@string/pref_title_categories" />
 
         <Preference android:key="pref_key_theme"
-            android:title="@string/pref_title_theme" />
+            android:title="@string/pref_title_theme"/>
 
     </PreferenceCategory>
     <PreferenceCategory
@@ -66,11 +67,13 @@
 
         <SwitchPreference
             android:key="pref_key_reminder"
+            android:defaultValue="false"
             android:summary="@string/pref_summary_reminder"
             android:title="@string/pref_title_reminder" />
         <Preference
             android:dependency="pref_key_reminder"
             android:key="pref_key_reminder_time"
+            android:defaultValue="00:00"
             android:title="@string/pref_title_reminder_time" />
 
     </PreferenceCategory>

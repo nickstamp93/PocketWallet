@@ -21,6 +21,8 @@ public class LauncherPickerActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+
         boolean isPass = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("pref_key_password" , false);
 
         /*

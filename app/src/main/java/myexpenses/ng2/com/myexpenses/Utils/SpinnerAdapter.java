@@ -1,5 +1,6 @@
 package myexpenses.ng2.com.myexpenses.Utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import myexpenses.ng2.com.myexpenses.Data.CategoryDatabase;
 import myexpenses.ng2.com.myexpenses.R;
 
 /**
@@ -21,8 +23,76 @@ import myexpenses.ng2.com.myexpenses.R;
  *  The magic behind this is the setTag() method which lets us attach an arbitrary object onto a View object, which is how we save
  *  the already inflated View for future reuse.
  */
-public class SpinnerAdapter extends ArrayAdapter<String> {
+public class SpinnerAdapter extends ArrayAdapter<SpinnerItem> {
 
+
+
+   public SpinnerAdapter(Context context,int resourseID,ArrayList<SpinnerItem> spinnerItems){
+
+       super(context,resourseID, R.layout.spinner_item,spinnerItems);
+       }
+
+    private class ViewHolder{
+        TextView tvName;
+        LetterImageView liv;
+    }
+
+
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder holder;
+        SpinnerItem item=getItem(position);
+
+        LayoutInflater mInflater = (LayoutInflater) getContext()
+                .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+        if (convertView == null) {
+            convertView = mInflater.inflate(R.layout.spinner_item, null);
+            holder = new ViewHolder();
+            holder.tvName = (TextView) convertView.findViewById(R.id.tvSpinnerCategories);
+            holder.liv = (LetterImageView) convertView.findViewById(R.id.livSpinner);
+            convertView.setTag(holder);
+        } else
+            holder = (ViewHolder) convertView.getTag();
+
+        int color=item.getColor();
+        char letter=item.getLetter();
+
+        holder.tvName.setText(item.getName());
+        holder.liv.setLetter(letter);
+        holder.liv.setmBackgroundPaint(color);
+
+        return convertView;
+    }
+
+
+    @Override
+    public View getDropDownView(int position, View convertView, ViewGroup parent) {
+        ViewHolder holder;
+        SpinnerItem item=getItem(position);
+
+        LayoutInflater mInflater = (LayoutInflater) getContext()
+                .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+        if (convertView == null) {
+            convertView = mInflater.inflate(R.layout.spinner_item, null);
+            holder = new ViewHolder();
+            holder.tvName = (TextView) convertView.findViewById(R.id.tvSpinnerCategories);
+            holder.liv = (LetterImageView) convertView.findViewById(R.id.livSpinner);
+            convertView.setTag(holder);
+        } else
+            holder = (ViewHolder) convertView.getTag();
+
+        int color=item.getColor();
+        char letter=item.getLetter();
+
+        holder.tvName.setText(item.getName());
+        holder.liv.setLetter(letter);
+        holder.liv.setmBackgroundPaint(color);
+
+        return convertView;
+    }
+
+    /*
     private static class ViewHolder{
         TextView tvfilters;
     }
@@ -73,4 +143,5 @@ public class SpinnerAdapter extends ArrayAdapter<String> {
 
         return convertView;
     }
+    */
 }

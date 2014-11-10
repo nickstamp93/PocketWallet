@@ -81,7 +81,7 @@ public class DeleteCategoryDialog extends DialogFragment {
         ArrayList<String> categories = cdb.getAllCategoriesExceptOne(delCategory, expense);
 
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, R.id.tvFilters, categories);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, R.id.tvSpinnerCategories, categories);
         sCategories.setAdapter(adapter);
 
     }

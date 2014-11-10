@@ -152,9 +152,9 @@ public class AddIncomeActivity extends FragmentActivity {
         //get from CategoryDatabase all the categories and save them in to an ArrayList
         ArrayList<String> allCategories = cdb.getExpenseCategories(false);
         //Initialize the SpinnerAdapter
-        SpinnerAdapter adapter = new SpinnerAdapter(AddIncomeActivity.this, allCategories);
+      //  SpinnerAdapter adapter = new SpinnerAdapter(AddIncomeActivity.this, allCategories);
         //Set the adapter of spinner item to be all the categories from CategoryDatabase
-        sCategories.setAdapter(adapter);
+        //sCategories.setAdapter(adapter);
         cdb.close();
     }
 

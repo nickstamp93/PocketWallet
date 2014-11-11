@@ -146,8 +146,8 @@ public class AddIncomeActivity extends FragmentActivity {
       // etSource=(EditText)findViewById(R.id.etisource);
        sCategories=(Spinner) findViewById(R.id.sIncomeCategories);
        ibCalendar =(ImageButton) findViewById(R.id.ibiCalendar);
-       bOk=(Button)findViewById(R.id.biOK);
-       bCancel=(Button)findViewById(R.id.biCancel);
+       bOk=(Button)findViewById(R.id.bOK);
+       bCancel=(Button)findViewById(R.id.bCancel);
 
         //get from CategoryDatabase all the categories and save them in to an ArrayList
         ArrayList<String> allCategories = cdb.getExpenseCategories(false);

@@ -10,7 +10,7 @@
             android:dialogTitle="Select Currency"
             android:entries="@array/currency_entries"
             android:entryValues="@array/currency_values"
-            android:defaultValue="European Euro(€)"
+            android:defaultValue="€"
             android:key="pref_key_currency"
             android:title="@string/pref_title_currency" />
 

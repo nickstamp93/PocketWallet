@@ -59,6 +59,7 @@ public class SpinnerAdapter extends ArrayAdapter<SpinnerItem> {
         char letter=item.getLetter();
 
         holder.tvName.setText(item.getName());
+        holder.tvName.setTextColor(color);
         holder.liv.setLetter(letter);
         holder.liv.setmBackgroundPaint(color);
 
@@ -86,6 +87,7 @@ public class SpinnerAdapter extends ArrayAdapter<SpinnerItem> {
         char letter=item.getLetter();
 
         holder.tvName.setText(item.getName());
+        holder.tvName.setTextColor(color);
         holder.liv.setLetter(letter);
         holder.liv.setmBackgroundPaint(color);
 

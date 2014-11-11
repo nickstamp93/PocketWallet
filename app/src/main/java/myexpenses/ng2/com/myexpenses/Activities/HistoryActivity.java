@@ -61,7 +61,7 @@ public class HistoryActivity extends FragmentActivity {
         lv = (ListView) findViewById(R.id.lvHistory);
 
         db = new MoneyDatabase(getApplicationContext());
-        c = db.getCursorExpense();
+        c = db.getExpensesFromNewestToOldest();
 
         startManagingCursor(c);
         adapter = new HistoryListViewAdapter(getApplicationContext() , c);
@@ -167,10 +167,6 @@ public class HistoryActivity extends FragmentActivity {
             case R.id.action_settings:
                 return true;
 
-            case R.id.FiltersStandar:
-                c=db.getCursorExpense();
-                this.refreshList(c);
-                break;
 
 
             case R.id.FiltersCategory:
@@ -242,10 +238,6 @@ public class HistoryActivity extends FragmentActivity {
                 refreshList(c);
                 break;
 
-            case R.id.IncomeStandar:
-                c=db.getCursorIncomes();
-                refreshList(c);
-                break;
 
             case R.id.IncomeSource:
 
@@ -356,7 +348,7 @@ public class HistoryActivity extends FragmentActivity {
                     switcher=false;
                     menu.clear();
                     getMenuInflater().inflate(R.menu.history_income, menu);
-                    c=db.getCursorIncomes();
+                    c=db.getIncomeByNewestToOldest();
                     adapter.closeCDB();
                     adapter=new HistoryListViewAdapter(getApplicationContext(),c);
                     adapter.setTheView(switcher);
@@ -366,7 +358,7 @@ public class HistoryActivity extends FragmentActivity {
                     switcher=true;
                     menu.clear();
                     getMenuInflater().inflate(R.menu.history_expense,menu);
-                    c=db.getCursorExpense();
+                    c=db.getExpensesFromNewestToOldest();
                     adapter.closeCDB();
                     adapter=new HistoryListViewAdapter(getApplicationContext(),c);
                     adapter.setTheView(switcher);
@@ -419,6 +411,7 @@ public class HistoryActivity extends FragmentActivity {
                 String to=data.getStringExtra("To");
 
                 if(switcher){
+
                   saveFiltersDateToDate(from,to);
                 }else {
                     saveIncomeFiltersDateToDate(from,to);

@@ -3,6 +3,106 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="0.00 €"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:textSize="40sp"
+            />
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="2dp"
+            android:layout_marginBottom="3dp"
+            android:background="@drawable/line_seperator_solid" />
+
+
+        <TextView
+            style="@style/Headline"
+            android:text="Source" />
+
+
+        <Spinner
+            android:id="@+id/sIncomeCategories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="2dp"
+            android:layout_marginBottom="3dp"
+            android:background="@drawable/line_seperator_solid" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:orientation="horizontal"
+            android:weightSum="9">
+
+            <TextView
+                style="@style/Headline"
+                android:layout_weight="3"
+                android:text="Date" />
+
+            <EditText
+                android:id="@+id/etIncomeDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:editable="false"
+                android:focusable="false" />
+
+            <ImageButton
+                android:id="@+id/ibIncomeCalendar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="4" />
+
+
+        </LinearLayout>
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="2dp"
+            android:layout_marginBottom="3dp"
+            android:background="@drawable/line_seperator_solid" />
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/bCancel"
+                style="@style/ButtonStyleBottom"
+                android:text="Cancel" />
+            <Button
+                android:id="@+id/bOK"
+                style="@style/ButtonStyleBottom"
+                android:text="OK" />
+
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+    <!--
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -121,16 +221,6 @@
     </LinearLayout>
 
 
-<!--
-        <EditText
-            android:id="@+id/etisource"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/tvisource"
-            android:layout_marginRight="36dp" />
--->
 
 
 
@@ -168,4 +258,6 @@
 
 
     </RelativeLayout>
+
+    -->
 </ScrollView>

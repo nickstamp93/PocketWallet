@@ -2,46 +2,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="myexpenses.ng2.com.myexpenses.Activities.HistoryActivity">
 
-    <item
-        android:id="@+id/actionFilters"
-        android:showAsAction="never"
-        android:title="@string/action_settings">
-
-    </item>
 
     <item android:id="@+id/Filters"
+        android:icon="@drawable/filter"
         android:showAsAction="always"
         android:title="Filters"
-        >
+        android:orderInCategory="10">
 
         <menu>
-            <item
-                android:id="@+id/FiltersStandar"
-                android:title="Standar"
-                />
 
             <item
                 android:id="@+id/FiltersCategory"
-                android:title="Category"
+                android:title="By Category"
                 />
 
             <item
                 android:id="@+id/OrderPrice"
-                android:title="Order depended on price"
+                android:title="By Price"
                 />
             <item
                 android:id="@+id/FiltersDate"
-                android:title="Date"
+                android:title="By Date"
                 />
 
             <item
                 android:id="@+id/FiltersDTD"
-                android:title="Date to Date"
+                android:title="From Date to Date"
                 />
 
             <item
                 android:id="@+id/FiltersNTO"
-                android:title="Newest expense to oldest"
+                android:title="By Most Recent"
                 />
 
 

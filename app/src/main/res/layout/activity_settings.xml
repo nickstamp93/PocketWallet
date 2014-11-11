@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="2dp"
             android:layout_marginBottom="3dp"
-            android:background="@drawable/line_seperator" />
+            android:background="@drawable/line_seperator_fade" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -169,7 +169,7 @@
             android:layout_width="wrap_content"
             android:layout_height="2dp"
             android:layout_marginBottom="3dp"
-            android:background="@drawable/line_seperator" />
+            android:background="@drawable/line_seperator_fade" />
 
         <LinearLayout
             android:layout_width="match_parent"

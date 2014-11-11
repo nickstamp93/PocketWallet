@@ -4,50 +4,39 @@
 
     <item
         android:id="@+id/IncomeFilters"
-        android:title="Filters"
+        android:icon="@drawable/filter"
+        android:orderInCategory="10"
         android:showAsAction="always"
-       >
+        android:title="Filters">
 
         <menu>
-            <item
-                android:id="@+id/IncomeStandar"
-                android:title="Standar"
-                />
 
             <item
                 android:id="@+id/IncomeSource"
-                android:title="Source"
-                />
-
-            <item
-                android:id="@+id/IncomeDate"
-                android:title="Date"
-                />
-           <item
-               android:id="@+id/IncomeDTD"
-               android:title="Date to Date"
-               />
-
-            <item
-                android:id="@+id/IncomeNTO"
-                android:title="Newest Income to oldest"
-                />
+                android:title="By Source" />
 
             <item
                 android:id="@+id/IncomeAmount"
-                android:title="Order depended on amount"
-                />
+                android:title="By Amount" />
+            <item
+                android:id="@+id/IncomeDate"
+                android:title="By Date" />
+            <item
+                android:id="@+id/IncomeDTD"
+                android:title="From Date to Date" />
 
+            <item
+                android:id="@+id/IncomeNTO"
+                android:title="By Most Recent" />
 
 
         </menu>
 
 
-       </item>
-<item
-    android:id="@+id/toggleButton"
-    android:title="Expenses"
-    android:showAsAction="always"
-    />
+    </item>
+    <item
+        android:id="@+id/toggleButton"
+        android:showAsAction="always"
+        android:title="Expense" />
 
 </menu>

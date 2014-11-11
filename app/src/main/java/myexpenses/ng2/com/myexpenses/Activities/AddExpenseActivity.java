@@ -1,11 +1,9 @@
 package myexpenses.ng2.com.myexpenses.Activities;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
-import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +17,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
+import com.doomonafireball.betterpickers.numberpicker.NumberPicker;
+import com.doomonafireball.betterpickers.numberpicker.NumberPickerBuilder;
+import com.doomonafireball.betterpickers.numberpicker.NumberPickerDialogFragment;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -28,8 +29,6 @@ import myexpenses.ng2.com.myexpenses.Data.CategoryDatabase;
 import myexpenses.ng2.com.myexpenses.Data.ExpenseItem;
 import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
 import myexpenses.ng2.com.myexpenses.R;
-import myexpenses.ng2.com.myexpenses.Utils.CalendarDialog;
-import myexpenses.ng2.com.myexpenses.Utils.PriceDialog;
 import myexpenses.ng2.com.myexpenses.Utils.SpinnerAdapter;
 import myexpenses.ng2.com.myexpenses.Utils.SpinnerItem;
 
@@ -56,12 +55,12 @@ for the result. DONE
 9) Fix some features in income (history List View Adapter and also update an income)
 10)Fix the dialog for filters date and date-to-date
  */
-public class AddExpenseActivity extends FragmentActivity {
+public class AddExpenseActivity extends FragmentActivity implements NumberPickerDialogFragment.NumberPickerDialogHandler {
 
     private Button bOk, bCancel;
     private ImageButton ibCalendar, ibCamera;
 
-    private EditText etNotes,etDate;
+    private EditText etNotes, etDate;
     private TextView tvPrice;
     private ImageView ivPhoto;
     private Spinner sCategories;
@@ -70,7 +69,7 @@ public class AddExpenseActivity extends FragmentActivity {
     private ExpenseItem item;
 
     private boolean image;
-  //  private CalendarDialog dialog;
+    //  private CalendarDialog dialog;
 
     private final int REQUEST_CODE = 1;
     private Bitmap bm;
@@ -79,10 +78,10 @@ public class AddExpenseActivity extends FragmentActivity {
     private boolean update;
 
     private Calendar c;
-    private  CalendarDatePickerDialog d;
-    private PriceDialog priceDialog;
+    private CalendarDatePickerDialog d;
+    private NumberPickerBuilder npb;
 
-    private  ArrayList<String> allCategories;
+    private ArrayList<String> allCategories;
 
 
     @Override
@@ -98,7 +97,7 @@ public class AddExpenseActivity extends FragmentActivity {
         item = (ExpenseItem) getIntent().getSerializableExtra("Expense");
         if (item != null) {
             update = true;
-            id=item.getId();
+            id = item.getId();
             initUiValues();
             Log.i("ExpenseActivity", "Called from History");
             Log.i("Values", item.getCategories() + "-" + item.getDate() + '-' + item.getNotes() + item.getPrice() + "-" + item.getId());
@@ -122,17 +121,17 @@ public class AddExpenseActivity extends FragmentActivity {
         update = false;
 
 
-           c = Calendar.getInstance();
-           d = CalendarDatePickerDialog.newInstance(listener ,
-             c.get(Calendar.YEAR) , c.get(Calendar.MONTH) , c.get(Calendar.DAY_OF_MONTH));
+        c = Calendar.getInstance();
+        d = CalendarDatePickerDialog.newInstance(listener,
+                c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
 
-        String day=c.get(Calendar.DAY_OF_MONTH)+"";
-        String month=c.get(Calendar.MONTH)+"";
-        if(c.get(Calendar.DAY_OF_MONTH)<10){
-            day = "0" +c.get(Calendar.DAY_OF_MONTH) ;
+        String day = c.get(Calendar.DAY_OF_MONTH) + "";
+        String month = c.get(Calendar.MONTH) + "";
+        if (c.get(Calendar.DAY_OF_MONTH) < 10) {
+            day = "0" + c.get(Calendar.DAY_OF_MONTH);
         }
-        if(c.get(Calendar.MONTH)<10){
-            month = "0" +c.get(Calendar.MONTH) ;
+        if (c.get(Calendar.MONTH) < 10) {
+            month = "0" + c.get(Calendar.MONTH);
         }
 
 /*
@@ -149,23 +148,29 @@ public class AddExpenseActivity extends FragmentActivity {
 
         date = c.get(Calendar.YEAR) + "-" + month + "-" + day;
 
+
+        npb = new NumberPickerBuilder().setFragmentManager(getSupportFragmentManager())
+                .setPlusMinusVisibility(NumberPicker.INVISIBLE)
+                .setStyleResId(R.style.BetterPickersDialogFragment);
+
     }
 
     private void initUiValues() {
         cdb = new CategoryDatabase(AddExpenseActivity.this);
-        tvPrice.setText(item.getPrice() + "");
+
+        tvPrice.setText(item.getPrice() + " " + PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("pref_key_currency", "€"));
         etNotes.setText(item.getNotes());
-        sCategories.setSelection(cdb.getPositionFromValue(item.getCategories(),true));
+        sCategories.setSelection(cdb.getPositionFromValue(item.getCategories(), true));
         cdb.close();
 
-        String tokens[]=item.getDate().split("-");
-        int day=Integer.parseInt(tokens[2]);
-        int month=Integer.parseInt(tokens[1]);
-        int year=Integer.parseInt(tokens[0]);
+        String tokens[] = item.getDate().split("-");
+        int day = Integer.parseInt(tokens[2]);
+        int month = Integer.parseInt(tokens[1]);
+        int year = Integer.parseInt(tokens[0]);
 
-        d= CalendarDatePickerDialog.newInstance(listener ,
-                year , month , day);
-        date=year+"-"+month+"-"+day;
+        d = CalendarDatePickerDialog.newInstance(listener,
+                year, month, day);
+        date = year + "-" + month + "-" + day;
         etDate.setText(reverseDate());
 
     }
@@ -176,8 +181,8 @@ public class AddExpenseActivity extends FragmentActivity {
         bOk = (Button) findViewById(R.id.bOK);
         bCancel = (Button) findViewById(R.id.bCancel);
         ibCalendar = (ImageButton) findViewById(R.id.ibCalendar);
-        tvPrice=(TextView)findViewById(R.id.tvPrice);
-        etDate=(EditText)findViewById(R.id.etDate);
+        tvPrice = (TextView) findViewById(R.id.tvPrice);
+        etDate = (EditText) findViewById(R.id.etDate);
         etNotes = (EditText) findViewById(R.id.etNotes);
         sCategories = (Spinner) findViewById(R.id.sCategories);
 
@@ -185,18 +190,18 @@ public class AddExpenseActivity extends FragmentActivity {
 
         //get from CategoryDatabase all the categories and save them in to an ArrayList
         allCategories = cdb.getExpenseCategories(true);
-        ArrayList<SpinnerItem> spinnerItems =new ArrayList<SpinnerItem>();
+        ArrayList<SpinnerItem> spinnerItems = new ArrayList<SpinnerItem>();
 
-        for(int i=0; i<allCategories.size(); i++){
-            String name=allCategories.get(i);
-            int color=cdb.getColorFromCategory(name,true);
-            char letter=cdb.getLetterFromCategory(name,true);
-            spinnerItems.add(new SpinnerItem(name,color,letter));
+        for (int i = 0; i < allCategories.size(); i++) {
+            String name = allCategories.get(i);
+            int color = cdb.getColorFromCategory(name, true);
+            char letter = cdb.getLetterFromCategory(name, true);
+            spinnerItems.add(new SpinnerItem(name, color, letter));
 
         }
 
         //Initialize the SpinnerAdapter
-        SpinnerAdapter adapter = new SpinnerAdapter(AddExpenseActivity.this,R.layout.spinner_item, spinnerItems);
+        SpinnerAdapter adapter = new SpinnerAdapter(AddExpenseActivity.this, R.layout.spinner_item, spinnerItems);
         //Set the adapter of spinner item to be all the categories from CategoryDatabase
         sCategories.setAdapter(adapter);
         cdb.closeDB();
@@ -208,39 +213,39 @@ public class AddExpenseActivity extends FragmentActivity {
             @Override
             public void onClick(View view) {
 
-                    boolean ok = true;
-                    double price = 0;
-                    String category, notes;
-                    //get the price of the expense if it has problem a Toast appear and say to correct it
-                    try {
-                        price = Double.parseDouble(String.valueOf(tvPrice.getText()));
-                    } catch (NumberFormatException e) {
-                        ok = false;
-                        Toast.makeText(getApplicationContext(), "Plz Press a numerical in Price and not a character", Toast.LENGTH_LONG).show();
+                boolean ok = true;
+                double price = 0;
+                String category, notes;
+                //get the price of the expense if it has problem a Toast appear and say to correct it
+                try {
+                    price = Double.parseDouble(tvPrice.getText().subSequence(0,tvPrice.getText().length()-1).toString());
+                } catch (NumberFormatException e) {
+                    ok = false;
+                    Toast.makeText(getApplicationContext(), "Plz Press a numerical in Price and not a character", Toast.LENGTH_LONG).show();
+                }
+                //if we took the price correctly we continue to retrieve the other information of the expense
+                if (ok) {
+
+                    //category = sCategories.getSelectedItem().toString();
+                    int position = sCategories.getSelectedItemPosition();
+
+                    category = allCategories.get(position);
+                    notes = etNotes.getText().toString();
+                    item = new ExpenseItem(category, notes, price, date);
+                    //if we took a picture using the image button camera we set to the ExpenseItem expense the byte array
+
+                    if (!update) {
+                        //then we add the expense to our database we close it and we finish the activity
+                        mydb.InsertExpense(item);
+
+                    } else {
+                        item.setId(id);
+                        mydb.UpdateExpense(item);
                     }
-                    //if we took the price correctly we continue to retrieve the other information of the expense
-                    if (ok) {
+                    mydb.close();
 
-                        //category = sCategories.getSelectedItem().toString();
-                        int position=sCategories.getSelectedItemPosition();
-
-                        category = allCategories.get(position);
-                        notes = etNotes.getText().toString();
-                        item = new ExpenseItem(category, notes, price, date);
-                        //if we took a picture using the image button camera we set to the ExpenseItem expense the byte array
-
-                        if(!update){
-                            //then we add the expense to our database we close it and we finish the activity
-                            mydb.InsertExpense(item);
-
-                        }else{
-                            item.setId(id);
-                            mydb.UpdateExpense(item);
-                        }
-                        mydb.close();
-
-                        finish();
-                    }
+                    finish();
+                }
 
 
             }
@@ -259,9 +264,7 @@ public class AddExpenseActivity extends FragmentActivity {
             public void onClick(View view) {
 
 
-
-
-                d.show(getSupportFragmentManager() , "Calendar Dialog");
+                d.show(getSupportFragmentManager(), "Calendar Dialog");
 
 
             }
@@ -271,13 +274,10 @@ public class AddExpenseActivity extends FragmentActivity {
         tvPrice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                priceDialog=new PriceDialog();
-                priceDialog.show(getFragmentManager(),"Price");
+                npb.show();
+
             }
         });
-
-
-
 
 
     }
@@ -285,15 +285,15 @@ public class AddExpenseActivity extends FragmentActivity {
     private CalendarDatePickerDialog.OnDateSetListener listener = new CalendarDatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(CalendarDatePickerDialog calendarDatePickerDialog, int i, int i2, int i3) {
-            String month,day;
-            if(i2<10){
+            String month, day;
+            if (i2 < 10) {
                 month = "0" + i2;
-            }else{
+            } else {
                 month = String.valueOf(i2);
             }
-            if(i3<10){
+            if (i3 < 10) {
                 day = "0" + i3;
-            }else{
+            } else {
                 day = String.valueOf(i3);
             }
             date = i + "-" + month + "-" + day;
@@ -304,15 +304,15 @@ public class AddExpenseActivity extends FragmentActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-      //  getMenuInflater().inflate(R.menu.add_expense, menu);
-        if(update){
+        //  getMenuInflater().inflate(R.menu.add_expense, menu);
+        if (update) {
 
-         MenuItem delete=menu.add("Delete").setIcon(getResources().getDrawable(android.R.drawable.ic_menu_delete));
-         delete.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+            MenuItem delete = menu.add("Delete").setIcon(getResources().getDrawable(android.R.drawable.ic_menu_delete));
+            delete.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
             delete.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem) {
-                    Log.i("MenuItem","activated");
+                    Log.i("MenuItem", "activated");
                     mydb.deleteExpense(item.getId());
                     mydb.close();
                     finish();
@@ -340,17 +340,21 @@ public class AddExpenseActivity extends FragmentActivity {
         this.date = date;
     }
 
-    public void setPrice(String price){
+    public void setPrice(String price) {
         tvPrice.setText(price);
     }
 
-    private String reverseDate(){
+    private String reverseDate() {
 
-        String tokens[]=date.split("-");
-        return tokens[2]+"-"+tokens[1]+"-"+tokens[0];
+        String tokens[] = date.split("-");
+        return tokens[2] + "-" + tokens[1] + "-" + tokens[0];
 
 
     }
 
-
+    @Override
+    public void onDialogNumberSet(int reference, int number, double decimal, boolean isNumber, double fullNumber) {
+        String currency = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("pref_key_currency", "€");
+        tvPrice.setText(fullNumber + " " + currency);
+    }
 }

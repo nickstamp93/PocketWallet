@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,8 +27,9 @@ import myexpenses.ng2.com.myexpenses.R;
  */
 public class FiltersDateToDateActivity extends FragmentActivity  {
 
-    private Button bOk,bCancel,bFromDate,bToDate;
-    private TextView tvFrom,tvTo;
+    private Button bOk,bCancel;
+    private ImageButton ibFrom , ibTo;
+    private EditText etFrom,etTo;
     private Dialog dialog;
     private String from,to;
     //We use the fragment FiltersDateDialog to initialise the fields from and to that are our dates.
@@ -69,12 +72,12 @@ public class FiltersDateToDateActivity extends FragmentActivity  {
 
     public void initUI(){
 
-        bOk=(Button) findViewById(R.id.bDTDOk);
-        bCancel=(Button)findViewById(R.id.bDTDCancel);
-        bFromDate=(Button) findViewById(R.id.bDTDFrom);
-        bToDate=(Button) findViewById(R.id.bDTDTo);
-        tvFrom=(TextView) findViewById(R.id.tvDTDFrom);
-        tvTo=(TextView) findViewById(R.id.tvDTDTo);
+        bOk=(Button) findViewById(R.id.bOK);
+        bCancel=(Button)findViewById(R.id.bCancel);
+        ibFrom=(ImageButton) findViewById(R.id.ibFrom);
+        ibTo=(ImageButton) findViewById(R.id.ibTo);
+        etFrom=(EditText) findViewById(R.id.etDateFrom);
+        etTo=(EditText) findViewById(R.id.etDateTo);
         //initialise the dialog fragment and also set the target fragment to be this parent fragment because we need
         //to take some data from child fragment FiltersDateDialog
       //  fdialog=new FiltersDateDialog(false,expense);
@@ -85,7 +88,7 @@ public class FiltersDateToDateActivity extends FragmentActivity  {
 
     public void initListeners(){
 
-       bFromDate.setOnClickListener(new View.OnClickListener() {
+       ibFrom.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
                flag=true;
@@ -98,7 +101,7 @@ public class FiltersDateToDateActivity extends FragmentActivity  {
            }
        });
 
-        bToDate.setOnClickListener(new View.OnClickListener() {
+        ibTo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 flag=false;
@@ -180,11 +183,11 @@ public class FiltersDateToDateActivity extends FragmentActivity  {
 
             if(flag){
                 from=date;
-                tvFrom.setText(from);
+                etFrom.setText(from);
 
             }else{
                 to=date;
-                tvTo.setText(to);
+                etTo.setText(to);
             }
 
         }

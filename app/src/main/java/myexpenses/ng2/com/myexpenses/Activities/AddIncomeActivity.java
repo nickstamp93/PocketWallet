@@ -1,9 +1,8 @@
 package myexpenses.ng2.com.myexpenses.Activities;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
-import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,9 +11,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
+import com.doomonafireball.betterpickers.numberpicker.NumberPicker;
+import com.doomonafireball.betterpickers.numberpicker.NumberPickerBuilder;
+import com.doomonafireball.betterpickers.numberpicker.NumberPickerDialogFragment;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -24,12 +27,13 @@ import myexpenses.ng2.com.myexpenses.Data.CategoryDatabase;
 import myexpenses.ng2.com.myexpenses.Data.IncomeItem;
 import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
 import myexpenses.ng2.com.myexpenses.R;
-import myexpenses.ng2.com.myexpenses.Utils.CalendarDialog;
 import myexpenses.ng2.com.myexpenses.Utils.SpinnerAdapter;
+import myexpenses.ng2.com.myexpenses.Utils.SpinnerItem;
 
-public class AddIncomeActivity extends FragmentActivity {
+public class AddIncomeActivity extends FragmentActivity implements NumberPickerDialogFragment.NumberPickerDialogHandler {
 
-    private EditText etAmount,etSource;
+    private EditText etDate;
+    private TextView tvAmount;
     private Spinner sCategories;
     private ImageButton ibCalendar;
     private Button bOk,bCancel;
@@ -40,9 +44,11 @@ public class AddIncomeActivity extends FragmentActivity {
     private String date;
     private boolean update;
     private int id;
+    private ArrayList<String> allCategories;
 
     private Calendar c;
     private CalendarDatePickerDialog d;
+    private NumberPickerBuilder npb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +93,7 @@ public class AddIncomeActivity extends FragmentActivity {
     }
     private void initUiValues() {
         cdb = new CategoryDatabase(AddIncomeActivity.this);
-        etAmount.setText(income.getAmount() + "");
+        tvAmount.setText(income.getAmount() + " " + PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("pref_key_currency", "€"));
         sCategories.setSelection(cdb.getPositionFromValue(income.getSource(),false));
         cdb.close();
 
@@ -99,6 +105,7 @@ public class AddIncomeActivity extends FragmentActivity {
         d= CalendarDatePickerDialog.newInstance(listener ,
                 year , month , day);
         date=year+"-"+month+"-"+day;
+        etDate.setText(reverseDate());
 
     }
 
@@ -138,23 +145,44 @@ public class AddIncomeActivity extends FragmentActivity {
         }
         */
         date = c.get(Calendar.YEAR) + "-" + month + "-" + day;
+
+
+        npb = new NumberPickerBuilder().setFragmentManager(getSupportFragmentManager())
+                .setPlusMinusVisibility(NumberPicker.INVISIBLE)
+                .setStyleResId(R.style.BetterPickersDialogFragment);
     }
 
     private void initUI(){
 
-       etAmount=(EditText)findViewById(R.id.etiamount);
+
+       etDate=(EditText) findViewById(R.id.etIncomeDate);
       // etSource=(EditText)findViewById(R.id.etisource);
+       tvAmount =(TextView) findViewById(R.id.tvAmount);
        sCategories=(Spinner) findViewById(R.id.sIncomeCategories);
-       ibCalendar =(ImageButton) findViewById(R.id.ibiCalendar);
+       ibCalendar =(ImageButton) findViewById(R.id.ibIncomeCalendar);
        bOk=(Button)findViewById(R.id.bOK);
        bCancel=(Button)findViewById(R.id.bCancel);
 
+        etDate.setText(reverseDate());
+
         //get from CategoryDatabase all the categories and save them in to an ArrayList
-        ArrayList<String> allCategories = cdb.getExpenseCategories(false);
+        allCategories = cdb.getCategories(false);
+
+        ArrayList<SpinnerItem> spinnerItems = new ArrayList<SpinnerItem>();
+
+        for (int i = 0; i < allCategories.size(); i++) {
+            String name = allCategories.get(i);
+            int color = cdb.getColorFromCategory(name, false);
+            char letter = cdb.getLetterFromCategory(name, false);
+            spinnerItems.add(new SpinnerItem(name, color, letter));
+
+        }
+
+
         //Initialize the SpinnerAdapter
-      //  SpinnerAdapter adapter = new SpinnerAdapter(AddIncomeActivity.this, allCategories);
+        SpinnerAdapter adapter = new SpinnerAdapter(AddIncomeActivity.this, R.layout.spinner_item, spinnerItems);
         //Set the adapter of spinner item to be all the categories from CategoryDatabase
-        //sCategories.setAdapter(adapter);
+        sCategories.setAdapter(adapter);
         cdb.close();
     }
 
@@ -169,7 +197,7 @@ public class AddIncomeActivity extends FragmentActivity {
            String source;
           //get the price of the income if it has problem a Toast appear and say to correct it
            try{
-               amount=Double.parseDouble(etAmount.getText().toString());
+               amount = Double.parseDouble(tvAmount.getText().subSequence(0, tvAmount.getText().length()-1).toString());
            }catch (NumberFormatException e){
                ok=false;
                Toast.makeText(getApplicationContext(),"Plz Press a numerical in Price and not a character",Toast.LENGTH_LONG).show();
@@ -177,7 +205,9 @@ public class AddIncomeActivity extends FragmentActivity {
             //if we took the price correctly we continue to retrieve the other information of the income item
            if(ok){
 
-               source=sCategories.getSelectedItem().toString();
+               //source=sCategories.getSelectedItem().toString();
+               int position = sCategories.getSelectedItemPosition();
+               source = allCategories.get(position);
 
            //then we add the income to our database we close it and we finish the activity
                income=new IncomeItem(amount,date,source);
@@ -218,7 +248,13 @@ public class AddIncomeActivity extends FragmentActivity {
             }
         });
 
+        tvAmount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                npb.show();
 
+            }
+        });
 
     }
 
@@ -237,6 +273,7 @@ public class AddIncomeActivity extends FragmentActivity {
                 day = String.valueOf(i3);
             }
             date = i + "-" + month + "-" + day;
+            etDate.setText(reverseDate());
         }
     };
 
@@ -254,5 +291,19 @@ public class AddIncomeActivity extends FragmentActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private String reverseDate() {
+
+        String tokens[] = date.split("-");
+        return tokens[2] + "-" + tokens[1] + "-" + tokens[0];
+
+
+    }
+
+    @Override
+    public void onDialogNumberSet(int reference, int number, double decimal, boolean isNumber, double fullNumber) {
+        String currency = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("pref_key_currency", "€");
+        tvAmount.setText(fullNumber + " " + currency);
     }
 }

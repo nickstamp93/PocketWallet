@@ -189,7 +189,7 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
         etDate.setText(reverseDate());
 
         //get from CategoryDatabase all the categories and save them in to an ArrayList
-        allCategories = cdb.getExpenseCategories(true);
+        allCategories = cdb.getCategories(true);
         ArrayList<SpinnerItem> spinnerItems = new ArrayList<SpinnerItem>();
 
         for (int i = 0; i < allCategories.size(); i++) {

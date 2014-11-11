@@ -151,7 +151,7 @@ public class CategoryDatabase extends SQLiteOpenHelper {
     }
 
     //Get all the categories of database returned in a ArrayList
-    public ArrayList<String> getExpenseCategories(boolean expense) {
+    public ArrayList<String> getCategories(boolean expense) {
         Cursor c;
         int Catrow;
         ArrayList<String> categories = new ArrayList<String>();

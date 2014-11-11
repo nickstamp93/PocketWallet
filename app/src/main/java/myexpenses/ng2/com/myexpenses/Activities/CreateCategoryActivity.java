@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,16 +19,17 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import myexpenses.ng2.com.myexpenses.ColorPicker.ColorPickerDialog;
+import myexpenses.ng2.com.myexpenses.ColorPicker.ColorPickerSwatch;
 import myexpenses.ng2.com.myexpenses.Data.CategoryDatabase;
 import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Utils.DeleteCategoryDialog;
 import myexpenses.ng2.com.myexpenses.Utils.LetterImageView;
 
-public class CreateCategoryActivity extends Activity {
+public class CreateCategoryActivity extends Activity implements ColorPickerSwatch.OnColorSelectedListener {
 
     private EditText etName;
     private ImageButton ibColor;
-    private CheckBox cbpreview;
+   // private CheckBox cbpreview;
     private Button bOk, bCancel;
     private LetterImageView liv;
     private ColorPickerDialog dialog;
@@ -59,11 +62,11 @@ public class CreateCategoryActivity extends Activity {
     private void initUi() {
         etName = (EditText) findViewById(R.id.etCatName);
         ibColor = (ImageButton) findViewById(R.id.ibCatColor);
-        cbpreview = (CheckBox) findViewById(R.id.cbCatPreview);
-        bOk = (Button) findViewById(R.id.bCatOk);
-        bCancel = (Button) findViewById(R.id.bCatCancel);
+       // cbpreview = (CheckBox) findViewById(R.id.cbCatPreview);
+        bOk = (Button) findViewById(R.id.bOK);
+        bCancel = (Button) findViewById(R.id.bCancel);
         liv = (LetterImageView) findViewById(R.id.livCatPreview);
-        llCatPreview = (LinearLayout) findViewById(R.id.llCatPreview);
+       // llCatPreview = (LinearLayout) findViewById(R.id.llCatPreview);
     }
 
     private void initBasicVariables() {
@@ -72,6 +75,7 @@ public class CreateCategoryActivity extends Activity {
                 , Color.LTGRAY, Color.MAGENTA, Color.YELLOW};
         dialog = ColorPickerDialog.newInstance(R.string.color_picker_default_title, mColor, 0, 4, ColorPickerDialog.SIZE_SMALL);
         dialog.setSelectedColor(Color.RED);
+        dialog.setOnColorSelectedListener(this);
 
         name = getIntent().getStringExtra("Name");
         if(name!=null){
@@ -82,7 +86,8 @@ public class CreateCategoryActivity extends Activity {
             Log.i("Update","U");
         }else{
             Log.i("Insert","I");
-            color = 0;
+            color = Color.RED;
+            liv.setmBackgroundPaint(color);
             id=-1;
         }
 
@@ -98,6 +103,8 @@ public class CreateCategoryActivity extends Activity {
         etName.setText(name);
        // cbpreview.setChecked(true);
         dialog.setSelectedColor(color);
+        liv.setmBackgroundPaint(color);
+        liv.setLetter(name.charAt(0));
 
     }
 
@@ -114,7 +121,31 @@ public class CreateCategoryActivity extends Activity {
             }
         });
 
+        etName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+
+                if(charSequence.toString().trim().length()>0){
+                    letter=charSequence.toString().trim().charAt(0);
+
+                }else{
+                    letter=' ';
+                }
+                liv.setLetter(letter);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+/*
         cbpreview.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -145,23 +176,23 @@ public class CreateCategoryActivity extends Activity {
                 }
             }
         });
-
+*/
 
         bOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
 
-                    name = etName.getText().toString();
+                    name = etName.getText().toString().trim();
                     //Check if the user gave a name
-                    if (name.equals("Name") || name.equals("")) {
+                    if ( name.length()==0) {
                         Toast.makeText(getApplicationContext(), "Plz write a name", Toast.LENGTH_SHORT).show();
                     } else {
 
                         if (cdb.checkIfNameExists(name, expense) && id==-1) {
                             Toast.makeText(getApplicationContext(), "There is already a category with this name plz try again", Toast.LENGTH_LONG).show();
                         } else {
-                            String newCat = etName.getText().toString().toUpperCase();
+                            String newCat = etName.getText().toString().trim().toUpperCase();
                             letter=newCat.charAt(0);
                             String sletter = String.valueOf(letter);
 
@@ -235,6 +266,13 @@ public class CreateCategoryActivity extends Activity {
     }
 
 
+    @Override
+    public void onColorSelected(int color) {
+        this.color=color;
+        dialog.setSelectedColor(color);
+        liv.setmBackgroundPaint(color);
+        liv.invalidate();
+    }
 }
 
 

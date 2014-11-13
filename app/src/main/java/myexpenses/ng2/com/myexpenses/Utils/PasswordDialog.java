@@ -21,6 +21,8 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import myexpenses.ng2.com.myexpenses.Activities.SettingsActivity;
+import myexpenses.ng2.com.myexpenses.Activities.SettingsActivity2;
 import myexpenses.ng2.com.myexpenses.R;
 
 /**
@@ -37,11 +39,12 @@ public class PasswordDialog extends DialogPreference {
     private CheckBox chbShowPass;
     //dialog object
     Dialog dialog;
+    private Context context;
 
     public PasswordDialog(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-
+        this.context = context;
         setDialogLayoutResource(R.layout.password_dialog);
 
     }
@@ -56,8 +59,6 @@ public class PasswordDialog extends DialogPreference {
         builder.setNegativeButton(null, null);
 
         dialog = getDialog();
-
-
 
     }
 
@@ -78,6 +79,7 @@ public class PasswordDialog extends DialogPreference {
         etNewRe = (EditText) view.findViewById(R.id.etNewPassRe);
 
         chbShowPass = (CheckBox) view.findViewById(R.id.chbShowPass);
+        chbShowPass.setOnCheckedChangeListener(chbListener);
 
 
         bOk = (Button) view.findViewById(R.id.bOk);
@@ -94,7 +96,7 @@ public class PasswordDialog extends DialogPreference {
 
 
 
-                //check if the 2 new passes are the same and the current pass is correct
+                //check if the 2 new passes are the same , not empty and the current pass is correct
                 if(etCurrent.getText().toString().equals(pass) && etNew.getText().toString().equals(etNewRe.getText().toString())){
                     //if all that are ok , store the new pass to the prefs file
                     SharedPreferences.Editor editor = prefs.edit();
@@ -117,6 +119,7 @@ public class PasswordDialog extends DialogPreference {
         bCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ((SettingsActivity2)context).updatePassword();
                 getDialog().dismiss();
             }
         });

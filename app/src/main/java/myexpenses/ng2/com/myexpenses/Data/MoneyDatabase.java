@@ -236,6 +236,14 @@ public class MoneyDatabase extends SQLiteOpenHelper {
 
     }
 
+    public void deleteAllIncome(){
+        getWritableDatabase().delete(Table_Income, null, null);
+    }
+
+    public void deleteAllExpense(){
+        getWritableDatabase().delete(Table_Expense, null, null);
+    }
+
 
     public void deleteTuplesDependedOnCategory(String category, boolean expense) {
 

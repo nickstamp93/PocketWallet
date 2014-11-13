@@ -27,6 +27,7 @@ import myexpenses.ng2.com.myexpenses.Data.CategoryDatabase;
 import myexpenses.ng2.com.myexpenses.Data.IncomeItem;
 import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
 import myexpenses.ng2.com.myexpenses.R;
+import myexpenses.ng2.com.myexpenses.Utils.SharedPrefsManager;
 import myexpenses.ng2.com.myexpenses.Utils.SpinnerAdapter;
 import myexpenses.ng2.com.myexpenses.Utils.SpinnerItem;
 
@@ -213,7 +214,29 @@ public class AddIncomeActivity extends FragmentActivity implements NumberPickerD
                income=new IncomeItem(amount,date,source);
                if(!update) {
                    db.InsertIncome(income);
+                   SharedPrefsManager manager = new SharedPrefsManager(AddIncomeActivity.this);
+                   manager.startEditing();
+                   if(manager.getPrefsSavings() > 0) {
 
+                       if (!manager.getPrefsOnSalary()) {
+                           manager.setPrefsSavings(manager.getPrefsSavings() + manager.getPrefsBalance());
+                           manager.setPrefsBalance(0);
+                           manager.setPrefsDifference(0);
+                           manager.commit();
+                       }
+                       manager.setPrefsBalance(manager.getPrefsBalance() + (float) income.getAmount());
+                       manager.commit();
+                   }else{
+                       float in = manager.getPrefsSavings();
+                       manager.setPrefsSavings(in + (float)income.getAmount());
+                       manager.commit();
+                       in = manager.getPrefsSavings();
+                       if(in > 0){
+                           manager.setPrefsSavings(0);
+                           manager.setPrefsBalance(in);
+                           manager.setPrefsDifference(0);
+                       }
+                   }
                }else{
                     income.setId(id);
                     db.UpdateIncome(income);

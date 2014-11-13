@@ -12,10 +12,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.filippudak.ProgressPieView.ProgressPieView;
+
 import myexpenses.ng2.com.myexpenses.Data.UserProfile;
 import myexpenses.ng2.com.myexpenses.Data.UserProfileSalary;
 import myexpenses.ng2.com.myexpenses.MainActivity;
 import myexpenses.ng2.com.myexpenses.R;
+import myexpenses.ng2.com.myexpenses.Utils.PercentView;
 import myexpenses.ng2.com.myexpenses.Utils.SharedPrefsManager;
 
 public class OverviewActivity extends Activity {
@@ -30,6 +33,7 @@ public class OverviewActivity extends Activity {
 
     //View objects for the XML management
     TextView tvBalance, tvSavings, tvDays, tvUsername;
+    PercentView pv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,13 @@ public class OverviewActivity extends Activity {
         }
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getDataFromSharedPrefs();
+        refreshUI();
     }
 
     //checks if a user profile already exists(practically if the app launches for the first time)
@@ -86,10 +97,9 @@ public class OverviewActivity extends Activity {
 
         if (onSalary) {
             float salary = manager.getPrefsSalary();
-            boolean bonus = manager.getPrefsBonus();
             String salFreq = manager.getPrefsSalFreq();
 
-            profile = new UserProfileSalary(username, savings, balance, bonus, salary, salFreq, nextPaymentDate, currency);
+            profile = new UserProfileSalary(username, savings, balance, salary, salFreq, nextPaymentDate, currency);
             ((UserProfileSalary) profile).show();
         } else {
             profile = new UserProfile(username, savings, balance, currency);
@@ -125,6 +135,7 @@ public class OverviewActivity extends Activity {
         tvSavings = (TextView) findViewById(R.id.tvSavings);
         tvDays = (TextView) findViewById(R.id.tvDays);
         tvUsername = (TextView) findViewById(R.id.tvUsername);
+        pv = (PercentView) findViewById(R.id.percentview);
 
         //set a font for the text views
         Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/font_exo2.otf");
@@ -144,8 +155,17 @@ public class OverviewActivity extends Activity {
         if (profile instanceof UserProfileSalary) {
             tvDays.setText(String.valueOf(((UserProfileSalary) profile).getDaysToNextPayment()));
         } else {
-            tvDays.setText("You are not currently working anywhere with a standard salary");
+            tvDays.setText("None");
         }
+        if(profile.getSavings() > 0){
+            float percentBalance = (manager.getPrefsDifference()+manager.getPrefsBalance())/(manager.getPrefsBalance()+manager.getPrefsDifference()+manager.getPrefsSavings());
+            float percentExpense = manager.getPrefsDifference()/(manager.getPrefsBalance()+manager.getPrefsDifference()+manager.getPrefsSavings());
+            pv.setPercentageBalance(percentBalance*100);
+            pv.setPercentageExpense(percentExpense * 100);
+        }else{
+            pv.setPercentageExpense(100);
+        }
+
     }
 
 

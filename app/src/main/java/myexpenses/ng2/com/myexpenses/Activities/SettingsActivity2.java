@@ -16,6 +16,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
+import android.preference.SwitchPreference;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.widget.Toast;
@@ -27,6 +28,7 @@ import java.util.Calendar;
 import java.util.prefs.Preferences;
 
 import myexpenses.ng2.com.myexpenses.BroadcastReceivers.ReminderReceiver;
+import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
 import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Utils.PasswordDialog;
 import myexpenses.ng2.com.myexpenses.Utils.SharedPrefsManager;
@@ -105,7 +107,9 @@ public class SettingsActivity2 extends PreferenceActivity
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //call delete income method from database
-
+                        MoneyDatabase db = new MoneyDatabase(getApplicationContext());
+                        db.deleteAllIncome();
+                        db.close();
                         dialog.dismiss();
                     }
                 });
@@ -134,6 +138,9 @@ public class SettingsActivity2 extends PreferenceActivity
                     public void onClick(DialogInterface dialog, int which) {
                         //call delete expense method from database
 
+                        MoneyDatabase db = new MoneyDatabase(getApplicationContext());
+                        db.deleteAllExpense();
+                        db.close();
                         dialog.dismiss();
                     }
                 });
@@ -167,6 +174,7 @@ public class SettingsActivity2 extends PreferenceActivity
                 && sharedPreferences.getString("pref_key_password_value", "").equals("")
                 && sharedPreferences.getBoolean("pref_key_password" , false)){
             ((PasswordDialog)findPreference("pref_key_password_value")).show();
+            //PasswordDialog d = new PasswordDialog(SettingsActivity2.this , null);
         }
         if(key.equals("pref_key_reminder") && sharedPreferences.getBoolean("pref_key_reminder",false)){
             SharedPrefsManager manager = new SharedPrefsManager(getApplicationContext());
@@ -200,6 +208,11 @@ public class SettingsActivity2 extends PreferenceActivity
         }
     }
 
+    public void updatePassword(){
+        SwitchPreference p =  (SwitchPreference)findPreference("pref_key_password");
+        PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putBoolean("pref_key_password" , false).commit();
+        p.setChecked(false);
+    }
 
     public void setAlarm(){
         PendingIntent pendingIntent;

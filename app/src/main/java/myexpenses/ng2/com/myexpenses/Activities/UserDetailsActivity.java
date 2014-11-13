@@ -137,7 +137,6 @@ public class UserDetailsActivity extends Activity {
                     manager.setPrefsUsername(username);
                     manager.setPrefsSavings(savings);
                     manager.setPrefsBalance(balance);
-                    manager.setPrefsBonus(bonus);
                     manager.setPrefsOnSalary(onSalary);
                     manager.setPrefsSalary(salary);
                     manager.setPrefsSalFreq(salFreq);

@@ -29,6 +29,7 @@ import myexpenses.ng2.com.myexpenses.Data.CategoryDatabase;
 import myexpenses.ng2.com.myexpenses.Data.ExpenseItem;
 import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
 import myexpenses.ng2.com.myexpenses.R;
+import myexpenses.ng2.com.myexpenses.Utils.SharedPrefsManager;
 import myexpenses.ng2.com.myexpenses.Utils.SpinnerAdapter;
 import myexpenses.ng2.com.myexpenses.Utils.SpinnerItem;
 
@@ -107,6 +108,7 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
 
 
     }
+
 
     private void initBasicVariables() {
         cdb = new CategoryDatabase(AddExpenseActivity.this);
@@ -237,7 +239,17 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
                     if (!update) {
                         //then we add the expense to our database we close it and we finish the activity
                         mydb.InsertExpense(item);
-
+                        SharedPrefsManager manager = new SharedPrefsManager(AddExpenseActivity.this);
+                        manager.startEditing();
+                        float difference = manager.getPrefsBalance() - (float)item.getPrice();
+                        manager.setPrefsBalance(difference);
+                        manager.setPrefsDifference((float)item.getPrice() + manager.getPrefsDifference());
+                        manager.commit();
+                        if(!manager.getPrefsOnSalary() && manager.getPrefsBalance() < 0){
+                            manager.setPrefsSavings(manager.getPrefsSavings() + manager.getPrefsBalance());
+                            manager.setPrefsBalance(0);
+                            manager.commit();
+                        }
                     } else {
                         item.setId(id);
                         mydb.UpdateExpense(item);

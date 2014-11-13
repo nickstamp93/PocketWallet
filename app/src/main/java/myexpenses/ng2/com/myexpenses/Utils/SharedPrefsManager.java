@@ -27,7 +27,6 @@ public class SharedPrefsManager {
     private static final String PREFS_SALARY = "salary";
     private static final String PREFS_BALANCE = "balance";
     private static final String PREFS_ON_SALARY = "onSalary";
-    private static final String PREFS_BONUS = "bonus";
     private static final String PREFS_SAVINGS = "savings";
     private static final String PREFS_SAL_FREQ = "salFreq";
     private static final String PREFS_NPD = "nextPaymentDate";
@@ -36,6 +35,7 @@ public class SharedPrefsManager {
     private static final String PREFS_REMINDER = "reminder";
     private static final String PREFS_ISPASSWORD = "ispassword";
     private static final String PREFS_PASSWORD = "password";
+    private static final String PREFS_DIFFERENCE = "difference";
 
     //the SharedPreferences and Editor objects
     SharedPreferences prefs;
@@ -72,9 +72,6 @@ public class SharedPrefsManager {
         return prefs.getFloat(PREFS_SAVINGS, 0);
     }
 
-    public boolean getPrefsBonus() {
-        return prefs.getBoolean(PREFS_BONUS, false);
-    }
 
     public float getPrefsSalary() {
         return prefs.getFloat(PREFS_SALARY, 0);
@@ -138,6 +135,10 @@ public class SharedPrefsManager {
         return prefs.getString(PREFS_PASSWORD , "0000");
     }
 
+    public float getPrefsDifference() {
+        return prefs.getFloat(PREFS_DIFFERENCE , 0);
+    }
+
     public void setPrefsIsProfile(boolean isProfile) {
         editor.putBoolean(PREFS_IS_PROFILE, isProfile);
     }
@@ -152,10 +153,6 @@ public class SharedPrefsManager {
 
     public void setPrefsBalance(float balance) {
         editor.putFloat(PREFS_BALANCE, balance);
-    }
-
-    public void setPrefsBonus(boolean bonus) {
-        editor.putBoolean(PREFS_BONUS, bonus);
     }
 
     public void setPrefsOnSalary(boolean onSalary) {
@@ -194,5 +191,8 @@ public class SharedPrefsManager {
         editor.putString(PREFS_PASSWORD , password);
     }
 
+    public void setPrefsDifference(float difference){
+        editor.putFloat(PREFS_DIFFERENCE , difference);
+    }
 
 }

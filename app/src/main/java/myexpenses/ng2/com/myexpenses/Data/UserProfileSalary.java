@@ -18,17 +18,15 @@ public class UserProfileSalary extends UserProfile {
     //salary
     private float salary;
     //if user can manually add an income
-    private boolean bonus;
     //days to next payment
     private int daysToNextPayment;
     //next payment date
     private Date nextPaymentDate;
 
     //constructor
-    public UserProfileSalary(String username, float savings, float balance, boolean bonus, float salary, String salFreq, String npd , String currency) {
+    public UserProfileSalary(String username, float savings, float balance, float salary, String salFreq, String npd , String currency) {
         super(username, savings, balance , currency);
 
-        this.bonus = bonus;
         this.salary = salary;
         this.salFreq = salFreq;
 
@@ -97,6 +95,7 @@ public class UserProfileSalary extends UserProfile {
             e.printStackTrace();
         }
 
+
     }
 
     //transfer any money left in the balance to the savings total
@@ -138,14 +137,6 @@ public class UserProfileSalary extends UserProfile {
 
     public void setSalary(float salary) {
         this.salary = salary;
-    }
-
-    public boolean isBonus() {
-        return bonus;
-    }
-
-    public void setBonus(boolean bonus) {
-        this.bonus = bonus;
     }
 
     public Date getNextPaymentDate() {

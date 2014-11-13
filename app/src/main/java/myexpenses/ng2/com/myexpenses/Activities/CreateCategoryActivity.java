@@ -67,6 +67,7 @@ public class CreateCategoryActivity extends Activity implements ColorPickerSwatc
         bOk = (Button) findViewById(R.id.bOK);
         bCancel = (Button) findViewById(R.id.bCancel);
         liv = (LetterImageView) findViewById(R.id.livCatPreview);
+        liv.setOval(true);
        // llCatPreview = (LinearLayout) findViewById(R.id.llCatPreview);
     }
 

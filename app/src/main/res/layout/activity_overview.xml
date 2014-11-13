@@ -32,28 +32,19 @@
 
             <TextView
                 android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/Headline"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                android:padding="2dp"
-                android:text="Current Balance : "
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:text="Balance : "
+                 />
 
             <TextView
                 android:id="@+id/tvBalanceAmount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/Headline"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                android:padding="2dp"
                 android:text="50 $"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#006400"
-                android:textSize="30dp"
-                android:textStyle="bold" />
+                android:textSize="40dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -64,31 +55,20 @@
 
             <TextView
                 android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/Headline"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:lines="2"
-                android:padding="2dp"
-                android:text="Days Left Until \nYour Next Payment:"
-                android:textAlignment="center"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="22sp"
-                android:textStyle="bold" />
+                android:text="Days Until Payment:"
+                android:textAlignment="center" />
 
             <TextView
                 android:id="@+id/tvDays"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                style="@style/Headline"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:padding="2dp"
                 android:text="7"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="#ff0000"
-                android:textSize="30sp"
-                android:textStyle="bold" />
+                android:textSize="40sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -103,43 +83,28 @@
 
             <TextView
                 android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/Headline"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                android:padding="2dp"
-                android:text="Total Savings : "
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:text="Savings : " />
 
             <TextView
                 android:id="@+id/tvSavings"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/Headline"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                android:padding="2dp"
                 android:text="140 $"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#006400"
-                android:textSize="30dp"
-                android:textStyle="bold" />
+                android:textSize="40dp"/>
         </LinearLayout>
 
-        <com.filippudak.ProgressPieView.ProgressPieView
-            android:layout_margin="8dp"
-            android:layout_gravity="center"
-            android:id="@+id/progressPieViewXml"
-            android:layout_width="match_parent"
-            android:layout_height="400dp"
-            ppv:progressFillType="radial"
-            ppv:strokeWidth="2dp"
-            ppv:strokeColor="#000000"
-            ppv:backgroundColor="#00ff00"
-            ppv:progressColor="#ff0000"
-            ppv:image="@drawable/ic_launcher"
-            ppv:progress="56"/>
+
+        <myexpenses.ng2.com.myexpenses.Utils.PercentView
+            android:id="@+id/percentview"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_gravity="center"/>
+
+
 
     </LinearLayout>
 </ScrollView>

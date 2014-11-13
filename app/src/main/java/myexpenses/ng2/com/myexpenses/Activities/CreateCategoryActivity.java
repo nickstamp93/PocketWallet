@@ -21,6 +21,7 @@ import android.widget.Toast;
 import myexpenses.ng2.com.myexpenses.ColorPicker.ColorPickerDialog;
 import myexpenses.ng2.com.myexpenses.ColorPicker.ColorPickerSwatch;
 import myexpenses.ng2.com.myexpenses.Data.CategoryDatabase;
+import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
 import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Utils.DeleteCategoryDialog;
 import myexpenses.ng2.com.myexpenses.Utils.LetterImageView;
@@ -242,8 +243,17 @@ public class CreateCategoryActivity extends Activity implements ColorPickerSwatc
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem) {
                     Log.i("MenuItem", "activated");
-                    deleteDialog=new DeleteCategoryDialog(name,expense);
-                    deleteDialog.show(getFragmentManager(), "Delete");
+                    MoneyDatabase mdb=new MoneyDatabase(CreateCategoryActivity.this);
+                    if(mdb.CategoryHasItems(name,expense)){
+
+                        deleteDialog = new DeleteCategoryDialog(name, expense);
+                        deleteDialog.show(getFragmentManager(), "Delete");
+
+                    }else {
+                        cdb.deleteCategory(name,expense);
+                        finish();
+                    }
+                    mdb.close();
                    // finish();
                     return false;
                 }

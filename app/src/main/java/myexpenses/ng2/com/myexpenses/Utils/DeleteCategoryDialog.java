@@ -28,7 +28,7 @@ import myexpenses.ng2.com.myexpenses.R;
 public class DeleteCategoryDialog extends DialogFragment {
 
     private CheckBox cbChooseCat;
-    private LinearLayout llCategories;
+  //  private LinearLayout llCategories;
     private Button bOk, bCancel;
     private Spinner sCategories;
     private Dialog dialog;
@@ -38,6 +38,8 @@ public class DeleteCategoryDialog extends DialogFragment {
 
     private String delCategory;
     private boolean expense;
+
+    private ArrayList<String> categories;
 
     public DeleteCategoryDialog(String delCategory, boolean expense) {
         this.delCategory = delCategory;
@@ -62,27 +64,41 @@ public class DeleteCategoryDialog extends DialogFragment {
     private void initUI() {
 
         cbChooseCat = (CheckBox) dialog.findViewById(R.id.cbancat);
-        llCategories = (LinearLayout) dialog.findViewById(R.id.llChooseCategory);
-        bOk = (Button) dialog.findViewById(R.id.bdeletecOk);
-        bCancel = (Button) dialog.findViewById(R.id.bdeletecCancel);
+        //llCategories = (LinearLayout) dialog.findViewById(R.id.llChooseCategory);
+        bOk = (Button) dialog.findViewById(R.id.bOK);
+        bCancel = (Button) dialog.findViewById(R.id.bCancel);
         sCategories = (Spinner) dialog.findViewById(R.id.sdCategories);
 
 
     }
 
     private void initBasicVariables() {
-
+/*
         for (int i = 0; i < llCategories.getChildCount(); i++) {
             View view = llCategories.getChildAt(i);
             view.setEnabled(false);
-        }
+        }*/
         mdb = new MoneyDatabase(getActivity());
         cdb = new CategoryDatabase(getActivity());
-        ArrayList<String> categories = cdb.getAllCategoriesExceptOne(delCategory, expense);
+       categories = cdb.getAllCategoriesExceptOne(delCategory, expense);
 
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, R.id.tvSpinnerCategories, categories);
+        ArrayList<SpinnerItem> spinnerItems = new ArrayList<SpinnerItem>();
+
+        for (int i = 0; i < categories.size(); i++) {
+            String name = categories.get(i);
+            int color = cdb.getColorFromCategory(name, true);
+            char letter = cdb.getLetterFromCategory(name, true);
+            spinnerItems.add(new SpinnerItem(name, color, letter));
+
+        }
+
+        SpinnerAdapter adapter = new SpinnerAdapter(getActivity(), R.layout.spinner_item, spinnerItems);
+
+
+       // ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, R.id.tvSpinnerCategories, categories);
         sCategories.setAdapter(adapter);
+        sCategories.setEnabled(false);
 
     }
 
@@ -92,11 +108,7 @@ public class DeleteCategoryDialog extends DialogFragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 cbChooseCat.setChecked(b);
-
-                for (int i = 0; i < llCategories.getChildCount(); i++) {
-                    View view = llCategories.getChildAt(i);
-                    view.setEnabled(b);
-                }
+                sCategories.setEnabled(b);
 
             }
         });
@@ -106,7 +118,13 @@ public class DeleteCategoryDialog extends DialogFragment {
             public void onClick(View view) {
                 if (cbChooseCat.isChecked()) {
                     Log.i("OK", "Checked");
-                    String newCategory=sCategories.getSelectedItem().toString();
+
+
+                    int position = sCategories.getSelectedItemPosition();
+
+                    String  newCategory = categories.get(position);
+
+                 //  newCategory=sCategories.getSelectedItem().toString();
                     mdb.updateTuplesDependedOnCategory(delCategory,expense,newCategory);
                     mdb.close();
                     cdb.deleteCategory(delCategory, expense);

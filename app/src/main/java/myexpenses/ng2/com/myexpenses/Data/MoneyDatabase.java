@@ -260,6 +260,24 @@ public class MoneyDatabase extends SQLiteOpenHelper {
 
     }
 
+    public boolean CategoryHasItems(String category,boolean expense){
+
+        Cursor c;
+
+        if(expense){
+            c=getReadableDatabase().rawQuery("SELECT * FROM "+ Table_Expense + " WHERE " + Key_ECategory +"=" + "'" +category+"'",null);
+        }else{
+            c=getReadableDatabase().rawQuery("SELECT * FROM "+ Table_Income + " WHERE " + Key_ISource +"=" + "'" +category+"'",null);
+        }
+
+        if(c.getCount()==0){
+            return false;
+        }
+
+        return true;
+
+    }
+
 
 
 

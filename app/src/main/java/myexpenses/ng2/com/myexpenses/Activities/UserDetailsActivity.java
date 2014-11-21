@@ -1,6 +1,8 @@
 package myexpenses.ng2.com.myexpenses.Activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -29,14 +31,16 @@ public class UserDetailsActivity extends Activity {
     //View objects for the XML management
     LinearLayout llSalary;
     EditText etSalary, etSavings, etUsername, etBalance;
-    CheckBox chbBonus, chbSalary;
+    CheckBox chbSalary;
     Button bOk, bCancel;
     RadioGroup radioGroup;
 
     //variables for storing the user inputs
     float savings, salary, balance;
-    String username, salFreq, nextPaymentDate;
-    boolean onSalary, bonus;
+    String username, salFreq, nextPaymentDate,salfreqWeekly;
+    int salfreqMonthly;
+    int position;
+    boolean onSalary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +80,10 @@ public class UserDetailsActivity extends Activity {
 
         manager = new SharedPrefsManager(getApplicationContext());
 
+        salfreqWeekly = manager.getPrefsSalFreqWeekly();
+        salfreqMonthly = manager.getPrefsSalFreqMonthly();
+        position = 0;
+
         etUsername.setText(manager.getPrefsUsername());
         etSavings.setText(String.valueOf(manager.getPrefsSavings()));
         etBalance.setText(String.valueOf(manager.getPrefsBalance()));
@@ -97,13 +105,66 @@ public class UserDetailsActivity extends Activity {
 
         chbSalary.setOnCheckedChangeListener(checkBoxListener);
 
+//        radioGroup.setOnCheckedChangeListener(radiogroupListener);
+        radioGroup.getChildAt(0).setOnClickListener(radiogroupListener);
+        radioGroup.getChildAt(1).setOnClickListener(radiogroupListener);
+
     }
 
+
+    private View.OnClickListener radiogroupListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(UserDetailsActivity.this);
+            switch (v.getId()){
+                case R.id.rbWeekly:
+                    //call select day of week dialog
+                    final CharSequence[] weekItems={"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
+                    builder.setTitle("Day of Week");
+                    builder.setSingleChoiceItems(weekItems, 0, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            position = which;
+                            salfreqWeekly = weekItems[which].toString();
+                            Toast.makeText(UserDetailsActivity.this, "Day of week:" + salfreqWeekly, Toast.LENGTH_LONG).show();
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.create().show();
+                    break;
+                case R.id.rbMonthly:
+                    //call select day of month dialog
+                    //call select day of week dialog
+                    final CharSequence[] monthItems={"1","10","15","20"};
+                    builder.setTitle("Day of Week");
+                    builder.setSingleChoiceItems(monthItems , 0 , new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            salfreqMonthly = Integer.parseInt(monthItems[which].toString());
+                            Toast.makeText(UserDetailsActivity.this , "Day of month:" + salfreqMonthly , Toast.LENGTH_LONG).show();
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.create().show();
+
+                    break;
+
+            }
+        }
+    };
     //the onSalary checkboxListener
     private CompoundButton.OnCheckedChangeListener checkBoxListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if(isChecked){
+                int id = radioGroup.getCheckedRadioButtonId();
+                if(id == R.id.rbWeekly){
+                    radioGroup.getChildAt(0).performClick();
+                }else{
+                    radioGroup.getChildAt(1).performClick();
+                }
 
+            }
             for (int i = 0; i < llSalary.getChildCount(); i++) {
                 View view = llSalary.getChildAt(i);
                 view.setEnabled(isChecked);
@@ -139,6 +200,8 @@ public class UserDetailsActivity extends Activity {
                     manager.setPrefsBalance(balance);
                     manager.setPrefsOnSalary(onSalary);
                     manager.setPrefsSalary(salary);
+                    manager.setPrefsSalFreqMonthly(salfreqMonthly);
+                    manager.setPrefsSalFreqWeekly(salfreqWeekly);
                     manager.setPrefsSalFreq(salFreq);
                     manager.setPrefsNpd(nextPaymentDate);
                     manager.setPrefsCurrency("€");
@@ -219,10 +282,10 @@ public class UserDetailsActivity extends Activity {
         int paymentDay;
         if (salFreq.equals("weekly")) {
             //default weekly payment day is monday
-            paymentDay = Calendar.MONDAY;
+            paymentDay = position+1;
         } else {
             //and for monthly payment is the 1st of each month
-            paymentDay = 1;
+            paymentDay = salfreqMonthly;
         }
 
         //if salary frequency is 'weekly' add up to 7 days

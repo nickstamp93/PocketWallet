@@ -1,11 +1,14 @@
 package myexpenses.ng2.com.myexpenses.Data;
 
+import android.content.Context;
 import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import myexpenses.ng2.com.myexpenses.Utils.SharedPrefsManager;
 
 /**
  * Created by Nikos on 7/29/2014.
@@ -82,7 +85,7 @@ public class UserProfileSalary extends UserProfile {
     }
 
     //update the money status of the user(if a payment has occured in between)
-    public void updateMoneyStatus() {
+    public void updateMoneyStatus(Context context) {
         Calendar c = Calendar.getInstance();
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         String todayStr = format.format(c.getTime());
@@ -94,7 +97,14 @@ public class UserProfileSalary extends UserProfile {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
+        SharedPrefsManager manager = new SharedPrefsManager(context);
+        String newNPD = format.format(nextPaymentDate);
+        manager.startEditing();
+        manager.setPrefsNpd(newNPD);
+        manager.setPrefsBalance(getBalance());
+        manager.setPrefsSavings(getSavings());
+        manager.commit();
+        show();
 
     }
 

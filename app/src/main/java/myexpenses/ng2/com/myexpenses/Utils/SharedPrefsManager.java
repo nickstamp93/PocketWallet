@@ -36,6 +36,8 @@ public class SharedPrefsManager {
     private static final String PREFS_ISPASSWORD = "ispassword";
     private static final String PREFS_PASSWORD = "password";
     private static final String PREFS_DIFFERENCE = "difference";
+    private static final String PREFS_SAL_FREQ_WEEKLY = "salfreq weekly";
+    private static final String PREFS_SAL_FREQ_MONTHLY = "salfreq monthly";
 
     //the SharedPreferences and Editor objects
     SharedPreferences prefs;
@@ -139,6 +141,13 @@ public class SharedPrefsManager {
         return prefs.getFloat(PREFS_DIFFERENCE , 0);
     }
 
+    public String getPrefsSalFreqWeekly(){
+        return prefs.getString(PREFS_SAL_FREQ_WEEKLY , "Monday");
+    }
+    public int getPrefsSalFreqMonthly(){
+        return prefs.getInt(PREFS_SAL_FREQ_MONTHLY , 1);
+    }
+
     public void setPrefsIsProfile(boolean isProfile) {
         editor.putBoolean(PREFS_IS_PROFILE, isProfile);
     }
@@ -193,6 +202,12 @@ public class SharedPrefsManager {
 
     public void setPrefsDifference(float difference){
         editor.putFloat(PREFS_DIFFERENCE , difference);
+    }
+    public void setPrefsSalFreqWeekly(String day){
+        editor.putString(PREFS_SAL_FREQ_WEEKLY , day);
+    }
+    public void setPrefsSalFreqMonthly(int day){
+        editor.putInt(PREFS_SAL_FREQ_MONTHLY , day);
     }
 
 }

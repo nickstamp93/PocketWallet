@@ -49,8 +49,9 @@ public class OverviewActivity extends Activity {
         //if profile is on salary , must update its money status
         //this is if the user opened the app after a payment has occurred
         if (profile instanceof UserProfileSalary) {
-            ((UserProfileSalary) profile).updateMoneyStatus();
+            ((UserProfileSalary) profile).updateMoneyStatus(this);
             //and refresh the UI accordingly
+            getDataFromSharedPrefs();
             refreshUI();
         }
 

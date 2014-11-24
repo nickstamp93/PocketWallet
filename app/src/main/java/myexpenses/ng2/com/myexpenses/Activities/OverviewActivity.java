@@ -5,16 +5,20 @@ package myexpenses.ng2.com.myexpenses.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
-
-import com.filippudak.ProgressPieView.ProgressPieView;
 
 import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
 import myexpenses.ng2.com.myexpenses.Data.UserProfile;
@@ -32,11 +36,14 @@ public class OverviewActivity extends Activity {
     private SharedPrefsManager manager;
 
     //UserProfile object
-    UserProfile profile;
+    private UserProfile profile;
 
     //View objects for the XML management
-    TextView tvBalance, tvSavings, tvDays, tvUsername;
-    PercentView pv;
+    private TextView tvBalance, tvSavings, tvDays, tvUsername;
+    private PercentView pv;
+    private DrawerLayout drawerLayout;
+    private ListView drawer;
+    private ActionBarDrawerToggle drawerToggle;
 
     private MoneyDatabase mdb;
 
@@ -48,7 +55,7 @@ public class OverviewActivity extends Activity {
         //init UI elements
         initUI();
 
-        mdb=new MoneyDatabase(OverviewActivity.this);
+        mdb = new MoneyDatabase(OverviewActivity.this);
 
         //manage the user profile
         checkUserProfile();
@@ -107,7 +114,7 @@ public class OverviewActivity extends Activity {
             float salary = manager.getPrefsSalary();
             String salFreq = manager.getPrefsSalFreq();
 
-            profile = new UserProfileSalary(OverviewActivity.this ,username, savings, balance, salary, salFreq, nextPaymentDate, currency);
+            profile = new UserProfileSalary(OverviewActivity.this, username, savings, balance, salary, salFreq, nextPaymentDate, currency);
             ((UserProfileSalary) profile).show();
         } else {
             profile = new UserProfile(username, savings, balance, currency);
@@ -146,6 +153,36 @@ public class OverviewActivity extends Activity {
         pv = (PercentView) findViewById(R.id.percentview);
         pv.setVisibility(View.GONE);
 
+        drawer = (ListView) findViewById(R.id.left_drawer);
+        // Set the adapter for the list view
+        drawer.setAdapter(new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.drawer_menu)));
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.setOnItemClickListener(drawerClickListener);
+
+
+        drawerToggle = new ActionBarDrawerToggle(this , drawerLayout , R.drawable.ic_drawer , R.string.open_drawer , R.string.close_drawer){
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getActionBar().setTitle("Drawer Just Opened");
+                invalidateOptionsMenu();
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                getActionBar().setTitle("Drawer just closed");
+                invalidateOptionsMenu();
+            }
+        };
+        drawerLayout.setDrawerListener(drawerToggle);
+        drawerLayout.setDrawerShadow(R.drawable.drawer_shadow , GravityCompat.START);
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+
+
         //set a font for the text views
         Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/font_exo2.otf");
         tvDays.setTypeface(typeface);
@@ -168,17 +205,16 @@ public class OverviewActivity extends Activity {
         }
 
 
+        double priceOfExpenses = mdb.getTotalExpensePriceForCurrentMonth();
+        double priceOfIncomes = mdb.getTotalIncomePriceForCurrentMonth();
+        double total = priceOfExpenses + priceOfIncomes;
+        Log.i("Expense", priceOfExpenses + "");
+        Log.i("Income", priceOfIncomes + "");
 
-        double priceOfExpenses=mdb.getTotalExpensePriceForCurrentMonth();
-        double priceOfIncomes=mdb.getTotalIncomePriceForCurrentMonth();
-        double total=priceOfExpenses+priceOfIncomes;
-        Log.i("Expense",priceOfExpenses+"");
-        Log.i("Income",priceOfIncomes+"");
-
-        if(total!=0){
-          pv.setVisibility(View.VISIBLE);
-          double percentOfExpenses= priceOfExpenses/total;
-            pv.setPercentageExpense((float)percentOfExpenses*100);
+        if (total != 0) {
+            pv.setVisibility(View.VISIBLE);
+            double percentOfExpenses = priceOfExpenses / total;
+            pv.setPercentageExpense((float) percentOfExpenses * 100);
         }
 /*
         if(profile.getSavings() > 0){
@@ -192,6 +228,49 @@ public class OverviewActivity extends Activity {
 */
     }
 
+
+    private ListView.OnItemClickListener drawerClickListener = new ListView.OnItemClickListener(){
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            switch (position){
+                case 0:
+                    startActivity(new Intent(OverviewActivity.this , HistoryActivity.class));
+                    break;
+                case 1:
+                    startActivity(new Intent(OverviewActivity.this , AddIncomeActivity.class));
+                    break;
+                case 2:
+                    startActivity(new Intent(OverviewActivity.this, AddExpenseActivity.class));
+                    break;
+                case 3:
+                    startActivity(new Intent(OverviewActivity.this , SettingsActivity2.class));
+                    break;
+                case 4:
+                    finish();
+                    break;
+            }
+        }
+    };
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        drawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        boolean drawerOpen = drawerLayout.isDrawerOpen(drawer);
+        menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
+        return super.onPrepareOptionsMenu(menu);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -211,6 +290,9 @@ public class OverviewActivity extends Activity {
         }
         if (id == R.id.action_settings) {
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        }
+        if(drawerToggle.onOptionsItemSelected(item)){
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

@@ -30,6 +30,13 @@
         <item>yy/dd/MM</item>
         <item>yy/MM/dd</item>
     </string-array>
+    <string-array name="drawer_menu" >
+        <item>History</item>
+        <item>Add Income</item>
+        <item>Add Expense</item>
+        <item>Settings</item>
+        <item>Exit</item>
+    </string-array>
     <string-array name="filters">
         <item>Standar</item>
         <item>Category</item>
@@ -87,7 +94,7 @@
     <string name="currency_rupee">₹</string>
     <string name="title_activity_main_activity2">MainActivity2</string>
     <string name="title_activity_password">PasswordActivity</string>
-    <string name="title_activity_launcher_picker">LauncherPickerActivity</string>
+    <string name="title_activity_launcher_picker">Launcher</string>
     <string name="title_activity_password_settings">PasswordSettingsActivity</string>
     <string name="title_activity_categories_manager">CategoriesManagerActivity</string>
     <string name="action_add_category">Add Category</string>
@@ -113,6 +120,8 @@
     <string name="title_activity_transparent">TransparentActivity</string>
     <string name="pref_title_theme">App Theme</string>
     <string name="title_activity_create_category">CreateCategoryActivity</string>
+    <string name="close_drawer">Closing Drawer</string>
+    <string name="open_drawer">Opening Drawer</string>
 
 
 </resources>

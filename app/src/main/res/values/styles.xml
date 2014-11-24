@@ -13,9 +13,9 @@
     </style>
 
     <style name="customActionBar" parent="android:Widget.Holo.ActionBar.Solid" >
-        <item name="android:background">@color/Gray</item>
-        <item name="android:backgroundStacked">@color/Gray</item>
-        <item name="android:backgroundSplit">@color/Gray</item>
+        <item name="android:background">@color/red</item>
+        <item name="android:backgroundStacked">@color/red</item>
+        <item name="android:backgroundSplit">@color/red</item>
     </style>
 
     <style name="Theme.Transparent" parent="android:Theme">

@@ -1,111 +1,127 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ppv="http://schemas.android.com/apk/res-auto"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:id="@+id/drawer_layout">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical"
-        android:weightSum="1">
 
-        <TextView
-            android:id="@+id/tvUsername"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:padding="10dp"
-            android:text="Username"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="35sp"
-            android:textStyle="bold" />
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal"
-            android:weightSum="2">
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:weightSum="1">
 
             <TextView
-                android:id="@+id/textView1"
-                style="@style/Headline"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:text="Balance : "
-                 />
+                android:id="@+id/tvUsername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:padding="10dp"
+                android:text="Username"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="35sp"
+                android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tvBalanceAmount"
-                style="@style/Headline"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:text="50 $"
-                android:textSize="40dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/textView1"
+                    style="@style/Headline"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:text="Balance : " />
+
+                <TextView
+                    android:id="@+id/tvBalanceAmount"
+                    style="@style/Headline"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:text="50 $"
+                    android:textSize="40dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/textView"
+                    style="@style/Headline"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Days Until Payment:"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:id="@+id/tvDays"
+                    style="@style/Headline"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="7"
+                    android:textSize="40sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    style="@style/Headline"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:text="Savings : " />
+
+                <TextView
+                    android:id="@+id/tvSavings"
+                    style="@style/Headline"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:text="140 $"
+                    android:textSize="40dp" />
+            </LinearLayout>
+
+
+            <myexpenses.ng2.com.myexpenses.Utils.PercentView
+                android:id="@+id/percentview"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:layout_gravity="center" />
+
+
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <TextView
-                android:id="@+id/textView"
-                style="@style/Headline"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Days Until Payment:"
-                android:textAlignment="center" />
-
-            <TextView
-                android:id="@+id/tvDays"
-                style="@style/Headline"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="7"
-                android:textSize="40sp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <TextView
-                android:id="@+id/textView2"
-                style="@style/Headline"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:text="Savings : " />
-
-            <TextView
-                android:id="@+id/tvSavings"
-                style="@style/Headline"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:text="140 $"
-                android:textSize="40dp"/>
-        </LinearLayout>
-
-
-        <myexpenses.ng2.com.myexpenses.Utils.PercentView
-            android:id="@+id/percentview"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            android:layout_gravity="center"
-            />
+    </ScrollView>
 
 
 
-    </LinearLayout>
-</ScrollView>
+    <!-- The navigation drawer -->
+    <ListView
+        android:id="@+id/left_drawer"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:choiceMode="singleChoice"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"
+        android:background="#111" />
+
+</android.support.v4.widget.DrawerLayout>

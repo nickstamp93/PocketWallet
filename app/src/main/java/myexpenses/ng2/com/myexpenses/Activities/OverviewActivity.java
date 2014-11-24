@@ -8,12 +8,15 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.filippudak.ProgressPieView.ProgressPieView;
 
+import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
 import myexpenses.ng2.com.myexpenses.Data.UserProfile;
 import myexpenses.ng2.com.myexpenses.Data.UserProfileSalary;
 import myexpenses.ng2.com.myexpenses.MainActivity;
@@ -35,6 +38,8 @@ public class OverviewActivity extends Activity {
     TextView tvBalance, tvSavings, tvDays, tvUsername;
     PercentView pv;
 
+    private MoneyDatabase mdb;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,13 +48,15 @@ public class OverviewActivity extends Activity {
         //init UI elements
         initUI();
 
+        mdb=new MoneyDatabase(OverviewActivity.this);
+
         //manage the user profile
         checkUserProfile();
 
         //if profile is on salary , must update its money status
         //this is if the user opened the app after a payment has occurred
         if (profile instanceof UserProfileSalary) {
-            ((UserProfileSalary) profile).updateMoneyStatus(this);
+            ((UserProfileSalary) profile).updateMoneyStatus();
             //and refresh the UI accordingly
             getDataFromSharedPrefs();
             refreshUI();
@@ -100,7 +107,7 @@ public class OverviewActivity extends Activity {
             float salary = manager.getPrefsSalary();
             String salFreq = manager.getPrefsSalFreq();
 
-            profile = new UserProfileSalary(username, savings, balance, salary, salFreq, nextPaymentDate, currency);
+            profile = new UserProfileSalary(OverviewActivity.this ,username, savings, balance, salary, salFreq, nextPaymentDate, currency);
             ((UserProfileSalary) profile).show();
         } else {
             profile = new UserProfile(username, savings, balance, currency);
@@ -137,6 +144,7 @@ public class OverviewActivity extends Activity {
         tvDays = (TextView) findViewById(R.id.tvDays);
         tvUsername = (TextView) findViewById(R.id.tvUsername);
         pv = (PercentView) findViewById(R.id.percentview);
+        pv.setVisibility(View.GONE);
 
         //set a font for the text views
         Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/font_exo2.otf");
@@ -158,6 +166,21 @@ public class OverviewActivity extends Activity {
         } else {
             tvDays.setText("None");
         }
+
+
+
+        double priceOfExpenses=mdb.getTotalExpensePriceForCurrentMonth();
+        double priceOfIncomes=mdb.getTotalIncomePriceForCurrentMonth();
+        double total=priceOfExpenses+priceOfIncomes;
+        Log.i("Expense",priceOfExpenses+"");
+        Log.i("Income",priceOfIncomes+"");
+
+        if(total!=0){
+          pv.setVisibility(View.VISIBLE);
+          double percentOfExpenses= priceOfExpenses/total;
+            pv.setPercentageExpense((float)percentOfExpenses*100);
+        }
+/*
         if(profile.getSavings() > 0){
             float percentBalance = (manager.getPrefsDifference()+manager.getPrefsBalance())/(manager.getPrefsBalance()+manager.getPrefsDifference()+manager.getPrefsSavings());
             float percentExpense = manager.getPrefsDifference()/(manager.getPrefsBalance()+manager.getPrefsDifference()+manager.getPrefsSavings());
@@ -166,7 +189,7 @@ public class OverviewActivity extends Activity {
         }else{
             pv.setPercentageExpense(100);
         }
-
+*/
     }
 
 

@@ -3,6 +3,7 @@ package myexpenses.ng2.com.myexpenses.Data;
 import android.content.Context;
 import android.util.Log;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -25,13 +26,17 @@ public class UserProfileSalary extends UserProfile {
     private int daysToNextPayment;
     //next payment date
     private Date nextPaymentDate;
+    private Context context;
+
 
     //constructor
-    public UserProfileSalary(String username, float savings, float balance, float salary, String salFreq, String npd , String currency) {
+    public UserProfileSalary(Context context,String username, float savings, float balance, float salary, String salFreq, String npd , String currency) {
         super(username, savings, balance , currency);
 
         this.salary = salary;
         this.salFreq = salFreq;
+
+        this.context = context;
 
         //set the next payment day
         setNextPaymentDate(npd);
@@ -79,13 +84,13 @@ public class UserProfileSalary extends UserProfile {
             makeBalanceToSavingsTransaction();
         }
         //and add a salary to the balance
-        addSalaryToBalance();
+        addSalaryToBalance(date);
         return;
 
     }
 
     //update the money status of the user(if a payment has occured in between)
-    public void updateMoneyStatus(Context context) {
+    public void updateMoneyStatus() {
         Calendar c = Calendar.getInstance();
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         String todayStr = format.format(c.getTime());
@@ -115,8 +120,20 @@ public class UserProfileSalary extends UserProfile {
     }
 
     //add a salary to the balance
-    public void addSalaryToBalance() {
-        setBalance(getBalance() + salary);
+    public void addSalaryToBalance(Date date) {
+        MoneyDatabase mdb=new MoneyDatabase(context);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String strDate=format.format(date);
+        IncomeItem income=new IncomeItem((double)salary,strDate,"Reqular");
+        Log.i("nikos","Salary:"+income.getAmount() + " Date:"+income.getDate());
+        try {
+            mdb.openDatabase();
+            mdb.InsertIncome(income);
+            mdb.close();
+            setBalance(getBalance() + salary);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     //for debugging

@@ -8,7 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Created by Nikos on 7/26/2014.
@@ -286,6 +288,52 @@ public class MoneyDatabase extends SQLiteOpenHelper {
 
     }
 
+    public double getTotalExpensePriceForCurrentMonth(){
+
+        double total=0;
+        Calendar c=Calendar.getInstance();
+        int currentMonth=c.get(Calendar.MONTH)+1;
+        Log.i("CurrentMonth",currentMonth+"");
+         Log.i("CurrentYear",c.get(Calendar.YEAR)+"");
+        String firstOfMonth="01"+"-"+currentMonth+"-"+c.get(Calendar.YEAR) ;
+        String lastOfMonth="31"+"-"+currentMonth+"-"+c.get(Calendar.YEAR);
+        Log.i("firstOfMonth",firstOfMonth);
+        Log.i("lastOfMonth",lastOfMonth);
+
+        Cursor cursor=this.getExpensesByDateToDate(firstOfMonth,lastOfMonth);
+
+        if(cursor.getCount()!=0){
+             Log.i("Database","Bike");
+            for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
+                total=Double.parseDouble(cursor.getString(3))+total;
+            }
+
+        }
+
+        return total;
+    }
+
+    public double getTotalIncomePriceForCurrentMonth(){
+
+        double total=0;
+        Calendar c=Calendar.getInstance();
+        int currentMonth=c.get(Calendar.MONTH)+1;
+
+        String firstOfMonth="01"+"-"+currentMonth+"-"+c.get(Calendar.YEAR) ;
+        String lastOfMonth="31"+"-"+currentMonth+"-"+c.get(Calendar.YEAR);
+
+        Cursor cursor=this.getIncomeByDateToDate(firstOfMonth,lastOfMonth);
+
+        if(cursor.getCount()>0){
+
+            for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
+                total=Double.parseDouble(cursor.getString(1))+total;
+            }
+
+        }
+
+        return total;
+    }
 
 
 

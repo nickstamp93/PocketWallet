@@ -125,13 +125,14 @@ public class AddIncomeActivity extends FragmentActivity implements NumberPickerD
         d = CalendarDatePickerDialog.newInstance(listener ,
                 c.get(Calendar.YEAR) , c.get(Calendar.MONTH) , c.get(Calendar.DAY_OF_MONTH));
 
-        String day=c.get(Calendar.DAY_OF_MONTH)+"";
-        String month=c.get(Calendar.MONTH)+"";
-        if(c.get(Calendar.DAY_OF_MONTH)<10){
-            day = "0" +c.get(Calendar.DAY_OF_MONTH) ;
+
+        String day = c.get(Calendar.DAY_OF_MONTH) + "";
+        String month = (c.get(Calendar.MONTH)+1) + "";
+        if (c.get(Calendar.DAY_OF_MONTH) < 10) {
+            day = "0" + c.get(Calendar.DAY_OF_MONTH);
         }
-        if(c.get(Calendar.MONTH)<10){
-            month = "0" +c.get(Calendar.MONTH) ;
+        if (c.get(Calendar.MONTH)+1 < 10) {
+            month = "0" + (c.get(Calendar.MONTH)+1);
         }
 /*
         Time now=new Time();

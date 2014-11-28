@@ -8,55 +8,54 @@
     <style name="AppThemeBlack" parent="android:Theme.Holo">
         <item name="android:windowBackground">@color/black</item>
         <item name="android:colorBackground">@color/black</item>
-        <item name="android:actionBarStyle">@style/actionBarGrey</item>
-        <item name="android:textColor">@color/Wheat</item>
+        <item name="android:actionBarStyle">@style/actionBarWhite</item>
+        <item name="android:textColor">@color/White</item>
     </style>
+
     <style name="AppThemeWhite" parent="android:Theme.Holo">
-        <item name="android:windowBackground">@color/Fuchsia</item>
-        <item name="android:colorBackground">@color/Fuchsia</item>
-        <item name="android:actionBarStyle">@style/actionBarFuchsia</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:windowBackground">@color/White</item>
+        <item name="android:colorBackground">@color/White</item>
+        <item name="android:actionBarStyle">@style/actionBarBlack</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
 
-    <style name="AppThemePink" parent="android:Theme.Holo">
+    <style name="AppThemeFuchsia" parent="android:Theme.Holo">
         <item name="android:windowBackground">@color/Fuchsia</item>
         <item name="android:colorBackground">@color/Fuchsia</item>
-        <item name="android:actionBarStyle">@style/actionBarFuchsia</item>
+        <item name="android:actionBarStyle">@style/actionBarBlack</item>
         <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="AppThemeOrange" parent="android:Theme.Holo">
-        <item name="android:windowBackground">@color/Fuchsia</item>
-        <item name="android:colorBackground">@color/Fuchsia</item>
-        <item name="android:actionBarStyle">@style/actionBarFuchsia</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:windowBackground">@color/Orange</item>
+        <item name="android:colorBackground">@color/Orange</item>
+        <item name="android:actionBarStyle">@style/actionBarBlack</item>
+        <item name="android:textColor">@color/White</item>
     </style>
     <style name="AppThemeGreen" parent="android:Theme.Holo">
-        <item name="android:windowBackground">@color/Fuchsia</item>
-        <item name="android:colorBackground">@color/Fuchsia</item>
-        <item name="android:actionBarStyle">@style/actionBarFuchsia</item>
+        <item name="android:windowBackground">@color/green</item>
+        <item name="android:colorBackground">@color/green</item>
+        <item name="android:actionBarStyle">@style/actionBarBlack</item>
         <item name="android:textColor">@color/white</item>
     </style>
     <style name="AppThemeTeal" parent="android:Theme.Holo">
-        <item name="android:windowBackground">@color/Fuchsia</item>
-        <item name="android:colorBackground">@color/Fuchsia</item>
-        <item name="android:actionBarStyle">@style/actionBarFuchsia</item>
+        <item name="android:windowBackground">@color/teal</item>
+        <item name="android:colorBackground">@color/teal</item>
+        <item name="android:actionBarStyle">@style/actionBarBlack</item>
         <item name="android:textColor">@color/white</item>
     </style>
 
-
-
-    <style name="actionBarGrey" parent="android:Widget.Holo.ActionBar.Solid" >
-        <item name="android:background">@color/LightGrey</item>
-        <item name="android:backgroundStacked">@color/LightGrey</item>
-        <item name="android:backgroundSplit">@color/LightGrey</item>
+    <style name="actionBarBlack" parent="android:Widget.Holo.ActionBar.Solid" >
+        <item name="android:background">@color/black</item>
+        <item name="android:backgroundStacked">@color/black</item>
+        <item name="android:backgroundSplit">@color/black</item>
     </style>
 
-    <style name="actionBarFuchsia" parent="android:Widget.Holo.ActionBar.Solid" >
-        <item name="android:background">@color/HotPink</item>
-        <item name="android:backgroundStacked">@color/HotPink</item>
-        <item name="android:backgroundSplit">@color/HotPink</item>
+    <style name="actionBarWhite" parent="android:Widget.Holo.ActionBar.Solid" >
+        <item name="android:background">@color/white</item>
+        <item name="android:backgroundStacked">@color/white</item>
+        <item name="android:backgroundSplit">@color/white</item>
     </style>
 
     <style name="Theme.Transparent" parent="android:Theme">

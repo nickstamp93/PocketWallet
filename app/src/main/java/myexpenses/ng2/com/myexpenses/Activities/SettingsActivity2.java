@@ -42,7 +42,22 @@ public class SettingsActivity2 extends PreferenceActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        if(prefs.getInt("pref_key_theme" , getResources().getColor(R.color.black))==getResources().getColor(R.color.Fuchsia)){
+            setTheme(R.style.AppThemeFuchsia);
+        }else if((prefs.getInt("pref_key_theme" ,getResources().getColor(R.color.black))==getResources().getColor(R.color.black))) {
+            setTheme(R.style.AppThemeBlack);
+        }else if((prefs.getInt("pref_key_theme" ,getResources().getColor(R.color.black))==getResources().getColor(R.color.green))) {
+            setTheme(R.style.AppThemeGreen);
+        }else if((prefs.getInt("pref_key_theme" ,getResources().getColor(R.color.black))==getResources().getColor(R.color.Orange))) {
+            setTheme(R.style.AppThemeOrange);
+        }else if((prefs.getInt("pref_key_theme" ,getResources().getColor(R.color.black))==getResources().getColor(R.color.teal))) {
+            setTheme(R.style.AppThemeTeal);
+        }else if((prefs.getInt("pref_key_theme" ,getResources().getColor(R.color.black))==getResources().getColor(R.color.white))) {
+            setTheme(R.style.AppThemeWhite);
+        }
         super.onCreate(savedInstanceState);
+
 
         addPreferencesFromResource(R.xml.preferences);
 
@@ -161,12 +176,15 @@ public class SettingsActivity2 extends PreferenceActivity
         });
 
         screen = (Preference) findPreference("pref_key_theme");
+        screen.setDefaultValue(getResources().getColor(R.color.Fuchsia));
         screen.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(SettingsActivity2.this);
-                int[] mColor = new int[]{getResources().getColor(R.color.Fuchsia),getResources().getColor(R.color.black)};
-                ColorPickerDialog dialog = ColorPickerDialog.newInstance(R.string.color_picker_default_title, mColor, 0, 2, ColorPickerDialog.SIZE_SMALL);
+                int[] mColor = new int[]{getResources().getColor(R.color.black),getResources().getColor(R.color.white)
+                ,getResources().getColor(R.color.Orange) , getResources().getColor(R.color.green) ,
+                        getResources().getColor(R.color.teal) , getResources().getColor(R.color.Fuchsia)};
+                ColorPickerDialog dialog = ColorPickerDialog.newInstance(R.string.color_picker_default_title, mColor, 0, 3, ColorPickerDialog.SIZE_SMALL);
                 dialog.setSelectedColor(prefs.getInt("pref_key_theme" ,getResources().getColor(R.color.black)));
                 dialog.setOnColorSelectedListener(colorSetListener);
                 dialog.show(getFragmentManager() , "color");

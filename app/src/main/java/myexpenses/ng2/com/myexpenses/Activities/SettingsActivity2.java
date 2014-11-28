@@ -164,9 +164,10 @@ public class SettingsActivity2 extends PreferenceActivity
         screen.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                int[] mColor = new int[]{R.color.Fuchsia , R.color.black};
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(SettingsActivity2.this);
+                int[] mColor = new int[]{getResources().getColor(R.color.Fuchsia),getResources().getColor(R.color.black)};
                 ColorPickerDialog dialog = ColorPickerDialog.newInstance(R.string.color_picker_default_title, mColor, 0, 2, ColorPickerDialog.SIZE_SMALL);
-
+                dialog.setSelectedColor(prefs.getInt("pref_key_theme" ,getResources().getColor(R.color.black)));
                 dialog.setOnColorSelectedListener(colorSetListener);
                 dialog.show(getFragmentManager() , "color");
                 return false;
@@ -181,12 +182,7 @@ public class SettingsActivity2 extends PreferenceActivity
         public void onColorSelected(int color) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(SettingsActivity2.this);
             SharedPreferences.Editor editor = prefs.edit();
-
-            if(color == R.color.Fuchsia){
-                editor.putString("pref_key_theme" , "fuchsia");
-            }else if(color == R.color.black){
-                editor.putString("pref_key_theme" , "black");
-            }
+            editor.putInt("pref_key_theme" , color);
             editor.commit();
         }
     };

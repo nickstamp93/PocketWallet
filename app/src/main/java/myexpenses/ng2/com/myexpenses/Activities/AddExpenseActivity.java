@@ -2,6 +2,7 @@ package myexpenses.ng2.com.myexpenses.Activities;
 
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
@@ -90,9 +91,9 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        if(prefs.getString("pref_key_theme" , "black").equals("fuchsia")){
+        if(prefs.getInt("pref_key_theme" , getResources().getColor(R.color.black))==getResources().getColor(R.color.Fuchsia)){
             setTheme(R.style.AppThemeFuchsia);
-        }else if(prefs.getString("pref_key_theme" , "black").equals("black")) {
+        }else if((prefs.getInt("pref_key_theme" ,getResources().getColor(R.color.black))==getResources().getColor(R.color.black))) {
             setTheme(R.style.AppThemeBlack);
         }
         setContentView(R.layout.activity_add_expense);

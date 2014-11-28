@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.DialogPreference;
 import android.preference.ListPreference;
@@ -28,6 +29,8 @@ import java.util.Calendar;
 import java.util.prefs.Preferences;
 
 import myexpenses.ng2.com.myexpenses.BroadcastReceivers.ReminderReceiver;
+import myexpenses.ng2.com.myexpenses.ColorPicker.ColorPickerDialog;
+import myexpenses.ng2.com.myexpenses.ColorPicker.ColorPickerSwatch;
 import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
 import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Utils.PasswordDialog;
@@ -157,8 +160,36 @@ public class SettingsActivity2 extends PreferenceActivity
             }
         });
 
+        screen = (Preference) findPreference("pref_key_theme");
+        screen.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                int[] mColor = new int[]{R.color.Fuchsia , R.color.black};
+                ColorPickerDialog dialog = ColorPickerDialog.newInstance(R.string.color_picker_default_title, mColor, 0, 2, ColorPickerDialog.SIZE_SMALL);
+
+                dialog.setOnColorSelectedListener(colorSetListener);
+                dialog.show(getFragmentManager() , "color");
+                return false;
+            }
+        });
+
 
     }
+
+    private ColorPickerSwatch.OnColorSelectedListener colorSetListener = new ColorPickerSwatch.OnColorSelectedListener() {
+        @Override
+        public void onColorSelected(int color) {
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(SettingsActivity2.this);
+            SharedPreferences.Editor editor = prefs.edit();
+
+            if(color == R.color.Fuchsia){
+                editor.putString("pref_key_theme" , "fuchsia");
+            }else if(color == R.color.black){
+                editor.putString("pref_key_theme" , "black");
+            }
+            editor.commit();
+        }
+    };
 
     @Override
     protected void onResume() {

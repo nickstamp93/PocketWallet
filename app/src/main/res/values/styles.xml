@@ -5,17 +5,30 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="AppThemeDark" parent="android:Theme.Holo">
+    <style name="AppThemeBlack" parent="android:Theme.Holo">
         <item name="android:windowBackground">@color/black</item>
         <item name="android:colorBackground">@color/black</item>
-        <item name="android:actionBarStyle">@style/customActionBar</item>
-        <item name="android:textColor">@color/Orange</item>
+        <item name="android:actionBarStyle">@style/actionBarGrey</item>
+        <item name="android:textColor">@color/Wheat</item>
     </style>
 
-    <style name="customActionBar" parent="android:Widget.Holo.ActionBar.Solid" >
-        <item name="android:background">@color/red</item>
-        <item name="android:backgroundStacked">@color/red</item>
-        <item name="android:backgroundSplit">@color/red</item>
+    <style name="AppThemeFuchsia" parent="android:Theme.Holo">
+        <item name="android:windowBackground">@color/Fuchsia</item>
+        <item name="android:colorBackground">@color/Fuchsia</item>
+        <item name="android:actionBarStyle">@style/actionBarFuchsia</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="actionBarGrey" parent="android:Widget.Holo.ActionBar.Solid" >
+        <item name="android:background">@color/LightGrey</item>
+        <item name="android:backgroundStacked">@color/LightGrey</item>
+        <item name="android:backgroundSplit">@color/LightGrey</item>
+    </style>
+
+    <style name="actionBarFuchsia" parent="android:Widget.Holo.ActionBar.Solid" >
+        <item name="android:background">@color/HotPink</item>
+        <item name="android:backgroundStacked">@color/HotPink</item>
+        <item name="android:backgroundSplit">@color/HotPink</item>
     </style>
 
     <style name="Theme.Transparent" parent="android:Theme">

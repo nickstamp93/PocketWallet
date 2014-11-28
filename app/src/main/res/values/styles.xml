@@ -11,13 +11,41 @@
         <item name="android:actionBarStyle">@style/actionBarGrey</item>
         <item name="android:textColor">@color/Wheat</item>
     </style>
-
-    <style name="AppThemeFuchsia" parent="android:Theme.Holo">
+    <style name="AppThemeWhite" parent="android:Theme.Holo">
         <item name="android:windowBackground">@color/Fuchsia</item>
         <item name="android:colorBackground">@color/Fuchsia</item>
         <item name="android:actionBarStyle">@style/actionBarFuchsia</item>
         <item name="android:textColor">@color/white</item>
     </style>
+
+
+    <style name="AppThemePink" parent="android:Theme.Holo">
+        <item name="android:windowBackground">@color/Fuchsia</item>
+        <item name="android:colorBackground">@color/Fuchsia</item>
+        <item name="android:actionBarStyle">@style/actionBarFuchsia</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="AppThemeOrange" parent="android:Theme.Holo">
+        <item name="android:windowBackground">@color/Fuchsia</item>
+        <item name="android:colorBackground">@color/Fuchsia</item>
+        <item name="android:actionBarStyle">@style/actionBarFuchsia</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="AppThemeGreen" parent="android:Theme.Holo">
+        <item name="android:windowBackground">@color/Fuchsia</item>
+        <item name="android:colorBackground">@color/Fuchsia</item>
+        <item name="android:actionBarStyle">@style/actionBarFuchsia</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="AppThemeTeal" parent="android:Theme.Holo">
+        <item name="android:windowBackground">@color/Fuchsia</item>
+        <item name="android:colorBackground">@color/Fuchsia</item>
+        <item name="android:actionBarStyle">@style/actionBarFuchsia</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+
 
     <style name="actionBarGrey" parent="android:Widget.Holo.ActionBar.Solid" >
         <item name="android:background">@color/LightGrey</item>

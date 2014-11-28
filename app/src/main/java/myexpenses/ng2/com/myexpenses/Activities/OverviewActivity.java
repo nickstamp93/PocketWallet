@@ -25,6 +25,7 @@ import myexpenses.ng2.com.myexpenses.Data.UserProfile;
 import myexpenses.ng2.com.myexpenses.Data.UserProfileSalary;
 import myexpenses.ng2.com.myexpenses.MainActivity;
 import myexpenses.ng2.com.myexpenses.R;
+import myexpenses.ng2.com.myexpenses.Utils.DrawerAdapter;
 import myexpenses.ng2.com.myexpenses.Utils.PercentView;
 import myexpenses.ng2.com.myexpenses.Utils.SharedPrefsManager;
 
@@ -155,8 +156,12 @@ public class OverviewActivity extends Activity {
 
         drawer = (ListView) findViewById(R.id.left_drawer);
         // Set the adapter for the list view
-        drawer.setAdapter(new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.drawer_menu)));
+        String activities[]=getResources().getStringArray(R.array.drawer_menu);
+        DrawerAdapter adapter=new DrawerAdapter(OverviewActivity.this,R.layout.drawer_item,activities);
+
+        drawer.setAdapter(adapter);
+//        drawer.setAdapter(new ArrayAdapter<String>(this,
+//                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.drawer_menu)));
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.setOnItemClickListener(drawerClickListener);
 

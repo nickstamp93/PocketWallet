@@ -95,8 +95,6 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
         mAlertDialog = new AlertDialog.Builder(activity)
                 .setTitle(mTitleResId)
                 .setView(view)
-                .setPositiveButton("Ok" , null)
-                .setNegativeButton("Cancel" , null)
                 .create();
         return mAlertDialog;
     }

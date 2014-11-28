@@ -185,9 +185,10 @@ public class SettingsActivity2 extends PreferenceActivity
                 ,getResources().getColor(R.color.Orange) , getResources().getColor(R.color.green) ,
                         getResources().getColor(R.color.teal) , getResources().getColor(R.color.Fuchsia)};
                 ColorPickerDialog dialog = ColorPickerDialog.newInstance(R.string.color_picker_default_title, mColor, 0, 3, ColorPickerDialog.SIZE_SMALL);
+
                 dialog.setSelectedColor(prefs.getInt("pref_key_theme" ,getResources().getColor(R.color.black)));
                 dialog.setOnColorSelectedListener(colorSetListener);
-                dialog.show(getFragmentManager() , "color");
+                dialog.show(getFragmentManager(), "color");
                 return false;
             }
         });
@@ -195,13 +196,22 @@ public class SettingsActivity2 extends PreferenceActivity
 
     }
 
+
+
     private ColorPickerSwatch.OnColorSelectedListener colorSetListener = new ColorPickerSwatch.OnColorSelectedListener() {
         @Override
         public void onColorSelected(int color) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(SettingsActivity2.this);
             SharedPreferences.Editor editor = prefs.edit();
-            editor.putInt("pref_key_theme" , color);
+            editor.putInt("pref_key_theme", color);
             editor.commit();
+            Intent i = getIntent();
+            overridePendingTransition(0,0);
+            i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            finish();
+            overridePendingTransition(0,0);
+            startActivity(i);
+
         }
     };
 
@@ -302,6 +312,5 @@ public class SettingsActivity2 extends PreferenceActivity
         Log.i("nikos", "alarm set for " + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH) + "-" + calendar.get(Calendar.YEAR)
                 + "  " + hour + ":" + minute);
     }
-
 
 }

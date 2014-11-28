@@ -14,11 +14,11 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -55,17 +55,17 @@ public class OverviewActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        if(prefs.getInt("pref_key_theme" , getResources().getColor(R.color.black))==getResources().getColor(R.color.Fuchsia)){
+        if (prefs.getInt("pref_key_theme", getResources().getColor(R.color.black)) == getResources().getColor(R.color.Fuchsia)) {
             setTheme(R.style.AppThemeFuchsia);
-        }else if((prefs.getInt("pref_key_theme" ,getResources().getColor(R.color.black))==getResources().getColor(R.color.black))) {
+        } else if ((prefs.getInt("pref_key_theme", getResources().getColor(R.color.black)) == getResources().getColor(R.color.black))) {
             setTheme(R.style.AppThemeBlack);
-        }else if((prefs.getInt("pref_key_theme" ,getResources().getColor(R.color.black))==getResources().getColor(R.color.green))) {
+        } else if ((prefs.getInt("pref_key_theme", getResources().getColor(R.color.black)) == getResources().getColor(R.color.green))) {
             setTheme(R.style.AppThemeGreen);
-        }else if((prefs.getInt("pref_key_theme" ,getResources().getColor(R.color.black))==getResources().getColor(R.color.Orange))) {
+        } else if ((prefs.getInt("pref_key_theme", getResources().getColor(R.color.black)) == getResources().getColor(R.color.Orange))) {
             setTheme(R.style.AppThemeOrange);
-        }else if((prefs.getInt("pref_key_theme" ,getResources().getColor(R.color.black))==getResources().getColor(R.color.teal))) {
+        } else if ((prefs.getInt("pref_key_theme", getResources().getColor(R.color.black)) == getResources().getColor(R.color.teal))) {
             setTheme(R.style.AppThemeTeal);
-        }else if((prefs.getInt("pref_key_theme" ,getResources().getColor(R.color.black))==getResources().getColor(R.color.white))) {
+        } else if ((prefs.getInt("pref_key_theme", getResources().getColor(R.color.black)) == getResources().getColor(R.color.white))) {
             setTheme(R.style.AppThemeWhite);
         }
 
@@ -95,8 +95,17 @@ public class OverviewActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+
         getDataFromSharedPrefs();
         refreshUI();
+
+//        Intent i = getIntent();
+//        overridePendingTransition(0,0);
+//        i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//        finish();
+//        overridePendingTransition(0,0);
+//        startActivity(i);
+
     }
 
     //checks if a user profile already exists(practically if the app launches for the first time)
@@ -175,8 +184,8 @@ public class OverviewActivity extends Activity {
 
         drawer = (ListView) findViewById(R.id.left_drawer);
         // Set the adapter for the list view
-        String activities[]=getResources().getStringArray(R.array.drawer_menu);
-        DrawerAdapter adapter=new DrawerAdapter(OverviewActivity.this,R.layout.drawer_item,activities);
+        String activities[] = getResources().getStringArray(R.array.drawer_menu);
+        DrawerAdapter adapter = new DrawerAdapter(OverviewActivity.this, R.layout.drawer_item, activities);
 
         drawer.setAdapter(adapter);
 //        drawer.setAdapter(new ArrayAdapter<String>(this,
@@ -185,7 +194,7 @@ public class OverviewActivity extends Activity {
         drawer.setOnItemClickListener(drawerClickListener);
 
 
-        drawerToggle = new ActionBarDrawerToggle(this , drawerLayout , R.drawable.ic_drawer , R.string.open_drawer , R.string.close_drawer){
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.ic_drawer, R.string.open_drawer, R.string.close_drawer) {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
@@ -198,10 +207,12 @@ public class OverviewActivity extends Activity {
                 super.onDrawerClosed(drawerView);
                 getActionBar().setTitle("Drawer just closed");
                 invalidateOptionsMenu();
+
             }
         };
         drawerLayout.setDrawerListener(drawerToggle);
-        drawerLayout.setDrawerShadow(R.drawable.drawer_shadow , GravityCompat.START);
+
+        drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
@@ -253,22 +264,23 @@ public class OverviewActivity extends Activity {
     }
 
 
-    private ListView.OnItemClickListener drawerClickListener = new ListView.OnItemClickListener(){
+    private ListView.OnItemClickListener drawerClickListener = new ListView.OnItemClickListener() {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            switch (position){
+            switch (position) {
                 case 0:
-                    startActivity(new Intent(OverviewActivity.this , HistoryActivity.class));
+                    startActivity(new Intent(OverviewActivity.this, HistoryActivity.class));
+
                     break;
                 case 1:
-                    startActivity(new Intent(OverviewActivity.this , AddIncomeActivity.class));
+                    startActivity(new Intent(OverviewActivity.this, AddIncomeActivity.class));
                     break;
                 case 2:
                     startActivity(new Intent(OverviewActivity.this, AddExpenseActivity.class));
                     break;
                 case 3:
-                    startActivity(new Intent(OverviewActivity.this , SettingsActivity2.class));
+                    startActivity(new Intent(OverviewActivity.this, SettingsActivity2.class));
                     break;
                 case 4:
                     finish();
@@ -289,6 +301,7 @@ public class OverviewActivity extends Activity {
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
     }
+
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         boolean drawerOpen = drawerLayout.isDrawerOpen(drawer);
@@ -315,10 +328,18 @@ public class OverviewActivity extends Activity {
         if (id == R.id.action_settings) {
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
         }
-        if(drawerToggle.onOptionsItemSelected(item)){
+        if (drawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(Gravity.LEFT)) {
+            drawerLayout.closeDrawer(Gravity.LEFT);
+        } else {
+            super.onBackPressed();
+        }
+    }
 }

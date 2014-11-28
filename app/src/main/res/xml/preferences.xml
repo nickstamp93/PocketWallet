@@ -39,6 +39,8 @@
         <Preference android:key="pref_key_theme"
             android:title="@string/pref_title_theme"/>
 
+
+
     </PreferenceCategory>
     <PreferenceCategory
         android:key="pref_key_data_settings"

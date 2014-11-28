@@ -95,6 +95,14 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
             setTheme(R.style.AppThemeFuchsia);
         }else if((prefs.getInt("pref_key_theme" ,getResources().getColor(R.color.black))==getResources().getColor(R.color.black))) {
             setTheme(R.style.AppThemeBlack);
+        }else if((prefs.getInt("pref_key_theme" ,getResources().getColor(R.color.black))==getResources().getColor(R.color.green))) {
+            setTheme(R.style.AppThemeGreen);
+        }else if((prefs.getInt("pref_key_theme" ,getResources().getColor(R.color.black))==getResources().getColor(R.color.Orange))) {
+            setTheme(R.style.AppThemeOrange);
+        }else if((prefs.getInt("pref_key_theme" ,getResources().getColor(R.color.black))==getResources().getColor(R.color.teal))) {
+            setTheme(R.style.AppThemeTeal);
+        }else if((prefs.getInt("pref_key_theme" ,getResources().getColor(R.color.black))==getResources().getColor(R.color.white))) {
+            setTheme(R.style.AppThemeWhite);
         }
         setContentView(R.layout.activity_add_expense);
 

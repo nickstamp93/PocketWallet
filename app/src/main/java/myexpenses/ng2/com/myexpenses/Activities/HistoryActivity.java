@@ -29,6 +29,7 @@ import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
 import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Utils.FiltersDateToDateActivity;
 import myexpenses.ng2.com.myexpenses.Utils.HistoryListViewAdapter;
+import myexpenses.ng2.com.myexpenses.Utils.Themer;
 
 
 public class HistoryActivity extends FragmentActivity {
@@ -57,7 +58,8 @@ public class HistoryActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        Themer.setThemeToActivity(this);
+       /* SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         if(prefs.getInt("pref_key_theme" , getResources().getColor(R.color.black))==getResources().getColor(R.color.Fuchsia)){
             setTheme(R.style.AppThemeFuchsia);
         }else if((prefs.getInt("pref_key_theme" ,getResources().getColor(R.color.black))==getResources().getColor(R.color.black))) {
@@ -70,7 +72,7 @@ public class HistoryActivity extends FragmentActivity {
             setTheme(R.style.AppThemeTeal);
         }else if((prefs.getInt("pref_key_theme" ,getResources().getColor(R.color.black))==getResources().getColor(R.color.white))) {
             setTheme(R.style.AppThemeWhite);
-        }
+        }*/
 
 
 

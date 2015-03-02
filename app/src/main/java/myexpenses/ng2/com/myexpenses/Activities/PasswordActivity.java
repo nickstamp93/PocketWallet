@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Utils.SharedPrefsManager;
+import myexpenses.ng2.com.myexpenses.Utils.Themer;
 
 //Activity for the user to enter the password for the app to unlock
 public class PasswordActivity extends Activity {
@@ -29,6 +30,7 @@ public class PasswordActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Themer.setThemeToActivity(this);
         setContentView(R.layout.activity_password);
 
         //init manager

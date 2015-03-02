@@ -31,7 +31,7 @@ public class UserProfileSalary extends UserProfile {
 
     //constructor
     public UserProfileSalary(Context context,String username, float savings, float balance, float salary, String salFreq, String npd , String currency) {
-        super(username, savings, balance , currency);
+        super(username, savings, balance , currency , username);
 
         this.salary = salary;
         this.salFreq = salFreq;
@@ -105,7 +105,7 @@ public class UserProfileSalary extends UserProfile {
         SharedPrefsManager manager = new SharedPrefsManager(context);
         String newNPD = format.format(nextPaymentDate);
         manager.startEditing();
-        manager.setPrefsNpd(newNPD);
+//        manager.setPrefsNpd(newNPD);
         manager.setPrefsBalance(getBalance());
         manager.setPrefsSavings(getSavings());
         manager.commit();

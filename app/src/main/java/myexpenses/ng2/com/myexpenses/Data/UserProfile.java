@@ -15,12 +15,15 @@ public class UserProfile {
     //preferred currency
     private String currency;
 
+    private String grouping;
+
     //constructor
-    public UserProfile(String username, float savings, float balance , String currency) {
+    public UserProfile(String username, float savings, float balance , String currency , String grouping) {
         this.username = username;
         this.savings = savings;
         this.balance = balance;
         this.currency = currency;
+        this.grouping = grouping;
     }
 
     /**
@@ -59,5 +62,13 @@ public class UserProfile {
 
     public void setCurrency(String currency) {
         this.currency = currency;
+    }
+
+    public String getGrouping() {
+        return grouping;
+    }
+
+    public void setGrouping(String grouping) {
+        this.grouping = grouping;
     }
 }

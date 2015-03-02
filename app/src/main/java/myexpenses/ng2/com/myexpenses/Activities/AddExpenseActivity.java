@@ -257,15 +257,24 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
                         mydb.InsertExpense(item);
                         SharedPrefsManager manager = new SharedPrefsManager(AddExpenseActivity.this);
                         manager.startEditing();
-                        float difference = manager.getPrefsBalance() - (float)item.getPrice();
-                        manager.setPrefsBalance(difference);
-                        manager.setPrefsDifference((float)item.getPrice() + manager.getPrefsDifference());
-                        manager.commit();
-                        if(!manager.getPrefsOnSalary() && manager.getPrefsBalance() < 0){
-                            manager.setPrefsSavings(manager.getPrefsSavings() + manager.getPrefsBalance());
+
+                        if(item.getPrice() > manager.getPrefsBalance()){
                             manager.setPrefsBalance(0);
-                            manager.commit();
+                            double diff = item.getPrice() - manager.getPrefsBalance();
+                            manager.setPrefsSavings((float)(manager.getPrefsSavings() - diff));
+                        }else{
+                            manager.setPrefsBalance((float)(manager.getPrefsBalance() - item.getPrice()));
                         }
+
+//                        float difference = manager.getPrefsBalance() - (float)item.getPrice();
+//                        manager.setPrefsBalance(difference);
+//                        manager.setPrefsDifference((float)item.getPrice() + manager.getPrefsDifference());
+                        manager.commit();
+//                        if(!manager.getPrefsOnSalary() && manager.getPrefsBalance() < 0){
+//                            manager.setPrefsSavings(manager.getPrefsSavings() + manager.getPrefsBalance());
+//                            manager.setPrefsBalance(0);
+//                            manager.commit();
+//                        }
                     } else {
                         item.setId(id);
                         mydb.UpdateExpense(item);
@@ -313,7 +322,8 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
     private CalendarDatePickerDialog.OnDateSetListener listener = new CalendarDatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(CalendarDatePickerDialog calendarDatePickerDialog, int i, int i2, int i3) {
-            String month, day;
+            String month , day;
+            i2++;
             if (i2 < 10) {
                 month = "0" + i2;
             } else {

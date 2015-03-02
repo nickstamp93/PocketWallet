@@ -97,7 +97,9 @@ public class PasswordDialog extends DialogPreference {
 
 
                 //check if the 2 new passes are the same , not empty and the current pass is correct
-                if(etCurrent.getText().toString().equals(pass) && etNew.getText().toString().equals(etNewRe.getText().toString())){
+                if(etCurrent.getText().toString().equals(pass) &&
+                        etNew.getText().toString().equals(etNewRe.getText().toString())
+                        && !etNew.getText().toString().trim().equals("")){
                     //if all that are ok , store the new pass to the prefs file
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.putString("pref_key_password_value" , etNew.getText().toString());

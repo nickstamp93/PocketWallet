@@ -29,24 +29,24 @@ public class UserDetailsActivity extends Activity {
     SharedPrefsManager manager;
 
     //View objects for the XML management
-    LinearLayout llSalary;
-    EditText etSalary, etSavings, etUsername, etBalance;
-    CheckBox chbSalary;
+    //LinearLayout llSalary;
+    EditText  etSavings, etUsername;//, etBalance; //etSalary,
+    //CheckBox chbSalary;
     Button bOk, bCancel;
     RadioGroup radioGroup;
 
     //variables for storing the user inputs
-    float savings, salary, balance;
-    String username, salFreq, nextPaymentDate,salfreqWeekly;
-    int salfreqMonthly;
+    float savings, balance; // ,salary
+    String username , grouping; //, salFreq, nextPaymentDate,salfreqWeekly;
+    //int salfreqMonthly;
     int position;
-    boolean onSalary;
+    //boolean onSalary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        //apply theme
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         if(prefs.getInt("pref_key_theme" , getResources().getColor(R.color.black))==getResources().getColor(R.color.Fuchsia)){
             setTheme(R.style.AppThemeFuchsia);
@@ -71,6 +71,7 @@ public class UserDetailsActivity extends Activity {
         //init the Listeners
         initListeners();
 
+        //init values
         initValues();
 
     }
@@ -81,16 +82,16 @@ public class UserDetailsActivity extends Activity {
         bOk = (Button) findViewById(R.id.bOk);
         bCancel = (Button) findViewById(R.id.bCancel);
 
-        etSalary = (EditText) findViewById(R.id.etSalary);
+        //etSalary = (EditText) findViewById(R.id.etSalary);
         etUsername = (EditText) findViewById(R.id.etUsername);
         etSavings = (EditText) findViewById(R.id.etSavings);
-        etBalance = (EditText) findViewById(R.id.etBalance);
+//        etBalance = (EditText) findViewById(R.id.etBalance);
 
-        chbSalary = (CheckBox) findViewById(R.id.chbSalary);
+        //chbSalary = (CheckBox) findViewById(R.id.chbSalary);
 
-        radioGroup = (RadioGroup) findViewById(R.id.rgFrequency);
+        radioGroup = (RadioGroup) findViewById(R.id.rgGrouping);
 
-        llSalary = (LinearLayout) findViewById(R.id.llSalary);
+       // llSalary = (LinearLayout) findViewById(R.id.llSalary);
 
     }
 
@@ -98,21 +99,26 @@ public class UserDetailsActivity extends Activity {
 
         manager = new SharedPrefsManager(getApplicationContext());
 
-        salfreqWeekly = manager.getPrefsSalFreqWeekly();
-        salfreqMonthly = manager.getPrefsSalFreqMonthly();
+//        salfreqWeekly = manager.getPrefsSalFreqWeekly();
+//        salfreqMonthly = manager.getPrefsSalFreqMonthly();
         position = 0;
 
         etUsername.setText(manager.getPrefsUsername());
         etSavings.setText(String.valueOf(manager.getPrefsSavings()));
-        etBalance.setText(String.valueOf(manager.getPrefsBalance()));
-        chbSalary.setChecked(manager.getPrefsOnSalary());
-        String salFreq = manager.getPrefsSalFreq();
-        if(salFreq.equalsIgnoreCase("monthly")){
+        //etBalance.setText(String.valueOf(manager.getPrefsBalance()));
+        if(manager.getPrefsGrouping().equalsIgnoreCase("monthly")){
             radioGroup.check(R.id.rbMonthly);
         }else{
             radioGroup.check(R.id.rbWeekly);
         }
-        etSalary.setText(String.valueOf(manager.getPrefsSalary()));
+//        chbSalary.setChecked(manager.getPrefsOnSalary());
+//        String salFreq = manager.getPrefsSalFreq();
+//        if(salFreq.equalsIgnoreCase("monthly")){
+//            radioGroup.check(R.id.rbMonthly);
+//        }else{
+//            radioGroup.check(R.id.rbWeekly);
+//        }
+//        etSalary.setText(String.valueOf(manager.getPrefsSalary()));
 
     }
 
@@ -121,16 +127,15 @@ public class UserDetailsActivity extends Activity {
         bOk.setOnClickListener(buttonListener);
         bCancel.setOnClickListener(buttonListener);
 
-        chbSalary.setOnCheckedChangeListener(checkBoxListener);
+//        chbSalary.setOnCheckedChangeListener(checkBoxListener);
 
-//        radioGroup.setOnCheckedChangeListener(radiogroupListener);
-        radioGroup.getChildAt(0).setOnClickListener(radiogroupListener);
-        radioGroup.getChildAt(1).setOnClickListener(radiogroupListener);
+//        radioGroup.getChildAt(0).setOnClickListener(radiogroupListener);
+//        radioGroup.getChildAt(1).setOnClickListener(radiogroupListener);
 
     }
 
 
-    private View.OnClickListener radiogroupListener = new View.OnClickListener() {
+    /*private View.OnClickListener radiogroupListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             AlertDialog.Builder builder = new AlertDialog.Builder(UserDetailsActivity.this);
@@ -169,9 +174,9 @@ public class UserDetailsActivity extends Activity {
 
             }
         }
-    };
+    };*/
     //the onSalary checkboxListener
-    private CompoundButton.OnCheckedChangeListener checkBoxListener = new CompoundButton.OnCheckedChangeListener() {
+    /*private CompoundButton.OnCheckedChangeListener checkBoxListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             if(isChecked){
@@ -192,7 +197,7 @@ public class UserDetailsActivity extends Activity {
                 view.setEnabled(isChecked);
             }
         }
-    };
+    };*/
 
     //the buttons listener
     private View.OnClickListener buttonListener = new View.OnClickListener() {
@@ -215,14 +220,15 @@ public class UserDetailsActivity extends Activity {
 
                     manager.setPrefsUsername(username);
                     manager.setPrefsSavings(savings);
-                    manager.setPrefsBalance(balance);
-                    manager.setPrefsOnSalary(onSalary);
-                    manager.setPrefsSalary(salary);
-                    manager.setPrefsSalFreqMonthly(salfreqMonthly);
-                    manager.setPrefsSalFreqWeekly(salfreqWeekly);
-                    manager.setPrefsSalFreq(salFreq);
-                    manager.setPrefsNpd(nextPaymentDate);
+//                    manager.setPrefsBalance(balance);
+//                    manager.setPrefsOnSalary(onSalary);
+//                    manager.setPrefsSalary(salary);
+//                    manager.setPrefsSalFreqMonthly(salfreqMonthly);
+//                    manager.setPrefsSalFreqWeekly(salfreqWeekly);
+//                    manager.setPrefsSalFreq(salFreq);
+//                    manager.setPrefsNpd(nextPaymentDate);
                     manager.setPrefsCurrency("€");
+                    manager.setPrefsGrouping(grouping);
 
                     manager.commit();
 
@@ -249,14 +255,14 @@ public class UserDetailsActivity extends Activity {
         if (etSavings.getText().toString().trim().length() < 1) {
             return false;
         }
-        if (etBalance.getText().toString().trim().length() < 1) {
-            return false;
-        }
-        if (chbSalary.isChecked()) {
-            if (etSalary.getText().toString().trim().length() < 1) {
-                return false;
-            }
-        }
+//        if (etBalance.getText().toString().trim().length() < 1) {
+//            return false;
+//        }
+//        if (chbSalary.isChecked()) {
+//            if (etSalary.getText().toString().trim().length() < 1) {
+//                return false;
+//            }
+//        }
 
         return true;
     }
@@ -265,31 +271,39 @@ public class UserDetailsActivity extends Activity {
     private void getDataFromXml() {
         username = etUsername.getText().toString();
         savings = Float.parseFloat(etSavings.getText().toString());
-        onSalary = chbSalary.isChecked();
-        balance = Float.parseFloat(etBalance.getText().toString());
-
-        if (onSalary) {
-            salary = Float.parseFloat(etSalary.getText().toString());
-            switch (radioGroup.getCheckedRadioButtonId()) {
-                case R.id.rbMonthly:
-                    salFreq = "monthly";
-                    break;
-                case R.id.rbWeekly:
-                    salFreq = "weekly";
-                    break;
-                default:
-                    salFreq = "monthly";
-            }
-        } else {
-            salary = 0;
-            salFreq = "none";
+//        onSalary = chbSalary.isChecked();
+        //balance = Float.parseFloat(etBalance.getText().toString());
+        switch (radioGroup.getCheckedRadioButtonId()){
+            case R.id.rbWeekly:
+                grouping = "weekly";
+                break;
+            case R.id.rbMonthly:
+                grouping = "monthly";
+                break;
         }
-        setNextPaymentDate();
+
+//        if (onSalary) {
+//            salary = Float.parseFloat(etSalary.getText().toString());
+//            switch (radioGroup.getCheckedRadioButtonId()) {
+//                case R.id.rbMonthly:
+//                    salFreq = "monthly";
+//                    break;
+//                case R.id.rbWeekly:
+//                    salFreq = "weekly";
+//                    break;
+//                default:
+//                    salFreq = "monthly";
+//            }
+//        } else {
+//            salary = 0;
+//            salFreq = "none";
+//        }
+//        setNextPaymentDate();
 
     }
 
     //set the next payment date in connection with the salFreq and the current date
-    private void setNextPaymentDate() {
+    /*private void setNextPaymentDate() {
 
         //if no salary then return
         if (!chbSalary.isChecked()) {
@@ -339,5 +353,5 @@ public class UserDetailsActivity extends Activity {
             e.printStackTrace();
             return;
         }
-    }
+    }*/
 }

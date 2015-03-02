@@ -24,20 +24,21 @@ public class SharedPrefsManager {
     //Shared Preferences attributes
     private static final String PREFS_IS_PROFILE = "isProfile";
     private static final String PREFS_USERNAME = "username";
-    private static final String PREFS_SALARY = "salary";
+//    private static final String PREFS_SALARY = "salary";
     private static final String PREFS_BALANCE = "balance";
-    private static final String PREFS_ON_SALARY = "onSalary";
+//    private static final String PREFS_ON_SALARY = "onSalary";
     private static final String PREFS_SAVINGS = "savings";
-    private static final String PREFS_SAL_FREQ = "salFreq";
-    private static final String PREFS_NPD = "nextPaymentDate";
+//    private static final String PREFS_SAL_FREQ = "salFreq";
+//    private static final String PREFS_NPD = "nextPaymentDate";
     private static final String PREFS_CURRENCY = "currency";
     private static final String PREFS_REMINDER_TIME = "reminderTime";
     private static final String PREFS_REMINDER = "reminder";
     private static final String PREFS_ISPASSWORD = "ispassword";
     private static final String PREFS_PASSWORD = "password";
     private static final String PREFS_DIFFERENCE = "difference";
-    private static final String PREFS_SAL_FREQ_WEEKLY = "salfreq weekly";
-    private static final String PREFS_SAL_FREQ_MONTHLY = "salfreq monthly";
+    private static final String PREFS_GROUPING = "grouping";
+//    private static final String PREFS_SAL_FREQ_WEEKLY = "salfreq weekly";
+//    private static final String PREFS_SAL_FREQ_MONTHLY = "salfreq monthly";
 
     //the SharedPreferences and Editor objects
     SharedPreferences prefs;
@@ -75,25 +76,25 @@ public class SharedPrefsManager {
     }
 
 
-    public float getPrefsSalary() {
-        return prefs.getFloat(PREFS_SALARY, 0);
-    }
-
-    public boolean getPrefsOnSalary() {
-        return prefs.getBoolean(PREFS_ON_SALARY, false);
-    }
+//    public float getPrefsSalary() {
+//        return prefs.getFloat(PREFS_SALARY, 0);
+//    }
+//
+//    public boolean getPrefsOnSalary() {
+//        return prefs.getBoolean(PREFS_ON_SALARY, false);
+//    }
 
     public float getPrefsBalance() {
         return prefs.getFloat(PREFS_BALANCE, 0);
     }
 
-    public String getPrefsSalFreq() {
-        return prefs.getString(PREFS_SAL_FREQ, "monthly");
-    }
-
-    public String getPrefsNpd() {
-        return prefs.getString(PREFS_NPD, "01-01-2014");
-    }
+//    public String getPrefsSalFreq() {
+//        return prefs.getString(PREFS_SAL_FREQ, "monthly");
+//    }
+//
+//    public String getPrefsNpd() {
+//        return prefs.getString(PREFS_NPD, "01-01-2014");
+//    }
 
     public String getPrefsCurrency(){
         return prefs.getString(PREFS_CURRENCY , "€");
@@ -141,12 +142,15 @@ public class SharedPrefsManager {
         return prefs.getFloat(PREFS_DIFFERENCE , 0);
     }
 
-    public String getPrefsSalFreqWeekly(){
-        return prefs.getString(PREFS_SAL_FREQ_WEEKLY , "Monday");
+    public String getPrefsGrouping() {
+        return prefs.getString(PREFS_GROUPING , "monthly");
     }
-    public int getPrefsSalFreqMonthly(){
-        return prefs.getInt(PREFS_SAL_FREQ_MONTHLY , 1);
-    }
+//    public String getPrefsSalFreqWeekly(){
+//        return prefs.getString(PREFS_SAL_FREQ_WEEKLY , "Monday");
+//    }
+//    public int getPrefsSalFreqMonthly(){
+//        return prefs.getInt(PREFS_SAL_FREQ_MONTHLY , 1);
+//    }
 
     public void setPrefsIsProfile(boolean isProfile) {
         editor.putBoolean(PREFS_IS_PROFILE, isProfile);
@@ -164,21 +168,21 @@ public class SharedPrefsManager {
         editor.putFloat(PREFS_BALANCE, balance);
     }
 
-    public void setPrefsOnSalary(boolean onSalary) {
-        editor.putBoolean(PREFS_ON_SALARY, onSalary);
-    }
-
-    public void setPrefsSalary(float salary) {
-        editor.putFloat(PREFS_SALARY, salary);
-    }
-
-    public void setPrefsSalFreq(String salFreq) {
-        editor.putString(PREFS_SAL_FREQ, salFreq);
-    }
-
-    public void setPrefsNpd(String npd) {
-        editor.putString(PREFS_NPD, npd);
-    }
+//    public void setPrefsOnSalary(boolean onSalary) {
+//        editor.putBoolean(PREFS_ON_SALARY, onSalary);
+//    }
+//
+//    public void setPrefsSalary(float salary) {
+//        editor.putFloat(PREFS_SALARY, salary);
+//    }
+//
+//    public void setPrefsSalFreq(String salFreq) {
+//        editor.putString(PREFS_SAL_FREQ, salFreq);
+//    }
+//
+//    public void setPrefsNpd(String npd) {
+//        editor.putString(PREFS_NPD, npd);
+//    }
 
     public void setPrefsCurrency(String currency) {
         editor.putString(PREFS_CURRENCY , currency);
@@ -203,11 +207,15 @@ public class SharedPrefsManager {
     public void setPrefsDifference(float difference){
         editor.putFloat(PREFS_DIFFERENCE , difference);
     }
-    public void setPrefsSalFreqWeekly(String day){
-        editor.putString(PREFS_SAL_FREQ_WEEKLY , day);
+
+    public void setPrefsGrouping(String grouping){
+        editor.putString(PREFS_GROUPING , grouping);
     }
-    public void setPrefsSalFreqMonthly(int day){
-        editor.putInt(PREFS_SAL_FREQ_MONTHLY , day);
-    }
+//    public void setPrefsSalFreqWeekly(String day){
+//        editor.putString(PREFS_SAL_FREQ_WEEKLY , day);
+//    }
+//    public void setPrefsSalFreqMonthly(int day){
+//        editor.putInt(PREFS_SAL_FREQ_MONTHLY , day);
+//    }
 
 }

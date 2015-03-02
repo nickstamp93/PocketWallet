@@ -46,9 +46,9 @@
             android:inputType="numberDecimal" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/textView3"
             style="@style/Headline"
-            android:text="Money Left Until Next Payment" />
+            android:text="Money Grouping" />
 
         <View
             android:layout_width="wrap_content"
@@ -56,76 +56,111 @@
             android:layout_marginBottom="3dp"
             android:background="@drawable/line_seperator_fade" />
 
-        <EditText
-            android:id="@+id/etBalance"
-            style="@style/UserDetailsEditText"
-            android:inputType="numberDecimal"
-            android:text="0" />
-
-        <LinearLayout
-            android:layout_width="fill_parent"
+        <RadioGroup
+            android:id="@+id/rgGrouping"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_weight="1">
 
-            <CheckBox
-                android:id="@+id/chbSalary"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:checked="true"
-                android:text="On Salary"
-                android:textSize="24sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/llSalary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textView3"
-                style="@style/Headline"
-                android:text="Salary Amount" />
-
-            <EditText
-                android:id="@+id/etSalary"
-                style="@style/UserDetailsEditText"
-                android:inputType="numberDecimal"
-                android:text="1000" />
-
-            <TextView
-                android:id="@+id/textView4"
-                style="@style/Headline"
-                android:text="Salary" />
-
-            <RadioGroup
-                android:id="@+id/rgFrequency"
+            <RadioButton
+                android:id="@+id/rbWeekly"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:checked="false"
+                android:text="Weekly"
+                android:textSize="20sp" />
 
-                <RadioButton
-                    android:id="@+id/rbWeekly"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="false"
-                    android:text="Weekly"
-                    android:textSize="20sp" />
+            <RadioButton
+                android:id="@+id/rbMonthly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Monthly"
+                android:textSize="20sp" />
+        </RadioGroup>
 
-                <RadioButton
-                    android:id="@+id/rbMonthly"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:text="Monthly"
-                    android:textSize="20sp" />
-            </RadioGroup>
 
-        </LinearLayout>
+        <!--<TextView-->
+        <!--android:id="@+id/textView5"-->
+        <!--style="@style/Headline"-->
+        <!--android:text="Money Left Until Next Payment" />-->
+
+        <!--<View-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="2dp"-->
+        <!--android:layout_marginBottom="3dp"-->
+        <!--android:background="@drawable/line_seperator_fade" />-->
+
+        <!--<EditText-->
+        <!--android:id="@+id/etBalance"-->
+        <!--style="@style/UserDetailsEditText"-->
+        <!--android:inputType="numberDecimal"-->
+        <!--android:text="0" />-->
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="horizontal">-->
+
+        <!--<CheckBox-->
+        <!--android:id="@+id/chbSalary"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_weight="1"-->
+        <!--android:checked="true"-->
+        <!--android:text="On Salary"-->
+        <!--android:textSize="24sp" />-->
+
+        <!--</LinearLayout>-->
+
+        <!--<LinearLayout-->
+        <!--android:id="@+id/llSalary"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="1"-->
+        <!--android:orientation="vertical">-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/textView3"-->
+        <!--style="@style/Headline"-->
+        <!--android:text="Salary Amount" />-->
+
+        <!--<EditText-->
+        <!--android:id="@+id/etSalary"-->
+        <!--style="@style/UserDetailsEditText"-->
+        <!--android:inputType="numberDecimal"-->
+        <!--android:text="1000" />-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/textView4"-->
+        <!--style="@style/Headline"-->
+        <!--android:text="Salary" />-->
+
+        <!--<RadioGroup-->
+        <!--android:id="@+id/rgFrequency"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="1">-->
+
+        <!--<RadioButton-->
+        <!--android:id="@+id/rbWeekly"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:checked="false"-->
+        <!--android:text="Weekly"-->
+        <!--android:textSize="20sp" />-->
+
+        <!--<RadioButton-->
+        <!--android:id="@+id/rbMonthly"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:checked="true"-->
+        <!--android:text="Monthly"-->
+        <!--android:textSize="20sp" />-->
+        <!--</RadioGroup>-->
+
+        <!--</LinearLayout>-->
 
         <LinearLayout
             android:layout_width="match_parent"

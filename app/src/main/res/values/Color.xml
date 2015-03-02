@@ -121,4 +121,12 @@
     <color name="SlateGray">#708090</color>
     <color name="OliveDrab">#6B8E23</color>
     <color name="SlateBlue">#6A5ACD</color>
+
+
+    <color name="bg_orange">#FF9800</color>
+    <color name="bg_pink">#EC407A</color>
+    <color name="bg_teal">#00BCD4</color>
+    <color name="bg_green">#8BC34A</color>
+    <color name="bg_dark">#263238</color>
+    <color name="bg_light">#FAFAFA</color>
 </resources>

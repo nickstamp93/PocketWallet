@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -24,7 +25,6 @@ import android.widget.TextView;
 
 import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
 import myexpenses.ng2.com.myexpenses.Data.UserProfile;
-import myexpenses.ng2.com.myexpenses.Data.UserProfileSalary;
 import myexpenses.ng2.com.myexpenses.MainActivity;
 import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Utils.DrawerAdapter;
@@ -42,7 +42,7 @@ public class OverviewActivity extends Activity {
     private UserProfile profile;
 
     //View objects for the XML management
-    private TextView tvBalance, tvSavings, tvDays, tvUsername;
+    private TextView tvBalance, tvSavings, tvLastIncome, tvLastExpense, tvUsername;
     private PercentView pv;
     private DrawerLayout drawerLayout;
     private ListView drawer;
@@ -54,6 +54,7 @@ public class OverviewActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //apply theme
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         if (prefs.getInt("pref_key_theme", getResources().getColor(R.color.black)) == getResources().getColor(R.color.Fuchsia)) {
             setTheme(R.style.AppThemeFuchsia);
@@ -75,6 +76,7 @@ public class OverviewActivity extends Activity {
         //init UI elements
         initUI();
 
+        //open money database
         mdb = new MoneyDatabase(OverviewActivity.this);
 
         //manage the user profile
@@ -82,12 +84,12 @@ public class OverviewActivity extends Activity {
 
         //if profile is on salary , must update its money status
         //this is if the user opened the app after a payment has occurred
-        if (profile instanceof UserProfileSalary) {
-            ((UserProfileSalary) profile).updateMoneyStatus();
-            //and refresh the UI accordingly
-            getDataFromSharedPrefs();
-            refreshUI();
-        }
+//        if (profile instanceof UserProfileSalary) {
+//            ((UserProfileSalary) profile).updateMoneyStatus();
+//            //and refresh the UI accordingly
+//            getDataFromSharedPrefs();
+//            refreshUI();
+//        }
 
 
     }
@@ -96,7 +98,9 @@ public class OverviewActivity extends Activity {
     protected void onResume() {
         super.onResume();
 
+        //get data from the preference file and init the profile object
         getDataFromSharedPrefs();
+        //refresh views according to the profile object values
         refreshUI();
 
 //        Intent i = getIntent();
@@ -133,21 +137,37 @@ public class OverviewActivity extends Activity {
     //then initialize the profile object with these variables
     private void getDataFromSharedPrefs() {
         String username = manager.getPrefsUsername();
-        boolean onSalary = manager.getPrefsOnSalary();
+        //boolean onSalary = manager.getPrefsOnSalary();
         float savings = manager.getPrefsSavings();
         float balance = manager.getPrefsBalance();
-        String nextPaymentDate = manager.getPrefsNpd();
+//        String nextPaymentDate = manager.getPrefsNpd();
         String currency = manager.getPrefsCurrency();
+        String grouping = manager.getPrefsGrouping();
 
-        if (onSalary) {
-            float salary = manager.getPrefsSalary();
-            String salFreq = manager.getPrefsSalFreq();
+        Cursor cExpense, cIncome;
+        cExpense = mdb.getLastExpense();
+        cIncome = mdb.getLastIncome();
 
-            profile = new UserProfileSalary(OverviewActivity.this, username, savings, balance, salary, salFreq, nextPaymentDate, currency);
-            ((UserProfileSalary) profile).show();
-        } else {
-            profile = new UserProfile(username, savings, balance, currency);
+        if (cExpense.moveToFirst()) {
+            tvLastExpense.setText(cExpense.getString(1) + " " + cExpense.getString(2) + " " + cExpense.getDouble(3));
         }
+        if (cIncome.moveToFirst()) {
+            tvLastIncome.setText(cIncome.getString(1) + " " + cIncome.getString(2) + " " + cIncome.getString(3));
+        }
+
+//        tvLastExpense.setText(cExpense.getString(1) + " " + cExpense.getString(2) + " " + cExpense.getString(3));
+//        tvLastIncome.setText(cIncome.getString(1) + " " + cIncome.getString(2) + " " + cIncome.getString(3));
+
+//        if (onSalary) {
+//            float salary = manager.getPrefsSalary();
+//            String salFreq = manager.getPrefsSalFreq();
+//
+//            profile = new UserProfileSalary(OverviewActivity.this, username, savings, balance, salary, salFreq, nextPaymentDate, currency);
+//            ((UserProfileSalary) profile).show();
+//        } else {
+//            profile = new UserProfile(username, savings, balance, currency);
+//        }
+        profile = new UserProfile(username, savings, balance, currency , grouping);
     }
 
     //is called when a sub-Activity with the result code returns
@@ -163,7 +183,7 @@ public class OverviewActivity extends Activity {
                 //get these data from the shared prefs file
                 if (resultCode == RESULT_OK) {
                     getDataFromSharedPrefs();
-                    //and refres the UI
+                    //and refresh the UI
                     refreshUI();
                 } else {
                     //else close the app(OverviewActivity is the main Activity)
@@ -177,8 +197,10 @@ public class OverviewActivity extends Activity {
     private void initUI() {
         tvBalance = (TextView) findViewById(R.id.tvBalanceAmount);
         tvSavings = (TextView) findViewById(R.id.tvSavings);
-        tvDays = (TextView) findViewById(R.id.tvDays);
         tvUsername = (TextView) findViewById(R.id.tvUsername);
+        tvLastExpense = (TextView) findViewById(R.id.tvLastExpense);
+        tvLastIncome = (TextView) findViewById(R.id.tvLastIncome);
+
         pv = (PercentView) findViewById(R.id.percentview);
         pv.setVisibility(View.GONE);
 
@@ -220,37 +242,52 @@ public class OverviewActivity extends Activity {
 
         //set a font for the text views
         Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/font_exo2.otf");
-        tvDays.setTypeface(typeface);
         tvBalance.setTypeface(typeface);
         tvSavings.setTypeface(typeface);
         tvUsername.setTypeface(typeface);
 
     }
 
-    //refresh UI according to preference file
+    //refresh UI according to profile object
     private void refreshUI() {
         tvUsername.setText(profile.getUsername());
         tvBalance.setText(String.valueOf(profile.getBalance()) + " " + profile.getCurrency());
         tvSavings.setText(String.valueOf(profile.getSavings()));
 
-        if (profile instanceof UserProfileSalary) {
-            tvDays.setText(String.valueOf(((UserProfileSalary) profile).getDaysToNextPayment()));
-        } else {
-            tvDays.setText("None");
+//        if (profile instanceof UserProfileSalary) {
+//            tvDays.setText(String.valueOf(((UserProfileSalary) profile).getDaysToNextPayment()));
+//        } else {
+//            tvDays.setText("None");
+//        }
+        double priceOfExpenses;
+        double priceOfIncomes;
+        if(profile.getGrouping().equalsIgnoreCase("monthly")){
+            priceOfExpenses = mdb.getTotalExpensePriceForCurrentMonth();
+            priceOfIncomes = mdb.getTotalIncomePriceForCurrentMonth();
+        }else{
+            priceOfExpenses = mdb.getTotalExpensePriceForCurrentWeek();
+            priceOfIncomes = mdb.getTotalIncomePriceForCurrentWeek();
         }
 
-
-        double priceOfExpenses = mdb.getTotalExpensePriceForCurrentMonth();
-        double priceOfIncomes = mdb.getTotalIncomePriceForCurrentMonth();
         double total = priceOfExpenses + priceOfIncomes;
-        Log.i("Expense", priceOfExpenses + "");
-        Log.i("Income", priceOfIncomes + "");
-
         if (total != 0) {
             pv.setVisibility(View.VISIBLE);
             double percentOfExpenses = priceOfExpenses / total;
             pv.setPercentageExpense((float) percentOfExpenses * 100);
         }
+
+//        double priceOfExpenses = mdb.getTotalExpensePriceForCurrentMonth();
+//        double priceOfIncomes = mdb.getTotalIncomePriceForCurrentMonth();
+//        double total = priceOfExpenses + priceOfIncomes;
+        Log.i("Expense", priceOfExpenses + "");
+        Log.i("Income", priceOfIncomes + "");
+
+        //TODO the pie is not working right
+//        if (total != 0) {
+//            pv.setVisibility(View.VISIBLE);
+//            double percentOfExpenses = priceOfExpenses / total;
+//            pv.setPercentageExpense((float) percentOfExpenses * 100);
+//        }
 /*
         if(profile.getSavings() > 0){
             float percentBalance = (manager.getPrefsDifference()+manager.getPrefsBalance())/(manager.getPrefsBalance()+manager.getPrefsDifference()+manager.getPrefsSavings());
@@ -336,9 +373,12 @@ public class OverviewActivity extends Activity {
 
     @Override
     public void onBackPressed() {
+        //if drawer is open , close it
         if (drawerLayout.isDrawerOpen(Gravity.LEFT)) {
             drawerLayout.closeDrawer(Gravity.LEFT);
-        } else {
+        }
+        //else , default action
+        else {
             super.onBackPressed();
         }
     }

@@ -4,8 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.view.Menu;
-import android.view.MenuItem;
+
 import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Utils.SharedPrefsManager;
 
@@ -23,7 +22,8 @@ public class LauncherPickerActivity extends Activity {
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
-        boolean isPass = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("pref_key_password" , false);
+        //if password protection is enabled
+        boolean isPass = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("pref_key_password", false);
 
         /*
         //init the manager
@@ -36,10 +36,10 @@ public class LauncherPickerActivity extends Activity {
             //else launch the default Overview Activity
             intent = new Intent(getApplicationContext() , OverviewActivity.class);
         }*/
-        if(isPass){
-            intent = new Intent(getApplicationContext() , PasswordActivity.class);
-        }else{
-            intent = new Intent(getApplicationContext() , OverviewActivity.class);
+        if (isPass) {
+            intent = new Intent(getApplicationContext(), PasswordActivity.class);
+        } else {
+            intent = new Intent(getApplicationContext(), OverviewActivity.class);
         }
 
         //start the correct activity with the chosen intent
@@ -47,7 +47,6 @@ public class LauncherPickerActivity extends Activity {
 
         //destroy this activity
         this.finish();
-
 
 
     }

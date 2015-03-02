@@ -237,27 +237,32 @@ public class AddIncomeActivity extends FragmentActivity implements NumberPickerD
                    db.InsertIncome(income);
                    SharedPrefsManager manager = new SharedPrefsManager(AddIncomeActivity.this);
                    manager.startEditing();
-                   if(manager.getPrefsSavings() > 0) {
+                   manager.setPrefsSavings(manager.getPrefsSavings() + manager.getPrefsBalance());
+                   manager.setPrefsBalance((float)income.getAmount());
+                   manager.commit();
 
-                       if (!manager.getPrefsOnSalary()) {
-                           manager.setPrefsSavings(manager.getPrefsSavings() + manager.getPrefsBalance());
-                           manager.setPrefsBalance(0);
-                           manager.setPrefsDifference(0);
-                           manager.commit();
-                       }
-                       manager.setPrefsBalance(manager.getPrefsBalance() + (float) income.getAmount());
-                       manager.commit();
-                   }else{
-                       float in = manager.getPrefsSavings();
-                       manager.setPrefsSavings(in + (float)income.getAmount());
-                       manager.commit();
-                       in = manager.getPrefsSavings();
-                       if(in > 0){
-                           manager.setPrefsSavings(0);
-                           manager.setPrefsBalance(in);
-                           manager.setPrefsDifference(0);
-                       }
-                   }
+
+//                   if(manager.getPrefsSavings() > 0) {
+//
+////                       if (!manager.getPrefsOnSalary()) {
+////                           manager.setPrefsSavings(manager.getPrefsSavings() + manager.getPrefsBalance());
+////                           manager.setPrefsBalance(0);
+////                           manager.setPrefsDifference(0);
+////                           manager.commit();
+////                       }
+//                       manager.setPrefsBalance(manager.getPrefsBalance() + (float) income.getAmount());
+//                       manager.commit();
+//                   }else{
+//                       float in = manager.getPrefsSavings();
+//                       manager.setPrefsSavings(in + (float)income.getAmount());
+//                       manager.commit();
+//                       in = manager.getPrefsSavings();
+//                       if(in > 0){
+//                           manager.setPrefsSavings(0);
+//                           manager.setPrefsBalance(in);
+//                           manager.setPrefsDifference(0);
+//                       }
+//                   }
                }else{
                     income.setId(id);
                     db.UpdateIncome(income);
@@ -306,6 +311,7 @@ public class AddIncomeActivity extends FragmentActivity implements NumberPickerD
         @Override
         public void onDateSet(CalendarDatePickerDialog calendarDatePickerDialog, int i, int i2, int i3) {
             String month,day;
+            i2++;
             if(i2<10){
                 month = "0" + i2;
             }else{

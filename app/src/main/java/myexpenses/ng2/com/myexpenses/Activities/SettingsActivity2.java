@@ -58,19 +58,26 @@ public class SettingsActivity2 extends PreferenceActivity
         }
         super.onCreate(savedInstanceState);
 
-
+        //init preference screen from xml file
         addPreferencesFromResource(R.xml.preferences);
 
         initSummary(getPreferenceScreen());
 
+        //when user clicks on "categories" preference item
+        //launch intent with target the CategoriesManagerActivity class
         Preference screen = (Preference) findPreference("pref_key_categories");
         Intent i = new Intent(this , CategoriesManagerActivity.class);
         screen.setIntent(i);
 
+        //when user clicks on "profile" preference item
+        //launch intent with target the UserDetailsActivity class
         screen = (Preference) findPreference("pref_key_profile");
         i = new Intent(this , UserDetailsActivity.class);
         screen.setIntent(i);
 
+        //when user clicks on "reminder time" preference item
+        //start TransparentActivity which contains the RadialTimeDialog
+        //doing it this way because the RadialTimePickerDialog
         screen = (Preference) findPreference("pref_key_reminder_time");
         screen.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
@@ -86,6 +93,8 @@ public class SettingsActivity2 extends PreferenceActivity
             }
         });
 
+        //when user clicks on "about" preference item
+        //launch an alert dialog with the aboout text
         screen = (Preference) findPreference("pref_key_about");
         screen.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
@@ -113,6 +122,8 @@ public class SettingsActivity2 extends PreferenceActivity
             }
         });
 
+        //when user clicks on "delete income" preference item
+        //ask for confirmation and delete the income data records
         screen = (Preference) findPreference("pref_key_delete_income");
         screen.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
@@ -143,6 +154,10 @@ public class SettingsActivity2 extends PreferenceActivity
                 return false;
             }
         });
+
+
+        //when user clicks on "delete expense" preference item
+        //ask for confirmation and delete the expense data records
         screen = (Preference) findPreference("pref_key_delete_expense");
         screen.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
@@ -175,6 +190,7 @@ public class SettingsActivity2 extends PreferenceActivity
             }
         });
 
+        //when the user clicks on the "theme" preference item
         screen = (Preference) findPreference("pref_key_theme");
         screen.setDefaultValue(getResources().getColor(R.color.Fuchsia));
         screen.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -206,7 +222,7 @@ public class SettingsActivity2 extends PreferenceActivity
             editor.putInt("pref_key_theme", color);
             editor.commit();
             Intent i = getIntent();
-            overridePendingTransition(0,0);
+            overridePendingTransition(0, 0);
             i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             finish();
             overridePendingTransition(0,0);
@@ -225,10 +241,14 @@ public class SettingsActivity2 extends PreferenceActivity
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
+        //if the password switch turned to "yes"
+        //and there is currently no password
+        //then launch the pass dialog for the user to enter a password
         if(key.equals("pref_key_password")
                 && sharedPreferences.getString("pref_key_password_value", "").equals("")
                 && sharedPreferences.getBoolean("pref_key_password" , false)){
             ((PasswordDialog)findPreference("pref_key_password_value")).show();
+            //((PasswordDialog) findPreference("pref_key_password_value")).onClick(null , 0);
             //PasswordDialog d = new PasswordDialog(SettingsActivity2.this , null);
         }
         if(key.equals("pref_key_reminder") && sharedPreferences.getBoolean("pref_key_reminder",false)){

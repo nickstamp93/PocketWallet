@@ -14,17 +14,17 @@ public class Themer {
     public static void setThemeToActivity(Activity act) {
         try {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(act);
-            if (prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.black)) == act.getResources().getColor(R.color.Fuchsia)) {
+            if (prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.teal)) == act.getResources().getColor(R.color.Fuchsia)) {
                 act.setTheme(R.style.AppThemeFuchsia);
-            } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.black)) == act.getResources().getColor(R.color.black))) {
+            } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.teal)) == act.getResources().getColor(R.color.black))) {
                 act.setTheme(R.style.AppThemeBlack);
-            } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.black)) == act.getResources().getColor(R.color.green))) {
+            } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.teal)) == act.getResources().getColor(R.color.green))) {
                 act.setTheme(R.style.AppThemeGreen);
-            } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.black)) == act.getResources().getColor(R.color.Orange))) {
+            } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.teal)) == act.getResources().getColor(R.color.Orange))) {
                 act.setTheme(R.style.AppThemeOrange);
-            } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.black)) == act.getResources().getColor(R.color.teal))) {
+            } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.teal)) == act.getResources().getColor(R.color.teal))) {
                 act.setTheme(R.style.AppThemeTeal);
-            } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.black)) == act.getResources().getColor(R.color.white))) {
+            } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.teal)) == act.getResources().getColor(R.color.white))) {
                 act.setTheme(R.style.AppThemeWhite);
             }
         } catch (Exception e) {

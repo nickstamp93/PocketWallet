@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -20,14 +21,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import myexpenses.ng2.com.myexpenses.Data.CategoryDatabase;
 import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
 import myexpenses.ng2.com.myexpenses.Data.UserProfile;
 import myexpenses.ng2.com.myexpenses.MainActivity;
 import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Utils.DrawerAdapter;
+import myexpenses.ng2.com.myexpenses.Utils.Legend;
+import myexpenses.ng2.com.myexpenses.Utils.LetterImageView;
 import myexpenses.ng2.com.myexpenses.Utils.PercentView;
 import myexpenses.ng2.com.myexpenses.Utils.SharedPrefsManager;
 import myexpenses.ng2.com.myexpenses.Utils.Themer;
@@ -43,8 +48,12 @@ public class OverviewActivity extends Activity {
     private UserProfile profile;
 
     //View objects for the XML management
-    private TextView tvBalance, tvSavings, tvLastIncome, tvLastExpense, tvUsername;
+    private TextView tvBalance, tvSavings, tvLastIncome, tvLastExpense,tvLastExpenseDate,tvLastIncomeDate, tvUsername , tvExpense , tvIncome;
     private PercentView pv;
+    private Legend legendIncome , legendExpense;
+    private View line1 , line2 , line3 , line4;
+    private LinearLayout llExpense , llIncome;
+    private LetterImageView livExpense , livIncome;
     private DrawerLayout drawerLayout;
     private ListView drawer;
     private ActionBarDrawerToggle drawerToggle;
@@ -138,16 +147,7 @@ public class OverviewActivity extends Activity {
         String currency = manager.getPrefsCurrency();
         String grouping = manager.getPrefsGrouping();
 
-        Cursor cExpense, cIncome;
-        cExpense = mdb.getLastExpense();
-        cIncome = mdb.getLastIncome();
 
-        if (cExpense.moveToFirst()) {
-            tvLastExpense.setText(cExpense.getString(1) + " " + cExpense.getString(2) + " " + cExpense.getDouble(3));
-        }
-        if (cIncome.moveToFirst()) {
-            tvLastIncome.setText(cIncome.getString(1) + " " + cIncome.getString(2) + " " + cIncome.getString(3));
-        }
 
 //        tvLastExpense.setText(cExpense.getString(1) + " " + cExpense.getString(2) + " " + cExpense.getString(3));
 //        tvLastIncome.setText(cIncome.getString(1) + " " + cIncome.getString(2) + " " + cIncome.getString(3));
@@ -192,11 +192,39 @@ public class OverviewActivity extends Activity {
         tvBalance = (TextView) findViewById(R.id.tvBalanceAmount);
         tvSavings = (TextView) findViewById(R.id.tvSavings);
         tvUsername = (TextView) findViewById(R.id.tvUsername);
-        tvLastExpense = (TextView) findViewById(R.id.tvLastExpense);
-        tvLastIncome = (TextView) findViewById(R.id.tvLastIncome);
+        tvLastExpense = (TextView) findViewById(R.id.tvLastExpensePrice);
+        tvLastIncome = (TextView) findViewById(R.id.tvLastIncomeAmount);
+        tvLastExpenseDate = (TextView) findViewById(R.id.tvLastExpenseDate);
+        tvLastIncomeDate = (TextView) findViewById(R.id.tvLastIncomeDate);
 
         pv = (PercentView) findViewById(R.id.percentview);
         pv.setVisibility(View.GONE);
+
+        line1 = (View) findViewById(R.id.line1);
+        line2 = (View) findViewById(R.id.line2);
+        line3 = (View) findViewById(R.id.line3);
+        line4 = (View) findViewById(R.id.line4);
+
+        llExpense = (LinearLayout) findViewById(R.id.llLastExpense);
+        llIncome = (LinearLayout) findViewById(R.id.llLastIncome);
+
+
+        tvExpense = (TextView) findViewById(R.id.tvLastExpense);
+        tvIncome = (TextView) findViewById(R.id.tvLastIncome);
+
+        livExpense = (LetterImageView) findViewById(R.id.livLastExpense);
+        livIncome = (LetterImageView) findViewById(R.id.livLastIncome);
+
+        legendIncome = (Legend) findViewById(R.id.legendIncome);
+        legendExpense = (Legend) findViewById(R.id.legendExpense);
+
+        legendIncome.setColor(getResources().getColor(R.color.green));
+        legendIncome.setText("Income");
+        legendExpense.setText("Expense");
+
+        legendIncome.setVisibility(View.GONE);
+        legendExpense.setVisibility(View.GONE);
+
 
         drawer = (ListView) findViewById(R.id.left_drawer);
         // Set the adapter for the list view
@@ -266,9 +294,67 @@ public class OverviewActivity extends Activity {
         double total = priceOfExpenses + priceOfIncomes;
         if (total != 0) {
             pv.setVisibility(View.VISIBLE);
+            legendExpense.setVisibility(View.VISIBLE);
+            legendIncome.setVisibility(View.VISIBLE);
             double percentOfExpenses = priceOfExpenses / total;
             pv.setPercentageExpense((float) percentOfExpenses * 100);
         }
+
+        Cursor cExpense, cIncome;
+        cExpense = mdb.getLastExpense();
+        cIncome = mdb.getLastIncome();
+
+        if (cExpense.moveToFirst()) {
+            llExpense.setVisibility(View.VISIBLE);
+            tvExpense.setVisibility(View.VISIBLE);
+            line1.setVisibility(View.VISIBLE);
+            line2.setVisibility(View.VISIBLE);
+
+
+            String d = cExpense.getString(2);
+            String tokens[] = d.split("-");
+            String date = tokens[2] + "-" + tokens[1] + "-" + tokens[0];
+
+            tvLastExpense.setText(cExpense.getDouble(3) + new SharedPrefsManager(this).getPrefsCurrency());
+            tvLastExpenseDate.setText(date);
+
+            CategoryDatabase cdb = new CategoryDatabase(this);
+
+            int color = cdb.getColorFromCategory(cExpense.getString(1), true);
+            char letter = cdb.getLetterFromCategory(cExpense.getString(1), true);
+
+            livExpense.setLetter(letter);
+            livExpense.setmBackgroundPaint(color);
+
+            cdb.close();
+
+        }
+        if (cIncome.moveToFirst()) {
+            llIncome.setVisibility(View.VISIBLE);
+            tvIncome.setVisibility(View.VISIBLE);
+            line3.setVisibility(View.VISIBLE);
+            line4.setVisibility(View.VISIBLE);
+
+            String d = cIncome.getString(3);
+            String tokens[] = d.split("-");
+            String date = tokens[2] + "-" + tokens[1] + "-" + tokens[0];
+
+            tvLastIncome.setText(cIncome.getDouble(1) + new SharedPrefsManager(this).getPrefsCurrency());
+            tvLastIncomeDate.setText(date);
+
+            CategoryDatabase cdb = new CategoryDatabase(this);
+
+            int color = cdb.getColorFromCategory(cIncome.getString(2), false);
+            char letter = cdb.getLetterFromCategory(cIncome.getString(2), false);
+
+            livIncome.setLetter(letter);
+            livIncome.setmBackgroundPaint(color);
+
+            cdb.close();
+
+        }
+
+
 
 //        double priceOfExpenses = mdb.getTotalExpensePriceForCurrentMonth();
 //        double priceOfIncomes = mdb.getTotalIncomePriceForCurrentMonth();

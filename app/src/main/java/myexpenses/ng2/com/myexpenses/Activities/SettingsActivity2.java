@@ -35,6 +35,7 @@ import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
 import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Utils.PasswordDialog;
 import myexpenses.ng2.com.myexpenses.Utils.SharedPrefsManager;
+import myexpenses.ng2.com.myexpenses.Utils.Themer;
 
 public class SettingsActivity2 extends PreferenceActivity
         implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -42,20 +43,7 @@ public class SettingsActivity2 extends PreferenceActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        if(prefs.getInt("pref_key_theme" , getResources().getColor(R.color.black))==getResources().getColor(R.color.Fuchsia)){
-            setTheme(R.style.AppThemeFuchsia);
-        }else if((prefs.getInt("pref_key_theme" ,getResources().getColor(R.color.black))==getResources().getColor(R.color.black))) {
-            setTheme(R.style.AppThemeBlack);
-        }else if((prefs.getInt("pref_key_theme" ,getResources().getColor(R.color.black))==getResources().getColor(R.color.green))) {
-            setTheme(R.style.AppThemeGreen);
-        }else if((prefs.getInt("pref_key_theme" ,getResources().getColor(R.color.black))==getResources().getColor(R.color.Orange))) {
-            setTheme(R.style.AppThemeOrange);
-        }else if((prefs.getInt("pref_key_theme" ,getResources().getColor(R.color.black))==getResources().getColor(R.color.teal))) {
-            setTheme(R.style.AppThemeTeal);
-        }else if((prefs.getInt("pref_key_theme" ,getResources().getColor(R.color.black))==getResources().getColor(R.color.white))) {
-            setTheme(R.style.AppThemeWhite);
-        }
+        Themer.setThemeToActivity(this);
         super.onCreate(savedInstanceState);
 
         //init preference screen from xml file
@@ -202,13 +190,15 @@ public class SettingsActivity2 extends PreferenceActivity
                         getResources().getColor(R.color.teal) , getResources().getColor(R.color.Fuchsia)};
                 ColorPickerDialog dialog = ColorPickerDialog.newInstance(R.string.color_picker_default_title, mColor, 0, 3, ColorPickerDialog.SIZE_SMALL);
 
-                dialog.setSelectedColor(prefs.getInt("pref_key_theme" ,getResources().getColor(R.color.black)));
+                dialog.setSelectedColor(prefs.getInt("pref_key_theme" ,getResources().getColor(R.color.green)));
                 dialog.setOnColorSelectedListener(colorSetListener);
                 dialog.show(getFragmentManager(), "color");
                 return false;
             }
         });
 
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
 
     }
 

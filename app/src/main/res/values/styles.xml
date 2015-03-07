@@ -8,14 +8,20 @@
     <style name="AppThemeBlack" parent="android:Theme.Holo">
         <item name="android:windowBackground">@color/bg_dark</item>
         <item name="android:colorBackground">@color/bg_dark</item>
-        <item name="android:actionBarStyle">@style/actionBarWhite</item>
+        <item name="android:actionBarStyle">@style/actionBarDark</item>
         <item name="android:textColor">@color/White</item>
+    </style>
+
+    <style name="actionBarDark" parent="android:Widget.Holo.ActionBar.Solid">
+        <item name="android:background">@color/action_bar_dark</item>
+        <item name="android:backgroundStacked">@color/action_bar_dark</item>
+        <item name="android:backgroundSplit">@color/action_bar_dark</item>
     </style>
 
     <style name="AppThemeWhite" parent="android:Theme.Holo">
         <item name="android:windowBackground">@color/bg_light</item>
         <item name="android:colorBackground">@color/bg_light</item>
-        <item name="android:actionBarStyle">@style/actionBarBlack</item>
+        <item name="android:actionBarStyle">@style/actionBarWhite</item>
         <item name="android:textColor">@color/bg_dark</item>
     </style>
 
@@ -23,65 +29,92 @@
     <style name="AppThemeFuchsia" parent="android:Theme.Holo">
         <item name="android:windowBackground">@color/bg_pink</item>
         <item name="android:colorBackground">@color/bg_pink</item>
-        <item name="android:actionBarStyle">@style/actionBarBlack</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:actionBarStyle">@style/actionBarPink</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="actionBarPink" parent="android:Widget.Holo.ActionBar.Solid">
+        <item name="android:background">@color/action_bar_pink</item>
+        <item name="android:backgroundStacked">@color/action_bar_pink</item>
+        <item name="android:backgroundSplit">@color/action_bar_pink</item>
     </style>
 
     <style name="AppThemeOrange" parent="android:Theme.Holo">
         <item name="android:windowBackground">@color/bg_orange</item>
         <item name="android:colorBackground">@color/bg_orange</item>
-        <item name="android:actionBarStyle">@style/actionBarBlack</item>
+        <item name="android:actionBarStyle">@style/actionBarDark</item>
         <item name="android:textColor">@color/White</item>
     </style>
+
+    <style name="actionBarOrange" parent="android:Widget.Holo.ActionBar.Solid">
+        <item name="android:background">@color/action_bar_green</item>
+        <item name="android:backgroundStacked">@color/action_bar_green</item>
+        <item name="android:backgroundSplit">@color/action_bar_green</item>
+    </style>
+
     <style name="AppThemeGreen" parent="android:Theme.Holo">
         <item name="android:windowBackground">@color/bg_green</item>
         <item name="android:colorBackground">@color/bg_green</item>
-        <item name="android:actionBarStyle">@style/actionBarBlack</item>
+        <item name="android:actionBarStyle">@style/actionBarGreen</item>
         <item name="android:textColor">@color/white</item>
     </style>
+
+    <style name="actionBarGreen" parent="android:Widget.Holo.ActionBar.Solid">
+        <item name="android:background">@color/action_bar_green</item>
+        <item name="android:backgroundStacked">@color/action_bar_green</item>
+        <item name="android:backgroundSplit">@color/action_bar_green</item>
+    </style>
+
     <style name="AppThemeTeal" parent="android:Theme.Holo">
         <item name="android:windowBackground">@color/bg_teal</item>
         <item name="android:colorBackground">@color/bg_teal</item>
-        <item name="android:actionBarStyle">@style/actionBarBlack</item>
+        <item name="android:actionBarStyle">@style/actionBarTeal</item>
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:textColorSecondary">@color/bg_dark</item>
         <item name="android:textColor">@color/white</item>
     </style>
 
-    <style name="actionBarBlack" parent="android:Widget.Holo.ActionBar.Solid" >
-        <item name="android:background">@color/bg_dark</item>
-        <item name="android:backgroundStacked">@color/bg_dark</item>
-        <item name="android:backgroundSplit">@color/bg_dark</item>
+    <style name="actionBarTeal" parent="android:Widget.Holo.ActionBar.Solid">
+        <item name="android:background">@color/action_bar_teal</item>
+        <item name="android:backgroundStacked">@color/action_bar_teal</item>
+        <item name="android:backgroundSplit">@color/action_bar_teal</item>
     </style>
 
-    <style name="actionBarWhite" parent="android:Widget.Holo.ActionBar.Solid" >
-        <item name="android:background">@color/bg_light</item>
-        <item name="android:backgroundStacked">@color/bg_light</item>
-        <item name="android:backgroundSplit">@color/bg_light</item>
+    <style name="actionBarWhite" parent="android:Widget.Holo.ActionBar.Solid">
+        <item name="android:background">@color/action_bar_light</item>
+        <item name="android:backgroundStacked">@color/action_bar_light</item>
+        <item name="android:backgroundSplit">@color/action_bar_light</item>
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:textColorSecondary">@color/black</item>
     </style>
 
     <style name="Theme.Transparent" parent="android:Theme">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowIsFloating">true</item>
     </style>
-    <style name="Headline" parent="android:Theme.Holo.Light.DarkActionBar" >
+
+    <style name="Headline" parent="android:Theme.Holo.Light.DarkActionBar">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
         <item name="android:textStyle">bold|italic</item>
         <item name="android:padding">10dp</item>
     </style>
-    <style name="UserDetailsEditText" parent="android:Theme.Holo.Light.DarkActionBar" >
+
+    <style name="UserDetailsEditText" parent="android:Theme.Holo.Light.DarkActionBar">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:ems">10</item>
         <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
         <item name="android:selectAllOnFocus">true</item>
     </style>
-    <style name="ButtonStyleBottom" >
+
+    <style name="ButtonStyleBottom">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:layout_marginLeft">10dp</item>
-        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
 
 
     </style>

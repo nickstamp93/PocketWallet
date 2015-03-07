@@ -25,6 +25,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import myexpenses.ng2.com.myexpenses.Data.CategoryDatabase;
 import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
 import myexpenses.ng2.com.myexpenses.Data.UserProfile;
@@ -33,6 +36,8 @@ import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Utils.DrawerAdapter;
 import myexpenses.ng2.com.myexpenses.Utils.Legend;
 import myexpenses.ng2.com.myexpenses.Utils.LetterImageView;
+import myexpenses.ng2.com.myexpenses.Utils.MagnificentChart;
+import myexpenses.ng2.com.myexpenses.Utils.MagnificentChartItem;
 import myexpenses.ng2.com.myexpenses.Utils.PercentView;
 import myexpenses.ng2.com.myexpenses.Utils.SharedPrefsManager;
 import myexpenses.ng2.com.myexpenses.Utils.Themer;
@@ -57,6 +62,8 @@ public class OverviewActivity extends Activity {
     private DrawerLayout drawerLayout;
     private ListView drawer;
     private ActionBarDrawerToggle drawerToggle;
+
+    private MagnificentChart mcPie;
 
     private MoneyDatabase mdb;
 
@@ -95,6 +102,7 @@ public class OverviewActivity extends Activity {
         super.onRestart();
         startActivity(new Intent(getBaseContext(), OverviewActivity.class));
         OverviewActivity.this.finish();
+        Log.i("nikos" , "restart called");
     }
 
     @Override
@@ -144,7 +152,7 @@ public class OverviewActivity extends Activity {
         float savings = manager.getPrefsSavings();
         float balance = manager.getPrefsBalance();
 //        String nextPaymentDate = manager.getPrefsNpd();
-        String currency = manager.getPrefsCurrency();
+        String currency = PreferenceManager.getDefaultSharedPreferences(this).getString("pref_key_currency" , "€");
         String grouping = manager.getPrefsGrouping();
 
 
@@ -197,8 +205,13 @@ public class OverviewActivity extends Activity {
         tvLastExpenseDate = (TextView) findViewById(R.id.tvLastExpenseDate);
         tvLastIncomeDate = (TextView) findViewById(R.id.tvLastIncomeDate);
 
-        pv = (PercentView) findViewById(R.id.percentview);
-        pv.setVisibility(View.GONE);
+//        pv = (PercentView) findViewById(R.id.percentview);
+//        pv.setVisibility(View.GONE);
+
+        mcPie = (MagnificentChart) findViewById(R.id.mcPie);
+        mcPie.setVisibility(View.GONE);
+
+
 
         line1 = (View) findViewById(R.id.line1);
         line2 = (View) findViewById(R.id.line2);
@@ -291,13 +304,23 @@ public class OverviewActivity extends Activity {
             priceOfIncomes = mdb.getTotalIncomePriceForCurrentWeek();
         }
 
+        List<MagnificentChartItem> chartItemsList = new ArrayList<MagnificentChartItem>();
+
         double total = priceOfExpenses + priceOfIncomes;
         if (total != 0) {
-            pv.setVisibility(View.VISIBLE);
+//            pv.setVisibility(View.VISIBLE);
+            mcPie.setVisibility(View.VISIBLE);
             legendExpense.setVisibility(View.VISIBLE);
             legendIncome.setVisibility(View.VISIBLE);
             double percentOfExpenses = priceOfExpenses / total;
-            pv.setPercentageExpense((float) percentOfExpenses * 100);
+//            pv.setPercentageExpense((float) percentOfExpenses * 100);
+            mcPie.setMaxValue((int)total);
+            MagnificentChartItem item = new  MagnificentChartItem("Expense", priceOfExpenses, getResources().getColor(R.color.red));
+            chartItemsList.add(item);
+            item = new  MagnificentChartItem("Income", priceOfIncomes, getResources().getColor(R.color.green));
+            chartItemsList.add(item);
+            mcPie.setChartItemsList(chartItemsList);
+            mcPie.setChartBackgroundColor(PreferenceManager.getDefaultSharedPreferences(this).getInt("pref_key_theme", getResources().getColor(R.color.bg_teal)));
         }
 
         Cursor cExpense, cIncome;
@@ -315,7 +338,7 @@ public class OverviewActivity extends Activity {
             String tokens[] = d.split("-");
             String date = tokens[2] + "-" + tokens[1] + "-" + tokens[0];
 
-            tvLastExpense.setText(cExpense.getDouble(3) + new SharedPrefsManager(this).getPrefsCurrency());
+            tvLastExpense.setText(cExpense.getDouble(3) + " " + profile.getCurrency());
             tvLastExpenseDate.setText(date);
 
             CategoryDatabase cdb = new CategoryDatabase(this);
@@ -339,7 +362,7 @@ public class OverviewActivity extends Activity {
             String tokens[] = d.split("-");
             String date = tokens[2] + "-" + tokens[1] + "-" + tokens[0];
 
-            tvLastIncome.setText(cIncome.getDouble(1) + new SharedPrefsManager(this).getPrefsCurrency());
+            tvLastIncome.setText(cIncome.getDouble(1) + " " + profile.getCurrency());
             tvLastIncomeDate.setText(date);
 
             CategoryDatabase cdb = new CategoryDatabase(this);

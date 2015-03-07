@@ -3,6 +3,7 @@ package myexpenses.ng2.com.myexpenses.Utils;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Typeface;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,15 +19,13 @@ import myexpenses.ng2.com.myexpenses.R;
 public class HistoryListViewAdapter extends CursorAdapter {
 
     LayoutInflater inflater;
-    SharedPrefsManager manager;
     String currency;
     private boolean expense;
     private CategoryDatabase cdb;
 
     public HistoryListViewAdapter(Context context, Cursor c) {
         super(context, c);
-        manager = new SharedPrefsManager(context);
-        currency = manager.getPrefsCurrency();
+        currency = PreferenceManager.getDefaultSharedPreferences(context).getString("pref_key_currency" , "€");
         cdb = new CategoryDatabase(context);
 
     }
@@ -120,7 +119,7 @@ public class HistoryListViewAdapter extends CursorAdapter {
             tvDate.setTypeface(typeface);
             tvSource.setTypeface(typeface);
 
-            tvIncome.setText(cursor.getString(1) + currency);
+            tvIncome.setText(cursor.getString(1) + " " + currency);
             //We take the date from the cursor we reformed it and we add it to TextView tvDate. We do that cause the format of
             //date in MoneyDatabase is YYYY-MM-DD and we want the user to see it like DD-MM-YYYY
             String date = cursor.getString(3);
@@ -213,7 +212,7 @@ public class HistoryListViewAdapter extends CursorAdapter {
             tvDate.setTypeface(typeface);
             tvSource.setTypeface(typeface);
 
-            tvIncome.setText(cursor.getString(1) + currency);
+            tvIncome.setText(cursor.getString(1) + " " + currency);
             //We take the date from the cursor we reformed it and we add it to TextView tvDate. We do that cause the format of
             //date in MoneyDatabase is YYYY-MM-DD and we want the user to see it like DD-MM-YYYY
             String date = cursor.getString(3);

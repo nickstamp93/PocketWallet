@@ -124,9 +124,15 @@
 
 
     <color name="bg_orange">#FF9800</color>
+    <color name="action_bar_orange">#F57C00</color>
     <color name="bg_pink">#EC407A</color>
+    <color name="action_bar_pink">#C2185B</color>
     <color name="bg_teal">#00BCD4</color>
+    <color name="action_bar_teal">#0097A7</color>
     <color name="bg_green">#8BC34A</color>
-    <color name="bg_dark">#263238</color>
+    <color name="action_bar_green">#558B2F</color>
+    <color name="bg_dark">#455A64</color>
+    <color name="action_bar_dark">#263238</color>
     <color name="bg_light">#FAFAFA</color>
+    <color name="action_bar_light">#EEEEEE</color>
 </resources>

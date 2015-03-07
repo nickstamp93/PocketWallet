@@ -16,8 +16,8 @@
             android:gravity="center"
             android:text="0.00 €"
             android:textAppearance="?android:textAppearanceLarge"
-            android:textSize="50sp"
-            />
+            android:textSize="50sp" />
+
         <View
             android:layout_width="wrap_content"
             android:layout_height="2dp"
@@ -59,6 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
+                android:gravity="center"
                 android:editable="false"
                 android:focusable="false" />
 
@@ -70,6 +71,7 @@
 
 
         </LinearLayout>
+
         <View
             android:layout_width="wrap_content"
             android:layout_height="2dp"
@@ -107,11 +109,11 @@
                 android:id="@+id/bCancel"
                 style="@style/ButtonStyleBottom"
                 android:text="Cancel" />
+
             <Button
                 android:id="@+id/bOK"
                 style="@style/ButtonStyleBottom"
                 android:text="OK" />
-
 
 
         </LinearLayout>

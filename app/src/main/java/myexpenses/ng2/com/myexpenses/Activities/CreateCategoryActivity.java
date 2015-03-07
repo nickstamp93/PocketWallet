@@ -74,6 +74,12 @@ public class CreateCategoryActivity extends Activity implements ColorPickerSwatc
         bCancel = (Button) findViewById(R.id.bCancel);
         liv = (LetterImageView) findViewById(R.id.livCatPreview);
         liv.setOval(true);
+
+
+        Themer.setTextColor(this , bOk , true);
+        Themer.setTextColor(this , bCancel , true);
+        Themer.setBackgroundColor(this , bOk , false);
+        Themer.setBackgroundColor(this , bCancel , true);
        // llCatPreview = (LinearLayout) findViewById(R.id.llCatPreview);
     }
 

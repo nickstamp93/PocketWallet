@@ -1,24 +1,12 @@
 package myexpenses.ng2.com.myexpenses.Activities;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Toast;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Utils.SharedPrefsManager;
@@ -31,14 +19,14 @@ public class UserDetailsActivity extends Activity {
 
     //View objects for the XML management
     //LinearLayout llSalary;
-    EditText  etSavings, etUsername;//, etBalance; //etSalary,
+    EditText etSavings, etUsername;//, etBalance; //etSalary,
     //CheckBox chbSalary;
     Button bOk, bCancel;
     RadioGroup radioGroup;
 
     //variables for storing the user inputs
     float savings, balance; // ,salary
-    String username , grouping; //, salFreq, nextPaymentDate,salfreqWeekly;
+    String username, grouping; //, salFreq, nextPaymentDate,salfreqWeekly;
     //int salfreqMonthly;
     int position;
     //boolean onSalary;
@@ -69,6 +57,12 @@ public class UserDetailsActivity extends Activity {
         bOk = (Button) findViewById(R.id.bOk);
         bCancel = (Button) findViewById(R.id.bCancel);
 
+        Themer.setTextColor(this , bOk , true);
+        Themer.setTextColor(this , bCancel , true);
+        Themer.setBackgroundColor(this, bOk, false);
+        Themer.setBackgroundColor(this, bCancel, true);
+
+
         //etSalary = (EditText) findViewById(R.id.etSalary);
         etUsername = (EditText) findViewById(R.id.etUsername);
         etSavings = (EditText) findViewById(R.id.etSavings);
@@ -78,11 +72,11 @@ public class UserDetailsActivity extends Activity {
 
         radioGroup = (RadioGroup) findViewById(R.id.rgGrouping);
 
-       // llSalary = (LinearLayout) findViewById(R.id.llSalary);
+        // llSalary = (LinearLayout) findViewById(R.id.llSalary);
 
     }
 
-    private void initValues(){
+    private void initValues() {
 
         manager = new SharedPrefsManager(getApplicationContext());
 
@@ -93,9 +87,9 @@ public class UserDetailsActivity extends Activity {
         etUsername.setText(manager.getPrefsUsername());
         etSavings.setText(String.valueOf(manager.getPrefsSavings()));
         //etBalance.setText(String.valueOf(manager.getPrefsBalance()));
-        if(manager.getPrefsGrouping().equalsIgnoreCase("monthly")){
+        if (manager.getPrefsGrouping().equalsIgnoreCase("monthly")) {
             radioGroup.check(R.id.rbMonthly);
-        }else{
+        } else {
             radioGroup.check(R.id.rbWeekly);
         }
 //        chbSalary.setChecked(manager.getPrefsOnSalary());
@@ -260,7 +254,7 @@ public class UserDetailsActivity extends Activity {
         savings = Float.parseFloat(etSavings.getText().toString());
 //        onSalary = chbSalary.isChecked();
         //balance = Float.parseFloat(etBalance.getText().toString());
-        switch (radioGroup.getCheckedRadioButtonId()){
+        switch (radioGroup.getCheckedRadioButtonId()) {
             case R.id.rbWeekly:
                 grouping = "weekly";
                 break;

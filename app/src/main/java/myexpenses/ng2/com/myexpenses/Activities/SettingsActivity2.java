@@ -185,12 +185,12 @@ public class SettingsActivity2 extends PreferenceActivity
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(SettingsActivity2.this);
-                int[] mColor = new int[]{getResources().getColor(R.color.black),getResources().getColor(R.color.white)
-                ,getResources().getColor(R.color.Orange) , getResources().getColor(R.color.green) ,
-                        getResources().getColor(R.color.teal) , getResources().getColor(R.color.Fuchsia)};
+                int[] mColor = new int[]{getResources().getColor(R.color.bg_dark),getResources().getColor(R.color.white)
+                ,getResources().getColor(R.color.Orange) , getResources().getColor(R.color.bg_green) ,
+                        getResources().getColor(R.color.bg_teal) , getResources().getColor(R.color.bg_pink)};
                 ColorPickerDialog dialog = ColorPickerDialog.newInstance(R.string.color_picker_default_title, mColor, 0, 3, ColorPickerDialog.SIZE_SMALL);
 
-                dialog.setSelectedColor(prefs.getInt("pref_key_theme" ,getResources().getColor(R.color.green)));
+                dialog.setSelectedColor(prefs.getInt("pref_key_theme" ,getResources().getColor(R.color.bg_green)));
                 dialog.setOnColorSelectedListener(colorSetListener);
                 dialog.show(getFragmentManager(), "color");
                 return false;

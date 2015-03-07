@@ -192,7 +192,25 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
         etNotes = (EditText) findViewById(R.id.etNotes);
         sCategories = (Spinner) findViewById(R.id.sCategories);
 
+        tvPrice.setText("0.00 " +  PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("pref_key_currency", "€"));
         etDate.setText(reverseDate());
+
+//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+//        if(prefs.getInt("pref_key_theme", getResources().getColor(R.color.bg_teal)) == getResources().getColor(R.color.bg_pink)){
+//            etDate.setTextColor(getResources().getColor(R.color.black));
+//            etNotes.setTextColor(getResources().getColor(R.color.black));
+//        }
+        Themer.setTextColor(this , etDate , false);
+        Themer.setTextColor(this , etNotes , false);
+
+//        if(prefs.getInt("pref_key_theme", getResources().getColor(R.color.bg_teal)) == getResources().getColor(R.color.bg_dark)){
+//            bOk.setBackgroundColor(getResources().getColor(R.color.YellowGreen));
+//            bCancel.setBackgroundColor(getResources().getColor(R.color.red));
+//        }
+        Themer.setTextColor(this , bOk , true);
+        Themer.setTextColor(this , bCancel , true);
+        Themer.setBackgroundColor(this , bOk , false);
+        Themer.setBackgroundColor(this , bCancel , true);
 
         //get from CategoryDatabase all the categories and save them in to an ArrayList
         allCategories = cdb.getCategories(true);

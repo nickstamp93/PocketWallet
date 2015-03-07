@@ -49,6 +49,8 @@ public class FiltersDateToDateActivity extends FragmentActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Themer.setThemeToActivity(this);
+
         setContentView(R.layout.filters_datetodate_dialog);
 
         initUI();

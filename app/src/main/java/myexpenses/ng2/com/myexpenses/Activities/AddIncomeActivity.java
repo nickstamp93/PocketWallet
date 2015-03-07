@@ -170,7 +170,15 @@ public class AddIncomeActivity extends FragmentActivity implements NumberPickerD
        bOk=(Button)findViewById(R.id.bOK);
        bCancel=(Button)findViewById(R.id.bCancel);
 
+        tvAmount.setText("0.00 " +  PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("pref_key_currency", "€"));
         etDate.setText(reverseDate());
+
+        Themer.setTextColor(this , etDate , false);
+
+        Themer.setTextColor(this , bOk , true);
+        Themer.setTextColor(this , bCancel , true);
+        Themer.setBackgroundColor(this , bOk , false);
+        Themer.setBackgroundColor(this , bCancel , true);
 
         //get from CategoryDatabase all the categories and save them in to an ArrayList
         allCategories = cdb.getCategories(false);

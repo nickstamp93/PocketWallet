@@ -18,13 +18,12 @@
         <item name="android:backgroundSplit">@color/action_bar_dark</item>
     </style>
 
-    <style name="AppThemeWhite" parent="android:Theme.Holo">
+    <style name="AppThemeWhite" parent="android:Theme.Holo.Light.DarkActionBar">
         <item name="android:windowBackground">@color/bg_light</item>
         <item name="android:colorBackground">@color/bg_light</item>
-        <item name="android:actionBarStyle">@style/actionBarWhite</item>
-        <item name="android:textColor">@color/bg_dark</item>
+        <!--<item name="android:actionBarStyle">@style/actionBarWhite</item>-->
+        <item name="android:textColor">@color/black</item>
     </style>
-
 
     <style name="AppThemeFuchsia" parent="android:Theme.Holo">
         <item name="android:windowBackground">@color/bg_pink</item>
@@ -69,7 +68,6 @@
         <item name="android:windowBackground">@color/bg_teal</item>
         <item name="android:colorBackground">@color/bg_teal</item>
         <item name="android:actionBarStyle">@style/actionBarTeal</item>
-        <item name="android:textColorPrimary">@color/black</item>
         <item name="android:textColorSecondary">@color/bg_dark</item>
         <item name="android:textColor">@color/white</item>
     </style>

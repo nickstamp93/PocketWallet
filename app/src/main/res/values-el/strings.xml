@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-    <string name="app_name">My Expenses</string>
+
+
+    <string name="app_name">Τα έξοδα μου</string>
     <string name="action_settings">Settings</string>
 
-    <string name="title_activity_add_expense">AddExpenseActivity</string>
-    <string name="title_activity_add_income">AddIncomeActivity</string>
-    <string name="title_activity_history">HistoryActivity</string>
-    <string name="title_activity_settings">SettingsActivity</string>
-    <string name="title_activity_user_details">UserDetailsActivity</string>
-    <string name="title_activity_overview">OverviewActivity</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="title_activity_reminder_settings">ReminderSettingsActivity</string>
 
+    <string name="title_activity_add_expense">Προσθήκη Εξόδου</string>
+    <string name="title_activity_add_income">Προσθήκη Εσόδου</string>
+    <string name="title_activity_history">Ιστορικό</string>
+    <string name="title_activity_settings">Ρυθμίσεις</string>
+    <string name="title_activity_user_details">Στοιχεία Χρήστη</string>
     <string name="action_add_expense">Add Expense</string>
 
+    <!-- Overview -->
+    <string name="string_balance">Ισολογισμός :</string>
+    <string name="string_savings">Οικονομίες :</string>
+    <string name="string_pie_heading">Συναλλαγές αυτήν την εβδομάδα</string>
+
     <string-array name="expenses_category">
-        <item>Food</item>
-        <item>Drinks</item>
-        <item>Personal</item>
-        <item>Clothing</item>
+        <item>Φαγητά</item>
+        <item>Ποτά</item>
+        <item>Προσωπικό</item>
+        <item>Ρούχα</item>
     </string-array>
     <string-array name="date_formats">
         <item>dd/MM/yyyy</item>
@@ -123,9 +127,5 @@
     <string name="title_activity_create_category">CreateCategoryActivity</string>
     <string name="close_drawer">Closing Drawer</string>
     <string name="open_drawer">Opening Drawer</string>
-    <string name="string_balance">Balance :</string>
-    <string name="string_savings">Savings :</string>
-    <string name="string_pie_heading">This week\'s transactions</string>
-
 
 </resources>

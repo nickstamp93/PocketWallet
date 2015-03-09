@@ -27,7 +27,7 @@ public class Themer {
                 act.setTheme(R.style.AppThemeOrange);
             } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_teal)) == act.getResources().getColor(R.color.bg_teal))) {
                 act.setTheme(R.style.AppThemeTeal);
-            } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_teal)) == act.getResources().getColor(R.color.white))) {
+            } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_teal)) == act.getResources().getColor(R.color.bg_light))) {
                 act.setTheme(R.style.AppThemeWhite);
             }
         } catch (Exception e) {
@@ -48,7 +48,8 @@ public class Themer {
     public static void setBackgroundColor(Activity act, View view, boolean isRed) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(act);
         if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_teal)) == act.getResources().getColor(R.color.bg_dark))
-                || (prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_teal)) == act.getResources().getColor(R.color.bg_teal))) {
+                || (prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_teal)) == act.getResources().getColor(R.color.bg_teal))
+                || (prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_teal)) == act.getResources().getColor(R.color.bg_light))) {
             if (isRed)
                 ((Button) view).setBackgroundColor(act.getResources().getColor(R.color.red));
             else

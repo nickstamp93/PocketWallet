@@ -25,7 +25,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.text.DateFormatSymbols;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import myexpenses.ng2.com.myexpenses.Data.CategoryDatabase;
@@ -53,12 +55,13 @@ public class OverviewActivity extends Activity {
     private UserProfile profile;
 
     //View objects for the XML management
-    private TextView tvBalance, tvSavings, tvLastIncome, tvLastExpense,tvLastExpenseDate,tvLastIncomeDate, tvUsername , tvExpense , tvIncome;
+    private TextView tvBalance, tvSavings, tvLastIncome, tvLastExpense,tvLastExpenseDate,
+            tvLastIncomeDate, tvUsername , tvExpense , tvIncome , tvPieHeading;
     private PercentView pv;
-    private Legend legendIncome , legendExpense;
+//    private Legend legendIncome , legendExpense;
     private View line1 , line2 , line3 , line4;
-    private LinearLayout llExpense , llIncome;
-    private LetterImageView livExpense , livIncome;
+    private LinearLayout llExpense , llIncome , llPiewView;
+    private LetterImageView livExpense , livIncome , livLegendIncome , livLegendExpense;
     private DrawerLayout drawerLayout;
     private ListView drawer;
     private ActionBarDrawerToggle drawerToggle;
@@ -75,6 +78,8 @@ public class OverviewActivity extends Activity {
         Themer.setThemeToActivity(this);
 
         setContentView(R.layout.activity_overview);
+
+        manager = new SharedPrefsManager(this);
 
         //init UI elements
         initUI();
@@ -127,7 +132,7 @@ public class OverviewActivity extends Activity {
     private void checkUserProfile() {
 
         //open the shared prefs manager
-        manager = new SharedPrefsManager(getApplicationContext());
+        //manager = new SharedPrefsManager(getApplicationContext());
 
         //store the profile existence in a boolean variable
         boolean isProfile = manager.getPrefsIsProfile();
@@ -204,13 +209,31 @@ public class OverviewActivity extends Activity {
         tvLastIncome = (TextView) findViewById(R.id.tvLastIncomeAmount);
         tvLastExpenseDate = (TextView) findViewById(R.id.tvLastExpenseDate);
         tvLastIncomeDate = (TextView) findViewById(R.id.tvLastIncomeDate);
+        tvPieHeading = (TextView) findViewById(R.id.tvPieHeading);
+
+        if(manager.getPrefsGrouping().equalsIgnoreCase("weekly")){
+            tvPieHeading.setText("This week's transactions");
+            tvPieHeading.setTextSize(20);
+        }else{
+            Calendar c = Calendar.getInstance();
+            int month = c.get(Calendar.MONTH);
+            String sMonth = getMonthForInt(month);
+            tvPieHeading.setText(sMonth);
+            tvPieHeading.setTextSize(30);
+        }
 
 //        pv = (PercentView) findViewById(R.id.percentview);
 //        pv.setVisibility(View.GONE);
 
         mcPie = (MagnificentChart) findViewById(R.id.mcPie);
-        mcPie.setVisibility(View.GONE);
+//        mcPie.setVisibility(View.GONE);
 
+        livLegendExpense = (LetterImageView) findViewById(R.id.livLegendExpense);
+        livLegendIncome = (LetterImageView) findViewById(R.id.livLegendIncome);
+        livLegendExpense.setmBackgroundPaint(getResources().getColor(R.color.red));
+        livLegendIncome.setmBackgroundPaint(getResources().getColor(R.color.green));
+        livLegendExpense.setOval(true);
+        livLegendIncome.setOval(true);
 
 
         line1 = (View) findViewById(R.id.line1);
@@ -221,6 +244,8 @@ public class OverviewActivity extends Activity {
         llExpense = (LinearLayout) findViewById(R.id.llLastExpense);
         llIncome = (LinearLayout) findViewById(R.id.llLastIncome);
 
+        llPiewView = (LinearLayout) findViewById(R.id.llPieView);
+        llPiewView.setVisibility(View.GONE);
 
         tvExpense = (TextView) findViewById(R.id.tvLastExpense);
         tvIncome = (TextView) findViewById(R.id.tvLastIncome);
@@ -228,15 +253,15 @@ public class OverviewActivity extends Activity {
         livExpense = (LetterImageView) findViewById(R.id.livLastExpense);
         livIncome = (LetterImageView) findViewById(R.id.livLastIncome);
 
-        legendIncome = (Legend) findViewById(R.id.legendIncome);
-        legendExpense = (Legend) findViewById(R.id.legendExpense);
-
-        legendIncome.setColor(getResources().getColor(R.color.green));
-        legendIncome.setText("Income");
-        legendExpense.setText("Expense");
-
-        legendIncome.setVisibility(View.GONE);
-        legendExpense.setVisibility(View.GONE);
+//        legendIncome = (Legend) findViewById(R.id.legendIncome);
+//        legendExpense = (Legend) findViewById(R.id.legendExpense);
+//
+//        legendIncome.setColor(getResources().getColor(R.color.green));
+//        legendIncome.setText("Income");
+//        legendExpense.setText("Expense");
+//
+//        legendIncome.setVisibility(View.GONE);
+//        legendExpense.setVisibility(View.GONE);
 
 
         drawer = (ListView) findViewById(R.id.left_drawer);
@@ -283,6 +308,16 @@ public class OverviewActivity extends Activity {
 
     }
 
+    String getMonthForInt(int num) {
+        String month = "wrong";
+        DateFormatSymbols dfs = new DateFormatSymbols();
+        String[] months = dfs.getMonths();
+        if (num >= 0 && num <= 11 ) {
+            month = months[num];
+        }
+        return month;
+    }
+
     //refresh UI according to profile object
     private void refreshUI() {
         tvUsername.setText(profile.getUsername());
@@ -309,11 +344,12 @@ public class OverviewActivity extends Activity {
         double total = priceOfExpenses + priceOfIncomes;
         if (total != 0) {
 //            pv.setVisibility(View.VISIBLE);
-            mcPie.setVisibility(View.VISIBLE);
-            legendExpense.setVisibility(View.VISIBLE);
-            legendIncome.setVisibility(View.VISIBLE);
+//            mcPie.setVisibility(View.VISIBLE);
+//            legendExpense.setVisibility(View.VISIBLE);
+//            legendIncome.setVisibility(View.VISIBLE);
             double percentOfExpenses = priceOfExpenses / total;
 //            pv.setPercentageExpense((float) percentOfExpenses * 100);
+            llPiewView.setVisibility(View.VISIBLE);
             mcPie.setMaxValue((int)total);
             MagnificentChartItem item = new  MagnificentChartItem("Expense", priceOfExpenses, getResources().getColor(R.color.red));
             chartItemsList.add(item);

@@ -1,7 +1,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="@dimen/layout_padding">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,8 +17,8 @@
             android:gravity="center"
             android:text="0.00 €"
             android:textAppearance="?android:textAppearanceLarge"
-            android:textSize="50sp"
-            />
+            android:textSize="@dimen/text_size_main_price" />
+
         <View
             android:layout_width="wrap_content"
             android:layout_height="2dp"
@@ -28,14 +28,14 @@
 
         <TextView
             style="@style/Headline"
-            android:text="Source" />
+            android:text="@string/textview_headline_source" />
 
 
         <Spinner
             android:id="@+id/sIncomeCategories"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp" />
+            android:layout_marginBottom="@dimen/bottom_margin_headlines" />
 
         <View
             android:layout_width="wrap_content"
@@ -46,20 +46,21 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="@dimen/bottom_margin_headlines"
             android:orientation="horizontal"
             android:weightSum="9">
 
             <TextView
                 style="@style/Headline"
                 android:layout_weight="3"
-                android:text="Date" />
+                android:text="@string/textview_headline_date" />
 
             <EditText
                 android:id="@+id/etIncomeDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
+                android:gravity="center"
                 android:editable="false"
                 android:focusable="false" />
 
@@ -71,13 +72,6 @@
 
 
         </LinearLayout>
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="2dp"
-            android:layout_marginBottom="3dp"
-            android:background="@drawable/line_seperator_solid" />
-
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -87,19 +81,18 @@
             <Button
                 android:id="@+id/bCancel"
                 style="@style/ButtonStyleBottom"
-                android:text="Cancel" />
+                android:text="@string/button_cancel" />
+
             <Button
                 android:id="@+id/bOK"
                 style="@style/ButtonStyleBottom"
-                android:text="OK" />
-
+                android:text="@string/button_ok" />
 
 
         </LinearLayout>
 
 
     </LinearLayout>
-
 
 
     <!--

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="text_size_main_price">60sp</dimen>
+    <dimen name="bottom_margin_headlines">35dp</dimen>
+    <dimen name="layout_padding">15dp</dimen>
+    <dimen name="bottom_margin_headlines_small">22dp</dimen>
+
+</resources>

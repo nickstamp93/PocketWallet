@@ -17,17 +17,15 @@ public class Themer {
     public static void setThemeToActivity(Activity act) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(act);
         try {
-            if (prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_teal)) == act.getResources().getColor(R.color.bg_pink)) {
+            if (prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_pink)) {
                 act.setTheme(R.style.AppThemeFuchsia);
-            } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_teal)) == act.getResources().getColor(R.color.bg_dark))) {
+            } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_dark))) {
                 act.setTheme(R.style.AppThemeBlack);
-            } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_teal)) == act.getResources().getColor(R.color.bg_green))) {
+            } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_green))) {
                 act.setTheme(R.style.AppThemeGreen);
-            } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_teal)) == act.getResources().getColor(R.color.Orange))) {
-                act.setTheme(R.style.AppThemeOrange);
-            } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_teal)) == act.getResources().getColor(R.color.bg_teal))) {
+            } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_teal))) {
                 act.setTheme(R.style.AppThemeTeal);
-            } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_teal)) == act.getResources().getColor(R.color.bg_light))) {
+            } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_light))) {
                 act.setTheme(R.style.AppThemeWhite);
             }
         } catch (Exception e) {
@@ -37,7 +35,7 @@ public class Themer {
 
     public static void setTextColor(Activity act, View view, boolean isButton) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(act);
-        if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_teal)) == act.getResources().getColor(R.color.bg_pink))) {
+        if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_pink))) {
             if (!isButton)
                 ((EditText) view).setTextColor(act.getResources().getColor(R.color.black));
             else
@@ -47,9 +45,9 @@ public class Themer {
 
     public static void setBackgroundColor(Activity act, View view, boolean isRed) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(act);
-        if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_teal)) == act.getResources().getColor(R.color.bg_dark))
-                || (prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_teal)) == act.getResources().getColor(R.color.bg_teal))
-                || (prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_teal)) == act.getResources().getColor(R.color.bg_light))) {
+        if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_dark))
+                || (prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_teal))
+                || (prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_light))) {
             if (isRed)
                 ((Button) view).setBackgroundColor(act.getResources().getColor(R.color.red));
             else
@@ -58,7 +56,6 @@ public class Themer {
         }
 
     }
-
 
 
 }

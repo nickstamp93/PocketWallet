@@ -1,7 +1,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/scrollView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="@dimen/layout_padding">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,54 +14,56 @@
         <TextView
             android:id="@+id/textView"
             style="@style/Headline"
-            android:text="Username" />
+            android:text="@string/textview_headline_username" />
 
         <View
             android:layout_width="wrap_content"
             android:layout_height="2dp"
             android:layout_marginBottom="3dp"
-            android:background="@drawable/line_seperator_fade" />
+            android:background="@drawable/line_seperator_solid" />
 
         <EditText
             android:id="@+id/etUsername"
             style="@style/UserDetailsEditText"
-            android:hint="User"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:layout_marginBottom="@dimen/bottom_margin_headlines_small" />
 
         <TextView
 
             android:id="@+id/textView2"
             style="@style/Headline"
-            android:text="Current Savings" />
+            android:text="@string/textview_headline_savings" />
 
         <View
             android:layout_width="wrap_content"
             android:layout_height="2dp"
             android:layout_marginBottom="3dp"
-            android:background="@drawable/line_seperator_fade" />
+            android:background="@drawable/line_seperator_solid" />
 
 
         <EditText
             android:id="@+id/etSavings"
             style="@style/UserDetailsEditText"
-            android:inputType="numberDecimal" />
+            android:inputType="numberDecimal"
+            android:layout_marginBottom="@dimen/bottom_margin_headlines_small" />
 
         <TextView
             android:id="@+id/textView3"
             style="@style/Headline"
-            android:text="Money Grouping" />
+            android:text="@string/textview_headline_grouping" />
 
         <View
             android:layout_width="wrap_content"
             android:layout_height="2dp"
             android:layout_marginBottom="3dp"
-            android:background="@drawable/line_seperator_fade" />
+            android:background="@drawable/line_seperator_solid" />
 
         <RadioGroup
             android:id="@+id/rgGrouping"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:layout_marginBottom="@dimen/bottom_margin_headlines_small">
 
             <RadioButton
                 android:id="@+id/rbWeekly"
@@ -79,89 +82,6 @@
                 android:textSize="20sp" />
         </RadioGroup>
 
-
-        <!--<TextView-->
-        <!--android:id="@+id/textView5"-->
-        <!--style="@style/Headline"-->
-        <!--android:text="Money Left Until Next Payment" />-->
-
-        <!--<View-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="2dp"-->
-        <!--android:layout_marginBottom="3dp"-->
-        <!--android:background="@drawable/line_seperator_fade" />-->
-
-        <!--<EditText-->
-        <!--android:id="@+id/etBalance"-->
-        <!--style="@style/UserDetailsEditText"-->
-        <!--android:inputType="numberDecimal"-->
-        <!--android:text="0" />-->
-
-        <!--<LinearLayout-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:orientation="horizontal">-->
-
-        <!--<CheckBox-->
-        <!--android:id="@+id/chbSalary"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="center"-->
-        <!--android:layout_weight="1"-->
-        <!--android:checked="true"-->
-        <!--android:text="On Salary"-->
-        <!--android:textSize="24sp" />-->
-
-        <!--</LinearLayout>-->
-
-        <!--<LinearLayout-->
-        <!--android:id="@+id/llSalary"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_weight="1"-->
-        <!--android:orientation="vertical">-->
-
-        <!--<TextView-->
-        <!--android:id="@+id/textView3"-->
-        <!--style="@style/Headline"-->
-        <!--android:text="Salary Amount" />-->
-
-        <!--<EditText-->
-        <!--android:id="@+id/etSalary"-->
-        <!--style="@style/UserDetailsEditText"-->
-        <!--android:inputType="numberDecimal"-->
-        <!--android:text="1000" />-->
-
-        <!--<TextView-->
-        <!--android:id="@+id/textView4"-->
-        <!--style="@style/Headline"-->
-        <!--android:text="Salary" />-->
-
-        <!--<RadioGroup-->
-        <!--android:id="@+id/rgFrequency"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_weight="1">-->
-
-        <!--<RadioButton-->
-        <!--android:id="@+id/rbWeekly"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:checked="false"-->
-        <!--android:text="Weekly"-->
-        <!--android:textSize="20sp" />-->
-
-        <!--<RadioButton-->
-        <!--android:id="@+id/rbMonthly"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:checked="true"-->
-        <!--android:text="Monthly"-->
-        <!--android:textSize="20sp" />-->
-        <!--</RadioGroup>-->
-
-        <!--</LinearLayout>-->
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -171,12 +91,12 @@
             <Button
                 android:id="@+id/bCancel"
                 style="@style/ButtonStyleBottom"
-                android:text="Cancel" />
+                android:text="@string/button_cancel" />
 
             <Button
                 android:id="@+id/bOk"
                 style="@style/ButtonStyleBottom"
-                android:text="OK" />
+                android:text="@string/button_ok" />
 
 
         </LinearLayout>

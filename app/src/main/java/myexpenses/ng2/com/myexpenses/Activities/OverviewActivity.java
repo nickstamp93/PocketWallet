@@ -105,9 +105,21 @@ public class OverviewActivity extends Activity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        startActivity(new Intent(getBaseContext(), OverviewActivity.class));
-        OverviewActivity.this.finish();
-        Log.i("nikos" , "restart called");
+        //if theme has changed , recreate activity
+//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+//        if(prefs.getBoolean("pref_theme_changed" , false)){
+//            startActivity(new Intent(getBaseContext(), OverviewActivity.class));
+//            OverviewActivity.this.finish();
+//            prefs = PreferenceManager.getDefaultSharedPreferences(this);
+//            SharedPreferences.Editor editor = prefs.edit();
+//            editor.putBoolean("pref_theme_changed" , false);
+//            editor.commit();
+//
+//            Log.i("nikos" , "overview recreated");
+//        }\
+            startActivity(new Intent(getBaseContext(), OverviewActivity.class));
+            OverviewActivity.this.finish();
+
     }
 
     @Override
@@ -356,7 +368,7 @@ public class OverviewActivity extends Activity {
             item = new  MagnificentChartItem("Income", priceOfIncomes, getResources().getColor(R.color.green));
             chartItemsList.add(item);
             mcPie.setChartItemsList(chartItemsList);
-            mcPie.setChartBackgroundColor(PreferenceManager.getDefaultSharedPreferences(this).getInt("pref_key_theme", getResources().getColor(R.color.bg_teal)));
+            mcPie.setChartBackgroundColor(PreferenceManager.getDefaultSharedPreferences(this).getInt("pref_key_theme", getResources().getColor(R.color.bg_dark)));
         }
 
         Cursor cExpense, cIncome;

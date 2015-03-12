@@ -4,6 +4,7 @@
     <string name="app_name">My Expenses</string>
     <string name="action_settings">Settings</string>
 
+    <!-- activity titles -->
     <string name="title_activity_add_expense">AddExpenseActivity</string>
     <string name="title_activity_add_income">AddIncomeActivity</string>
     <string name="title_activity_history">HistoryActivity</string>
@@ -13,7 +14,34 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_reminder_settings">ReminderSettingsActivity</string>
 
+    <string name="button_cancel">Cancel</string>
+    <string name="button_ok">OK</string>
+
+    <!-- AddExpenseActivity -->
+    <string name="textview_hint_notes">Enter some notes...</string>
     <string name="action_add_expense">Add Expense</string>
+    <string name="textview_headline_category">Category</string>
+    <string name="textview_headline_date">Date</string>
+    <string name="textview_headline_notes">Notes</string>
+
+    <!-- AddIncomeActivity -->
+    <string name="textview_headline_source">Source</string>
+
+    <!-- CreateCategoryActivity -->
+    <string name="textview_headline_category_name">Category Name</string>
+    <string name="textview_hint_headline_category_name">e.g. Food</string>
+    <string name="textview_headline_category_color">Color</string>
+    <string name="textview_headline_category_preview">Preview Icon</string>
+
+    <!-- UserDetailsActivity -->
+    <string name="textview_headline_username">Username</string>
+    <string name="textview_headline_savings">Savings</string>
+    <string name="textview_headline_grouping">Grouping</string>
+
+    <!-- DeleteCategoryDialog -->
+    <string name="dialog_delete_category_text">There are items of this category in your history. Delete or move them to another category.</string>
+    <string name="dialog_delete_category_move">Move To</string>
+
 
     <string-array name="expenses_category">
         <item>Food</item>
@@ -31,7 +59,7 @@
         <item>yy/dd/MM</item>
         <item>yy/MM/dd</item>
     </string-array>
-    <string-array name="drawer_menu" >
+    <string-array name="drawer_menu">
         <item>History</item>
         <item>Add Income</item>
         <item>Add Expense</item>
@@ -126,6 +154,5 @@
     <string name="string_balance">Balance :</string>
     <string name="string_savings">Savings :</string>
     <string name="string_pie_heading">This week\'s transactions</string>
-
 
 </resources>

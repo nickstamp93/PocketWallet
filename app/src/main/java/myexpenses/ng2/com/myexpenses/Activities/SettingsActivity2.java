@@ -182,7 +182,7 @@ public class SettingsActivity2 extends PreferenceActivity
                         getResources().getColor(R.color.bg_teal),
                         getResources().getColor(R.color.bg_pink)
                 };
-                ColorPickerDialog dialog = ColorPickerDialog.newInstance(R.string.color_picker_default_title, mColor, 0, 3, ColorPickerDialog.SIZE_SMALL);
+                ColorPickerDialog dialog = ColorPickerDialog.newInstance(R.string.color_picker_default_title, mColor, 0, 5, ColorPickerDialog.SIZE_SMALL);
                 //dialog.setStyle(ColorPickerDialog.STYLE_NO_TITLE, ColorPickerDialog.STYLE_NORMAL);
                 dialog.setSelectedColor(prefs.getInt("pref_key_theme", getResources().getColor(R.color.bg_dark)));
                 dialog.setOnColorSelectedListener(colorSetListener);
@@ -204,7 +204,12 @@ public class SettingsActivity2 extends PreferenceActivity
             SharedPreferences.Editor editor = prefs.edit();
             editor.putInt("pref_key_theme", color);
             //editor.putBoolean("pref_theme_changed" , true);
+//            editor.putBoolean("my_pref" , true);
             editor.commit();
+            SharedPrefsManager manager = new SharedPrefsManager(SettingsActivity2.this);
+            manager.startEditing();
+            manager.setPrefsThemeChanged(true);
+            manager.commit();
             Intent i = getIntent();
             overridePendingTransition(0, 0);
             i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);

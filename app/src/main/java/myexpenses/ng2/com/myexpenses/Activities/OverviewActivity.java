@@ -5,10 +5,8 @@ package myexpenses.ng2.com.myexpenses.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -36,7 +34,6 @@ import myexpenses.ng2.com.myexpenses.Data.UserProfile;
 import myexpenses.ng2.com.myexpenses.MainActivity;
 import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Utils.DrawerAdapter;
-import myexpenses.ng2.com.myexpenses.Utils.Legend;
 import myexpenses.ng2.com.myexpenses.Utils.LetterImageView;
 import myexpenses.ng2.com.myexpenses.Utils.MagnificentChart;
 import myexpenses.ng2.com.myexpenses.Utils.MagnificentChartItem;
@@ -55,13 +52,13 @@ public class OverviewActivity extends Activity {
     private UserProfile profile;
 
     //View objects for the XML management
-    private TextView tvBalance, tvSavings, tvLastIncome, tvLastExpense,tvLastExpenseDate,
-            tvLastIncomeDate, tvUsername , tvExpense , tvIncome , tvPieHeading;
+    private TextView tvBalance, tvSavings, tvLastIncome, tvLastExpense, tvLastExpenseDate,
+            tvLastIncomeDate, tvUsername, tvExpense, tvIncome, tvPieHeading;
     private PercentView pv;
-//    private Legend legendIncome , legendExpense;
-    private View line1 , line2 , line3 , line4;
-    private LinearLayout llExpense , llIncome , llPiewView;
-    private LetterImageView livExpense , livIncome , livLegendIncome , livLegendExpense;
+    //    private Legend legendIncome , legendExpense;
+    private View line1, line2, line3, line4;
+    private LinearLayout llExpense, llIncome, llPiewView;
+    private LetterImageView livExpense, livIncome, livLegendIncome, livLegendExpense;
     private DrawerLayout drawerLayout;
     private ListView drawer;
     private ActionBarDrawerToggle drawerToggle;
@@ -117,8 +114,17 @@ public class OverviewActivity extends Activity {
 //
 //            Log.i("nikos" , "overview recreated");
 //        }\
+        if (manager.getPrefsThemeChanged()) {
             startActivity(new Intent(getBaseContext(), OverviewActivity.class));
             OverviewActivity.this.finish();
+
+            manager = new SharedPrefsManager(OverviewActivity.this);
+            manager.startEditing();
+            manager.setPrefsThemeChanged(false);
+            manager.commit();
+
+            Log.i("nikos" , "overview recreated");
+        }
 
     }
 
@@ -169,9 +175,8 @@ public class OverviewActivity extends Activity {
         float savings = manager.getPrefsSavings();
         float balance = manager.getPrefsBalance();
 //        String nextPaymentDate = manager.getPrefsNpd();
-        String currency = PreferenceManager.getDefaultSharedPreferences(this).getString("pref_key_currency" , "€");
+        String currency = PreferenceManager.getDefaultSharedPreferences(this).getString("pref_key_currency", "€");
         String grouping = manager.getPrefsGrouping();
-
 
 
 //        tvLastExpense.setText(cExpense.getString(1) + " " + cExpense.getString(2) + " " + cExpense.getString(3));
@@ -186,7 +191,7 @@ public class OverviewActivity extends Activity {
 //        } else {
 //            profile = new UserProfile(username, savings, balance, currency);
 //        }
-        profile = new UserProfile(username, savings, balance, currency , grouping);
+        profile = new UserProfile(username, savings, balance, currency, grouping);
     }
 
     //is called when a sub-Activity with the result code returns
@@ -223,10 +228,10 @@ public class OverviewActivity extends Activity {
         tvLastIncomeDate = (TextView) findViewById(R.id.tvLastIncomeDate);
         tvPieHeading = (TextView) findViewById(R.id.tvPieHeading);
 
-        if(manager.getPrefsGrouping().equalsIgnoreCase("weekly")){
+        if (manager.getPrefsGrouping().equalsIgnoreCase("weekly")) {
             tvPieHeading.setText("This week's transactions");
             tvPieHeading.setTextSize(20);
-        }else{
+        } else {
             Calendar c = Calendar.getInstance();
             int month = c.get(Calendar.MONTH);
             String sMonth = getMonthForInt(month);
@@ -324,7 +329,7 @@ public class OverviewActivity extends Activity {
         String month = "wrong";
         DateFormatSymbols dfs = new DateFormatSymbols();
         String[] months = dfs.getMonths();
-        if (num >= 0 && num <= 11 ) {
+        if (num >= 0 && num <= 11) {
             month = months[num];
         }
         return month;
@@ -343,10 +348,10 @@ public class OverviewActivity extends Activity {
 //        }
         double priceOfExpenses;
         double priceOfIncomes;
-        if(profile.getGrouping().equalsIgnoreCase("monthly")){
+        if (profile.getGrouping().equalsIgnoreCase("monthly")) {
             priceOfExpenses = mdb.getTotalExpensePriceForCurrentMonth();
             priceOfIncomes = mdb.getTotalIncomePriceForCurrentMonth();
-        }else{
+        } else {
             priceOfExpenses = mdb.getTotalExpensePriceForCurrentWeek();
             priceOfIncomes = mdb.getTotalIncomePriceForCurrentWeek();
         }
@@ -362,10 +367,10 @@ public class OverviewActivity extends Activity {
             double percentOfExpenses = priceOfExpenses / total;
 //            pv.setPercentageExpense((float) percentOfExpenses * 100);
             llPiewView.setVisibility(View.VISIBLE);
-            mcPie.setMaxValue((int)total);
-            MagnificentChartItem item = new  MagnificentChartItem("Expense", priceOfExpenses, getResources().getColor(R.color.red));
+            mcPie.setMaxValue((int) total);
+            MagnificentChartItem item = new MagnificentChartItem("Expense", priceOfExpenses, getResources().getColor(R.color.red));
             chartItemsList.add(item);
-            item = new  MagnificentChartItem("Income", priceOfIncomes, getResources().getColor(R.color.green));
+            item = new MagnificentChartItem("Income", priceOfIncomes, getResources().getColor(R.color.green));
             chartItemsList.add(item);
             mcPie.setChartItemsList(chartItemsList);
             mcPie.setChartBackgroundColor(PreferenceManager.getDefaultSharedPreferences(this).getInt("pref_key_theme", getResources().getColor(R.color.bg_dark)));
@@ -424,7 +429,6 @@ public class OverviewActivity extends Activity {
             cdb.close();
 
         }
-
 
 
 //        double priceOfExpenses = mdb.getTotalExpensePriceForCurrentMonth();

@@ -37,6 +37,7 @@ public class SharedPrefsManager {
     private static final String PREFS_PASSWORD = "password";
     private static final String PREFS_DIFFERENCE = "difference";
     private static final String PREFS_GROUPING = "grouping";
+    private static final String PREFS_THEME_CHANGED = "themeChanged";
 //    private static final String PREFS_SAL_FREQ_WEEKLY = "salfreq weekly";
 //    private static final String PREFS_SAL_FREQ_MONTHLY = "salfreq monthly";
 
@@ -145,6 +146,9 @@ public class SharedPrefsManager {
     public String getPrefsGrouping() {
         return prefs.getString(PREFS_GROUPING , "monthly");
     }
+    public boolean getPrefsThemeChanged() {
+        return prefs.getBoolean(PREFS_THEME_CHANGED , false);
+    }
 //    public String getPrefsSalFreqWeekly(){
 //        return prefs.getString(PREFS_SAL_FREQ_WEEKLY , "Monday");
 //    }
@@ -210,6 +214,10 @@ public class SharedPrefsManager {
 
     public void setPrefsGrouping(String grouping){
         editor.putString(PREFS_GROUPING , grouping);
+    }
+
+    public void setPrefsThemeChanged(boolean value){
+        editor.putBoolean(PREFS_THEME_CHANGED , value);
     }
 //    public void setPrefsSalFreqWeekly(String day){
 //        editor.putString(PREFS_SAL_FREQ_WEEKLY , day);

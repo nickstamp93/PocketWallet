@@ -28,82 +28,90 @@
             android:name=".Activities.AddExpenseActivity"
             android:label="@string/title_activity_add_expense"
             android:parentActivityName=".Activities.OverviewActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".Activities.AddIncomeActivity"
             android:label="@string/title_activity_add_income"
             android:parentActivityName=".Activities.OverviewActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".Activities.HistoryActivity"
             android:label="@string/title_activity_history"
             android:parentActivityName=".Activities.OverviewActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".Activities.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:parentActivityName=".Activities.OverviewActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".Activities.UserDetailsActivity"
             android:label="@string/title_activity_user_details"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".Activities.ReminderSettingsActivity"
             android:label="@string/title_activity_reminder_settings"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <receiver
             android:name=".BroadcastReceivers.ReminderReceiver"
-            android:enabled="true"></receiver>
+            android:enabled="true" />
 
         <service
             android:name=".Utils.AlarmService"
-            android:enabled="true"></service>
+            android:enabled="true" />
 
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_main_activity2"></activity>
+            android:label="@string/title_activity_main_activity2" />
+
         <activity
             android:name=".Activities.PasswordActivity"
             android:label="@string/title_activity_password"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".Activities.OverviewActivity"
             android:label="@string/title_activity_launcher_picker"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".Activities.PasswordSettingsActivity"
             android:label="@string/title_activity_password_settings"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".Activities.CategoriesManagerActivity"
             android:label="@string/title_activity_categories_manager"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".Activities.SettingsActivity2"
             android:label="@string/title_activity_settings_activity2"
             android:parentActivityName=".Activities.OverviewActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+
         <activity
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:name=".Activities.TransparentActivity"
             android:label="@string/title_activity_transparent"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" />
 
-        </activity>
         <activity
             android:name=".Activities.CreateCategoryActivity"
             android:label="CreateCategoryActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".Utils.FiltersDateToDateActivity"
             android:label="FiltersDateToDate"
-            android:screenOrientation="portrait">
-
-        </activity>
-
+            android:screenOrientation="portrait"
+            android:parentActivityName=".Activities.HistoryActivity" />
 
     </application>
 

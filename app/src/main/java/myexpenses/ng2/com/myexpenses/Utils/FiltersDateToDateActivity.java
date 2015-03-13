@@ -56,6 +56,9 @@ public class FiltersDateToDateActivity extends FragmentActivity  {
         initUI();
         initListeners();
 
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+
     }
 
     /*
@@ -80,6 +83,11 @@ public class FiltersDateToDateActivity extends FragmentActivity  {
         ibTo=(ImageButton) findViewById(R.id.ibTo);
         etFrom=(EditText) findViewById(R.id.etDateFrom);
         etTo=(EditText) findViewById(R.id.etDateTo);
+
+        Themer.setBackgroundColor(this , bOk , false);
+        Themer.setBackgroundColor(this , bCancel , true);
+
+
         //initialise the dialog fragment and also set the target fragment to be this parent fragment because we need
         //to take some data from child fragment FiltersDateDialog
       //  fdialog=new FiltersDateDialog(false,expense);

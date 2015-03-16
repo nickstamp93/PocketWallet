@@ -68,6 +68,8 @@
                 android:id="@+id/ibIncomeCalendar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="?android:borderlessButtonStyle"
+                android:src="@drawable/calendar"
                 android:layout_weight="4" />
 
 

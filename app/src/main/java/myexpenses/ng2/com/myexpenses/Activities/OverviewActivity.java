@@ -57,7 +57,7 @@ public class OverviewActivity extends Activity {
     private PercentView pv;
     //    private Legend legendIncome , legendExpense;
     private View line1, line2, line3, line4;
-    private LinearLayout llExpense, llIncome, llPiewView;
+    private LinearLayout llExpense, llIncome, llPiewView , llBalance , llLast;
     private LetterImageView livExpense, livIncome, livLegendIncome, livLegendExpense;
     private DrawerLayout drawerLayout;
     private ListView drawer;
@@ -228,16 +228,7 @@ public class OverviewActivity extends Activity {
         tvLastIncomeDate = (TextView) findViewById(R.id.tvLastIncomeDate);
         tvPieHeading = (TextView) findViewById(R.id.tvPieHeading);
 
-        if (manager.getPrefsGrouping().equalsIgnoreCase("weekly")) {
-            tvPieHeading.setText("This week's transactions");
-            tvPieHeading.setTextSize(20);
-        } else {
-            Calendar c = Calendar.getInstance();
-            int month = c.get(Calendar.MONTH);
-            String sMonth = getMonthForInt(month);
-            tvPieHeading.setText(sMonth);
-            tvPieHeading.setTextSize(30);
-        }
+
 
 //        pv = (PercentView) findViewById(R.id.percentview);
 //        pv.setVisibility(View.GONE);
@@ -260,6 +251,10 @@ public class OverviewActivity extends Activity {
 
         llExpense = (LinearLayout) findViewById(R.id.llLastExpense);
         llIncome = (LinearLayout) findViewById(R.id.llLastIncome);
+
+        llBalance = (LinearLayout) findViewById(R.id.llBalance);
+        llLast = (LinearLayout) findViewById(R.id.llLast);
+        llLast.setVisibility(View.GONE);
 
         llPiewView = (LinearLayout) findViewById(R.id.llPieView);
         llPiewView.setVisibility(View.GONE);
@@ -341,6 +336,11 @@ public class OverviewActivity extends Activity {
         tvBalance.setText(String.valueOf(profile.getBalance()) + " " + profile.getCurrency());
         tvSavings.setText(String.valueOf(profile.getSavings()));
 
+        Themer.setLinearLayoutBackround(this , llBalance);
+        Themer.setLinearLayoutBackround(this , llLast);
+        Themer.setLinearLayoutBackround(this , llPiewView);
+
+
 //        if (profile instanceof UserProfileSalary) {
 //            tvDays.setText(String.valueOf(((UserProfileSalary) profile).getDaysToNextPayment()));
 //        } else {
@@ -355,6 +355,7 @@ public class OverviewActivity extends Activity {
             priceOfExpenses = mdb.getTotalExpensePriceForCurrentWeek();
             priceOfIncomes = mdb.getTotalIncomePriceForCurrentWeek();
         }
+
 
         List<MagnificentChartItem> chartItemsList = new ArrayList<MagnificentChartItem>();
 
@@ -373,7 +374,19 @@ public class OverviewActivity extends Activity {
             item = new MagnificentChartItem("Income", priceOfIncomes, getResources().getColor(R.color.green));
             chartItemsList.add(item);
             mcPie.setChartItemsList(chartItemsList);
-            mcPie.setChartBackgroundColor(PreferenceManager.getDefaultSharedPreferences(this).getInt("pref_key_theme", getResources().getColor(R.color.bg_dark)));
+            Themer.setPieBackgroundColor(this , mcPie);
+            //mcPie.setChartBackgroundColor(PreferenceManager.getDefaultSharedPreferences(this).getInt("pref_key_theme", getResources().getColor(R.color.bg_dark)));
+        }
+
+        if (manager.getPrefsGrouping().equalsIgnoreCase("weekly")) {
+            tvPieHeading.setText("This week's transactions");
+            tvPieHeading.setTextSize(20);
+        } else {
+            Calendar c = Calendar.getInstance();
+            int month = c.get(Calendar.MONTH);
+            String sMonth = getMonthForInt(month);
+            tvPieHeading.setText(sMonth);
+            tvPieHeading.setTextSize(30);
         }
 
         Cursor cExpense, cIncome;
@@ -381,6 +394,7 @@ public class OverviewActivity extends Activity {
         cIncome = mdb.getLastIncome();
 
         if (cExpense.moveToFirst()) {
+            llLast.setVisibility(View.VISIBLE);
             llExpense.setVisibility(View.VISIBLE);
             tvExpense.setVisibility(View.VISIBLE);
             line1.setVisibility(View.VISIBLE);
@@ -497,7 +511,6 @@ public class OverviewActivity extends Activity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         boolean drawerOpen = drawerLayout.isDrawerOpen(drawer);
-        menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -516,9 +529,6 @@ public class OverviewActivity extends Activity {
         int id = item.getItemId();
         if (id == R.id.action_addExpense) {
             startActivity(new Intent(getApplicationContext(), AddExpenseActivity.class));
-        }
-        if (id == R.id.action_settings) {
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
         }
         if (drawerToggle.onOptionsItemSelected(item)) {
             return true;

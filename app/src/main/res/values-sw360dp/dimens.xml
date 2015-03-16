@@ -5,4 +5,5 @@
     <dimen name="bottom_margin_headlines">30dp</dimen>
     <dimen name="layout_padding">10dp</dimen>
     <dimen name="bottom_margin_headlines_small">20dp</dimen>
+    <dimen name="value_size_big">35sp</dimen>
 </resources>

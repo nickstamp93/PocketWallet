@@ -68,7 +68,9 @@
                 android:id="@+id/ibCalendar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="4" />
+                android:layout_weight="4"
+                style="?android:borderlessButtonStyle"
+                android:src="@drawable/calendar"/>
 
 
         </LinearLayout>

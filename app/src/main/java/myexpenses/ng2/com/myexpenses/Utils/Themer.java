@@ -2,10 +2,13 @@ package myexpenses.ng2.com.myexpenses.Utils;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import myexpenses.ng2.com.myexpenses.R;
 
@@ -53,6 +56,57 @@ public class Themer {
             else
                 ((Button) view).setBackgroundColor(act.getResources().getColor(R.color.YellowGreen));
 
+        }
+
+
+    }
+
+    public static void setPieBackgroundColor(Activity act, View view) {
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(act);
+        try {
+            if (prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_pink)) {
+                ((MagnificentChart) view).setChartBackgroundColor(act.getResources().getColor(R.color.action_bar_pink));
+            } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_dark))) {
+                ((MagnificentChart) view).setChartBackgroundColor(act.getResources().getColor(R.color.action_bar_dark));
+            } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_green))) {
+                ((MagnificentChart) view).setChartBackgroundColor(act.getResources().getColor(R.color.action_bar_green));
+            } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_teal))) {
+                ((MagnificentChart) view).setChartBackgroundColor(act.getResources().getColor(R.color.action_bar_teal));
+            } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_light))) {
+                ((MagnificentChart) view).setChartBackgroundColor(act.getResources().getColor(R.color.backround_pie_light));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void setLinearLayoutBackround(Activity act , View view){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(act);
+        try {
+            if (prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_pink)) {
+//                ((LinearLayout) view).setBackgroundColor(act.getResources().getColor(R.color.action_bar_pink));
+                GradientDrawable d = (GradientDrawable) ((LinearLayout) view).getBackground();
+                d.setColor(act.getResources().getColor(R.color.action_bar_pink));
+            } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_dark))) {
+//                ((LinearLayout) view).setBackgroundColor(act.getResources().getColor(R.color.action_bar_pink));
+                GradientDrawable d = (GradientDrawable) ((LinearLayout) view).getBackground();
+                d.setColor(act.getResources().getColor(R.color.action_bar_dark));
+            } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_green))) {
+//                ((LinearLayout) view).setBackgroundColor(act.getResources().getColor(R.color.action_bar_pink));
+                GradientDrawable d = (GradientDrawable) ((LinearLayout) view).getBackground();
+                d.setColor(act.getResources().getColor(R.color.action_bar_green));
+            } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_teal))) {
+//                ((LinearLayout) view).setBackgroundColor(act.getResources().getColor(R.color.action_bar_pink));
+                GradientDrawable d = (GradientDrawable) ((LinearLayout) view).getBackground();
+                d.setColor(act.getResources().getColor(R.color.action_bar_teal));
+            } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_light))) {
+//                ((LinearLayout) view).setBackgroundColor(act.getResources().getColor(R.color.action_bar_pink));
+                GradientDrawable d = (GradientDrawable) ((LinearLayout) view).getBackground();
+                d.setColor(act.getResources().getColor(R.color.backround_pie_light));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }

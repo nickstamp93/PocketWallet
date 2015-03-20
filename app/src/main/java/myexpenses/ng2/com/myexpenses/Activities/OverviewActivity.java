@@ -101,18 +101,6 @@ public class OverviewActivity extends Activity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        //if theme has changed , recreate activity
-//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-//        if(prefs.getBoolean("pref_theme_changed" , false)){
-//            startActivity(new Intent(getBaseContext(), OverviewActivity.class));
-//            OverviewActivity.this.finish();
-//            prefs = PreferenceManager.getDefaultSharedPreferences(this);
-//            SharedPreferences.Editor editor = prefs.edit();
-//            editor.putBoolean("pref_theme_changed" , false);
-//            editor.commit();
-//
-//            Log.i("nikos" , "overview recreated");
-//        }\
         if (manager.getPrefsThemeChanged()) {
             startActivity(new Intent(getBaseContext(), OverviewActivity.class));
             OverviewActivity.this.finish();

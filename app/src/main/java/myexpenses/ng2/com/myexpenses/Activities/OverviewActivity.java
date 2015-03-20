@@ -334,7 +334,7 @@ public class OverviewActivity extends Activity {
     private void refreshUI() {
         tvUsername.setText(profile.getUsername());
         //tvBalance.setText(String.valueOf(profile.getBalance()) + " " + profile.getCurrency());
-        tvSavings.setText(String.valueOf(profile.getSavings()));
+        //tvSavings.setText(String.valueOf(profile.getSavings()));
 
         Themer.setLinearLayoutBackround(this, llBalance);
         Themer.setLinearLayoutBackround(this, llLast);
@@ -366,6 +366,8 @@ public class OverviewActivity extends Activity {
         tvTotalExpense.setText("Expense \n(" + (priceOfExpenses + " " + profile.getCurrency()) + ")");
         tvTotalIncome.setText("Income \n(" + (priceOfIncomes + " " + profile.getCurrency()) + ")");
 
+        double savings = mdb.getTotalIncome() - mdb.getTotalExpenses() - balance + profile.getSavings();
+        tvSavings.setText(savings + profile.getCurrency());
         List<MagnificentChartItem> chartItemsList = new ArrayList<MagnificentChartItem>();
 
         double total = priceOfExpenses + priceOfIncomes;
@@ -385,6 +387,8 @@ public class OverviewActivity extends Activity {
             mcPie.setChartItemsList(chartItemsList);
             Themer.setPieBackgroundColor(this, mcPie);
             //mcPie.setChartBackgroundColor(PreferenceManager.getDefaultSharedPreferences(this).getInt("pref_key_theme", getResources().getColor(R.color.bg_dark)));
+        }else{
+            llPiewView.setVisibility(View.GONE);
         }
 
         if (manager.getPrefsGrouping().equalsIgnoreCase("weekly")) {
@@ -427,8 +431,14 @@ public class OverviewActivity extends Activity {
 
             cdb.close();
 
+        }else{
+            llExpense.setVisibility(View.GONE);
+            tvExpense.setVisibility(View.GONE);
+            line1.setVisibility(View.GONE);
+            line2.setVisibility(View.GONE);
         }
         if (cIncome.moveToFirst()) {
+            llLast.setVisibility(View.VISIBLE);
             llIncome.setVisibility(View.VISIBLE);
             tvIncome.setVisibility(View.VISIBLE);
             line3.setVisibility(View.VISIBLE);
@@ -451,6 +461,15 @@ public class OverviewActivity extends Activity {
 
             cdb.close();
 
+        }else{
+
+            llIncome.setVisibility(View.GONE);
+            tvIncome.setVisibility(View.GONE);
+            line3.setVisibility(View.GONE);
+            line4.setVisibility(View.GONE);
+        }
+        if(!cIncome.moveToFirst() && !cExpense.moveToFirst()){
+            llLast.setVisibility(View.GONE);
         }
 
 

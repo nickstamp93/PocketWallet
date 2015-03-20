@@ -294,7 +294,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         int currentMonth = c.get(Calendar.MONTH) + 1;
 
         String month = currentMonth + "";
-        if (currentMonth< 10) {
+        if (currentMonth < 10) {
             month = "0" + currentMonth;
         }
 
@@ -322,7 +322,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         Calendar c = Calendar.getInstance();
         int currentMonth = c.get(Calendar.MONTH) + 1;
         String month = currentMonth + "";
-        if (currentMonth< 10) {
+        if (currentMonth < 10) {
             month = "0" + currentMonth;
         }
         String firstOfMonth = "01" + "-" + month + "-" + c.get(Calendar.YEAR);
@@ -332,6 +332,38 @@ public class MoneyDatabase extends SQLiteOpenHelper {
 
         if (cursor.getCount() > 0) {
 
+            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                total = Double.parseDouble(cursor.getString(1)) + total;
+            }
+
+        }
+
+        return total;
+    }
+
+    public double getTotalExpenses() {
+
+        double total = 0;
+
+        Cursor cursor = this.getCursorExpense();
+
+        if (cursor.getCount() != 0) {
+            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                total = Double.parseDouble(cursor.getString(3)) + total;
+            }
+
+        }
+
+        return total;
+    }
+
+    public double getTotalIncome() {
+
+        double total = 0;
+
+        Cursor cursor = this.getCursorIncomes();
+
+        if (cursor.getCount() != 0) {
             for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
                 total = Double.parseDouble(cursor.getString(1)) + total;
             }
@@ -353,7 +385,6 @@ public class MoneyDatabase extends SQLiteOpenHelper {
                 , null);
         return c;
     }
-
 
     public double getTotalExpensePriceForCurrentWeek() {
 
@@ -377,24 +408,24 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         c.setTime(startDate);
 
         String day = c.get(Calendar.DAY_OF_MONTH) + "";
-        String month = (c.get(Calendar.MONTH)+1) + "";
+        String month = (c.get(Calendar.MONTH) + 1) + "";
         if (c.get(Calendar.DAY_OF_MONTH) < 10) {
             day = "0" + c.get(Calendar.DAY_OF_MONTH);
         }
-        if (c.get(Calendar.MONTH)+1 < 10) {
-            month = "0" + (c.get(Calendar.MONTH)+1);
+        if (c.get(Calendar.MONTH) + 1 < 10) {
+            month = "0" + (c.get(Calendar.MONTH) + 1);
         }
 
         String firstOfWeek = day + "-" + month + "-" + c.get(Calendar.YEAR);
         c.setTime(endDate);
 
         day = c.get(Calendar.DAY_OF_MONTH) + "";
-        month = (c.get(Calendar.MONTH)+1) + "";
+        month = (c.get(Calendar.MONTH) + 1) + "";
         if (c.get(Calendar.DAY_OF_MONTH) < 10) {
             day = "0" + c.get(Calendar.DAY_OF_MONTH);
         }
-        if (c.get(Calendar.MONTH)+1 < 10) {
-            month = "0" + (c.get(Calendar.MONTH)+1);
+        if (c.get(Calendar.MONTH) + 1 < 10) {
+            month = "0" + (c.get(Calendar.MONTH) + 1);
         }
 
         String lastOfWeek = day + "-" + month + "-" + c.get(Calendar.YEAR);
@@ -435,24 +466,24 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         c.setTime(startDate);
 
         String day = c.get(Calendar.DAY_OF_MONTH) + "";
-        String month = (c.get(Calendar.MONTH)+1) + "";
+        String month = (c.get(Calendar.MONTH) + 1) + "";
         if (c.get(Calendar.DAY_OF_MONTH) < 10) {
             day = "0" + c.get(Calendar.DAY_OF_MONTH);
         }
-        if (c.get(Calendar.MONTH)+1 < 10) {
-            month = "0" + (c.get(Calendar.MONTH)+1);
+        if (c.get(Calendar.MONTH) + 1 < 10) {
+            month = "0" + (c.get(Calendar.MONTH) + 1);
         }
 
         String firstOfWeek = day + "-" + month + "-" + c.get(Calendar.YEAR);
         c.setTime(endDate);
 
         day = c.get(Calendar.DAY_OF_MONTH) + "";
-        month = (c.get(Calendar.MONTH)+1) + "";
+        month = (c.get(Calendar.MONTH) + 1) + "";
         if (c.get(Calendar.DAY_OF_MONTH) < 10) {
             day = "0" + c.get(Calendar.DAY_OF_MONTH);
         }
-        if (c.get(Calendar.MONTH)+1 < 10) {
-            month = "0" + (c.get(Calendar.MONTH)+1);
+        if (c.get(Calendar.MONTH) + 1 < 10) {
+            month = "0" + (c.get(Calendar.MONTH) + 1);
         }
 
         String lastOfWeek = day + "-" + month + "-" + c.get(Calendar.YEAR);

@@ -261,26 +261,8 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
                     if (!update) {
                         //then we add the expense to our database we close it and we finish the activity
                         mydb.InsertExpense(item);
-                        SharedPrefsManager manager = new SharedPrefsManager(AddExpenseActivity.this);
-                        manager.startEditing();
 
-                        if(item.getPrice() > manager.getPrefsBalance()){
-                            manager.setPrefsBalance(0);
-                            double diff = item.getPrice() - manager.getPrefsBalance();
-                            manager.setPrefsSavings((float)(manager.getPrefsSavings() - diff));
-                        }else{
-                            manager.setPrefsBalance((float) (manager.getPrefsBalance() - item.getPrice()));
-                        }
-
-//                        float difference = manager.getPrefsBalance() - (float)item.getPrice();
-//                        manager.setPrefsBalance(difference);
-//                        manager.setPrefsDifference((float)item.getPrice() + manager.getPrefsDifference());
-                        manager.commit();
-//                        if(!manager.getPrefsOnSalary() && manager.getPrefsBalance() < 0){
-//                            manager.setPrefsSavings(manager.getPrefsSavings() + manager.getPrefsBalance());
-//                            manager.setPrefsBalance(0);
-//                            manager.commit();
-//                        }
+//
                     } else {
                         item.setId(id);
                         mydb.UpdateExpense(item);

@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
 import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Utils.SharedPrefsManager;
 import myexpenses.ng2.com.myexpenses.Utils.Themer;
@@ -23,6 +25,8 @@ public class UserDetailsActivity extends Activity {
     //CheckBox chbSalary;
     Button bOk, bCancel;
     RadioGroup radioGroup;
+
+    LinearLayout llSavings;
 
     //variables for storing the user inputs
     float savings, balance; // ,salary
@@ -65,6 +69,13 @@ public class UserDetailsActivity extends Activity {
 
         //etSalary = (EditText) findViewById(R.id.etSalary);
         etUsername = (EditText) findViewById(R.id.etUsername);
+
+        llSavings = (LinearLayout) findViewById(R.id.llSavings);
+
+        MoneyDatabase db = new MoneyDatabase(this);
+        if(db.getTotalExpenses() != 0 && db.getTotalIncome() != 0){
+            llSavings.setVisibility(View.GONE);
+        }
         etSavings = (EditText) findViewById(R.id.etSavings);
 //        etBalance = (EditText) findViewById(R.id.etBalance);
 

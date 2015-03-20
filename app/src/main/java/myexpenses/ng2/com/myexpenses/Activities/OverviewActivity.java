@@ -31,7 +31,6 @@ import java.util.List;
 import myexpenses.ng2.com.myexpenses.Data.CategoryDatabase;
 import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
 import myexpenses.ng2.com.myexpenses.Data.UserProfile;
-import myexpenses.ng2.com.myexpenses.MainActivity;
 import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Utils.DrawerAdapter;
 import myexpenses.ng2.com.myexpenses.Utils.LetterImageView;
@@ -53,11 +52,11 @@ public class OverviewActivity extends Activity {
 
     //View objects for the XML management
     private TextView tvBalance, tvSavings, tvLastIncome, tvLastExpense, tvLastExpenseDate,
-            tvLastIncomeDate, tvUsername, tvExpense, tvIncome, tvPieHeading;
+            tvLastIncomeDate, tvUsername, tvExpense, tvIncome, tvPieHeading, tvTotalExpense, tvTotalIncome;
     private PercentView pv;
     //    private Legend legendIncome , legendExpense;
     private View line1, line2, line3, line4;
-    private LinearLayout llExpense, llIncome, llPiewView , llBalance , llLast;
+    private LinearLayout llExpense, llIncome, llPiewView, llBalance, llLast;
     private LetterImageView livExpense, livIncome, livLegendIncome, livLegendExpense;
     private DrawerLayout drawerLayout;
     private ListView drawer;
@@ -123,7 +122,7 @@ public class OverviewActivity extends Activity {
             manager.setPrefsThemeChanged(false);
             manager.commit();
 
-            Log.i("nikos" , "overview recreated");
+            Log.i("nikos", "overview recreated");
         }
 
     }
@@ -227,7 +226,8 @@ public class OverviewActivity extends Activity {
         tvLastExpenseDate = (TextView) findViewById(R.id.tvLastExpenseDate);
         tvLastIncomeDate = (TextView) findViewById(R.id.tvLastIncomeDate);
         tvPieHeading = (TextView) findViewById(R.id.tvPieHeading);
-
+        tvTotalExpense = (TextView) findViewById(R.id.tvExpenses);
+        tvTotalIncome = (TextView) findViewById(R.id.tvIncomes);
 
 
 //        pv = (PercentView) findViewById(R.id.percentview);
@@ -333,12 +333,12 @@ public class OverviewActivity extends Activity {
     //refresh UI according to profile object
     private void refreshUI() {
         tvUsername.setText(profile.getUsername());
-        tvBalance.setText(String.valueOf(profile.getBalance()) + " " + profile.getCurrency());
+        //tvBalance.setText(String.valueOf(profile.getBalance()) + " " + profile.getCurrency());
         tvSavings.setText(String.valueOf(profile.getSavings()));
 
-        Themer.setLinearLayoutBackround(this , llBalance);
-        Themer.setLinearLayoutBackround(this , llLast);
-        Themer.setLinearLayoutBackround(this , llPiewView);
+        Themer.setLinearLayoutBackround(this, llBalance);
+        Themer.setLinearLayoutBackround(this, llLast);
+        Themer.setLinearLayoutBackround(this, llPiewView);
 
 
 //        if (profile instanceof UserProfileSalary) {
@@ -356,6 +356,15 @@ public class OverviewActivity extends Activity {
             priceOfIncomes = mdb.getTotalIncomePriceForCurrentWeek();
         }
 
+        manager.startEditing();
+        double balance = priceOfIncomes - priceOfExpenses;
+        manager.setPrefsBalance((float)balance);
+        manager.commit();
+        profile.setBalance((float)balance);
+
+        tvBalance.setText(balance + profile.getCurrency());
+        tvTotalExpense.setText("Expense \n(" + (priceOfExpenses + " " + profile.getCurrency()) + ")");
+        tvTotalIncome.setText("Income \n(" + (priceOfIncomes + " " + profile.getCurrency()) + ")");
 
         List<MagnificentChartItem> chartItemsList = new ArrayList<MagnificentChartItem>();
 
@@ -374,7 +383,7 @@ public class OverviewActivity extends Activity {
             item = new MagnificentChartItem("Income", priceOfIncomes, getResources().getColor(R.color.green));
             chartItemsList.add(item);
             mcPie.setChartItemsList(chartItemsList);
-            Themer.setPieBackgroundColor(this , mcPie);
+            Themer.setPieBackgroundColor(this, mcPie);
             //mcPie.setChartBackgroundColor(PreferenceManager.getDefaultSharedPreferences(this).getInt("pref_key_theme", getResources().getColor(R.color.bg_dark)));
         }
 

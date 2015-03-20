@@ -39,7 +39,7 @@ import myexpenses.ng2.com.myexpenses.Utils.Themer;
 /*
 Future Modules
 1)Credit or Cash on Expenses
-2)Diagrams-Pites probably library
+2)Diagrams-Pites probably Done
 3)Repeat some of the expenses
 4)SubCategories
 5)User add a Category DONE
@@ -47,36 +47,26 @@ Future Modules
 7)Switch on History Activity Income-Expense with filters (Toggle Button) DONE
 8)Filters change in DropDown Menu in ActionBar DONE
 TO DO LIST
-1)Create a table for income categories DONE
-2)Switch categories in CategoriesManagerActivity DONE but need to fix some methods
-3)method to delete all expenses and all incomes to MoneyDatabase
-4)Custom dialog to handle categories and tuples when you delete a category DONE
-5)Create addCategoryActivity (EditText namecat button to choose color for category,ll to change the starting letter for category and preview
-for the result. DONE
-6)Change categoryDatabase, add to tables color and letter DONE
-7) Process categories add functions to change the categories DONE
-8)Add a filter feature amount in income
-9) Fix some features in income (history List View Adapter and also update an income)
-10)Fix the dialog for filters date and date-to-date
+1) Icons for whole app
+2) translate the strings in greek
+3)fix the dimensions
+4)cleaning and debugging
+5)Notification fixed
+6)Styles for dialogs
+7)Default Categories
  */
 public class AddExpenseActivity extends FragmentActivity implements NumberPickerDialogFragment.NumberPickerDialogHandler {
 
     private Button bOk, bCancel;
-    private ImageButton ibCalendar, ibCamera;
+    private ImageButton ibCalendar;
 
     private EditText etNotes, etDate;
     private TextView tvPrice;
-    private ImageView ivPhoto;
     private Spinner sCategories;
     private MoneyDatabase mydb;
     private CategoryDatabase cdb;
     private ExpenseItem item;
 
-    private boolean image;
-    //  private CalendarDialog dialog;
-
-    private final int REQUEST_CODE = 1;
-    private Bitmap bm;
     private String date;
     private int id;
     private boolean update;
@@ -99,7 +89,13 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
         initUi();
         initListeners();
 
+        //This activity contains 2 modules. Add a new expense in Database or update an exist one.
+        //When the user wants to update a expense he just click the history item. From History
+        //we start an Intent to open this activity. So we use a ExpenseItem variable to get the
+        //expense that the user wants to update.
         item = (ExpenseItem) getIntent().getSerializableExtra("Expense");
+        //If variable item is not null it means that AddExpenseActivity is called from HistoryActivity so
+        //we need to update the values of the expense that pressed.
         if (item != null) {
             update = true;
             id = item.getId();
@@ -117,16 +113,16 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
     private void initBasicVariables() {
         cdb = new CategoryDatabase(AddExpenseActivity.this);
         mydb = new MoneyDatabase(AddExpenseActivity.this);
-
+        //Open the database
         try {
             mydb.openDatabase();
         } catch (SQLException e) {
-            Toast.makeText(getApplicationContext(), "Problem with our database", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Problem with database", Toast.LENGTH_SHORT).show();
         }
-        image = false;
+
         update = false;
 
-
+        //Get current date and save it to variable date with format e.t.c 2014-09-12
         c = Calendar.getInstance();
         d = CalendarDatePickerDialog.newInstance(listener,
                 c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
@@ -140,17 +136,6 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
             month = "0" + (c.get(Calendar.MONTH)+1);
         }
 
-/*
-        Time now = new Time();
-        now.setToNow();
-        String day = now.monthDay + "", month = now.month + "";
-        //Check if the day and month is <10 to add a leading zero in front of them
-        if (now.monthDay < 10) {
-            day = "0" + now.monthDay;
-        }
-        if (now.month < 10) {
-            month = "0" + now.month;
-        }*/
 
         date = c.get(Calendar.YEAR) + "-" + month + "-" + day;
 
@@ -195,18 +180,11 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
         tvPrice.setText("0.00 " +  PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("pref_key_currency", "€"));
         etDate.setText(reverseDate());
 
-//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-//        if(prefs.getInt("pref_key_theme", getResources().getColor(R.color.bg_teal)) == getResources().getColor(R.color.bg_pink)){
-//            etDate.setTextColor(getResources().getColor(R.color.black));
-//            etNotes.setTextColor(getResources().getColor(R.color.black));
-//        }
+
         Themer.setTextColor(this , etDate , false);
         Themer.setTextColor(this , etNotes , false);
 
-//        if(prefs.getInt("pref_key_theme", getResources().getColor(R.color.bg_teal)) == getResources().getColor(R.color.bg_dark)){
-//            bOk.setBackgroundColor(getResources().getColor(R.color.YellowGreen));
-//            bCancel.setBackgroundColor(getResources().getColor(R.color.red));
-//        }
+
         Themer.setTextColor(this , bOk , true);
         Themer.setTextColor(this , bCancel , true);
         Themer.setBackgroundColor(this , bOk , false);
@@ -215,7 +193,7 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
         //get from CategoryDatabase all the categories and save them in to an ArrayList
         allCategories = cdb.getCategories(true);
               ArrayList<SpinnerItem> spinnerItems = new ArrayList<SpinnerItem>();
-
+        //Initialize the the categories in UI using LetterImageView for each category
         for (int i = 0; i < allCategories.size(); i++) {
             String name = allCategories.get(i);
             int color = cdb.getColorFromCategory(name, true);
@@ -228,7 +206,7 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
         SpinnerAdapter adapter = new SpinnerAdapter(AddExpenseActivity.this, R.layout.spinner_item, spinnerItems);
         //Set the adapter of spinner item to be all the categories from CategoryDatabase
         sCategories.setAdapter(adapter);
-        cdb.closeDB();
+        cdb.close();
 
     }
 
@@ -250,23 +228,26 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
                 //if we took the price correctly we continue to retrieve the other information of the expense
                 if (ok) {
 
-                    //category = sCategories.getSelectedItem().toString();
+                   //get the position of the chosen category from spinner
                     int position = sCategories.getSelectedItemPosition();
 
                     category = allCategories.get(position);
                     notes = etNotes.getText().toString();
                     item = new ExpenseItem(category, notes, price, date);
-                    //if we took a picture using the image button camera we set to the ExpenseItem expense the byte array
 
+                    //After retrieve all values from the UI we want to check if this Expense is new so we just add
+                    //it to database or if this expense already exists so we need to update it
                     if (!update) {
-                        //then we add the expense to our database we close it and we finish the activity
+                        // we add the expense to our database
                         mydb.InsertExpense(item);
 
-//
+
                     } else {
+                        //update the expense
                         item.setId(id);
                         mydb.UpdateExpense(item);
                     }
+                    //Close the database and finish the activity
                     mydb.close();
 
                     finish();
@@ -287,11 +268,7 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
         ibCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 d.show(getSupportFragmentManager(), "Calendar Dialog");
-
-
             }
         });
 
@@ -310,6 +287,10 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
     private CalendarDatePickerDialog.OnDateSetListener listener = new CalendarDatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(CalendarDatePickerDialog calendarDatePickerDialog, int i, int i2, int i3) {
+           //This listener used when we change the date. We just increase the value of month because in android
+           //the months start to count from 0. After that we set up the proper format for the date and show
+           //in EditText etDate
+
             String month , day;
             i2++;
             if (i2 < 10) {
@@ -330,7 +311,8 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //  getMenuInflater().inflate(R.menu.add_expense, menu);
+        //When the user want to update a expense we display at the top right of menu a menu item that
+        //is used for deletion of this expense.
         if (update) {
 
             MenuItem delete = menu.add("Delete").setIcon(getResources().getDrawable(android.R.drawable.ic_menu_delete));
@@ -371,11 +353,8 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
     }
 
     private String reverseDate() {
-
         String tokens[] = date.split("-");
         return tokens[2] + "-" + tokens[1] + "-" + tokens[0];
-
-
     }
 
     @Override

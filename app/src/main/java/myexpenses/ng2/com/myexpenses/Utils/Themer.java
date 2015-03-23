@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import myexpenses.ng2.com.myexpenses.R;
 
@@ -111,5 +112,23 @@ public class Themer {
 
     }
 
+    public static void setDrawerBackground(Activity act , View view){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(act);
+        try {
+            if (prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_pink)) {
+                ((ListView) view).setBackgroundColor(act.getResources().getColor(R.color.bg_pink));
+            } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_dark))) {
+                ((ListView) view).setBackgroundColor(act.getResources().getColor(R.color.bg_dark));
+            } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_green))) {
+                ((ListView) view).setBackgroundColor(act.getResources().getColor(R.color.bg_green));
+            } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_teal))) {
+                ((ListView) view).setBackgroundColor(act.getResources().getColor(R.color.bg_teal));
+            } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_light))) {
+                ((ListView) view).setBackgroundColor(act.getResources().getColor(R.color.action_bar_dark));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

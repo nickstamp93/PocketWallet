@@ -360,7 +360,7 @@
         android:choiceMode="singleChoice"
         android:divider="@drawable/line_seperator_solid"
         android:padding="5dp"
-        android:dividerHeight="1dp"
-        android:background="#111" />
+        android:dividerHeight="1dp"/>
+        <!--android:background="#111" -->
 
 </android.support.v4.widget.DrawerLayout>

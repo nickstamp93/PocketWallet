@@ -1,8 +1,5 @@
 package myexpenses.ng2.com.myexpenses.Activities;
 
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
@@ -13,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,7 +27,6 @@ import myexpenses.ng2.com.myexpenses.Data.CategoryDatabase;
 import myexpenses.ng2.com.myexpenses.Data.ExpenseItem;
 import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
 import myexpenses.ng2.com.myexpenses.R;
-import myexpenses.ng2.com.myexpenses.Utils.SharedPrefsManager;
 import myexpenses.ng2.com.myexpenses.Utils.SpinnerAdapter;
 import myexpenses.ng2.com.myexpenses.Utils.SpinnerItem;
 import myexpenses.ng2.com.myexpenses.Utils.Themer;
@@ -128,12 +123,12 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
                 c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
 
         String day = c.get(Calendar.DAY_OF_MONTH) + "";
-        String month = (c.get(Calendar.MONTH)+1) + "";
+        String month = (c.get(Calendar.MONTH) + 1) + "";
         if (c.get(Calendar.DAY_OF_MONTH) < 10) {
             day = "0" + c.get(Calendar.DAY_OF_MONTH);
         }
-        if (c.get(Calendar.MONTH)+1 < 10) {
-            month = "0" + (c.get(Calendar.MONTH)+1);
+        if (c.get(Calendar.MONTH) + 1 < 10) {
+            month = "0" + (c.get(Calendar.MONTH) + 1);
         }
 
 
@@ -177,22 +172,20 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
         etNotes = (EditText) findViewById(R.id.etNotes);
         sCategories = (Spinner) findViewById(R.id.sCategories);
 
-        tvPrice.setText("0.00 " +  PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("pref_key_currency", "€"));
+        tvPrice.setText("0.00 " + PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("pref_key_currency", "€"));
         etDate.setText(reverseDate());
 
 
-        Themer.setTextColor(this , etDate , false);
-        Themer.setTextColor(this , etNotes , false);
+        Themer.setTextColor(this, etDate, false);
+        Themer.setTextColor(this, etNotes, false);
 
 
-        Themer.setTextColor(this , bOk , true);
-        Themer.setTextColor(this , bCancel , true);
-        Themer.setBackgroundColor(this , bOk , false);
-        Themer.setBackgroundColor(this , bCancel , true);
+        Themer.setBackgroundColor(this, bOk, false);
+        Themer.setBackgroundColor(this, bCancel, true);
 
         //get from CategoryDatabase all the categories and save them in to an ArrayList
         allCategories = cdb.getCategories(true);
-              ArrayList<SpinnerItem> spinnerItems = new ArrayList<SpinnerItem>();
+        ArrayList<SpinnerItem> spinnerItems = new ArrayList<SpinnerItem>();
         //Initialize the the categories in UI using LetterImageView for each category
         for (int i = 0; i < allCategories.size(); i++) {
             String name = allCategories.get(i);
@@ -220,7 +213,7 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
                 String category, notes;
                 //get the price of the expense if it has problem a Toast appear and say to correct it
                 try {
-                    price = Double.parseDouble(tvPrice.getText().subSequence(0,tvPrice.getText().length()-1).toString());
+                    price = Double.parseDouble(tvPrice.getText().subSequence(0, tvPrice.getText().length() - 1).toString());
                 } catch (NumberFormatException e) {
                     ok = false;
                     Toast.makeText(getApplicationContext(), "Plz Press a numerical in Price and not a character", Toast.LENGTH_LONG).show();
@@ -228,7 +221,7 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
                 //if we took the price correctly we continue to retrieve the other information of the expense
                 if (ok) {
 
-                   //get the position of the chosen category from spinner
+                    //get the position of the chosen category from spinner
                     int position = sCategories.getSelectedItemPosition();
 
                     category = allCategories.get(position);
@@ -287,11 +280,11 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
     private CalendarDatePickerDialog.OnDateSetListener listener = new CalendarDatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(CalendarDatePickerDialog calendarDatePickerDialog, int i, int i2, int i3) {
-           //This listener used when we change the date. We just increase the value of month because in android
-           //the months start to count from 0. After that we set up the proper format for the date and show
-           //in EditText etDate
+            //This listener used when we change the date. We just increase the value of month because in android
+            //the months start to count from 0. After that we set up the proper format for the date and show
+            //in EditText etDate
 
-            String month , day;
+            String month, day;
             i2++;
             if (i2 < 10) {
                 month = "0" + i2;

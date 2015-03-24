@@ -3,7 +3,6 @@ package myexpenses.ng2.com.myexpenses.Utils;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.LayerDrawable;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
@@ -22,13 +21,13 @@ public class Themer {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(act);
         try {
             if (prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_pink)) {
-                act.setTheme(R.style.AppThemeFuchsia);
+                act.setTheme(R.style.AppThemePink);
             } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_dark))) {
                 act.setTheme(R.style.AppThemeBlack);
             } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_green))) {
                 act.setTheme(R.style.AppThemeGreen);
             } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_teal))) {
-                act.setTheme(R.style.AppThemeTeal);
+                act.setTheme(R.style.AppThemeLightBlue);
             } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_light))) {
                 act.setTheme(R.style.AppThemeWhite);
             }

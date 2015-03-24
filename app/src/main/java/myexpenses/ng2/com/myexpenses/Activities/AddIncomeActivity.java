@@ -174,8 +174,6 @@ public class AddIncomeActivity extends FragmentActivity implements NumberPickerD
 
         Themer.setTextColor(this, etDate, false);
 
-        Themer.setTextColor(this, bOk, true);
-        Themer.setTextColor(this, bCancel, true);
         Themer.setBackgroundColor(this, bOk, false);
         Themer.setBackgroundColor(this, bCancel, true);
 

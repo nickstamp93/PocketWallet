@@ -26,29 +26,42 @@ public class TransparentActivity extends FragmentActivity implements RadialTimeP
     private PendingIntent pendingIntent;
     private AlarmManager alarmManager;
 
+    //Time dialog
+    private RadialTimePickerDialog timeDialog;
+    //Calendar variable
+    private Calendar calendar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        init();
 
-        manager = new SharedPrefsManager(getApplicationContext());
-
-        Calendar c = Calendar.getInstance();
-
-        RadialTimePickerDialog timeDialog = RadialTimePickerDialog.newInstance(TransparentActivity.this, c.getTime().getHours(), c.getTime().getMinutes(), true);
-        timeDialog.show(getSupportFragmentManager(), "Nikos");
+        timeDialog.show(getSupportFragmentManager(), "Time Dialog");
 
     }
 
+    //init variables
+    private void init() {
+        manager = new SharedPrefsManager(getApplicationContext());
+
+        calendar = Calendar.getInstance();
+
+        timeDialog = RadialTimePickerDialog.newInstance(TransparentActivity.this, calendar.getTime().getHours(), calendar.getTime().getMinutes(), true);
+    }
+
     @Override
-    public void onTimeSet(RadialPickerLayout radialPickerLayout, int i, int i2) {
+    public void onTimeSet(RadialPickerLayout radialPickerLayout, int hour, int minutes) {
+
         //on time set , save the new time in the preferences file
         SharedPrefsManager manager = new SharedPrefsManager(getApplicationContext());
         manager.startEditing();
-        manager.setPrefsReminderTime(i, i2);
+        manager.setPrefsReminderTime(hour, minutes);
         manager.commit();
+
         //and set the alarm to this time
         setAlarm();
+        //destroy current activity
         TransparentActivity.this.finish();
     }
 
@@ -65,12 +78,10 @@ public class TransparentActivity extends FragmentActivity implements RadialTimeP
         TransparentActivity.this.finish();
     }
 
+    //set the reminder
     public void setAlarm() {
         //get calendar instance
         Calendar calendar = Calendar.getInstance();
-
-        Log.i("nikos", "instance date:" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH) + "-" + calendar.get(Calendar.YEAR)
-                + "  " + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE));
 
         //get the preferred time from the preferences file
         String[] time = manager.getPrefsReminderTime().split(":");
@@ -80,8 +91,6 @@ public class TransparentActivity extends FragmentActivity implements RadialTimeP
         //if this time has passed in the day , set the next notification for tomorrow , same time
         if (hour < calendar.get(Calendar.HOUR_OF_DAY) || hour == calendar.get(Calendar.HOUR_OF_DAY) && minute <= calendar.get(Calendar.MINUTE)) {
             calendar.add(Calendar.DATE, 1);
-            Log.i("nikos", "date changed: " + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH) + "-" + calendar.get(Calendar.YEAR)
-                    + "  " + calendar.get(Calendar.HOUR_OF_DAY) + ":" + minute);
         }
 
         //set the calendar instance to the right date and time
@@ -100,8 +109,7 @@ public class TransparentActivity extends FragmentActivity implements RadialTimeP
         //set next notification at the above date-time , service starts every 24 hours
         alarmManager.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), 24 * 60 * 60 * 1000, pendingIntent);
 
-        Log.i("nikos", "alarm set for " + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH) + "-" + calendar.get(Calendar.YEAR)
-                + "  " + hour + ":" + minute);
+
     }
 
 }

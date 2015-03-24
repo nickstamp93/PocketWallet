@@ -504,7 +504,7 @@ public class OverviewActivity extends Activity {
                     startActivity(new Intent(OverviewActivity.this, AddExpenseActivity.class));
                     break;
                 case 3:
-                    startActivity(new Intent(OverviewActivity.this, SettingsActivity2.class));
+                    startActivity(new Intent(OverviewActivity.this, SettingsActivity.class));
                     break;
                 case 4:
                     finish();

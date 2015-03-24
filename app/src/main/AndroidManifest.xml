@@ -56,10 +56,6 @@
             android:enabled="true" />
 
         <activity
-            android:name=".MainActivity"
-            android:label="@string/title_activity_main_activity2" />
-
-        <activity
             android:name=".Activities.PasswordActivity"
             android:label="@string/title_activity_password"
             android:screenOrientation="portrait" />
@@ -75,7 +71,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".Activities.SettingsActivity2"
+            android:name=".Activities.SettingsActivity"
             android:label="@string/title_activity_settings_activity2"
             android:parentActivityName=".Activities.OverviewActivity"
             android:screenOrientation="portrait" />

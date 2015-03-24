@@ -10,7 +10,6 @@ import android.preference.Preference;
 import android.preference.PreferenceManager;
 
 import myexpenses.ng2.com.myexpenses.Activities.OverviewActivity;
-import myexpenses.ng2.com.myexpenses.MainActivity;
 import myexpenses.ng2.com.myexpenses.R;
 
 public class AlarmService extends Service {

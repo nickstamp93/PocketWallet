@@ -14,7 +14,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import myexpenses.ng2.com.myexpenses.Activities.SettingsActivity2;
+import myexpenses.ng2.com.myexpenses.Activities.SettingsActivity;
 import myexpenses.ng2.com.myexpenses.R;
 
 /**
@@ -113,7 +113,7 @@ public class PasswordDialog extends DialogPreference {
         bCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((SettingsActivity2)context).updatePassword();
+                ((SettingsActivity)context).updatePassword();
                 getDialog().dismiss();
             }
         });

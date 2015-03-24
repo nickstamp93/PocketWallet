@@ -27,7 +27,7 @@ import myexpenses.ng2.com.myexpenses.Utils.PasswordDialog;
 import myexpenses.ng2.com.myexpenses.Utils.SharedPrefsManager;
 import myexpenses.ng2.com.myexpenses.Utils.Themer;
 
-public class SettingsActivity2 extends PreferenceActivity
+public class SettingsActivity extends PreferenceActivity
         implements SharedPreferences.OnSharedPreferenceChangeListener {
 
 
@@ -61,12 +61,7 @@ public class SettingsActivity2 extends PreferenceActivity
             @Override
             public boolean onPreferenceClick(Preference preference) {
 
-                startActivity(new Intent(SettingsActivity2.this, TransparentActivity.class));
-//                act = new TransparentActivity(SettingsActivity2.this);
-//                Calendar c = Calendar.getInstance();
-//                RadialTimePickerDialog timeDialog = RadialTimePickerDialog.newInstance(SettingsActivity2.this, c.getTime().getHours(), c.getTime().getMinutes(), true);
-//                timeDialog.show(i.getSupportFragmentManager() , "Nikos");
-
+                startActivity(new Intent(SettingsActivity.this, TransparentActivity.class));
                 return false;
             }
         });
@@ -78,7 +73,7 @@ public class SettingsActivity2 extends PreferenceActivity
             @Override
             public boolean onPreferenceClick(Preference preference) {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity2.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
 
                 builder.setMessage("This is an application for managing your personal expenses and incomes" +
                         "\n\n\nCreated by Stampoulis Nikos and Zissis Nikos." +
@@ -106,7 +101,7 @@ public class SettingsActivity2 extends PreferenceActivity
         screen.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity2.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
 
                 builder.setMessage("You are about to delete your income history.This cannot be undone.")
                         .setTitle("Caution");
@@ -140,7 +135,7 @@ public class SettingsActivity2 extends PreferenceActivity
         screen.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity2.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
 
                 builder.setMessage("You are about to delete your expense history.This cannot be undone.")
                         .setTitle("Caution");
@@ -149,7 +144,7 @@ public class SettingsActivity2 extends PreferenceActivity
                     public void onClick(DialogInterface dialog, int which) {
                         //call delete expense method from database
 
-                        MoneyDatabase db = new MoneyDatabase(SettingsActivity2.this);
+                        MoneyDatabase db = new MoneyDatabase(SettingsActivity.this);
                         db.deleteAllExpense();
                         db.close();
                         dialog.dismiss();
@@ -174,7 +169,7 @@ public class SettingsActivity2 extends PreferenceActivity
         screen.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(SettingsActivity2.this);
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this);
                 int[] mColor = new int[]{
                         getResources().getColor(R.color.bg_light),
                         getResources().getColor(R.color.bg_dark),
@@ -200,13 +195,13 @@ public class SettingsActivity2 extends PreferenceActivity
     private ColorPickerSwatch.OnColorSelectedListener colorSetListener = new ColorPickerSwatch.OnColorSelectedListener() {
         @Override
         public void onColorSelected(int color) {
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(SettingsActivity2.this);
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this);
             SharedPreferences.Editor editor = prefs.edit();
             editor.putInt("pref_key_theme", color);
             //editor.putBoolean("pref_theme_changed" , true);
 //            editor.putBoolean("my_pref" , true);
             editor.commit();
-            SharedPrefsManager manager = new SharedPrefsManager(SettingsActivity2.this);
+            SharedPrefsManager manager = new SharedPrefsManager(SettingsActivity.this);
             manager.startEditing();
             manager.setPrefsThemeChanged(true);
             manager.commit();
@@ -237,11 +232,9 @@ public class SettingsActivity2 extends PreferenceActivity
                 && sharedPreferences.getString("pref_key_password_value", "").equals("")
                 && sharedPreferences.getBoolean("pref_key_password", false)) {
             ((PasswordDialog) findPreference("pref_key_password_value")).show();
-            //((PasswordDialog) findPreference("pref_key_password_value")).onClick(null , 0);
-            //PasswordDialog d = new PasswordDialog(SettingsActivity2.this , null);
         }
         if (key.equals("pref_key_reminder") && sharedPreferences.getBoolean("pref_key_reminder", false)) {
-            SharedPrefsManager manager = new SharedPrefsManager(SettingsActivity2.this);
+            SharedPrefsManager manager = new SharedPrefsManager(SettingsActivity.this);
             Toast.makeText(getApplicationContext(), "Daily Reminder activated\nNext reminder at " + manager.getPrefsReminderTime(), Toast.LENGTH_SHORT).show();
 
             setAlarm();
@@ -267,14 +260,14 @@ public class SettingsActivity2 extends PreferenceActivity
             ListPreference pref = (ListPreference) p;
             pref.setSummary(pref.getValue());
         } else if (p.getKey().equals("pref_key_reminder_time")) {
-            String sum = new SharedPrefsManager(SettingsActivity2.this).getPrefsReminderTime();
+            String sum = new SharedPrefsManager(SettingsActivity.this).getPrefsReminderTime();
             p.setSummary(sum);
         }
     }
 
     public void updatePassword() {
         SwitchPreference p = (SwitchPreference) findPreference("pref_key_password");
-        PreferenceManager.getDefaultSharedPreferences(SettingsActivity2.this).edit().putBoolean("pref_key_password", false).commit();
+        PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putBoolean("pref_key_password", false).commit();
         p.setChecked(false);
     }
 
@@ -282,7 +275,7 @@ public class SettingsActivity2 extends PreferenceActivity
         PendingIntent pendingIntent;
         Intent myIntent;
         AlarmManager alarmManager;
-        SharedPrefsManager manager = new SharedPrefsManager(SettingsActivity2.this);
+        SharedPrefsManager manager = new SharedPrefsManager(SettingsActivity.this);
 
         //get calendar instance
         Calendar calendar = Calendar.getInstance();

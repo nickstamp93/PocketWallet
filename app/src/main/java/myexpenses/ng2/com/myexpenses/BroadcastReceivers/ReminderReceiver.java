@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.preference.PreferenceManager;
 
+import myexpenses.ng2.com.myexpenses.Activities.LauncherPickerActivity;
 import myexpenses.ng2.com.myexpenses.Activities.OverviewActivity;
 import myexpenses.ng2.com.myexpenses.R;
 
@@ -26,7 +27,7 @@ public class ReminderReceiver extends BroadcastReceiver {
             //get the notification service from the system
             NotificationManager manager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
             //create an intent to be  used on click notification
-            Intent intent1 = new Intent(context, OverviewActivity.class);
+            Intent intent1 = new Intent(context, LauncherPickerActivity.class);
 
             //create the notification and add flags
             Notification notification = new Notification(R.drawable.ic_launcher, "This is a test message", System.currentTimeMillis());

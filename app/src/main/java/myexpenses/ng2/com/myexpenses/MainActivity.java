@@ -21,7 +21,6 @@ import myexpenses.ng2.com.myexpenses.Activities.CategoriesManagerActivity;
 import myexpenses.ng2.com.myexpenses.Activities.CreateCategoryActivity;
 import myexpenses.ng2.com.myexpenses.Activities.HistoryActivity;
 import myexpenses.ng2.com.myexpenses.Activities.OverviewActivity;
-import myexpenses.ng2.com.myexpenses.Activities.SettingsActivity;
 import myexpenses.ng2.com.myexpenses.Activities.SettingsActivity2;
 import myexpenses.ng2.com.myexpenses.Activities.UserDetailsActivity;
 import myexpenses.ng2.com.myexpenses.ColorPicker.ColorPickerDialog;
@@ -103,9 +102,6 @@ public class MainActivity extends FragmentActivity implements RadialTimePickerDi
                     break;
                 case R.id.bHistory:
                     startActivity(new Intent(getApplicationContext(), HistoryActivity.class));
-                    break;
-                case R.id.bSettings:
-                    startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
                     break;
                 case R.id.bUserDetails:
                     startActivity(new Intent(getApplicationContext(), UserDetailsActivity.class));

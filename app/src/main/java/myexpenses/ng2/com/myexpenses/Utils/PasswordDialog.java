@@ -2,26 +2,18 @@ package myexpenses.ng2.com.myexpenses.Utils;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.preference.DialogPreference;
-import android.preference.Preference;
-import android.preference.PreferenceManager;
 import android.text.InputType;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import myexpenses.ng2.com.myexpenses.Activities.SettingsActivity;
 import myexpenses.ng2.com.myexpenses.Activities.SettingsActivity2;
 import myexpenses.ng2.com.myexpenses.R;
 

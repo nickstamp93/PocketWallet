@@ -43,19 +43,8 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".Activities.SettingsActivity"
-            android:label="@string/title_activity_settings"
-            android:parentActivityName=".Activities.OverviewActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
             android:name=".Activities.UserDetailsActivity"
             android:label="@string/title_activity_user_details"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".Activities.ReminderSettingsActivity"
-            android:label="@string/title_activity_reminder_settings"
             android:screenOrientation="portrait" />
 
         <receiver
@@ -78,11 +67,6 @@
         <activity
             android:name=".Activities.OverviewActivity"
             android:label="@string/title_activity_launcher_picker"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".Activities.PasswordSettingsActivity"
-            android:label="@string/title_activity_password_settings"
             android:screenOrientation="portrait" />
 
         <activity

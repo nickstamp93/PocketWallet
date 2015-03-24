@@ -90,12 +90,6 @@
                 android:background="@drawable/rounded_color_background"
                 android:orientation="horizontal">
 
-                <!--<myexpenses.ng2.com.myexpenses.Utils.PercentView-->
-                <!--android:id="@+id/percentview"-->
-                <!--android:layout_width="180dp"-->
-                <!--android:layout_height="180dp"-->
-                <!--android:layout_gravity="left"-->
-                <!--android:layout_marginLeft="30dp" />-->
                 <myexpenses.ng2.com.myexpenses.Utils.MagnificentChart
                     android:layout_width="180dp"
                     android:layout_height="180dp"
@@ -178,15 +172,6 @@
                     </LinearLayout>
 
 
-                    <!--<myexpenses.ng2.com.myexpenses.Utils.Legend-->
-                    <!--android:id="@+id/legendIncome"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="50dp" />-->
-
-                    <!--<myexpenses.ng2.com.myexpenses.Utils.Legend-->
-                    <!--android:id="@+id/legendExpense"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="50dp" />-->
 
                 </LinearLayout>
 

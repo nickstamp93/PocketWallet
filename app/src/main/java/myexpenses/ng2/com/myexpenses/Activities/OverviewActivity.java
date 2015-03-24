@@ -36,7 +36,6 @@ import myexpenses.ng2.com.myexpenses.Utils.DrawerAdapter;
 import myexpenses.ng2.com.myexpenses.Utils.LetterImageView;
 import myexpenses.ng2.com.myexpenses.Utils.MagnificentChart;
 import myexpenses.ng2.com.myexpenses.Utils.MagnificentChartItem;
-import myexpenses.ng2.com.myexpenses.Utils.PercentView;
 import myexpenses.ng2.com.myexpenses.Utils.SharedPrefsManager;
 import myexpenses.ng2.com.myexpenses.Utils.Themer;
 
@@ -53,8 +52,6 @@ public class OverviewActivity extends Activity {
     //View objects for the XML management
     private TextView tvBalance, tvSavings, tvLastIncome, tvLastExpense, tvLastExpenseDate,
             tvLastIncomeDate, tvUsername, tvExpense, tvIncome, tvPieHeading, tvTotalExpense, tvTotalIncome;
-    private PercentView pv;
-    //    private Legend legendIncome , legendExpense;
     private View line1, line2, line3, line4;
     private LinearLayout llExpense, llIncome, llPiewView, llBalance, llLast;
     private LetterImageView livExpense, livIncome, livLegendIncome, livLegendExpense;
@@ -218,8 +215,6 @@ public class OverviewActivity extends Activity {
         tvTotalIncome = (TextView) findViewById(R.id.tvIncomes);
 
 
-//        pv = (PercentView) findViewById(R.id.percentview);
-//        pv.setVisibility(View.GONE);
 
         mcPie = (MagnificentChart) findViewById(R.id.mcPie);
 //        mcPie.setVisibility(View.GONE);
@@ -253,15 +248,6 @@ public class OverviewActivity extends Activity {
         livExpense = (LetterImageView) findViewById(R.id.livLastExpense);
         livIncome = (LetterImageView) findViewById(R.id.livLastIncome);
 
-//        legendIncome = (Legend) findViewById(R.id.legendIncome);
-//        legendExpense = (Legend) findViewById(R.id.legendExpense);
-//
-//        legendIncome.setColor(getResources().getColor(R.color.green));
-//        legendIncome.setText("Income");
-//        legendExpense.setText("Expense");
-//
-//        legendIncome.setVisibility(View.GONE);
-//        legendExpense.setVisibility(View.GONE);
 
 
         drawer = (ListView) findViewById(R.id.left_drawer);

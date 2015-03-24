@@ -154,5 +154,6 @@
     <string name="string_balance">Balance :</string>
     <string name="string_savings">Savings :</string>
     <string name="string_pie_heading">This week\'s transactions</string>
+    <string name="text_about">text about us</string>
 
 </resources>

@@ -3,9 +3,11 @@ package myexpenses.ng2.com.myexpenses.Activities;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -13,7 +15,6 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.util.Calendar;
@@ -23,7 +24,6 @@ import myexpenses.ng2.com.myexpenses.ColorPicker.ColorPickerDialog;
 import myexpenses.ng2.com.myexpenses.ColorPicker.ColorPickerSwatch;
 import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
 import myexpenses.ng2.com.myexpenses.R;
-import myexpenses.ng2.com.myexpenses.Utils.PasswordDialog;
 import myexpenses.ng2.com.myexpenses.Utils.SharedPrefsManager;
 import myexpenses.ng2.com.myexpenses.Utils.Themer;
 
@@ -33,34 +33,46 @@ public class SettingsActivity extends PreferenceActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         Themer.setThemeToActivity(this);
+
         super.onCreate(savedInstanceState);
 
         //init preference screen from xml file
         addPreferencesFromResource(R.xml.preferences);
 
-        initSummary(getPreferenceScreen());
+        //init the summaries for the screens
+        initSummaries(getPreferenceScreen());
 
+        setPreferenceActions();
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+
+    }
+
+    //set all the preferences and their actions
+    private void setPreferenceActions() {
         //when user clicks on "categories" preference item
         //launch intent with target the CategoriesManagerActivity class
-        Preference screen = (Preference) findPreference("pref_key_categories");
+        Preference screen = findPreference("pref_key_categories");
         Intent i = new Intent(this, CategoriesManagerActivity.class);
         screen.setIntent(i);
 
         //when user clicks on "profile" preference item
         //launch intent with target the UserDetailsActivity class
-        screen = (Preference) findPreference("pref_key_profile");
+        screen = findPreference("pref_key_profile");
         i = new Intent(this, UserDetailsActivity.class);
         screen.setIntent(i);
 
         //when user clicks on "reminder time" preference item
         //start TransparentActivity which contains the RadialTimeDialog
-        //doing it this way because the RadialTimePickerDialog
-        screen = (Preference) findPreference("pref_key_reminder_time");
+        //doing it this way because the RadialTimePickerDialog must have FragmentActivity as a parent
+        //and this activity is a PreferenceActivity
+        screen = findPreference("pref_key_reminder_time");
         screen.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-
                 startActivity(new Intent(SettingsActivity.this, TransparentActivity.class));
                 return false;
             }
@@ -68,13 +80,13 @@ public class SettingsActivity extends PreferenceActivity
 
         //when user clicks on "about" preference item
         //launch an alert dialog with the aboout text
-        screen = (Preference) findPreference("pref_key_about");
+        screen = findPreference("pref_key_about");
         screen.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
-
+//                builder.setMessage(getResources().getString(R.string.text_about));
                 builder.setMessage("This is an application for managing your personal expenses and incomes" +
                         "\n\n\nCreated by Stampoulis Nikos and Zissis Nikos." +
                         "\n\nNo external libraries were used in this project" +
@@ -90,6 +102,24 @@ public class SettingsActivity extends PreferenceActivity
                 AlertDialog dialog = builder.create();
                 dialog.show();
 
+                return false;
+            }
+        });
+
+        //when user clicks on "rate app" preference item
+        //launch the market with the app's page
+        screen = findPreference("pref_key_rate_app");
+        screen.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+
+                Uri uri = Uri.parse("market://details?id=" + getPackageName());
+                Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                try {
+                    startActivity(goToMarket);
+                } catch (ActivityNotFoundException e) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + getPackageName())));
+                }
 
                 return false;
             }
@@ -97,15 +127,14 @@ public class SettingsActivity extends PreferenceActivity
 
         //when user clicks on "delete income" preference item
         //ask for confirmation and delete the income data records
-        screen = (Preference) findPreference("pref_key_delete_income");
+        screen = findPreference("pref_key_delete_income");
         screen.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
 
-                builder.setMessage("You are about to delete your income history.This cannot be undone.")
-                        .setTitle("Caution");
-                builder.setPositiveButton("Proceed", new DialogInterface.OnClickListener() {
+                builder.setMessage("Delete ALL income transactions?");
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //call delete income method from database
@@ -131,15 +160,15 @@ public class SettingsActivity extends PreferenceActivity
 
         //when user clicks on "delete expense" preference item
         //ask for confirmation and delete the expense data records
-        screen = (Preference) findPreference("pref_key_delete_expense");
+        screen = findPreference("pref_key_delete_expense");
         screen.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
 
-                builder.setMessage("You are about to delete your expense history.This cannot be undone.")
+                builder.setMessage("Delete ALL expense transactions?")
                         .setTitle("Caution");
-                builder.setPositiveButton("Proceed", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //call delete expense method from database
@@ -164,7 +193,7 @@ public class SettingsActivity extends PreferenceActivity
         });
 
         //when the user clicks on the "theme" preference item
-        screen = (Preference) findPreference("pref_key_theme");
+        screen = findPreference("pref_key_theme");
         screen.setDefaultValue(getResources().getColor(R.color.bg_dark));
         screen.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
@@ -178,33 +207,35 @@ public class SettingsActivity extends PreferenceActivity
                         getResources().getColor(R.color.bg_pink)
                 };
                 ColorPickerDialog dialog = ColorPickerDialog.newInstance(R.string.color_picker_default_title, mColor, 0, 5, ColorPickerDialog.SIZE_SMALL);
-                //dialog.setStyle(ColorPickerDialog.STYLE_NO_TITLE, ColorPickerDialog.STYLE_NORMAL);
+
                 dialog.setSelectedColor(prefs.getInt("pref_key_theme", getResources().getColor(R.color.bg_dark)));
                 dialog.setOnColorSelectedListener(colorSetListener);
                 dialog.show(getFragmentManager(), "color");
                 return false;
             }
         });
-
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
-
     }
 
 
     private ColorPickerSwatch.OnColorSelectedListener colorSetListener = new ColorPickerSwatch.OnColorSelectedListener() {
         @Override
         public void onColorSelected(int color) {
+
+            //when color is selected
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this);
             SharedPreferences.Editor editor = prefs.edit();
+
+            //save the new theme color
             editor.putInt("pref_key_theme", color);
-            //editor.putBoolean("pref_theme_changed" , true);
-//            editor.putBoolean("my_pref" , true);
             editor.commit();
+
+            //set the theme changed variable to true
             SharedPrefsManager manager = new SharedPrefsManager(SettingsActivity.this);
             manager.startEditing();
             manager.setPrefsThemeChanged(true);
             manager.commit();
+
+            //and then destroy the dialog
             Intent i = getIntent();
             overridePendingTransition(0, 0);
             i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -218,6 +249,8 @@ public class SettingsActivity extends PreferenceActivity
     @Override
     protected void onResume() {
         super.onResume();
+        //on resume , update the summaries , and  any preferences changed
+        initSummaries(getPreferenceScreen());
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 
     }
@@ -225,15 +258,33 @@ public class SettingsActivity extends PreferenceActivity
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
-        //if the password switch turned to "yes"
-        //and there is currently no password
-        //then launch the pass dialog for the user to enter a password
-        if (key.equals("pref_key_password")
-                && sharedPreferences.getString("pref_key_password_value", "").equals("")
-                && sharedPreferences.getBoolean("pref_key_password", false)) {
-            ((PasswordDialog) findPreference("pref_key_password_value")).show();
+
+        if (key.equals("pref_key_password")) {
+
+            //if the pass just been enabled
+            if (sharedPreferences.getBoolean("pref_key_password", false)) {
+                //alert the user
+                Toast.makeText(this, "Password protection enabled", Toast.LENGTH_SHORT).show();
+
+                //if this is the first time
+                if (sharedPreferences.getString("pref_key_password_value", "").equals("")) {
+
+                    //make the default pass to be 1234
+                    PreferenceManager.getDefaultSharedPreferences(this).edit().putString("pref_key_password_value", "1234").commit();
+                    //and alert the user
+                    Toast.makeText(this, "Default pass is \"1234\"", Toast.LENGTH_LONG).show();
+                }
+
+            } else {
+                //alert the user
+                Toast.makeText(this, "Password protection disabled", Toast.LENGTH_SHORT).show();
+            }
+
         }
+
         if (key.equals("pref_key_reminder") && sharedPreferences.getBoolean("pref_key_reminder", false)) {
+
+            //alert the user
             SharedPrefsManager manager = new SharedPrefsManager(SettingsActivity.this);
             Toast.makeText(getApplicationContext(), "Daily Reminder activated\nNext reminder at " + manager.getPrefsReminderTime(), Toast.LENGTH_SHORT).show();
 
@@ -243,17 +294,22 @@ public class SettingsActivity extends PreferenceActivity
 
     }
 
-    private void initSummary(Preference p) {
+    //init summaries of the preference screen
+    private void initSummaries(Preference p) {
+
+        //if preference is a PreferenceGroup , init summary for each child in it
         if (p instanceof PreferenceGroup) {
             PreferenceGroup pGrp = (PreferenceGroup) p;
             for (int i = 0; i < pGrp.getPreferenceCount(); i++) {
-                initSummary(pGrp.getPreference(i));
+                initSummaries(pGrp.getPreference(i));
             }
         } else {
+            //else just update this item's summary
             updatePrefSummary(p);
         }
     }
 
+    //update summary accordingly to preference key
     private void updatePrefSummary(Preference p) {
 
         if (p.getKey().equals("pref_key_currency")) {
@@ -265,23 +321,20 @@ public class SettingsActivity extends PreferenceActivity
         }
     }
 
-    public void updatePassword() {
+    //sets the password off
+    public void disablePassword() {
         SwitchPreference p = (SwitchPreference) findPreference("pref_key_password");
         PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putBoolean("pref_key_password", false).commit();
         p.setChecked(false);
     }
 
+    //set the alarm for the daily reminder
     public void setAlarm() {
-        PendingIntent pendingIntent;
-        Intent myIntent;
-        AlarmManager alarmManager;
+
         SharedPrefsManager manager = new SharedPrefsManager(SettingsActivity.this);
 
         //get calendar instance
         Calendar calendar = Calendar.getInstance();
-
-        Log.i("nikos", "instance date:" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH) + "-" + calendar.get(Calendar.YEAR)
-                + "  " + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE));
 
         //get the preferred time from the preferences file
         String[] time = manager.getPrefsReminderTime().split(":");
@@ -291,28 +344,24 @@ public class SettingsActivity extends PreferenceActivity
         //if this time has passed in the day , set the next notification for tomorrow , same time
         if (hour < calendar.get(Calendar.HOUR_OF_DAY) || hour == calendar.get(Calendar.HOUR_OF_DAY) && minute <= calendar.get(Calendar.MINUTE)) {
             calendar.add(Calendar.DATE, 1);
-            Log.i("nikos", "date changed: " + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH) + "-" + calendar.get(Calendar.YEAR)
-                    + "  " + calendar.get(Calendar.HOUR_OF_DAY) + ":" + minute);
         }
 
-        //set the calendar instance to the right date and time
+        //set the calendar instance to the saved date and time
         calendar.set(Calendar.HOUR_OF_DAY, hour);
         calendar.set(Calendar.MINUTE, minute);
         calendar.set(Calendar.SECOND, 0);
 
         //create an intent with the notification service
-        myIntent = new Intent(getApplicationContext(), ReminderReceiver.class);
+        Intent myIntent = new Intent(getApplicationContext(), ReminderReceiver.class);
 
         //and a pending intent containing the previous intent
-        pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, myIntent, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, myIntent, 0);
 
         //create an alarm manager instance (alarm manager , repeating notifications)
-        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         //set next notification at the above date-time , service starts every 24 hours
         alarmManager.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), 24 * 60 * 60 * 1000, pendingIntent);
 
-        Log.i("nikos", "alarm set for " + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH) + "-" + calendar.get(Calendar.YEAR)
-                + "  " + hour + ":" + minute);
     }
 
 }

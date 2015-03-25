@@ -51,10 +51,6 @@
             android:name=".BroadcastReceivers.ReminderReceiver"
             android:enabled="true" />
 
-        <service
-            android:name=".Utils.AlarmService"
-            android:enabled="true" />
-
         <activity
             android:name=".Activities.PasswordActivity"
             android:label="@string/title_activity_password"

@@ -1,13 +1,9 @@
 package myexpenses.ng2.com.myexpenses.Activities;
 
-//this is a comment for github
-//this is a comment without being collaborator
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -50,11 +46,10 @@ public class OverviewActivity extends Activity {
     private UserProfile profile;
 
     //View objects for the XML management
-    private TextView tvBalance, tvSavings, tvLastIncome, tvLastExpense, tvLastExpenseDate,
-            tvLastIncomeDate, tvUsername, tvExpense, tvIncome, tvPieHeading, tvTotalExpense, tvTotalIncome;
-    private View line1, line2, line3, line4;
-    private LinearLayout llExpense, llIncome, llPiewView, llBalance, llLast;
-    private LetterImageView livExpense, livIncome, livLegendIncome, livLegendExpense;
+    private TextView tvBalance, tvSavings, tvLastIncomeValue, tvLastExpenseValue, tvLastExpenseDate,
+            tvLastIncomeDate, tvUsername, tvPieHeading, tvLegendTotalExpense, tvLegendTotalIncome;
+    private LinearLayout llPiewView, llBalance, llLastTransactions, llLastExpense, llLastIncome;
+    private LetterImageView livLastExpense, livLastIncome, livLegendIncome, livLegendExpense;
     private DrawerLayout drawerLayout;
     private ListView drawer;
     private ActionBarDrawerToggle drawerToggle;
@@ -72,28 +67,62 @@ public class OverviewActivity extends Activity {
 
         setContentView(R.layout.activity_overview);
 
-        manager = new SharedPrefsManager(this);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+
+        init();
 
         //init UI elements
         initUI();
 
-        //open money database
-        mdb = new MoneyDatabase(OverviewActivity.this);
+        //set up UI elements
+        setUpUI();
 
         //manage the user profile
         checkUserProfile();
 
-        //if profile is on salary , must update its money status
-        //this is if the user opened the app after a payment has occurred
-//        if (profile instanceof UserProfileSalary) {
-//            ((UserProfileSalary) profile).updateMoneyStatus();
-//            //and refresh the UI accordingly
-//            getDataFromSharedPrefs();
-//            refreshUI();
-//        }
-
 
     }
+
+    private void setUpUI() {
+
+        //==================================Navigation Drawer=======================================
+
+        //get the string array with the Navigation drawer items
+        String drawerItems[] = getResources().getStringArray(R.array.drawer_menu);
+
+        //init the adapter and connect with the View
+        DrawerAdapter adapter = new DrawerAdapter(OverviewActivity.this, R.layout.drawer_item, drawerItems);
+        drawer.setAdapter(adapter);
+
+        //set on drawer item click listener
+        drawer.setOnItemClickListener(drawerClickListener);
+
+        //set shadow for the navigation drawer
+        drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+
+
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.ic_drawer, R.string.open_drawer, R.string.close_drawer) {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getActionBar().setTitle("Drawer Just Opened");
+                invalidateOptionsMenu();
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                getActionBar().setTitle("Drawer just closed");
+                invalidateOptionsMenu();
+
+            }
+        };
+
+        drawerLayout.setDrawerListener(drawerToggle);
+
+    }
+
 
     @Override
     protected void onRestart() {
@@ -121,28 +150,17 @@ public class OverviewActivity extends Activity {
         //refresh views according to the profile object values
         refreshUI();
 
-//        Intent i = getIntent();
-//        overridePendingTransition(0,0);
-//        i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-//        finish();
-//        overridePendingTransition(0,0);
-//        startActivity(i);
-
     }
 
     //checks if a user profile already exists(practically if the app launches for the first time)
     private void checkUserProfile() {
-
-        //open the shared prefs manager
-        //manager = new SharedPrefsManager(getApplicationContext());
 
         //store the profile existence in a boolean variable
         boolean isProfile = manager.getPrefsIsProfile();
 
         //if there isn't a profile already , launch the user details activity to create one
         if (!isProfile) {
-            Intent i = new Intent(getApplicationContext(), UserDetailsActivity.class);
-            startActivityForResult(i, USER_DETAILS_SUB_ACTIVITY);
+            startActivityForResult(new Intent(getApplicationContext(), UserDetailsActivity.class), USER_DETAILS_SUB_ACTIVITY);
         } else {
             //else load the profile data from the shared prefs
             getDataFromSharedPrefs();
@@ -151,30 +169,16 @@ public class OverviewActivity extends Activity {
         }
     }
 
-    //loads the user data from the shared prefs file to some variables
+    //loads the user data from the shared prefs file
     //then initialize the profile object with these variables
     private void getDataFromSharedPrefs() {
+
         String username = manager.getPrefsUsername();
-        //boolean onSalary = manager.getPrefsOnSalary();
         float savings = manager.getPrefsSavings();
         float balance = manager.getPrefsBalance();
-//        String nextPaymentDate = manager.getPrefsNpd();
         String currency = PreferenceManager.getDefaultSharedPreferences(this).getString("pref_key_currency", "€");
         String grouping = manager.getPrefsGrouping();
 
-
-//        tvLastExpense.setText(cExpense.getString(1) + " " + cExpense.getString(2) + " " + cExpense.getString(3));
-//        tvLastIncome.setText(cIncome.getString(1) + " " + cIncome.getString(2) + " " + cIncome.getString(3));
-
-//        if (onSalary) {
-//            float salary = manager.getPrefsSalary();
-//            String salFreq = manager.getPrefsSalFreq();
-//
-//            profile = new UserProfileSalary(OverviewActivity.this, username, savings, balance, salary, salFreq, nextPaymentDate, currency);
-//            ((UserProfileSalary) profile).show();
-//        } else {
-//            profile = new UserProfile(username, savings, balance, currency);
-//        }
         profile = new UserProfile(username, savings, balance, currency, grouping);
     }
 
@@ -201,23 +205,36 @@ public class OverviewActivity extends Activity {
         }
     }
 
+    //init some basic variables
+    private void init() {
+
+        //shared preferences
+        manager = new SharedPrefsManager(this);
+
+        //open money database
+        mdb = new MoneyDatabase(OverviewActivity.this);
+
+    }
+
     //init the UI Views
     private void initUI() {
-        tvBalance = (TextView) findViewById(R.id.tvBalanceAmount);
-        tvSavings = (TextView) findViewById(R.id.tvSavings);
+
+        //name
         tvUsername = (TextView) findViewById(R.id.tvUsername);
-        tvLastExpense = (TextView) findViewById(R.id.tvLastExpensePrice);
-        tvLastIncome = (TextView) findViewById(R.id.tvLastIncomeAmount);
-        tvLastExpenseDate = (TextView) findViewById(R.id.tvLastExpenseDate);
-        tvLastIncomeDate = (TextView) findViewById(R.id.tvLastIncomeDate);
-        tvPieHeading = (TextView) findViewById(R.id.tvPieHeading);
-        tvTotalExpense = (TextView) findViewById(R.id.tvExpenses);
-        tvTotalIncome = (TextView) findViewById(R.id.tvIncomes);
 
+        //=================First card , Balance - Savings=====================================
+        llBalance = (LinearLayout) findViewById(R.id.llOverviewStatus);
 
+        tvBalance = (TextView) findViewById(R.id.tvOverviewBalance);
+        tvSavings = (TextView) findViewById(R.id.tvOverviewSavings);
+
+        //=================Second section , Pie - Pie Heading - Pie Legends===================
+        llPiewView = (LinearLayout) findViewById(R.id.llPieView);
+        llPiewView.setVisibility(View.GONE);
 
         mcPie = (MagnificentChart) findViewById(R.id.mcPie);
-//        mcPie.setVisibility(View.GONE);
+
+        tvPieHeading = (TextView) findViewById(R.id.tvPieHeading);
 
         livLegendExpense = (LetterImageView) findViewById(R.id.livLegendExpense);
         livLegendIncome = (LetterImageView) findViewById(R.id.livLegendIncome);
@@ -226,78 +243,36 @@ public class OverviewActivity extends Activity {
         livLegendExpense.setOval(true);
         livLegendIncome.setOval(true);
 
+        tvLegendTotalExpense = (TextView) findViewById(R.id.tvLegendExpenseText);
+        tvLegendTotalIncome = (TextView) findViewById(R.id.tvLegendIncomeText);
 
-        line1 = (View) findViewById(R.id.line1);
-        line2 = (View) findViewById(R.id.line2);
-        line3 = (View) findViewById(R.id.line3);
-        line4 = (View) findViewById(R.id.line4);
+        //==================Third Section , Last Transactions=================================
+        llLastTransactions = (LinearLayout) findViewById(R.id.llOverviewLastTransactions);
+        llLastTransactions.setVisibility(View.GONE);
 
-        llExpense = (LinearLayout) findViewById(R.id.llLastExpense);
-        llIncome = (LinearLayout) findViewById(R.id.llLastIncome);
+        llLastExpense = (LinearLayout) findViewById(R.id.llOverviewLastExpense);
+        llLastIncome = (LinearLayout) findViewById(R.id.llOverviewLastIncome);
 
-        llBalance = (LinearLayout) findViewById(R.id.llBalance);
-        llLast = (LinearLayout) findViewById(R.id.llLast);
-        llLast.setVisibility(View.GONE);
+        tvLastExpenseValue = (TextView) findViewById(R.id.tvLastExpenseValue);
+        tvLastIncomeValue = (TextView) findViewById(R.id.tvLastIncomeValue);
 
-        llPiewView = (LinearLayout) findViewById(R.id.llPieView);
-        llPiewView.setVisibility(View.GONE);
+        tvLastExpenseDate = (TextView) findViewById(R.id.tvLastExpenseDate);
+        tvLastIncomeDate = (TextView) findViewById(R.id.tvLastIncomeDate);
 
-        tvExpense = (TextView) findViewById(R.id.tvLastExpense);
-        tvIncome = (TextView) findViewById(R.id.tvLastIncome);
+        livLastExpense = (LetterImageView) findViewById(R.id.livLastExpense);
+        livLastIncome = (LetterImageView) findViewById(R.id.livLastIncome);
 
-        livExpense = (LetterImageView) findViewById(R.id.livLastExpense);
-        livIncome = (LetterImageView) findViewById(R.id.livLastIncome);
-
-
-
-        drawer = (ListView) findViewById(R.id.left_drawer);
-        Themer.setDrawerBackground(this , drawer);
-        // Set the adapter for the list view
-        String activities[] = getResources().getStringArray(R.array.drawer_menu);
-        DrawerAdapter adapter = new DrawerAdapter(OverviewActivity.this, R.layout.drawer_item, activities);
-
-        drawer.setAdapter(adapter);
-//        drawer.setAdapter(new ArrayAdapter<String>(this,
-//                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.drawer_menu)));
+        //==================Navigation Drawer=================================================
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        drawer.setOnItemClickListener(drawerClickListener);
+        drawer = (ListView) findViewById(R.id.nav_drawer);
+        Themer.setDrawerBackground(this, drawer);
 
-
-        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.ic_drawer, R.string.open_drawer, R.string.close_drawer) {
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                getActionBar().setTitle("Drawer Just Opened");
-                invalidateOptionsMenu();
-            }
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                super.onDrawerClosed(drawerView);
-                getActionBar().setTitle("Drawer just closed");
-                invalidateOptionsMenu();
-
-            }
-        };
-        drawerLayout.setDrawerListener(drawerToggle);
-
-        drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
-
-
-        //set a font for the text views
-        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/font_exo2.otf");
-        tvBalance.setTypeface(typeface);
-        tvSavings.setTypeface(typeface);
-        tvUsername.setTypeface(typeface);
 
     }
 
     String getMonthForInt(int num) {
-        String month = "wrong";
+        String month = "January";
         DateFormatSymbols dfs = new DateFormatSymbols();
         String[] months = dfs.getMonths();
         if (num >= 0 && num <= 11) {
@@ -308,171 +283,161 @@ public class OverviewActivity extends Activity {
 
     //refresh UI according to profile object
     private void refreshUI() {
+
         tvUsername.setText(profile.getUsername());
-        //tvBalance.setText(String.valueOf(profile.getBalance()) + " " + profile.getCurrency());
-        //tvSavings.setText(String.valueOf(profile.getSavings()));
 
         Themer.setLinearLayoutBackround(this, llBalance);
-        Themer.setLinearLayoutBackround(this, llLast);
+        Themer.setLinearLayoutBackround(this, llLastTransactions);
         Themer.setLinearLayoutBackround(this, llPiewView);
 
 
-//        if (profile instanceof UserProfileSalary) {
-//            tvDays.setText(String.valueOf(((UserProfileSalary) profile).getDaysToNextPayment()));
-//        } else {
-//            tvDays.setText("None");
-//        }
-        double priceOfExpenses;
-        double priceOfIncomes;
+        double totalExpenses;
+        double totalIncomes;
         if (profile.getGrouping().equalsIgnoreCase("monthly")) {
-            priceOfExpenses = mdb.getTotalExpensePriceForCurrentMonth();
-            priceOfIncomes = mdb.getTotalIncomePriceForCurrentMonth();
+            totalExpenses = mdb.getTotalExpensePriceForCurrentMonth();
+            totalIncomes = mdb.getTotalIncomePriceForCurrentMonth();
         } else {
-            priceOfExpenses = mdb.getTotalExpensePriceForCurrentWeek();
-            priceOfIncomes = mdb.getTotalIncomePriceForCurrentWeek();
+            totalExpenses = mdb.getTotalExpensePriceForCurrentWeek();
+            totalIncomes = mdb.getTotalIncomePriceForCurrentWeek();
         }
 
+        double balance = totalIncomes - totalExpenses;
+        //save balance to the prefs file
+        //(this is for the)
         manager.startEditing();
-        double balance = priceOfIncomes - priceOfExpenses;
-        manager.setPrefsBalance((float)balance);
+        manager.setPrefsBalance((float) balance);
         manager.commit();
-        profile.setBalance((float)balance);
+        //set the balance to the user profile object
+        profile.setBalance((float) balance);
 
+        //set balance to UI
         tvBalance.setText(balance + profile.getCurrency());
-        tvTotalExpense.setText("Expense \n(" + (priceOfExpenses + " " + profile.getCurrency()) + ")");
-        tvTotalIncome.setText("Income \n(" + (priceOfIncomes + " " + profile.getCurrency()) + ")");
+        //set legends' text
+        tvLegendTotalExpense.setText("Expense \n(" + (totalExpenses + " " + profile.getCurrency()) + ")");
+        tvLegendTotalIncome.setText("Income \n(" + (totalIncomes + " " + profile.getCurrency()) + ")");
 
+        //savings are : total income - total expense - balance + savings user defined at the creation of the profile
         double savings = mdb.getTotalIncome() - mdb.getTotalExpenses() - balance + profile.getSavings();
         tvSavings.setText(savings + profile.getCurrency());
+
+        //set up the PieChart
         List<MagnificentChartItem> chartItemsList = new ArrayList<MagnificentChartItem>();
 
-        double total = priceOfExpenses + priceOfIncomes;
+        double total = totalExpenses + totalIncomes;
+        //if there is income or expense for the current period (week or month)
         if (total != 0) {
-//            pv.setVisibility(View.VISIBLE);
-//            mcPie.setVisibility(View.VISIBLE);
-//            legendExpense.setVisibility(View.VISIBLE);
-//            legendIncome.setVisibility(View.VISIBLE);
-            double percentOfExpenses = priceOfExpenses / total;
-//            pv.setPercentageExpense((float) percentOfExpenses * 100);
-            llPiewView.setVisibility(View.VISIBLE);
+
             mcPie.setMaxValue((int) total);
-            MagnificentChartItem item = new MagnificentChartItem("Expense", priceOfExpenses, getResources().getColor(R.color.red));
+
+            //expense part of the pie chart
+            MagnificentChartItem item = new MagnificentChartItem("Expense", totalExpenses, getResources().getColor(R.color.red));
             chartItemsList.add(item);
-            item = new MagnificentChartItem("Income", priceOfIncomes, getResources().getColor(R.color.green));
+
+            //income part of the pie chart
+            item = new MagnificentChartItem("Income", totalIncomes, getResources().getColor(R.color.green));
             chartItemsList.add(item);
+
+            //set the parts to the pie chart
             mcPie.setChartItemsList(chartItemsList);
+
+            mcPie.setAnimationSpeed(MagnificentChart.ANIMATION_SPEED_NORMAL);
+
+            //apply the pie's background to be the same with the section's color
             Themer.setPieBackgroundColor(this, mcPie);
-            //mcPie.setChartBackgroundColor(PreferenceManager.getDefaultSharedPreferences(this).getInt("pref_key_theme", getResources().getColor(R.color.bg_dark)));
-        }else{
+
+            //show the pie after set up
+            llPiewView.setVisibility(View.VISIBLE);
+
+        } else {
+            //else the pie section should be invisible
             llPiewView.setVisibility(View.GONE);
         }
 
+        //set the heading of the PieChart according to the preferred grouping
         if (manager.getPrefsGrouping().equalsIgnoreCase("weekly")) {
             tvPieHeading.setText("This week's transactions");
             tvPieHeading.setTextSize(20);
         } else {
             Calendar c = Calendar.getInstance();
             int month = c.get(Calendar.MONTH);
+
+            //get month name
             String sMonth = getMonthForInt(month);
+
             tvPieHeading.setText(sMonth);
             tvPieHeading.setTextSize(30);
         }
 
-        Cursor cExpense, cIncome;
-        cExpense = mdb.getLastExpense();
-        cIncome = mdb.getLastIncome();
+        Cursor cursorLastExpense, cursorLastIncome;
+        cursorLastExpense = mdb.getLastExpense();
+        cursorLastIncome = mdb.getLastIncome();
 
-        if (cExpense.moveToFirst()) {
-            llLast.setVisibility(View.VISIBLE);
-            llExpense.setVisibility(View.VISIBLE);
-            tvExpense.setVisibility(View.VISIBLE);
-            line1.setVisibility(View.VISIBLE);
-            line2.setVisibility(View.VISIBLE);
+        //if there isn't currently an expense
+        if (cursorLastExpense.moveToFirst()) {
+            llLastTransactions.setVisibility(View.VISIBLE);
+            llLastExpense.setVisibility(View.VISIBLE);
 
+            //get last expense's date
+            String date = cursorLastExpense.getString(2);
+            String tokens[] = date.split("-");
+            date = tokens[2] + "-" + tokens[1] + "-" + tokens[0];
 
-            String d = cExpense.getString(2);
-            String tokens[] = d.split("-");
-            String date = tokens[2] + "-" + tokens[1] + "-" + tokens[0];
-
-            tvLastExpense.setText(cExpense.getDouble(3) + " " + profile.getCurrency());
+            //and fill the views with the values
+            tvLastExpenseValue.setText(cursorLastExpense.getDouble(3) + " " + profile.getCurrency());
             tvLastExpenseDate.setText(date);
 
+            //open category database
             CategoryDatabase cdb = new CategoryDatabase(this);
 
-            int color = cdb.getColorFromCategory(cExpense.getString(1), true);
-            char letter = cdb.getLetterFromCategory(cExpense.getString(1), true);
-
-            livExpense.setLetter(letter);
-            livExpense.setmBackgroundPaint(color);
-
+            //and get the right color and letter according to the last expense category
+            int color = cdb.getColorFromCategory(cursorLastExpense.getString(1), true);
+            char letter = cdb.getLetterFromCategory(cursorLastExpense.getString(1), true);
             cdb.close();
 
-        }else{
-            llExpense.setVisibility(View.GONE);
-            tvExpense.setVisibility(View.GONE);
-            line1.setVisibility(View.GONE);
-            line2.setVisibility(View.GONE);
+            //set the letter image views accordingly
+            livLastExpense.setLetter(letter);
+            livLastExpense.setmBackgroundPaint(color);
+
+
+        } else {
+            //else disappear the last expense module
+            llLastExpense.setVisibility(View.GONE);
         }
-        if (cIncome.moveToFirst()) {
-            llLast.setVisibility(View.VISIBLE);
-            llIncome.setVisibility(View.VISIBLE);
-            tvIncome.setVisibility(View.VISIBLE);
-            line3.setVisibility(View.VISIBLE);
-            line4.setVisibility(View.VISIBLE);
+        if (cursorLastIncome.moveToFirst()) {
+            llLastTransactions.setVisibility(View.VISIBLE);
+            llLastIncome.setVisibility(View.VISIBLE);
 
-            String d = cIncome.getString(3);
-            String tokens[] = d.split("-");
-            String date = tokens[2] + "-" + tokens[1] + "-" + tokens[0];
+            //get last income's date
+            String date = cursorLastIncome.getString(3);
+            String tokens[] = date.split("-");
+            date = tokens[2] + "-" + tokens[1] + "-" + tokens[0];
 
-            tvLastIncome.setText(cIncome.getDouble(1) + " " + profile.getCurrency());
+            //and fill the views with the values
+            tvLastIncomeValue.setText(cursorLastIncome.getDouble(1) + " " + profile.getCurrency());
             tvLastIncomeDate.setText(date);
 
+            //open category database
             CategoryDatabase cdb = new CategoryDatabase(this);
 
-            int color = cdb.getColorFromCategory(cIncome.getString(2), false);
-            char letter = cdb.getLetterFromCategory(cIncome.getString(2), false);
+            //and get the right color and letter according to the last expense category
+            int color = cdb.getColorFromCategory(cursorLastIncome.getString(2), false);
+            char letter = cdb.getLetterFromCategory(cursorLastIncome.getString(2), false);
 
-            livIncome.setLetter(letter);
-            livIncome.setmBackgroundPaint(color);
+            livLastIncome.setLetter(letter);
+            livLastIncome.setmBackgroundPaint(color);
 
             cdb.close();
 
-        }else{
-
-            llIncome.setVisibility(View.GONE);
-            tvIncome.setVisibility(View.GONE);
-            line3.setVisibility(View.GONE);
-            line4.setVisibility(View.GONE);
+        } else {
+            //else disappear the last income module
+            llLastIncome.setVisibility(View.GONE);
         }
-        if(!cIncome.moveToFirst() && !cExpense.moveToFirst()){
-            llLast.setVisibility(View.GONE);
+        //if neither expense or income exists , disappear the last transactions section
+        if (!cursorLastIncome.moveToFirst() && !cursorLastExpense.moveToFirst()) {
+            llLastTransactions.setVisibility(View.GONE);
         }
 
-
-//        double priceOfExpenses = mdb.getTotalExpensePriceForCurrentMonth();
-//        double priceOfIncomes = mdb.getTotalIncomePriceForCurrentMonth();
-//        double total = priceOfExpenses + priceOfIncomes;
-        Log.i("Expense", priceOfExpenses + "");
-        Log.i("Income", priceOfIncomes + "");
-
-        //TODO the pie is not working right
-//        if (total != 0) {
-//            pv.setVisibility(View.VISIBLE);
-//            double percentOfExpenses = priceOfExpenses / total;
-//            pv.setPercentageExpense((float) percentOfExpenses * 100);
-//        }
-/*
-        if(profile.getSavings() > 0){
-            float percentBalance = (manager.getPrefsDifference()+manager.getPrefsBalance())/(manager.getPrefsBalance()+manager.getPrefsDifference()+manager.getPrefsSavings());
-            float percentExpense = manager.getPrefsDifference()/(manager.getPrefsBalance()+manager.getPrefsDifference()+manager.getPrefsSavings());
-            pv.setPercentageBalance(percentBalance*100);
-            pv.setPercentageExpense(percentExpense * 100);
-        }else{
-            pv.setPercentageExpense(100);
-        }
-*/
     }
-
 
     private ListView.OnItemClickListener drawerClickListener = new ListView.OnItemClickListener() {
 
@@ -481,7 +446,6 @@ public class OverviewActivity extends Activity {
             switch (position) {
                 case 0:
                     startActivity(new Intent(OverviewActivity.this, HistoryActivity.class));
-
                     break;
                 case 1:
                     startActivity(new Intent(OverviewActivity.this, AddIncomeActivity.class));
@@ -502,7 +466,6 @@ public class OverviewActivity extends Activity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
         drawerToggle.syncState();
     }
 

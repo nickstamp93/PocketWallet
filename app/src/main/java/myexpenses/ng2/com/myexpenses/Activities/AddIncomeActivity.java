@@ -41,7 +41,6 @@ public class AddIncomeActivity extends FragmentActivity implements NumberPickerD
     private MoneyDatabase db;
     private CategoryDatabase cdb;
     private IncomeItem income;
-    //private CalendarDialog dialog;
     private String date;
     private boolean update;
     private int id;
@@ -251,10 +250,6 @@ public class AddIncomeActivity extends FragmentActivity implements NumberPickerD
         ibCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                dialog=new CalendarDialog(false);
-//                dialog.show(getFragmentManager(),"Calendar Dialog");
-
-
                 d.show(getSupportFragmentManager(), "Calendar Dialog");
 
             }

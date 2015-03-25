@@ -150,13 +150,17 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
         cdb.close();
 
         String tokens[] = item.getDate().split("-");
-        int day = Integer.parseInt(tokens[2]);
-        int month = Integer.parseInt(tokens[1]);
-        int year = Integer.parseInt(tokens[0]);
+        String year = tokens[0];
+        String month = tokens[1];
+        String day = tokens[2];
+//        int day = Integer.parseInt(tokens[2]);
+//        int month = Integer.parseInt(tokens[1]);
+//        int year = Integer.parseInt(tokens[0]);
 
         d = CalendarDatePickerDialog.newInstance(listener,
-                year, month, day);
+                Integer.parseInt(year), Integer.parseInt(month)-1, Integer.parseInt(day));
         date = year + "-" + month + "-" + day;
+        Log.i("nikos" , date);
         etDate.setText(reverseDate());
 
     }

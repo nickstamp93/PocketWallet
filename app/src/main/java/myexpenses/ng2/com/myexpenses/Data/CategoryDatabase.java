@@ -6,8 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
+import android.util.Log;
 
 import java.util.ArrayList;
+
+import myexpenses.ng2.com.myexpenses.R;
 
 
 /**
@@ -36,9 +39,12 @@ public class CategoryDatabase extends SQLiteOpenHelper {
     private static final String CREATE_INCOME_CATEGORIES = "CREATE TABLE " + TABLE_INCOME_CATEGORIES + " (" +
             COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_INAME + " TEXT NOT NULL," + COLUMN_ICOLOR + " INTEGER," + COLUMN_ILETTER + " TEXT NOT NULL)";
 
+    private Context context;
+
     public CategoryDatabase(Context context) {
 
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
 
     }
 
@@ -47,37 +53,79 @@ public class CategoryDatabase extends SQLiteOpenHelper {
         db.execSQL(CREATE_EXPENSE_CATEGORIES);
         db.execSQL(CREATE_INCOME_CATEGORIES);
 
+        String[] array = context.getResources().getStringArray(R.array.colors);
+        ArrayList<Integer> colors = new ArrayList();
+
+        for (String item : array) {
+            colors.add(Color.parseColor(item));
+        }
+
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_ENAME, "Food");
-        cv.put(COLUMN_COLOR, Color.RED);
+        cv.put(COLUMN_COLOR, colors.get(7));
         cv.put(COLUMN_LETTER, "F");
         db.insert(TABLE_EXPENSE_CATEGORIES, null, cv);
 
         cv.put(COLUMN_ENAME, "Drinks");
-        cv.put(COLUMN_COLOR, Color.BLUE);
+        cv.put(COLUMN_COLOR, colors.get(23));
         cv.put(COLUMN_LETTER, "D");
         db.insert(TABLE_EXPENSE_CATEGORIES, null, cv);
 
+        cv.put(COLUMN_ENAME, "Leisure");
+        cv.put(COLUMN_COLOR, colors.get(20));
+        cv.put(COLUMN_LETTER, "L");
+        db.insert(TABLE_EXPENSE_CATEGORIES, null, cv);
+
         cv.put(COLUMN_ENAME, "Personal");
-        cv.put(COLUMN_COLOR, Color.BLACK);
+        cv.put(COLUMN_COLOR, colors.get(16));
         cv.put(COLUMN_LETTER, "P");
         db.insert(TABLE_EXPENSE_CATEGORIES, null, cv);
 
+        cv.put(COLUMN_ENAME, "Health");
+        cv.put(COLUMN_COLOR, colors.get(3));
+        cv.put(COLUMN_LETTER, "H");
+        db.insert(TABLE_EXPENSE_CATEGORIES, null, cv);
+
+        cv.put(COLUMN_ENAME, "Bills");
+        cv.put(COLUMN_COLOR, colors.get(22));
+        cv.put(COLUMN_LETTER, "B");
+        db.insert(TABLE_EXPENSE_CATEGORIES, null, cv);
+
+        cv.put(COLUMN_ENAME, "Transportation");
+        cv.put(COLUMN_COLOR, colors.get(27));
+        cv.put(COLUMN_LETTER, "T");
+        db.insert(TABLE_EXPENSE_CATEGORIES, null, cv);
+
         cv.put(COLUMN_ENAME, "Clothing");
-        cv.put(COLUMN_COLOR, Color.YELLOW);
+        cv.put(COLUMN_COLOR, colors.get(10));
         cv.put(COLUMN_LETTER, "C");
+        db.insert(TABLE_EXPENSE_CATEGORIES, null, cv);
+
+        cv.put(COLUMN_ENAME, "Housekeeping");
+        cv.put(COLUMN_COLOR, colors.get(29));
+        cv.put(COLUMN_LETTER, "H");
+        db.insert(TABLE_EXPENSE_CATEGORIES, null, cv);
+
+        cv.put(COLUMN_ENAME, "Work Expenses");
+        cv.put(COLUMN_COLOR, colors.get(8));
+        cv.put(COLUMN_LETTER, "W");
+        db.insert(TABLE_EXPENSE_CATEGORIES, null, cv);
+
+        cv.put(COLUMN_ENAME, "Miscellaneous");
+        cv.put(COLUMN_COLOR, colors.get(31));
+        cv.put(COLUMN_LETTER, "M");
         db.insert(TABLE_EXPENSE_CATEGORIES, null, cv);
 
         cv = new ContentValues();
 
-        cv.put(COLUMN_INAME, "Company");
-        cv.put(COLUMN_ICOLOR, Color.BLACK);
-        cv.put(COLUMN_ILETTER, "C");
+        cv.put(COLUMN_INAME, "Salary");
+        cv.put(COLUMN_ICOLOR, colors.get(4));
+        cv.put(COLUMN_ILETTER, "S");
         db.insert(TABLE_INCOME_CATEGORIES, null, cv);
 
-        cv.put(COLUMN_INAME, "External Source");
-        cv.put(COLUMN_ICOLOR, Color.YELLOW);
-        cv.put(COLUMN_ILETTER, "E");
+        cv.put(COLUMN_INAME, "Bonus");
+        cv.put(COLUMN_ICOLOR, colors.get(6));
+        cv.put(COLUMN_ILETTER, "B");
         db.insert(TABLE_INCOME_CATEGORIES, null, cv);
 
 

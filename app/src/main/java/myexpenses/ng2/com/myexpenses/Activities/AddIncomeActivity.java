@@ -102,12 +102,15 @@ public class AddIncomeActivity extends FragmentActivity implements NumberPickerD
         cdb.close();
 
         String tokens[] = income.getDate().split("-");
-        int day = Integer.parseInt(tokens[2]);
-        int month = Integer.parseInt(tokens[1]);
-        int year = Integer.parseInt(tokens[0]);
+        String year = tokens[0];
+        String month = tokens[1];
+        String day = tokens[2];
+//        int day = Integer.parseInt(tokens[2]);
+//        int month = Integer.parseInt(tokens[1]);
+//        int year = Integer.parseInt(tokens[0]);
 
         d = CalendarDatePickerDialog.newInstance(listener,
-                year, month, day);
+                Integer.parseInt(year), Integer.parseInt(month)-1, Integer.parseInt(day));
         date = year + "-" + month + "-" + day;
         etDate.setText(reverseDate());
 

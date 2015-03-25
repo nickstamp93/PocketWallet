@@ -67,7 +67,7 @@
         <item>Exit</item>
     </string-array>
     <string-array name="filters">
-        <item>Standar</item>
+        <item>Standard</item>
         <item>Category</item>
         <item>Order depended on price</item>
         <item>Date</item>
@@ -91,24 +91,25 @@
         <item>₹</item>
     </string-array>
     <string-array name="colors" translatable="false">
-        <!--white-->
+        <!--white : 0-->
         <item>#CDC0B0</item>
         <item>#EECFA1</item>
         <item>#D9D9F3</item>
-        <!--yellow - green-->
-        <item>#CD950C</item>
+        <!--yellow - green : 3-->
         <item>#32CD32</item>
+        <item>#FFB90F</item>
+        <item>#FFD700</item>
         <item>#00FA9A</item>
         <item>#029D74</item>
         <item>#8B814C</item>
         <item>#8B8B00</item>
-        <!--orange-->
+        <!--orange : 10-->
         <item>#EE7600</item>
         <item>#CD8162</item>
         <item>#8B5742</item>
         <item>#8B3E2F</item>
         <item>#8E2323</item>
-        <!--red-->
+        <!--red : 15-->
         <item>#FF82AB</item>
         <item>#FF1493</item>
         <item>#CD1076</item>
@@ -117,12 +118,12 @@
         <item>#8B008B</item>
         <item>#8B0000</item>
         <item>#FF0000</item>
-        <!--blue-->
+        <!--blue : 23-->
         <item>#00688B</item>
         <item>#20B2AA</item>
         <item>#436EEE</item>
         <item>#0000EE</item>
-        <!--black-brown-->
+        <!--black-brown : 27-->
         <item>#8B4513</item>
         <item>#5C4033</item>
         <item>#2F4F4F</item>

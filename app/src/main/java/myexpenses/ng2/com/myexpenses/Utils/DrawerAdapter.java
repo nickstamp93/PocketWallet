@@ -51,10 +51,10 @@ public class DrawerAdapter extends ArrayAdapter<String> {
                 holder.ivActivity.setImageResource(R.drawable.ic_action_database);
                 break;
             case 1:
-                holder.ivActivity.setImageResource(R.drawable.ic_action_cart);
+                holder.ivActivity.setImageResource(R.drawable.ic_action_creditcard);
                 break;
             case 2:
-                holder.ivActivity.setImageResource(R.drawable.ic_action_creditcard);
+                holder.ivActivity.setImageResource(R.drawable.ic_action_cart);
                 break;
             case 3:
                 holder.ivActivity.setImageResource(R.drawable.ic_action_gear);
@@ -93,10 +93,10 @@ public class DrawerAdapter extends ArrayAdapter<String> {
                 holder.ivActivity.setImageResource(R.drawable.ic_action_database);
                 break;
             case 1:
-                holder.ivActivity.setImageResource(R.drawable.ic_action_cart);
+                holder.ivActivity.setImageResource(R.drawable.ic_action_creditcard);
                 break;
             case 2:
-                holder.ivActivity.setImageResource(R.drawable.ic_action_creditcard);
+                holder.ivActivity.setImageResource(R.drawable.ic_action_cart);
                 break;
             case 3:
                 holder.ivActivity.setImageResource(R.drawable.ic_action_gear);

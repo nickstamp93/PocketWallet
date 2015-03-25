@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:divider="?android:dividerHorizontal"
-    android:showDividers="middle"
-    android:dividerPadding="8dp"
-    android:descendantFocusability="blocksDescendants"
-    >
+    android:padding="5dp">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -16,20 +13,12 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center_vertical">
-<!--
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/ivIcon"
-            android:src="@drawable/ic_launcher"
-            android:padding="10dp" />
-            -->
+
         <myexpenses.ng2.com.myexpenses.Utils.LetterImageView
             android:id="@+id/livcat"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginLeft="15dp"
-            />
+            android:layout_marginLeft="15dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -39,16 +28,6 @@
             android:id="@+id/tvName"
             android:padding="10dp"
             android:gravity="center"
-            android:layout_weight="0.8"
-            />
+            android:layout_weight="0.8" />
     </LinearLayout>
-<!--
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/ibDelete"
-        android:src="@android:drawable/ic_menu_delete"
-        android:focusableInTouchMode="true"
-         />
--->
 </LinearLayout>

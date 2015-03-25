@@ -91,23 +91,59 @@
         <item>₹</item>
     </string-array>
     <string-array name="colors" translatable="false">
-        <item>#99cc00</item>
-        <item>#33b5e5</item>
-        <item>#0099cc</item>
-        <item>#547bca</item>
-        <item>#aa66cc</item>
-        <item>#9933cc</item>
-        <item>#669900</item>
-        <item>#aeb857</item>
-        <item>#cc0000</item>
-        <item>#df5948</item>
-        <item>#ff4444</item>
-        <item>#ae6b23</item>
-        <item>#ff8800</item>
-        <item>#e5ae4f</item>
-        <item>#ffbb33</item>
-        <item>#cccccc</item>
-        <item>#888888</item>
+        <!--white-->
+        <item>#CDC0B0</item>
+        <item>#EECFA1</item>
+        <item>#D9D9F3</item>
+        <!--yellow - green-->
+        <item>#CD950C</item>
+        <item>#32CD32</item>
+        <item>#00FA9A</item>
+        <item>#029D74</item>
+        <item>#8B814C</item>
+        <item>#8B8B00</item>
+        <!--orange-->
+        <item>#EE7600</item>
+        <item>#CD8162</item>
+        <item>#8B5742</item>
+        <item>#8B3E2F</item>
+        <item>#8E2323</item>
+        <!--red-->
+        <item>#FF82AB</item>
+        <item>#FF1493</item>
+        <item>#CD1076</item>
+        <item>#9932CC</item>
+        <item>#8B3A62</item>
+        <item>#8B008B</item>
+        <item>#8B0000</item>
+        <item>#FF0000</item>
+        <!--blue-->
+        <item>#00688B</item>
+        <item>#20B2AA</item>
+        <item>#436EEE</item>
+        <item>#0000EE</item>
+        <!--black-brown-->
+        <item>#8B4513</item>
+        <item>#5C4033</item>
+        <item>#2F4F4F</item>
+        <item>#7A7A7A</item>
+        <item>#545454</item>
+        <item>#0A0A0A</item>
+        <!--<item>#70DB93</item>-->
+        <!--<item>#241882</item>-->
+        <!--<item>#547bca</item>-->
+        <!--<item>#aa66cc</item>-->
+        <!--<item>#9933cc</item>-->
+        <!--<item>#4F2F4F</item>-->
+        <!--<item>#aeb857</item>-->
+        <!--<item>#FF0000</item>-->
+        <!--<item>#df5948</item>-->
+        <!--<item>#8E2323</item>-->
+        <!--<item>#ae6b23</item>-->
+        <!--<item>#ff8800</item>-->
+        <!--<item>#e5ae4f</item>-->
+        <!--<item>#ffbb33</item>-->
+
     </string-array>
 
     <string name="color_picker_default_title">Select a Color</string>

@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import myexpenses.ng2.com.myexpenses.R;
 
@@ -36,7 +37,7 @@ public class Themer {
         }
     }
 
-    public static void setTextColor(Activity act, View view, boolean isButton) {
+    public static void setButtonTextColor(Activity act, View view, boolean isButton) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(act);
         if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_pink))) {
             if (!isButton)
@@ -44,6 +45,16 @@ public class Themer {
             else
                 ((Button) view).setTextColor(act.getResources().getColor(R.color.black));
         }
+    }
+
+    public static void setTextviewTextColor(Activity act, View view){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(act);
+        if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_light))) {
+            ((TextView) view).setTextColor(act.getResources().getColor(R.color.black));
+        }else{
+            ((TextView) view).setTextColor(act.getResources().getColor(R.color.white));
+        }
+
     }
 
     public static void setBackgroundColor(Activity act, View view, boolean isRed) {

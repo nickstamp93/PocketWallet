@@ -174,7 +174,7 @@ public class AddIncomeActivity extends FragmentActivity implements NumberPickerD
         tvAmount.setText("0.00 " + PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("pref_key_currency", "€"));
         etDate.setText(reverseDate());
 
-        Themer.setTextColor(this, etDate, false);
+        Themer.setButtonTextColor(this, etDate, false);
 
         Themer.setBackgroundColor(this, bOk, false);
         Themer.setBackgroundColor(this, bCancel, true);

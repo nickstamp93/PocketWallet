@@ -180,8 +180,8 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
         etDate.setText(reverseDate());
 
 
-        Themer.setTextColor(this, etDate, false);
-        Themer.setTextColor(this, etNotes, false);
+        Themer.setButtonTextColor(this, etDate, false);
+        Themer.setButtonTextColor(this, etNotes, false);
 
 
         Themer.setBackgroundColor(this, bOk, false);

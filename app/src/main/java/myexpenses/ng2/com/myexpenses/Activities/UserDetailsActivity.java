@@ -36,7 +36,7 @@ public class UserDetailsActivity extends Activity {
         //apply theme
         Themer.setThemeToActivity(this);
 
-        setContentView(R.layout.activity_user_details);
+        setContentView(R.layout.activity_user_details2);
 
         //init the UI
         initUI();
@@ -75,10 +75,10 @@ public class UserDetailsActivity extends Activity {
         manager = new SharedPrefsManager(getApplicationContext());
 
         //if there are no transactions in the database , the user can edit the stock savings amount
-        MoneyDatabase db = new MoneyDatabase(this);
+        /*MoneyDatabase db = new MoneyDatabase(this);
         if(db.getTotalExpenses() != 0 && db.getTotalIncome() != 0){
             llSavings.setVisibility(View.GONE);
-        }
+        }*/
 
         etUsername.setText(manager.getPrefsUsername());
         etSavings.setText(String.valueOf(manager.getPrefsSavings()));

@@ -99,7 +99,7 @@ public class LetterImageView extends ImageView {
 
     private int randomColor() {
         Random random = new Random();
-        String[] colorsArr = getResources().getStringArray(R.array.colors);
+        String[] colorsArr = getResources().getStringArray(R.array.categoryColors);
         return Color.parseColor(colorsArr[random.nextInt(colorsArr.length)]);
     }
 }

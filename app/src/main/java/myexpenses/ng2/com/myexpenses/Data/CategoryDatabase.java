@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -53,7 +52,7 @@ public class CategoryDatabase extends SQLiteOpenHelper {
         db.execSQL(CREATE_EXPENSE_CATEGORIES);
         db.execSQL(CREATE_INCOME_CATEGORIES);
 
-        String[] array = context.getResources().getStringArray(R.array.colors);
+        String[] array = context.getResources().getStringArray(R.array.categoryColors);
         ArrayList<Integer> colors = new ArrayList();
 
         for (String item : array) {
@@ -203,12 +202,12 @@ public class CategoryDatabase extends SQLiteOpenHelper {
         Cursor c;
         int Catrow;
         ArrayList<String> categories = new ArrayList<String>();
-        if(expense) {
+        if (expense) {
             c = getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_EXPENSE_CATEGORIES, null);
             Catrow = c.getColumnIndex(COLUMN_ENAME);
-        }else{
+        } else {
             c = getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_INCOME_CATEGORIES, null);
-            Catrow=c.getColumnIndex(COLUMN_INAME);
+            Catrow = c.getColumnIndex(COLUMN_INAME);
 
         }
 
@@ -225,13 +224,13 @@ public class CategoryDatabase extends SQLiteOpenHelper {
         return categories;
     }
 
-    public int getPositionFromValue(String category,boolean expense) {
+    public int getPositionFromValue(String category, boolean expense) {
 
         int pos = 0;
         Cursor c;
-        if(expense) {
+        if (expense) {
             c = getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_EXPENSE_CATEGORIES, null);
-        }else {
+        } else {
             c = getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_INCOME_CATEGORIES, null);
         }
         if (c != null) {
@@ -336,7 +335,9 @@ public class CategoryDatabase extends SQLiteOpenHelper {
             getReadableDatabase().update(TABLE_INCOME_CATEGORIES, cv, COLUMN_ID + "=" + id, null);
         }
 
-
+        /*TODO except from changing the category attributes , we must change all the category's data
+            that are already in the database
+        */
     }
 
     public int getColorFromCategory(String name, boolean expense) {

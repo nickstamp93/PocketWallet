@@ -94,7 +94,6 @@ public class MoneyDatabase extends SQLiteOpenHelper {
 
     //return a cursor which contains the whole table expense (select *)
     public Cursor getCursorExpense() {
-
         return getReadableDatabase().rawQuery("SELECT * FROM " + Table_Expense,
                 null);
     }
@@ -500,4 +499,20 @@ public class MoneyDatabase extends SQLiteOpenHelper {
 
         return total;
     }
+
+    public void updateCategory(String oldCategoryName, String newCategoryName) {
+        ContentValues newValues = new ContentValues();
+        newValues.put(Key_ECategory, newCategoryName);
+
+        getWritableDatabase().update(Table_Expense, newValues, Key_ECategory + "='" + oldCategoryName + "'", null);
+    }
+
+    public void updateSource(String oldSource, String newSource) {
+        ContentValues newValues = new ContentValues();
+        newValues.put(Key_ISource, newSource);
+
+        getWritableDatabase().update(Table_Income, newValues, Key_ISource + "='" + oldSource + "'", null);
+
+    }
+
 }

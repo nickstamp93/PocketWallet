@@ -3,7 +3,6 @@ package myexpenses.ng2.com.myexpenses.Activities;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -58,10 +57,11 @@ public class AddIncomeActivity extends FragmentActivity implements NumberPickerD
 
         setContentView(R.layout.activity_add_income);
 
-        initBasicVariables();
+        init();
         initUI();
-        initListeners();
+        setUpUI();
 
+        //if income not null , means that activity launched from history for editing,load data
         income = (IncomeItem) getIntent().getSerializableExtra("Income");
         if (income != null) {
             update = true;
@@ -74,15 +74,12 @@ public class AddIncomeActivity extends FragmentActivity implements NumberPickerD
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        // getMenuInflater().inflate(R.menu.add_income, menu);
-
         if (update) {
             MenuItem delete = menu.add("Delete").setIcon(getResources().getDrawable(android.R.drawable.ic_menu_delete));
             delete.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
             delete.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem) {
-                    Log.i("MenuItem", "activated");
                     db.deleteIncome(income.getId());
                     db.close();
                     finish();
@@ -105,24 +102,21 @@ public class AddIncomeActivity extends FragmentActivity implements NumberPickerD
         String year = tokens[0];
         String month = tokens[1];
         String day = tokens[2];
-//        int day = Integer.parseInt(tokens[2]);
-//        int month = Integer.parseInt(tokens[1]);
-//        int year = Integer.parseInt(tokens[0]);
-
         d = CalendarDatePickerDialog.newInstance(listener,
-                Integer.parseInt(year), Integer.parseInt(month)-1, Integer.parseInt(day));
+                Integer.parseInt(year), Integer.parseInt(month) - 1, Integer.parseInt(day));
         date = year + "-" + month + "-" + day;
         etDate.setText(reverseDate());
 
     }
 
-    private void initBasicVariables() {
+    private void init() {
         db = new MoneyDatabase(AddIncomeActivity.this);
         try {
             db.openDatabase();
         } catch (SQLException e) {
-            Toast.makeText(getApplicationContext(), "Problem with our database", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Database Error", Toast.LENGTH_SHORT).show();
         }
+
         cdb = new CategoryDatabase(getApplicationContext());
 
         update = false;
@@ -134,24 +128,15 @@ public class AddIncomeActivity extends FragmentActivity implements NumberPickerD
 
         String day = c.get(Calendar.DAY_OF_MONTH) + "";
         String month = (c.get(Calendar.MONTH) + 1) + "";
+
         if (c.get(Calendar.DAY_OF_MONTH) < 10) {
             day = "0" + c.get(Calendar.DAY_OF_MONTH);
         }
+
         if (c.get(Calendar.MONTH) + 1 < 10) {
             month = "0" + (c.get(Calendar.MONTH) + 1);
         }
-/*
-        Time now=new Time();
-        now.setToNow();
-        String day=now.monthDay+"",month=now.month+"";
 
-        if(now.monthDay<10){
-            day="0"+now.monthDay;
-        }
-        if(now.month<10){
-            month="0"+now.month;
-        }
-        */
         date = c.get(Calendar.YEAR) + "-" + month + "-" + day;
 
 
@@ -162,21 +147,27 @@ public class AddIncomeActivity extends FragmentActivity implements NumberPickerD
 
     private void initUI() {
 
+        tvAmount = (TextView) findViewById(R.id.tvAmount);
+        tvAmount.setText("0.00 " + PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("pref_key_currency", "€"));
+
+        sCategories = (Spinner) findViewById(R.id.sIncomeCategories);
 
         etDate = (EditText) findViewById(R.id.etIncomeDate);
-        // etSource=(EditText)findViewById(R.id.etisource);
-        tvAmount = (TextView) findViewById(R.id.tvAmount);
-        sCategories = (Spinner) findViewById(R.id.sIncomeCategories);
+        etDate.setText(reverseDate());
         ibCalendar = (ImageButton) findViewById(R.id.ibIncomeCalendar);
+
         bOk = (Button) findViewById(R.id.bOK);
         bCancel = (Button) findViewById(R.id.bCancel);
-
-        tvAmount.setText("0.00 " + PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("pref_key_currency", "€"));
-        etDate.setText(reverseDate());
-
         Themer.setBackgroundColor(this, bOk, false);
         Themer.setBackgroundColor(this, bCancel, true);
 
+
+    }
+
+
+    private void setUpUI() {
+
+        //======================spinner init with categories========================================
         //get from CategoryDatabase all the categories and save them in to an ArrayList
         allCategories = cdb.getCategories(false);
 
@@ -196,11 +187,8 @@ public class AddIncomeActivity extends FragmentActivity implements NumberPickerD
         //Set the adapter of spinner item to be all the categories from CategoryDatabase
         sCategories.setAdapter(adapter);
         cdb.close();
-    }
 
-
-    private void initListeners() {
-
+        //=========================ok button listener===============================================
         bOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -212,8 +200,9 @@ public class AddIncomeActivity extends FragmentActivity implements NumberPickerD
                     amount = Double.parseDouble(tvAmount.getText().subSequence(0, tvAmount.getText().length() - 1).toString());
                 } catch (NumberFormatException e) {
                     ok = false;
-                    Toast.makeText(getApplicationContext(), "Plz Press a numerical in Price and not a character", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Not a valid number on amount", Toast.LENGTH_LONG).show();
                 }
+
                 //if we took the price correctly we continue to retrieve the other information of the income item
                 if (ok) {
 
@@ -268,27 +257,23 @@ public class AddIncomeActivity extends FragmentActivity implements NumberPickerD
 
     private CalendarDatePickerDialog.OnDateSetListener listener = new CalendarDatePickerDialog.OnDateSetListener() {
         @Override
-        public void onDateSet(CalendarDatePickerDialog calendarDatePickerDialog, int i, int i2, int i3) {
+        public void onDateSet(CalendarDatePickerDialog calendarDatePickerDialog, int year, int cMonth, int cDay) {
             String month, day;
-            i2++;
-            if (i2 < 10) {
-                month = "0" + i2;
+            cMonth++;
+            if (cMonth < 10) {
+                month = "0" + cMonth;
             } else {
-                month = String.valueOf(i2);
+                month = String.valueOf(cMonth);
             }
-            if (i3 < 10) {
-                day = "0" + i3;
+            if (cDay < 10) {
+                day = "0" + cDay;
             } else {
-                day = String.valueOf(i3);
+                day = String.valueOf(cDay);
             }
-            date = i + "-" + month + "-" + day;
+            date = year + "-" + month + "-" + day;
             etDate.setText(reverseDate());
         }
     };
-
-    public void setIncomeDate(String date) {
-        this.date = date;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -306,7 +291,6 @@ public class AddIncomeActivity extends FragmentActivity implements NumberPickerD
 
         String tokens[] = date.split("-");
         return tokens[2] + "-" + tokens[1] + "-" + tokens[0];
-
 
     }
 

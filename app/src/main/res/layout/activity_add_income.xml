@@ -15,38 +15,47 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="0.00 €"
             android:textAppearance="?android:textAppearanceLarge"
-            android:textSize="@dimen/text_size_main_price" />
+            android:textSize="@dimen/text_size_main_price"
+            android:text="0.00 €" />
 
         <View
             android:layout_width="wrap_content"
             android:layout_height="2dp"
-            android:layout_marginBottom="3dp"
+            android:layout_marginBottom="@dimen/bottom_margin_headlines_small"
             android:background="@drawable/line_seperator_solid" />
 
 
-        <TextView
-            style="@style/Headline"
-            android:text="@string/textview_headline_source" />
-
-
-        <Spinner
-            android:id="@+id/sIncomeCategories"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/bottom_margin_headlines" />
+            android:weightSum="6"
+            android:layout_marginBottom="@dimen/bottom_margin_headlines_small">
+
+            <TextView
+                style="@style/Headline"
+                android:layout_weight="4"
+                android:text="@string/textview_headline_source" />
+
+
+            <Spinner
+                android:id="@+id/sIncomeCategories"
+                android:layout_weight="2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
 
         <View
             android:layout_width="wrap_content"
             android:layout_height="2dp"
-            android:layout_marginBottom="3dp"
+            android:layout_marginBottom="@dimen/bottom_margin_headlines_small"
             android:background="@drawable/line_seperator_solid" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/bottom_margin_headlines"
+            android:layout_marginBottom="@dimen/bottom_margin_headlines_small"
             android:orientation="horizontal"
             android:weightSum="9">
 
@@ -72,7 +81,6 @@
                 android:src="@drawable/calendar"
                 android:layout_weight="4" />
 
-
         </LinearLayout>
 
         <LinearLayout
@@ -90,169 +98,8 @@
                 style="@style/ButtonStyleBottom"
                 android:text="@string/button_ok" />
 
-
         </LinearLayout>
-
 
     </LinearLayout>
 
-
-    <!--
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        tools:context="myexpenses.ng2.com.myexpenses.Activities.AddIncomeActivity">
-
-
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/llIncomeAmount"
-            android:orientation="horizontal"
-            android:weightSum="1"
-            android:layout_marginTop="15dp"
-            >
-
-            <TextView
-                android:id="@+id/tviamount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Amount:"
-                android:paddingLeft="10dp"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/blue"
-                android:layout_weight="0.3"
-
-                />
-            <EditText
-                android:id="@+id/etiamount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Enter amount"
-                android:layout_weight="0.7"
-                android:textColor="#000000"
-                android:ems="10"
-                android:gravity="center"
-
-               />
-
-            </LinearLayout>
-
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/llIncomeSource"
-    android:orientation="horizontal"
-    android:layout_below="@+id/llIncomeAmount"
-    android:layout_marginTop="30dp"
-    android:weightSum="1"
-    >
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvIncomeSource"
-        android:text="Source:"
-        android:layout_gravity="center"
-
-
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/blue" />
-
-
-    <Spinner
-        android:id="@+id/sIncomeCategories"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-
-
-        />
-
-
-</LinearLayout>
-
-
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/llIncomeDate"
-    android:layout_below="@+id/llIncomeSource"
-    android:orientation="horizontal"
-    android:layout_marginTop="40dp"
-    android:weightSum="1"
-
-
-    >
-
-   <TextView
-    android:id="@+id/tvidate"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Date"
-    android:textAppearance="?android:attr/textAppearanceLarge"
-    android:textColor="@color/blue"
-       android:layout_weight="0.6"
-       />
-
-
-
-    <ImageButton
-        android:id="@+id/ibiCalendar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.4"
-
-        />
-
-    </LinearLayout>
-
-
-
-
-
-
-
-        <LinearLayout
-            android:id="@+id/llButtons"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/llIncomeDate"
-            android:layout_marginTop="60dp"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <Button
-                android:id="@+id/biOK"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="7dp"
-                android:layout_weight="1"
-                android:background="@color/OrangeRed"
-                android:text="Ok" />
-
-            <Button
-                android:id="@+id/biCancel"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="7dp"
-                android:layout_weight="1"
-                android:background="@color/OrangeRed"
-                android:text="Cancel" />
-
-
-        </LinearLayout>
-
-
-    </RelativeLayout>
-
-    -->
 </ScrollView>

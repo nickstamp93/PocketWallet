@@ -15,32 +15,38 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="0.00 €"
             android:textAppearance="?android:textAppearanceLarge"
-            android:textSize="@dimen/text_size_main_price" />
+            android:textSize="@dimen/text_size_main_price"
+            android:text="0.00 €" />
 
         <View
             android:layout_width="wrap_content"
             android:layout_height="2dp"
-            android:layout_marginBottom="3dp"
+            android:layout_marginBottom="@dimen/bottom_margin_headlines_small"
             android:background="@drawable/line_seperator_solid" />
 
-
-        <TextView
-            style="@style/Headline"
-            android:text="@string/textview_headline_category" />
-
-
-        <Spinner
-            android:id="@+id/sCategories"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/bottom_margin_headlines" />
+            android:weightSum="6"
+            android:layout_marginBottom="@dimen/bottom_margin_headlines_small">
+
+            <TextView
+                style="@style/Headline"
+                android:layout_weight="4"
+                android:text="@string/textview_headline_category" />
+
+            <Spinner
+                android:id="@+id/sCategories"
+                android:layout_weight="2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
         <View
             android:layout_width="wrap_content"
             android:layout_height="2dp"
-            android:layout_marginBottom="3dp"
+            android:layout_marginBottom="@dimen/bottom_margin_headlines_small"
             android:background="@drawable/line_seperator_solid" />
 
         <LinearLayout
@@ -70,27 +76,26 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="4"
                 style="?android:borderlessButtonStyle"
-                android:src="@drawable/calendar"/>
-
+                android:src="@drawable/calendar" />
 
         </LinearLayout>
 
         <View
             android:layout_width="wrap_content"
             android:layout_height="2dp"
-            android:layout_marginBottom="3dp"
+            android:layout_marginBottom="@dimen/bottom_margin_headlines_small"
             android:background="@drawable/line_seperator_solid" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/bottom_margin_headlines"
+            android:layout_marginBottom="@dimen/bottom_margin_headlines_small"
             android:orientation="horizontal"
-            android:weightSum="5">
+            android:weightSum="6">
 
             <TextView
                 style="@style/Headline"
-                android:layout_weight="3"
+                android:layout_weight="4"
                 android:text="@string/textview_headline_notes" />
 
             <EditText

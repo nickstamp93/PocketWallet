@@ -80,9 +80,9 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
         setContentView(R.layout.activity_add_expense);
 
 
-        initBasicVariables();
+        init();
         initUi();
-        initListeners();
+        setUpUI();
 
         //This activity contains 2 modules. Add a new expense in Database or update an exist one.
         //When the user wants to update a expense he just click the history item. From History
@@ -95,24 +95,19 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
             update = true;
             id = item.getId();
             initUiValues();
-            Log.i("ExpenseActivity", "Called from History");
-            Log.i("Values", item.getCategories() + "-" + item.getDate() + '-' + item.getNotes() + item.getPrice() + "-" + item.getId());
-        } else {
-            Log.i("ExpenseActivity", "Called from Expense");
         }
-
 
     }
 
 
-    private void initBasicVariables() {
+    private void init() {
         cdb = new CategoryDatabase(AddExpenseActivity.this);
         mydb = new MoneyDatabase(AddExpenseActivity.this);
         //Open the database
         try {
             mydb.openDatabase();
         } catch (SQLException e) {
-            Toast.makeText(getApplicationContext(), "Problem with database", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Database Error", Toast.LENGTH_SHORT).show();
         }
 
         update = false;
@@ -130,7 +125,6 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
         if (c.get(Calendar.MONTH) + 1 < 10) {
             month = "0" + (c.get(Calendar.MONTH) + 1);
         }
-
 
         date = c.get(Calendar.YEAR) + "-" + month + "-" + day;
 
@@ -153,14 +147,9 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
         String year = tokens[0];
         String month = tokens[1];
         String day = tokens[2];
-//        int day = Integer.parseInt(tokens[2]);
-//        int month = Integer.parseInt(tokens[1]);
-//        int year = Integer.parseInt(tokens[0]);
-
         d = CalendarDatePickerDialog.newInstance(listener,
-                Integer.parseInt(year), Integer.parseInt(month)-1, Integer.parseInt(day));
+                Integer.parseInt(year), Integer.parseInt(month) - 1, Integer.parseInt(day));
         date = year + "-" + month + "-" + day;
-        Log.i("nikos" , date);
         etDate.setText(reverseDate());
 
     }
@@ -168,21 +157,28 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
 
     private void initUi() {
 
-        bOk = (Button) findViewById(R.id.bOK);
-        bCancel = (Button) findViewById(R.id.bCancel);
-        ibCalendar = (ImageButton) findViewById(R.id.ibCalendar);
         tvPrice = (TextView) findViewById(R.id.tvPrice);
-        etDate = (EditText) findViewById(R.id.etDate);
-        etNotes = (EditText) findViewById(R.id.etNotes);
+        tvPrice.setText("0.00 " + PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("pref_key_currency", "€"));
+
         sCategories = (Spinner) findViewById(R.id.sCategories);
 
-        tvPrice.setText("0.00 " + PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("pref_key_currency", "€"));
+        etDate = (EditText) findViewById(R.id.etDate);
         etDate.setText(reverseDate());
+        ibCalendar = (ImageButton) findViewById(R.id.ibCalendar);
 
+        etNotes = (EditText) findViewById(R.id.etNotes);
 
+        bOk = (Button) findViewById(R.id.bOK);
+        bCancel = (Button) findViewById(R.id.bCancel);
         Themer.setBackgroundColor(this, bOk, false);
         Themer.setBackgroundColor(this, bCancel, true);
 
+
+    }
+
+    private void setUpUI() {
+
+        //=========================set up the spinner with the categories===========================
         //get from CategoryDatabase all the categories and save them in to an ArrayList
         allCategories = cdb.getCategories(true);
         ArrayList<SpinnerItem> spinnerItems = new ArrayList<SpinnerItem>();
@@ -201,9 +197,24 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
         sCategories.setAdapter(adapter);
         cdb.close();
 
-    }
+        //=============================date picker listener=========================================
+        ibCalendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                d.show(getSupportFragmentManager(), "Calendar Dialog");
+            }
+        });
 
-    private void initListeners() {
+        //=============================price textview listener=======================================
+        tvPrice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                npb.show();
+
+            }
+        });
+
+        //=============================ok button listener===========================================
         bOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -251,6 +262,7 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
 
         });
 
+        //===========================cancel button listener=========================================
         bCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -258,45 +270,28 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
             }
         });
 
-        ibCalendar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                d.show(getSupportFragmentManager(), "Calendar Dialog");
-            }
-        });
-
-
-        tvPrice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                npb.show();
-
-            }
-        });
-
-
     }
 
     private CalendarDatePickerDialog.OnDateSetListener listener = new CalendarDatePickerDialog.OnDateSetListener() {
         @Override
-        public void onDateSet(CalendarDatePickerDialog calendarDatePickerDialog, int i, int i2, int i3) {
+        public void onDateSet(CalendarDatePickerDialog calendarDatePickerDialog, int year, int cMonth, int cDay) {
             //This listener used when we change the date. We just increase the value of month because in android
             //the months start to count from 0. After that we set up the proper format for the date and show
             //in EditText etDate
 
             String month, day;
-            i2++;
-            if (i2 < 10) {
-                month = "0" + i2;
+            cMonth++;
+            if (cMonth < 10) {
+                month = "0" + cMonth;
             } else {
-                month = String.valueOf(i2);
+                month = String.valueOf(cMonth);
             }
-            if (i3 < 10) {
-                day = "0" + i3;
+            if (cDay < 10) {
+                day = "0" + cDay;
             } else {
-                day = String.valueOf(i3);
+                day = String.valueOf(cDay);
             }
-            date = i + "-" + month + "-" + day;
+            date = year + "-" + month + "-" + day;
             etDate.setText(reverseDate());
         }
     };
@@ -313,7 +308,6 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
             delete.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem) {
-                    Log.i("MenuItem", "activated");
                     mydb.deleteExpense(item.getId());
                     mydb.close();
                     finish();
@@ -336,13 +330,8 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
         return super.onOptionsItemSelected(item);
     }
 
-
     public void setDate(String date) {
         this.date = date;
-    }
-
-    public void setPrice(String price) {
-        tvPrice.setText(price);
     }
 
     private String reverseDate() {

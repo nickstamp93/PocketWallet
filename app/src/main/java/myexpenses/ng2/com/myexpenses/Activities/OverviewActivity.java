@@ -311,14 +311,14 @@ public class OverviewActivity extends Activity {
         profile.setBalance((float) balance);
 
         //set balance to UI
-        tvBalance.setText(balance + profile.getCurrency());
+        tvBalance.setText(balance + " " + profile.getCurrency());
         //set legends' text
         tvLegendTotalExpense.setText("Expense \n(" + (totalExpenses + " " + profile.getCurrency()) + ")");
         tvLegendTotalIncome.setText("Income \n(" + (totalIncomes + " " + profile.getCurrency()) + ")");
 
         //savings are : total income - total expense - balance + savings user defined at the creation of the profile
         double savings = mdb.getTotalIncome() - mdb.getTotalExpenses() - balance + profile.getSavings();
-        tvSavings.setText(savings + profile.getCurrency());
+        tvSavings.setText(savings + " " +  profile.getCurrency());
 
         //set up the PieChart
         List<MagnificentChartItem> chartItemsList = new ArrayList<MagnificentChartItem>();

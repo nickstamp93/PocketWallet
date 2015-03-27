@@ -398,19 +398,20 @@ public class HistoryActivity extends FragmentActivity {
 
      private CalendarDatePickerDialog.OnDateSetListener dListener=new CalendarDatePickerDialog.OnDateSetListener() {
          @Override
-         public void onDateSet(CalendarDatePickerDialog calendarDatePickerDialog, int i, int i2, int i3) {
+         public void onDateSet(CalendarDatePickerDialog calendarDatePickerDialog, int cYear, int cMonth, int cDay) {
              String month,day,date;
-             if(i2<10){
-                 month = "0" + i2;
+             cMonth++;
+             if(cMonth<10){
+                 month = "0" + cMonth;
              }else{
-                 month = String.valueOf(i2);
+                 month = String.valueOf(cMonth);
              }
-             if(i3<10){
-                 day = "0" + i3;
+             if(cDay<10){
+                 day = "0" + cDay;
              }else{
-                 day = String.valueOf(i3);
+                 day = String.valueOf(cDay);
              }
-             date = day+"-"+month+"-"+i;
+             date = day+"-"+month+"-"+cYear;
              if(switcher){
                  saveExpenseFiltersDate(date);
 

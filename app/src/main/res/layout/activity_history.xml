@@ -2,5 +2,6 @@
     android:id="@+id/lvHistory"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:dividerHeight="3dp"
+    android:dividerHeight="5dp"
+    android:divider="@color/transparent"
     android:padding="@dimen/layout_padding" />

@@ -142,7 +142,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
     //return a cursor which contains the tuples of table expense order by the date
     public Cursor getExpensesFromNewestToOldest() {
 
-        return getReadableDatabase().rawQuery("SELECT * FROM " + Table_Expense + " ORDER BY " + Key_EDate + " DESC"
+        return getReadableDatabase().rawQuery("SELECT * FROM " + Table_Expense + " ORDER BY " + Key_EDate + " DESC , " + Key_EId + " DESC"
                 , null);
     }
 

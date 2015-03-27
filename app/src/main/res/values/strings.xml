@@ -42,23 +42,6 @@
     <string name="dialog_delete_category_text">There are items of this category in your history. Delete or move them to another category.</string>
     <string name="dialog_delete_category_move">Move To</string>
 
-
-    <string-array name="expenses_category">
-        <item>Food</item>
-        <item>Drinks</item>
-        <item>Personal</item>
-        <item>Clothing</item>
-    </string-array>
-    <string-array name="date_formats">
-        <item>dd/MM/yyyy</item>
-        <item>MM/dd/yyyy</item>
-        <item>dd/MM/yy</item>
-        <item>MM/dd/yy</item>
-        <item>yyyy/MM/dd</item>
-        <item>yyyy/dd/MM</item>
-        <item>yy/dd/MM</item>
-        <item>yy/MM/dd</item>
-    </string-array>
     <string-array name="drawer_menu">
         <item>History</item>
         <item>Add Income</item>

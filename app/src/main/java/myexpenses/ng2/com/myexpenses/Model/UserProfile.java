@@ -1,4 +1,4 @@
-package myexpenses.ng2.com.myexpenses.Data;
+package myexpenses.ng2.com.myexpenses.Model;
 
 /**
  * Created by Nikos on 7/28/2014.

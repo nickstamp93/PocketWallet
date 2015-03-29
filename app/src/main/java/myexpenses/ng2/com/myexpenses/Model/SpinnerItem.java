@@ -1,6 +1,4 @@
-package myexpenses.ng2.com.myexpenses.Utils;
-
-import android.widget.Spinner;
+package myexpenses.ng2.com.myexpenses.Model;
 
 /**
  * Created by Vromia on 7/11/2014.

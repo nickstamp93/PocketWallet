@@ -14,7 +14,7 @@
         android:layout_weight="1"
         android:gravity="center_vertical">
 
-        <myexpenses.ng2.com.myexpenses.Utils.LetterImageView
+        <myexpenses.ng2.com.myexpenses.Extra.LetterImageView
             android:id="@+id/livcat"
             android:layout_width="50dp"
             android:layout_height="50dp"

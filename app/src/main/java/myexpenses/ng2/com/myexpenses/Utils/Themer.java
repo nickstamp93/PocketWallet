@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import myexpenses.ng2.com.myexpenses.Extra.MagnificentChart;
 import myexpenses.ng2.com.myexpenses.R;
 
 /**

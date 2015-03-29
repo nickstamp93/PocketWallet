@@ -20,11 +20,11 @@ import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDi
 import java.util.Calendar;
 
 import myexpenses.ng2.com.myexpenses.Data.CategoryDatabase;
-import myexpenses.ng2.com.myexpenses.Data.ExpenseItem;
-import myexpenses.ng2.com.myexpenses.Data.IncomeItem;
+import myexpenses.ng2.com.myexpenses.Model.ExpenseItem;
+import myexpenses.ng2.com.myexpenses.Model.IncomeItem;
 import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
 import myexpenses.ng2.com.myexpenses.R;
-import myexpenses.ng2.com.myexpenses.Utils.HistoryListViewAdapter;
+import myexpenses.ng2.com.myexpenses.Adapters.HistoryListViewAdapter;
 import myexpenses.ng2.com.myexpenses.Utils.Themer;
 
 

@@ -1,4 +1,4 @@
-package myexpenses.ng2.com.myexpenses.Data;
+package myexpenses.ng2.com.myexpenses.Model;
 
 import java.io.Serializable;
 

@@ -6,7 +6,7 @@
     android:background="@drawable/rounded_color_background"
     android:padding="5dp">
 
-    <myexpenses.ng2.com.myexpenses.Utils.LetterImageView
+    <myexpenses.ng2.com.myexpenses.Extra.LetterImageView
         android:id="@+id/livhistory"
         android:layout_width="50dp"
         android:layout_height="50dp"

@@ -53,7 +53,7 @@
                 android:layout_height="match_parent"
                 android:layout_columnSpan="1" />
 
-            <myexpenses.ng2.com.myexpenses.Utils.LetterImageView
+            <myexpenses.ng2.com.myexpenses.Extra.LetterImageView
                 android:id="@+id/livCatPreview"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
@@ -97,7 +97,7 @@
         <!--android:text="@string/textview_headline_category_preview"-->
         <!--android:layout_width="wrap_content" />-->
 
-        <!--<myexpenses.ng2.com.myexpenses.Utils.LetterImageView-->
+        <!--<myexpenses.ng2.com.myexpenses.Extra.LetterImageView-->
         <!--android:id="@+id/livCatPreview"-->
         <!--android:layout_width="80dp"-->
         <!--android:layout_height="80dp"-->

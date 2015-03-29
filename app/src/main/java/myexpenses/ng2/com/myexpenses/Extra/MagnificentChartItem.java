@@ -1,4 +1,4 @@
-package myexpenses.ng2.com.myexpenses.Utils;
+package myexpenses.ng2.com.myexpenses.Extra;
 
 /**
  * Created by Nikos on 7/3/2015.

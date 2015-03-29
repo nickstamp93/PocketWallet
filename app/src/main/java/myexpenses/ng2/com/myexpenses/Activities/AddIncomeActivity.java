@@ -23,11 +23,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import myexpenses.ng2.com.myexpenses.Data.CategoryDatabase;
-import myexpenses.ng2.com.myexpenses.Data.IncomeItem;
+import myexpenses.ng2.com.myexpenses.Model.IncomeItem;
 import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
 import myexpenses.ng2.com.myexpenses.R;
-import myexpenses.ng2.com.myexpenses.Utils.SpinnerAdapter;
-import myexpenses.ng2.com.myexpenses.Utils.SpinnerItem;
+import myexpenses.ng2.com.myexpenses.Adapters.SpinnerAdapter;
+import myexpenses.ng2.com.myexpenses.Model.SpinnerItem;
 import myexpenses.ng2.com.myexpenses.Utils.Themer;
 
 public class AddIncomeActivity extends FragmentActivity implements NumberPickerDialogFragment.NumberPickerDialogHandler {

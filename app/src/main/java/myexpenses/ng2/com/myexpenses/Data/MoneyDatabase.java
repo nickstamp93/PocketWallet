@@ -10,6 +10,9 @@ import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
 
+import myexpenses.ng2.com.myexpenses.Model.ExpenseItem;
+import myexpenses.ng2.com.myexpenses.Model.IncomeItem;
+
 /**
  * Created by Nikos on 7/26/2014.
  */

@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import myexpenses.ng2.com.myexpenses.Data.CategoryDatabase;
 import myexpenses.ng2.com.myexpenses.R;
-import myexpenses.ng2.com.myexpenses.Utils.LetterImageView;
+import myexpenses.ng2.com.myexpenses.Extra.LetterImageView;
 import myexpenses.ng2.com.myexpenses.Utils.Themer;
 
 //activity managind the categories

@@ -1,4 +1,4 @@
-package myexpenses.ng2.com.myexpenses.Utils;
+package myexpenses.ng2.com.myexpenses.Dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

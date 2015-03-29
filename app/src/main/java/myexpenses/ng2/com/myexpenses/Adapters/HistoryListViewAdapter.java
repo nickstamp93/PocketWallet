@@ -1,4 +1,4 @@
-package myexpenses.ng2.com.myexpenses.Utils;
+package myexpenses.ng2.com.myexpenses.Adapters;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -11,6 +11,7 @@ import android.widget.CursorAdapter;
 import android.widget.TextView;
 
 import myexpenses.ng2.com.myexpenses.Data.CategoryDatabase;
+import myexpenses.ng2.com.myexpenses.Extra.LetterImageView;
 import myexpenses.ng2.com.myexpenses.R;
 
 /**

@@ -1,4 +1,4 @@
-package myexpenses.ng2.com.myexpenses.Utils;
+package myexpenses.ng2.com.myexpenses.Adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,8 +10,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import myexpenses.ng2.com.myexpenses.Data.CategoryDatabase;
+import myexpenses.ng2.com.myexpenses.Extra.LetterImageView;
 import myexpenses.ng2.com.myexpenses.R;
+import myexpenses.ng2.com.myexpenses.Model.SpinnerItem;
 
 /**
  * Created by Vromia on 14/9/2014.

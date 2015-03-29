@@ -26,12 +26,12 @@ import java.util.List;
 
 import myexpenses.ng2.com.myexpenses.Data.CategoryDatabase;
 import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
-import myexpenses.ng2.com.myexpenses.Data.UserProfile;
+import myexpenses.ng2.com.myexpenses.Model.UserProfile;
 import myexpenses.ng2.com.myexpenses.R;
-import myexpenses.ng2.com.myexpenses.Utils.DrawerAdapter;
-import myexpenses.ng2.com.myexpenses.Utils.LetterImageView;
-import myexpenses.ng2.com.myexpenses.Utils.MagnificentChart;
-import myexpenses.ng2.com.myexpenses.Utils.MagnificentChartItem;
+import myexpenses.ng2.com.myexpenses.Adapters.DrawerAdapter;
+import myexpenses.ng2.com.myexpenses.Extra.LetterImageView;
+import myexpenses.ng2.com.myexpenses.Extra.MagnificentChart;
+import myexpenses.ng2.com.myexpenses.Extra.MagnificentChartItem;
 import myexpenses.ng2.com.myexpenses.Utils.SharedPrefsManager;
 import myexpenses.ng2.com.myexpenses.Utils.Themer;
 

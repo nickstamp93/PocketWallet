@@ -20,8 +20,8 @@ import android.widget.Toast;
 import java.util.Calendar;
 
 import myexpenses.ng2.com.myexpenses.BroadcastReceivers.ReminderReceiver;
-import myexpenses.ng2.com.myexpenses.ColorPicker.ColorPickerDialog;
-import myexpenses.ng2.com.myexpenses.ColorPicker.ColorPickerSwatch;
+import myexpenses.ng2.com.myexpenses.Extra.ColorPicker.ColorPickerDialog;
+import myexpenses.ng2.com.myexpenses.Extra.ColorPicker.ColorPickerSwatch;
 import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
 import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Utils.SharedPrefsManager;

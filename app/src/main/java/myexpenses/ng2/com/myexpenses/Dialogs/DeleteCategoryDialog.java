@@ -1,9 +1,8 @@
-package myexpenses.ng2.com.myexpenses.Utils;
+package myexpenses.ng2.com.myexpenses.Dialogs;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -17,6 +16,8 @@ import java.util.ArrayList;
 import myexpenses.ng2.com.myexpenses.Data.CategoryDatabase;
 import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
 import myexpenses.ng2.com.myexpenses.R;
+import myexpenses.ng2.com.myexpenses.Adapters.SpinnerAdapter;
+import myexpenses.ng2.com.myexpenses.Model.SpinnerItem;
 
 /**
  * Created by Vromia on 17/10/2014.

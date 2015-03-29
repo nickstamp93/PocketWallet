@@ -4,7 +4,7 @@
     android:layout_height="50dp"
     android:orientation="horizontal" >
 
-    <myexpenses.ng2.com.myexpenses.Utils.LetterImageView
+    <myexpenses.ng2.com.myexpenses.Extra.LetterImageView
         android:id="@+id/livSpinner"
         android:layout_width="50dp"
         android:layout_height="50dp"

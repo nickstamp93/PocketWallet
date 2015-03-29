@@ -1,4 +1,4 @@
-package myexpenses.ng2.com.myexpenses.ColorPicker;/*
+package myexpenses.ng2.com.myexpenses.Extra.ColorPicker;/*
  * Copyright (C) 2013 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");

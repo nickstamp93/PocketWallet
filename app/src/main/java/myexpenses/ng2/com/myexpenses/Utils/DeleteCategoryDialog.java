@@ -6,18 +6,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import myexpenses.ng2.com.myexpenses.Activities.CategoriesManagerActivity;
-import myexpenses.ng2.com.myexpenses.Activities.CreateCategoryActivity;
 import myexpenses.ng2.com.myexpenses.Data.CategoryDatabase;
 import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
 import myexpenses.ng2.com.myexpenses.R;
@@ -28,7 +24,6 @@ import myexpenses.ng2.com.myexpenses.R;
 public class DeleteCategoryDialog extends DialogFragment {
 
     private CheckBox cbChooseCat;
-  //  private LinearLayout llCategories;
     private Button bOk, bCancel;
     private Spinner sCategories;
     private Dialog dialog;
@@ -40,6 +35,7 @@ public class DeleteCategoryDialog extends DialogFragment {
     private boolean expense;
 
     private ArrayList<String> categories;
+    private SpinnerAdapter adapter;
 
     public DeleteCategoryDialog(String delCategory, boolean expense) {
         this.delCategory = delCategory;
@@ -53,10 +49,9 @@ public class DeleteCategoryDialog extends DialogFragment {
         dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.delete_category_dialog);
 
+        init();
         initUI();
-        initBasicVariables();
-        initListeners();
-
+        setUpUI();
 
         return dialog;
     }
@@ -64,25 +59,24 @@ public class DeleteCategoryDialog extends DialogFragment {
     private void initUI() {
 
         cbChooseCat = (CheckBox) dialog.findViewById(R.id.cbancat);
-        //llCategories = (LinearLayout) dialog.findViewById(R.id.llChooseCategory);
-        bOk = (Button) dialog.findViewById(R.id.bOK);
-        bCancel = (Button) dialog.findViewById(R.id.bCancel);
         sCategories = (Spinner) dialog.findViewById(R.id.sdCategories);
 
+        bOk = (Button) dialog.findViewById(R.id.bOK);
+        bCancel = (Button) dialog.findViewById(R.id.bCancel);
 
     }
 
-    private void initBasicVariables() {
-/*
-        for (int i = 0; i < llCategories.getChildCount(); i++) {
-            View view = llCategories.getChildAt(i);
-            view.setEnabled(false);
-        }*/
+    private void init() {
+
         mdb = new MoneyDatabase(getActivity());
         cdb = new CategoryDatabase(getActivity());
-       categories = cdb.getAllCategoriesExceptOne(delCategory, expense);
+        categories = cdb.getAllCategoriesExceptOne(delCategory, expense);
 
+    }
 
+    private void setUpUI() {
+
+        //=========================spinner==========================================================
         ArrayList<SpinnerItem> spinnerItems = new ArrayList<SpinnerItem>();
 
         for (int i = 0; i < categories.size(); i++) {
@@ -93,17 +87,12 @@ public class DeleteCategoryDialog extends DialogFragment {
 
         }
 
-        SpinnerAdapter adapter = new SpinnerAdapter(getActivity(), R.layout.spinner_item, spinnerItems);
+        adapter = new SpinnerAdapter(getActivity(), R.layout.spinner_item, spinnerItems);
 
-
-       // ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, R.id.tvSpinnerCategories, categories);
         sCategories.setAdapter(adapter);
         sCategories.setEnabled(false);
 
-    }
-
-    private void initListeners() {
-
+        //========================check box move listener===========================================
         cbChooseCat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -113,62 +102,41 @@ public class DeleteCategoryDialog extends DialogFragment {
             }
         });
 
+        //====================================button ok listener=====================================
         bOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (cbChooseCat.isChecked()) {
-                    Log.i("OK", "Checked");
-
 
                     int position = sCategories.getSelectedItemPosition();
 
-                    String  newCategory = categories.get(position);
+                    String newCategory = categories.get(position);
 
-                 //  newCategory=sCategories.getSelectedItem().toString();
-                    mdb.updateTuplesDependedOnCategory(delCategory,expense,newCategory);
+                    mdb.updateTuplesDependedOnCategory(delCategory, expense, newCategory);
                     mdb.close();
                     cdb.deleteCategory(delCategory, expense);
 
-
-/*
-                    CategoriesManagerActivity activity = (CategoriesManagerActivity) getActivity();
-                    activity.deleteHappen();
-                    activity.refreshList(cdb.getAllCategories(expense));
-                    */
                     cdb.close();
-                    Toast.makeText(getActivity(), "All the data with category " + delCategory + " have been updated to "+newCategory, Toast.LENGTH_SHORT).show();
-
 
                     dialog.dismiss();
                     getActivity().finish();
 
-
                 } else {
-                    Log.i("OK", "!Checked");
                     mdb.deleteTuplesDependedOnCategory(delCategory, expense);
                     mdb.close();
                     cdb.deleteCategory(delCategory, expense);
 
 
-
-                    /*
-                    CategoriesManagerActivity activity = (CategoriesManagerActivity) getActivity();
-                    activity.deleteHappen();
-                    activity.refreshList(cdb.getAllCategories(expense));
-                    cdb.close();
-                    */
-
-                    Toast.makeText(getActivity(), "All the data with category " + delCategory + " have been deleted", Toast.LENGTH_SHORT).show();
-
                     dialog.dismiss();
                     getActivity().finish();
 
-
                 }
+                Toast.makeText(getActivity(), "Category " + delCategory + " deleted", Toast.LENGTH_SHORT).show();
 
             }
         });
 
+        //========================================= button cancel listener==========================
         bCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -177,7 +145,6 @@ public class DeleteCategoryDialog extends DialogFragment {
                 dialog.dismiss();
             }
         });
-
 
     }
 

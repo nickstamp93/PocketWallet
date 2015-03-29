@@ -40,7 +40,6 @@ public class CreateCategoryActivity extends Activity implements ColorPickerSwatc
     private CategoryDatabase cdb;
     private DeleteCategoryDialog deleteDialog;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -227,6 +226,7 @@ public class CreateCategoryActivity extends Activity implements ColorPickerSwatc
 
                     } else {
                         cdb.deleteCategory(name, expense);
+                        Toast.makeText(CreateCategoryActivity.this, "Category " + name + " deleted", Toast.LENGTH_SHORT).show();
                         finish();
                     }
                     mdb.close();

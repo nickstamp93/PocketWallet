@@ -2,7 +2,7 @@ package myexpenses.ng2.com.myexpenses.Data;
 
 /**
  * Created by Nikos on 7/28/2014.
- * class : represents a user profile without a standard salary
+ * class : represents a user profile
  */
 public class UserProfile {
 
@@ -18,7 +18,7 @@ public class UserProfile {
     private String grouping;
 
     //constructor
-    public UserProfile(String username, float savings, float balance , String currency , String grouping) {
+    public UserProfile(String username, float savings, float balance, String currency, String grouping) {
         this.username = username;
         this.savings = savings;
         this.balance = balance;
@@ -34,10 +34,6 @@ public class UserProfile {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public float getSavings() {
         return savings;
     }
@@ -45,7 +41,6 @@ public class UserProfile {
     public void setSavings(float savings) {
         this.savings = savings;
     }
-
 
     public float getBalance() {
         return balance;
@@ -55,20 +50,11 @@ public class UserProfile {
         this.balance = balance;
     }
 
-
     public String getCurrency() {
         return currency;
     }
 
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
-
     public String getGrouping() {
         return grouping;
-    }
-
-    public void setGrouping(String grouping) {
-        this.grouping = grouping;
     }
 }

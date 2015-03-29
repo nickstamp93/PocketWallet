@@ -70,7 +70,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
     public void InsertExpense(ExpenseItem expense) {
 
         ContentValues values = new ContentValues();
-        values.put(Key_ECategory, expense.getCategories());
+        values.put(Key_ECategory, expense.getCategory());
         values.put(Key_EDate, expense.getDate());
         values.put(Key_EPrice, expense.getPrice());
         values.put(Key_ENotes, expense.getNotes());
@@ -203,7 +203,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
     public void UpdateExpense(ExpenseItem expense) {
 
         ContentValues values = new ContentValues();
-        values.put(Key_ECategory, expense.getCategories());
+        values.put(Key_ECategory, expense.getCategory());
         values.put(Key_EDate, expense.getDate());
         values.put(Key_EPrice, expense.getPrice());
         values.put(Key_ENotes, expense.getNotes());

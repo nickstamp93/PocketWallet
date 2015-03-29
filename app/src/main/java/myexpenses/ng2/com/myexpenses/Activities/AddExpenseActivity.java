@@ -3,7 +3,6 @@ package myexpenses.ng2.com.myexpenses.Activities;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -140,7 +139,7 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
 
         tvPrice.setText(item.getPrice() + " " + PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("pref_key_currency", "€"));
         etNotes.setText(item.getNotes());
-        sCategories.setSelection(cdb.getPositionFromValue(item.getCategories(), true));
+        sCategories.setSelection(cdb.getPositionFromValue(item.getCategory(), true));
         cdb.close();
 
         String tokens[] = item.getDate().split("-");

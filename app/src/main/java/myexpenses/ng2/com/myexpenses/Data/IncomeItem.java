@@ -7,51 +7,42 @@ import java.io.Serializable;
  */
 public class IncomeItem implements Serializable {
 
-   private double amount;
-   private int id;
-   private String date,source;
+    private double amount;
+    private int id;
+    private String date, source;
 
 
-   public IncomeItem(double amount,String date,String source){
-       this.amount=amount;
-       this.date=date;
-       this.source=source;
-   }
-
-    public IncomeItem(){
-
+    public IncomeItem(double amount, String date, String source) {
+        this.amount = amount;
+        this.date = date;
+        this.source = source;
     }
 
-    public void setId(int id){
-        this.id=id;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setAmount(double amount){
-        this.amount=amount;
+    public void setDate(String date) {
+        this.date = date;
     }
 
-
-    public void setDate(String date){
-        this.date=date;
+    public void setSource(String source) {
+        this.source = source;
     }
 
-    public void setSource(String source){
-        this.source=source;
-    }
-
-    public double getAmount(){
+    public double getAmount() {
         return amount;
     }
 
-    public String getDate(){
+    public String getDate() {
         return date;
     }
 
-    public String getSource(){
+    public String getSource() {
         return source;
     }
 
-    public int getId(){
+    public int getId() {
         return id;
     }
 

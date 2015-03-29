@@ -223,7 +223,8 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
                 String category, notes;
                 //get the price of the expense if it has problem a Toast appear and say to correct it
                 try {
-                    price = Double.parseDouble(tvPrice.getText().subSequence(0, tvPrice.getText().length() - 1).toString());
+                    int currencyLength = PreferenceManager.getDefaultSharedPreferences(AddExpenseActivity.this).getString("pref_key_currency" , "€").length();
+                    price = Double.parseDouble(tvPrice.getText().subSequence(0, tvPrice.getText().length() - currencyLength).toString());
                 } catch (NumberFormatException e) {
                     ok = false;
                     Toast.makeText(getApplicationContext(), "Plz Press a numerical in Price and not a character", Toast.LENGTH_LONG).show();
@@ -317,17 +318,6 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     public void setDate(String date) {
         this.date = date;

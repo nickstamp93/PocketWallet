@@ -361,7 +361,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         Calendar c = Calendar.getInstance();
 
         int currentDay = c.get(Calendar.DAY_OF_WEEK);
-        int endDay = Calendar.SUNDAY;
+        int endDay = Calendar.MONDAY;
 
         while (currentDay != endDay) {
             c.add(Calendar.DATE, 1);
@@ -419,7 +419,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         Calendar c = Calendar.getInstance();
 
         int currentDay = c.get(Calendar.DAY_OF_WEEK);
-        int endDay = Calendar.SUNDAY;
+        int endDay = Calendar.MONDAY;
 
         while (currentDay != endDay) {
             c.add(Calendar.DATE, 1);

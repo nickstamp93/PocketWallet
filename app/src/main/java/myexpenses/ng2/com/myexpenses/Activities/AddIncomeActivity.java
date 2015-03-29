@@ -197,7 +197,8 @@ public class AddIncomeActivity extends FragmentActivity implements NumberPickerD
                 String source;
                 //get the price of the income if it has problem a Toast appear and say to correct it
                 try {
-                    amount = Double.parseDouble(tvAmount.getText().subSequence(0, tvAmount.getText().length() - 1).toString());
+                    int currencyLength = PreferenceManager.getDefaultSharedPreferences(AddIncomeActivity.this).getString("pref_key_currency" , "€").length();
+                    amount = Double.parseDouble(tvAmount.getText().subSequence(0, tvAmount.getText().length() - currencyLength).toString());
                 } catch (NumberFormatException e) {
                     ok = false;
                     Toast.makeText(getApplicationContext(), "Not a valid number on amount", Toast.LENGTH_LONG).show();
@@ -224,7 +225,6 @@ public class AddIncomeActivity extends FragmentActivity implements NumberPickerD
                     finish();
 
                 }
-
 
             }
         });
@@ -275,17 +275,7 @@ public class AddIncomeActivity extends FragmentActivity implements NumberPickerD
         }
     };
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
 
     private String reverseDate() {
 

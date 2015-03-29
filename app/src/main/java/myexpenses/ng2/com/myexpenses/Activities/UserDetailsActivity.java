@@ -74,6 +74,8 @@ public class UserDetailsActivity extends Activity {
         manager = new SharedPrefsManager(getApplicationContext());
 
         etUsername.setText(manager.getPrefsUsername());
+        etSavings.setText(manager.getPrefsSavings() + "");
+
         if (manager.getPrefsGrouping().equalsIgnoreCase("monthly")) {
             radioGroup.check(R.id.rbMonthly);
         } else {
@@ -109,6 +111,7 @@ public class UserDetailsActivity extends Activity {
 
                     manager.setPrefsIsProfile(true);
                     manager.setPrefsUsername(username);
+                    manager.setPrefsSavings(savings);
                     manager.setPrefsGrouping(grouping);
 
                     manager.commit();

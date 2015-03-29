@@ -1,7 +1,6 @@
 package myexpenses.ng2.com.myexpenses.Activities;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -15,27 +14,22 @@ import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDi
 import java.util.Calendar;
 
 import myexpenses.ng2.com.myexpenses.R;
-import myexpenses.ng2.com.myexpenses.Utils.FiltersDateDialog;
 import myexpenses.ng2.com.myexpenses.Utils.Themer;
 
 /**
  * Created by Vromia on 15/9/2014.
  * FiltersDateToDateDialog class that extends DialogFragment is used when we want to find expenses or incomes with date between two
- * dates. HistoryActivity calls this class more specific in filters. It also implement the Interface Date from Fragment
- * FiltersDateDialog because we need to send data from FiltersDateDialog to FiltersDateToDateDialog
+ * dates. HistoryActivity calls this class more specific in filters.
  */
 public class FiltersDateToDateActivity extends FragmentActivity {
 
     private Button bOk, bCancel;
     private ImageButton ibFrom, ibTo;
     private EditText etFrom, etTo;
-    private Dialog dialog;
     private String from, to;
-    //We use the fragment FiltersDateDialog to initialise the fields from and to that are our dates.
-    private FiltersDateDialog fdialog;
     //variable flag is used because we want to know which button the user pressed so we initialise the right date
     //and variable expense is to check if this fragment is called for expenses or incomes
-    private boolean flag, expense;
+    private boolean flag;
 
     private CalendarDatePickerDialog Cdialog;
 

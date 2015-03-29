@@ -2,11 +2,7 @@ package myexpenses.ng2.com.myexpenses.Utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
-import java.text.DateFormat;
-import java.text.FieldPosition;
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -24,22 +20,10 @@ public class SharedPrefsManager {
     //Shared Preferences attributes
     private static final String PREFS_IS_PROFILE = "isProfile";
     private static final String PREFS_USERNAME = "username";
-//    private static final String PREFS_SALARY = "salary";
     private static final String PREFS_BALANCE = "balance";
-//    private static final String PREFS_ON_SALARY = "onSalary";
-    private static final String PREFS_SAVINGS = "savings";
-//    private static final String PREFS_SAL_FREQ = "salFreq";
-//    private static final String PREFS_NPD = "nextPaymentDate";
-    private static final String PREFS_CURRENCY = "currency";
     private static final String PREFS_REMINDER_TIME = "reminderTime";
-    private static final String PREFS_REMINDER = "reminder";
-    private static final String PREFS_ISPASSWORD = "ispassword";
-    private static final String PREFS_PASSWORD = "password";
-    private static final String PREFS_DIFFERENCE = "difference";
     private static final String PREFS_GROUPING = "grouping";
     private static final String PREFS_THEME_CHANGED = "themeChanged";
-//    private static final String PREFS_SAL_FREQ_WEEKLY = "salfreq weekly";
-//    private static final String PREFS_SAL_FREQ_MONTHLY = "salfreq monthly";
 
     //the SharedPreferences and Editor objects
     SharedPreferences prefs;
@@ -72,45 +56,17 @@ public class SharedPrefsManager {
         return prefs.getString(PREFS_USERNAME, "");
     }
 
-    public float getPrefsSavings() {
-        return prefs.getFloat(PREFS_SAVINGS, 0);
-    }
-
-
-//    public float getPrefsSalary() {
-//        return prefs.getFloat(PREFS_SALARY, 0);
-//    }
-//
-//    public boolean getPrefsOnSalary() {
-//        return prefs.getBoolean(PREFS_ON_SALARY, false);
-//    }
 
     public float getPrefsBalance() {
         return prefs.getFloat(PREFS_BALANCE, 0);
     }
 
-//    public String getPrefsSalFreq() {
-//        return prefs.getString(PREFS_SAL_FREQ, "monthly");
-//    }
-//
-//    public String getPrefsNpd() {
-//        return prefs.getString(PREFS_NPD, "01-01-2014");
-//    }
-
-    public String getPrefsCurrency(){
-        return prefs.getString(PREFS_CURRENCY , "€");
-    }
-
-    public boolean getPrefsReminder(){
-        return prefs.getBoolean(PREFS_REMINDER , false);
-    }
-
-    public String getPrefsReminderTime(){
+    public String getPrefsReminderTime() {
         //get the saved time
-        String time = prefs.getString(PREFS_REMINDER_TIME , "20:00");
+        String time = prefs.getString(PREFS_REMINDER_TIME, "20:00");
 
         //format the saved time to the format "kk:mm"
-        int hour , minute;
+        int hour, minute;
         String vars[] = time.split(":");
         hour = Integer.valueOf(vars[0]);
         minute = Integer.valueOf(vars[1]);
@@ -128,33 +84,15 @@ public class SharedPrefsManager {
         //return the new formatted time string
         return formatted;
 
-
-    }
-
-    public boolean getPrefsIsPassword(){
-        return prefs.getBoolean(PREFS_ISPASSWORD , false);
-    }
-
-    public String getPrefsPassword(){
-        return prefs.getString(PREFS_PASSWORD , "0000");
-    }
-
-    public float getPrefsDifference() {
-        return prefs.getFloat(PREFS_DIFFERENCE , 0);
     }
 
     public String getPrefsGrouping() {
-        return prefs.getString(PREFS_GROUPING , "monthly");
+        return prefs.getString(PREFS_GROUPING, "monthly");
     }
+
     public boolean getPrefsThemeChanged() {
-        return prefs.getBoolean(PREFS_THEME_CHANGED , false);
+        return prefs.getBoolean(PREFS_THEME_CHANGED, false);
     }
-//    public String getPrefsSalFreqWeekly(){
-//        return prefs.getString(PREFS_SAL_FREQ_WEEKLY , "Monday");
-//    }
-//    public int getPrefsSalFreqMonthly(){
-//        return prefs.getInt(PREFS_SAL_FREQ_MONTHLY , 1);
-//    }
 
     public void setPrefsIsProfile(boolean isProfile) {
         editor.putBoolean(PREFS_IS_PROFILE, isProfile);
@@ -164,66 +102,19 @@ public class SharedPrefsManager {
         editor.putString(PREFS_USERNAME, username);
     }
 
-    public void setPrefsSavings(float savings) {
-        editor.putFloat(PREFS_SAVINGS, savings);
-    }
-
     public void setPrefsBalance(float balance) {
         editor.putFloat(PREFS_BALANCE, balance);
     }
 
-//    public void setPrefsOnSalary(boolean onSalary) {
-//        editor.putBoolean(PREFS_ON_SALARY, onSalary);
-//    }
-//
-//    public void setPrefsSalary(float salary) {
-//        editor.putFloat(PREFS_SALARY, salary);
-//    }
-//
-//    public void setPrefsSalFreq(String salFreq) {
-//        editor.putString(PREFS_SAL_FREQ, salFreq);
-//    }
-//
-//    public void setPrefsNpd(String npd) {
-//        editor.putString(PREFS_NPD, npd);
-//    }
-
-    public void setPrefsCurrency(String currency) {
-        editor.putString(PREFS_CURRENCY , currency);
+    public void setPrefsReminderTime(int hour, int minute) {
+        editor.putString(PREFS_REMINDER_TIME, hour + ":" + minute);
     }
 
-    public void setPrefsReminder(boolean reminder){
-        editor.putBoolean(PREFS_REMINDER , reminder);
+    public void setPrefsGrouping(String grouping) {
+        editor.putString(PREFS_GROUPING, grouping);
     }
 
-    public void setPrefsReminderTime(int hour , int minute){
-        editor.putString(PREFS_REMINDER_TIME , hour + ":" + minute);
+    public void setPrefsThemeChanged(boolean value) {
+        editor.putBoolean(PREFS_THEME_CHANGED, value);
     }
-
-    public void setPrefsIsPassword(boolean isPassword){
-        editor.putBoolean(PREFS_ISPASSWORD , isPassword);
-    }
-
-    public void setPrefsPassword(String password){
-        editor.putString(PREFS_PASSWORD , password);
-    }
-
-    public void setPrefsDifference(float difference){
-        editor.putFloat(PREFS_DIFFERENCE , difference);
-    }
-
-    public void setPrefsGrouping(String grouping){
-        editor.putString(PREFS_GROUPING , grouping);
-    }
-
-    public void setPrefsThemeChanged(boolean value){
-        editor.putBoolean(PREFS_THEME_CHANGED , value);
-    }
-//    public void setPrefsSalFreqWeekly(String day){
-//        editor.putString(PREFS_SAL_FREQ_WEEKLY , day);
-//    }
-//    public void setPrefsSalFreqMonthly(int day){
-//        editor.putInt(PREFS_SAL_FREQ_MONTHLY , day);
-//    }
-
 }

@@ -112,7 +112,7 @@ public class HistoryActivity extends FragmentActivity {
         adapter.notifyDataSetChanged();
     }
 
-    //This method is called by FiltersDateDialog when the dialog is about to close and set the cursor of HistoryActivity to be all
+    //This method is called by DatePickerDialog when the dialog is about to close and set the cursor of HistoryActivity to be all
     //the expenses in specific date(parameter)
     public void saveExpenseFiltersDate(String date) {
         c = db.getExpensesByDate(date);
@@ -120,7 +120,7 @@ public class HistoryActivity extends FragmentActivity {
     }
 
 
-    //This method is called by FiltersDateDialog\ when the dialog is about to close and set the cursor of HistoryActivity to be all
+    //This method is called by DatePickerDialog when the dialog is about to close and set the cursor of HistoryActivity to be all
     //the incomes in specific date(parameter)
     public void saveIncomeFiltersDate(String date) {
         c = db.getIncomeByDate(date);

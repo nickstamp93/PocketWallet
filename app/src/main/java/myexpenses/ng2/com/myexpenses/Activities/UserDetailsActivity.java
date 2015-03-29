@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
 import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Utils.SharedPrefsManager;
 import myexpenses.ng2.com.myexpenses.Utils.Themer;
@@ -42,10 +41,10 @@ public class UserDetailsActivity extends Activity {
         initUI();
 
         //init the Listeners
-        initListeners();
+        setUpUI();
 
         //init values
-        initValues();
+        fillUIValues();
 
     }
 
@@ -70,19 +69,11 @@ public class UserDetailsActivity extends Activity {
     }
 
     //init form values according to preference file
-    private void initValues() {
+    private void fillUIValues() {
 
         manager = new SharedPrefsManager(getApplicationContext());
 
-        //if there are no transactions in the database , the user can edit the stock savings amount
-        /*MoneyDatabase db = new MoneyDatabase(this);
-        if(db.getTotalExpenses() != 0 && db.getTotalIncome() != 0){
-            llSavings.setVisibility(View.GONE);
-        }*/
-
         etUsername.setText(manager.getPrefsUsername());
-        etSavings.setText(String.valueOf(manager.getPrefsSavings()));
-
         if (manager.getPrefsGrouping().equalsIgnoreCase("monthly")) {
             radioGroup.check(R.id.rbMonthly);
         } else {
@@ -91,7 +82,7 @@ public class UserDetailsActivity extends Activity {
     }
 
     //init the Listeners
-    private void initListeners() {
+    private void setUpUI() {
         bOk.setOnClickListener(buttonListener);
         bCancel.setOnClickListener(buttonListener);
 
@@ -117,10 +108,7 @@ public class UserDetailsActivity extends Activity {
                     getDataFromXml();
 
                     manager.setPrefsIsProfile(true);
-
                     manager.setPrefsUsername(username);
-                    manager.setPrefsSavings(savings);
-                    manager.setPrefsCurrency("€");
                     manager.setPrefsGrouping(grouping);
 
                     manager.commit();

@@ -127,23 +127,6 @@ public class CategoryDatabase extends SQLiteOpenHelper {
         cv.put(COLUMN_ILETTER, "B");
         db.insert(TABLE_INCOME_CATEGORIES, null, cv);
 
-
-        //insert the initial expense categories
-      /*  db.execSQL("insert into " + TABLE_EXPENSE_CATEGORIES + "(" + COLUMN_ID + ","
-                + COLUMN_ENAME +COLUMN_COLOR+","+COLUMN_LETTER + ") values(1,'Food',"+red+",'F')");
-        db.execSQL("insert into " + TABLE_EXPENSE_CATEGORIES + "(" + COLUMN_ID + ","
-                + COLUMN_ENAME +","+COLUMN_COLOR+","+COLUMN_LETTER +") values(2,'Drinks',Color.GREEN,'D')");
-        db.execSQL("insert into " + TABLE_EXPENSE_CATEGORIES + "(" + COLUMN_ID + ","
-                + COLUMN_ENAME + ") values(3,'Personal')");
-        db.execSQL("insert into " + TABLE_EXPENSE_CATEGORIES + "(" + COLUMN_ID + ","
-                + COLUMN_ENAME + ") values(4,'Clothing')");
-        //insert the initial income categories
-        db.execSQL("insert into " + TABLE_INCOME_CATEGORIES + "(" + COLUMN_ID + ","
-                + COLUMN_INAME + ") values(1,'Company')");
-        db.execSQL("insert into " + TABLE_INCOME_CATEGORIES + "(" + COLUMN_ID + ","
-                + COLUMN_INAME + ") values(2,'Other')");
-                */
-
     }
 
     @Override
@@ -165,9 +148,7 @@ public class CategoryDatabase extends SQLiteOpenHelper {
             values.put(COLUMN_ILETTER, letter);
             values.put(COLUMN_ICOLOR, color);
             getWritableDatabase().insert(TABLE_INCOME_CATEGORIES, null, values);
-
         }
-
     }
 
 
@@ -202,13 +183,13 @@ public class CategoryDatabase extends SQLiteOpenHelper {
         Cursor c;
         int Catrow;
         ArrayList<String> categories = new ArrayList<String>();
+
         if (expense) {
             c = getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_EXPENSE_CATEGORIES, null);
             Catrow = c.getColumnIndex(COLUMN_ENAME);
         } else {
             c = getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_INCOME_CATEGORIES, null);
             Catrow = c.getColumnIndex(COLUMN_INAME);
-
         }
 
         if (c != null) {
@@ -217,9 +198,7 @@ public class CategoryDatabase extends SQLiteOpenHelper {
 
                 String category = c.getString(Catrow);
                 categories.add(category);
-
             }
-
         }
         return categories;
     }
@@ -245,10 +224,7 @@ public class CategoryDatabase extends SQLiteOpenHelper {
             c.close();
 
         }
-
         return pos;
-
-
     }
 
     public ArrayList<String> getAllCategoriesExceptOne(String category, boolean expense) {
@@ -335,9 +311,6 @@ public class CategoryDatabase extends SQLiteOpenHelper {
             getReadableDatabase().update(TABLE_INCOME_CATEGORIES, cv, COLUMN_ID + "=" + id, null);
         }
 
-        /*TODO except from changing the category attributes , we must change all the category's data
-            that are already in the database
-        */
     }
 
     public int getColorFromCategory(String name, boolean expense) {
@@ -394,15 +367,8 @@ public class CategoryDatabase extends SQLiteOpenHelper {
             }
             c.close();
         }
-
-
         return letter;
 
-    }
-
-
-    public void closeDB() {
-        getReadableDatabase().close();
     }
 
 }

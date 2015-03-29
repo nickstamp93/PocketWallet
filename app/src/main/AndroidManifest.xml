@@ -84,7 +84,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".Utils.FiltersDateToDateActivity"
+            android:name=".Activities.FiltersDateToDateActivity"
             android:label="FiltersDateToDate"
             android:screenOrientation="portrait"
             android:parentActivityName=".Activities.HistoryActivity" />

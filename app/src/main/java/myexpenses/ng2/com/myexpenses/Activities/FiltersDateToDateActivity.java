@@ -1,4 +1,4 @@
-package myexpenses.ng2.com.myexpenses.Utils;
+package myexpenses.ng2.com.myexpenses.Activities;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -9,13 +9,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
 
 import java.util.Calendar;
 
 import myexpenses.ng2.com.myexpenses.R;
+import myexpenses.ng2.com.myexpenses.Utils.FiltersDateDialog;
+import myexpenses.ng2.com.myexpenses.Utils.Themer;
 
 /**
  * Created by Vromia on 15/9/2014.
@@ -38,12 +39,6 @@ public class FiltersDateToDateActivity extends FragmentActivity {
 
     private CalendarDatePickerDialog Cdialog;
 
-/*
-    public FiltersDateToDateDialog(boolean expense){
-        this.expense=expense;
-    }
-    */
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,35 +47,21 @@ public class FiltersDateToDateActivity extends FragmentActivity {
         setContentView(R.layout.filters_datetodate_dialog);
 
         initUI();
-        initListeners();
+        setUpUI();
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
 
     }
 
-    /*
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        dialog=new Dialog(getActivity());
-        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.filters_datetodate_dialog);
-
-        initUI();
-        initListeners();
-
-        return dialog;
-    }
-*/
 
     public void initUI() {
 
-        bOk = (Button) findViewById(R.id.bOK);
-        bCancel = (Button) findViewById(R.id.bCancel);
-        ibFrom = (ImageButton) findViewById(R.id.ibFrom);
-        ibTo = (ImageButton) findViewById(R.id.ibTo);
         etFrom = (EditText) findViewById(R.id.etDateFrom);
+        ibFrom = (ImageButton) findViewById(R.id.ibFrom);
+
         etTo = (EditText) findViewById(R.id.etDateTo);
+        ibTo = (ImageButton) findViewById(R.id.ibTo);
 
         Calendar c = Calendar.getInstance();
         String day = c.get(Calendar.DAY_OF_MONTH) + "";
@@ -92,25 +73,20 @@ public class FiltersDateToDateActivity extends FragmentActivity {
             month = "0" + (c.get(Calendar.MONTH) + 1);
         }
 
-        String date =  day + "-" + month + "-" + c.get(Calendar.YEAR);
+        String date = day + "-" + month + "-" + c.get(Calendar.YEAR);
         etFrom.setText(date);
         etTo.setText(date);
 
-
+        bOk = (Button) findViewById(R.id.bOK);
+        bCancel = (Button) findViewById(R.id.bCancel);
         Themer.setBackgroundColor(this, bOk, false);
         Themer.setBackgroundColor(this, bCancel, true);
 
-
-        //initialise the dialog fragment and also set the target fragment to be this parent fragment because we need
-        //to take some data from child fragment FiltersDateDialog
-        //  fdialog=new FiltersDateDialog(false,expense);
-        // fdialog.setTargetFragment(FiltersDateToDateDialog.this,0);
-
     }
 
+    public void setUpUI() {
 
-    public void initListeners() {
-
+        //from button listener
         ibFrom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -119,11 +95,11 @@ public class FiltersDateToDateActivity extends FragmentActivity {
                 Cdialog = CalendarDatePickerDialog.newInstance(dtdListener,
                         c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
                 Cdialog.show(getSupportFragmentManager(), "Calendar Dialog");
-                //fdialog.show(getFragmentManager(),"FiltersDate dialog");
 
             }
         });
 
+        //to button listener
         ibTo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -132,7 +108,6 @@ public class FiltersDateToDateActivity extends FragmentActivity {
                 Cdialog = CalendarDatePickerDialog.newInstance(dtdListener,
                         c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
                 Cdialog.show(getSupportFragmentManager(), "Calendar Dialog");
-                //  fdialog.show(getFragmentManager(),"FiltersDate dialog");
 
             }
         });
@@ -140,47 +115,24 @@ public class FiltersDateToDateActivity extends FragmentActivity {
         bOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String DateFrom[] = etFrom.getText().toString().split("-");
-                String DateTo[] = etTo.getText().toString().split("-");
-                String reformedDateFrom = DateFrom[2] + "-" + DateFrom[1] + "-" + DateFrom[0];
-                String reformedDateTo = DateTo[2] + "-" + DateTo[1] + "-" + DateTo[0];
-                //When we press the Ok we check if the user press two dates and also if the dates are ok.
 
-                    //Intent resultIntent=new Intent();
-                    Intent resultIntent = getIntent();
-                    resultIntent.putExtra("From", etFrom.getText().toString());
-                    resultIntent.putExtra("To", etTo.getText().toString());
-                    setResult(Activity.RESULT_OK, resultIntent);
-                    finish();
-
-
-                /*
-                    HistoryActivity activity=(HistoryActivity) getActivity();
-                    //If expense is true it means that this fragment is called for expenses so we call the method
-                    //saveFiltersDateToDate from HistoryActivity. Otherwise is called for incomes so we call the
-                    //method saveIncomeFiltersDateToDate
-                    if(expense) {
-                        activity.saveFiltersDateToDate(from, to);
-                    }else{
-                        activity.saveIncomeFiltersDateToDate(from,to);
-                    }
-                    dialog.dismiss();
-                    */
-
+                Intent resultIntent = getIntent();
+                resultIntent.putExtra("From", etFrom.getText().toString());
+                resultIntent.putExtra("To", etTo.getText().toString());
+                setResult(Activity.RESULT_OK, resultIntent);
+                finish();
 
 
             }
         });
+        //cancel button listener
         bCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 finish();
-                //Toast.makeText(getActivity(),"Return back no choice happened",Toast.LENGTH_LONG).show();
-                //dialog.dismiss();
             }
         });
-
 
     }
 
@@ -210,26 +162,7 @@ public class FiltersDateToDateActivity extends FragmentActivity {
                 to = date;
                 etTo.setText(to);
             }
-
         }
     };
 
-
-/*
-//getDateFromDialogFragment is the method from the interface Date and we need to override it because this class
- //implements Date
-    @Override
-    public void getDateFromDialogFragment(String date) {
-//if the flag is true it means that the user press the Date (from) so we initialise the string variable from and also
-//we set the Text of TextView tvFrom. Otherwise we do the same for Date (To).
-        if(flag){
-            from=date;
-            tvFrom.setText(from);
-        }else{
-            to=date;
-            tvTo.setText(to);
-        }
-
-    }
-    */
 }

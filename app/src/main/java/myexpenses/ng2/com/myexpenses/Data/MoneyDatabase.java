@@ -173,7 +173,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
     //return a cursor which contains the tuples of table income order by the date
     public Cursor getIncomeByNewestToOldest() {
 
-        return getReadableDatabase().rawQuery("SELECT * FROM " + Table_Income + " ORDER BY " + Key_IDate + " DESC"
+        return getReadableDatabase().rawQuery("SELECT * FROM " + Table_Income + " ORDER BY " + Key_IDate + " DESC , " + Key_Iid + " DESC"
                 , null);
     }
 
@@ -370,19 +370,6 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         }
 
         return total;
-    }
-
-    public Cursor getLastExpense() {
-        Cursor c = getReadableDatabase().rawQuery("SELECT * FROM " + Table_Expense + " ORDER BY " + Key_EDate + " DESC"
-                , null);
-        return c;
-
-    }
-
-    public Cursor getLastIncome() {
-        Cursor c = getReadableDatabase().rawQuery("SELECT * FROM " + Table_Income + " ORDER BY " + Key_IDate + " DESC"
-                , null);
-        return c;
     }
 
     public double getTotalExpensePriceForCurrentWeek() {

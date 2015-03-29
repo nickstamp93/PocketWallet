@@ -369,8 +369,8 @@ public class OverviewActivity extends Activity {
         }
 
         Cursor cursorLastExpense, cursorLastIncome;
-        cursorLastExpense = mdb.getLastExpense();
-        cursorLastIncome = mdb.getLastIncome();
+        cursorLastExpense = mdb.getExpensesFromNewestToOldest();
+        cursorLastIncome = mdb.getIncomeByNewestToOldest();
 
         //if there isn't currently an expense
         if (cursorLastExpense.moveToFirst()) {

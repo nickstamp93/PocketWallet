@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import java.sql.SQLException;
 import java.util.Calendar;
@@ -28,7 +27,6 @@ public class MoneyDatabase extends SQLiteOpenHelper {
     private static final String Key_EDate = "date";
     private static final String Key_EPrice = "price";
     private static final String Key_ENotes = "notes";
-    private static final String Key_EReceive = "receive";
 
     //Table Income Columns
     private static final String Key_Iid = "_id";
@@ -39,7 +37,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
     private SQLiteDatabase mydb;
 
     private static final String Create_Expense_Table = "CREATE TABLE " + Table_Expense + "(" + Key_EId + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-            Key_ECategory + " TEXT NOT NULL," + Key_EDate + " TEXT NOT NULL," + Key_EPrice + " DOUBLE," + Key_ENotes + " TEXT," + Key_EReceive + " BLOB" + ")";
+            Key_ECategory + " TEXT NOT NULL," + Key_EDate + " TEXT NOT NULL," + Key_EPrice + " DOUBLE," + Key_ENotes + " TEXT)";
 
     private static final String Create_Income_Table = "CREATE TABLE " + Table_Income + "(" + Key_Iid + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             Key_IAmount + " DOUBLE," + Key_ISource + " TEXT NOT NULL," + Key_IDate + " TEXT NOT NULL" + ")";
@@ -74,7 +72,6 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         values.put(Key_EDate, expense.getDate());
         values.put(Key_EPrice, expense.getPrice());
         values.put(Key_ENotes, expense.getNotes());
-        values.put(Key_EReceive, expense.getReceive());
 
         mydb.insert(Table_Expense, null, values);
 
@@ -90,7 +87,6 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         mydb.insert(Table_Income, null, values);
 
     }
-
 
     //return a cursor which contains the whole table expense (select *)
     public Cursor getCursorExpense() {
@@ -136,7 +132,6 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         return getReadableDatabase().rawQuery("SELECT * FROM " + Table_Expense + " WHERE " + Key_EDate + ">=" + "'" + reformedDateFrom + "'" +
                 " AND " + Key_EDate + "<=" + "'" + reformedDateTo + "'", null);
 
-
     }
 
     //return a cursor which contains the tuples of table expense order by the date
@@ -146,7 +141,6 @@ public class MoneyDatabase extends SQLiteOpenHelper {
                 , null);
     }
 
-
     //return a cursor which contains all the tuples of table income
     public Cursor getCursorIncomes() {
         return getReadableDatabase().rawQuery("SELECT * FROM " + Table_Income,
@@ -155,9 +149,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
 
     //return a cursor which contains all the tuples of table income with Source = to parameter source
     public Cursor getIncomesBySource(String source) {
-
         return getReadableDatabase().rawQuery("SELECT * FROM " + Table_Income + " WHERE " + Key_ISource + "=" + "'" + source + "'", null);
-
     }
 
     //return a cursor which contains the tuples of table income with Date equal to parameter date
@@ -183,7 +175,6 @@ public class MoneyDatabase extends SQLiteOpenHelper {
             order = " DESC";
         }
         return getReadableDatabase().rawQuery("SELECT * FROM " + Table_Income + " ORDER BY " + Key_IAmount + order, null);
-
     }
 
 
@@ -208,8 +199,6 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         values.put(Key_EPrice, expense.getPrice());
         values.put(Key_ENotes, expense.getNotes());
 
-        Log.i("Database Enter", expense.getId() + "");
-
         getReadableDatabase().update(Table_Expense, values, Key_EId + " = " + expense.getId(), null);
 
     }
@@ -221,19 +210,14 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         values.put(Key_IDate, income.getDate());
 
         getReadableDatabase().update(Table_Income, values, Key_Iid + " = " + income.getId(), null);
-
     }
 
     public void deleteExpense(int id) {
-
         getReadableDatabase().delete(Table_Expense, Key_EId + "=" + id, null);
-
     }
 
     public void deleteIncome(int id) {
-
         getReadableDatabase().delete(Table_Income, Key_Iid + "=" + id, null);
-
     }
 
     public void deleteAllIncome() {
@@ -264,8 +248,6 @@ public class MoneyDatabase extends SQLiteOpenHelper {
             values.put(Key_ISource, newCategory);
             getReadableDatabase().update(Table_Income, values, Key_ISource + "=" + "'" + category + "'", null);
         }
-
-
     }
 
     public boolean CategoryHasItems(String category, boolean expense) {
@@ -299,13 +281,10 @@ public class MoneyDatabase extends SQLiteOpenHelper {
 
         String firstOfMonth = "01" + "-" + month + "-" + c.get(Calendar.YEAR);
         String lastOfMonth = "31" + "-" + month + "-" + c.get(Calendar.YEAR);
-        Log.i("firstOfMonth", firstOfMonth);
-        Log.i("lastOfMonth", lastOfMonth);
 
         Cursor cursor = this.getExpensesByDateToDate(firstOfMonth, lastOfMonth);
 
         if (cursor.getCount() != 0) {
-            Log.i("Database", "Bike");
             for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
                 total = Double.parseDouble(cursor.getString(3)) + total;
             }

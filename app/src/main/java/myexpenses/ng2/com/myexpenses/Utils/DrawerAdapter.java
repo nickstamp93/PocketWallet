@@ -63,7 +63,6 @@ public class DrawerAdapter extends ArrayAdapter<String> {
                 holder.ivActivity.setImageResource(R.drawable.ic_action_exit);
                 break;
 
-
         }
         return convertView;
     }

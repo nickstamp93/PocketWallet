@@ -109,7 +109,6 @@ public class CategoriesManagerActivity extends Activity {
         int id = item.getItemId();
         if (id == R.id.action_addCategory) {
             //on action bar add category , launch add category dialog
-            //  new AddCategoryDialog().show(getFragmentManager() , "Add Category");
             Intent CreateCategory = new Intent(CategoriesManagerActivity.this, CreateCategoryActivity.class);
             CreateCategory.putExtra("Expense", expense);
             startActivity(CreateCategory);

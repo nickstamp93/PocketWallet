@@ -6,7 +6,6 @@ import android.graphics.drawable.GradientDrawable;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -38,21 +37,12 @@ public class Themer {
         }
     }
 
-    public static void setButtonTextColor(Activity act, View view, boolean isButton) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(act);
-        if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_pink))) {
-            if (!isButton)
-                ((EditText) view).setTextColor(act.getResources().getColor(R.color.black));
-            else
-                ((Button) view).setTextColor(act.getResources().getColor(R.color.black));
-        }
-    }
 
-    public static void setTextviewTextColor(Activity act, View view){
+    public static void setTextviewTextColor(Activity act, View view) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(act);
         if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_light))) {
             ((TextView) view).setTextColor(act.getResources().getColor(R.color.black));
-        }else{
+        } else {
             ((TextView) view).setTextColor(act.getResources().getColor(R.color.white));
         }
 
@@ -93,27 +83,22 @@ public class Themer {
         }
     }
 
-    public static void setLinearLayoutBackround(Activity act , View view){
+    public static void setLinearLayoutBackround(Activity act, View view) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(act);
         try {
             if (prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_pink)) {
-//                ((LinearLayout) view).setBackgroundColor(act.getResources().getColor(R.color.action_bar_pink));
                 GradientDrawable d = (GradientDrawable) ((LinearLayout) view).getBackground();
                 d.setColor(act.getResources().getColor(R.color.action_bar_pink));
             } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_dark))) {
-//                ((LinearLayout) view).setBackgroundColor(act.getResources().getColor(R.color.action_bar_pink));
                 GradientDrawable d = (GradientDrawable) ((LinearLayout) view).getBackground();
                 d.setColor(act.getResources().getColor(R.color.action_bar_dark));
             } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_green))) {
-//                ((LinearLayout) view).setBackgroundColor(act.getResources().getColor(R.color.action_bar_pink));
                 GradientDrawable d = (GradientDrawable) ((LinearLayout) view).getBackground();
                 d.setColor(act.getResources().getColor(R.color.action_bar_green));
             } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_teal))) {
-//                ((LinearLayout) view).setBackgroundColor(act.getResources().getColor(R.color.action_bar_pink));
                 GradientDrawable d = (GradientDrawable) ((LinearLayout) view).getBackground();
                 d.setColor(act.getResources().getColor(R.color.action_bar_teal));
             } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_light))) {
-//                ((LinearLayout) view).setBackgroundColor(act.getResources().getColor(R.color.action_bar_pink));
                 GradientDrawable d = (GradientDrawable) ((LinearLayout) view).getBackground();
                 d.setColor(act.getResources().getColor(R.color.backround_pie_light));
             }
@@ -123,7 +108,7 @@ public class Themer {
 
     }
 
-    public static void setDrawerBackground(Activity act , View view){
+    public static void setDrawerBackground(Activity act, View view) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(act);
         try {
             if (prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_pink)) {

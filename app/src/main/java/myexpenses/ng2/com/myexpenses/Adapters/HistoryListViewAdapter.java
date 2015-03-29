@@ -26,7 +26,7 @@ public class HistoryListViewAdapter extends CursorAdapter {
 
     public HistoryListViewAdapter(Context context, Cursor c) {
         super(context, c);
-        currency = PreferenceManager.getDefaultSharedPreferences(context).getString("pref_key_currency" , "€");
+        currency = PreferenceManager.getDefaultSharedPreferences(context).getString("pref_key_currency", "€");
         cdb = new CategoryDatabase(context);
 
     }
@@ -51,8 +51,6 @@ public class HistoryListViewAdapter extends CursorAdapter {
             TextView tvCategory = (TextView) view.findViewById(R.id.tvCategory);
             TextView tvNotes = (TextView) view.findViewById(R.id.tvNotes);
             LetterImageView liv = (LetterImageView) view.findViewById(R.id.livhistory);
-            // ImageView ivCategory = (ImageView) view.findViewById(R.id.ivCategory);
-
             Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/font_exo2.otf");
 
             tvPrice.setTypeface(typeface);
@@ -78,32 +76,9 @@ public class HistoryListViewAdapter extends CursorAdapter {
 
             tvCategory.setTextColor(color);
 
-            //liv.setOval(true);
             liv.setLetter(letter);
             liv.setmBackgroundPaint(color);
 
-
-      /*
-      //take from cursor the blob and then convert it to bitmap and finally add it to ImageView ivCategory (Cursor.getBlob(columnIndex))
-        byte[] image=cursor.getBlob(5);
-        if(image==null){
-            ivCategory.setImageResource(R.drawable.food);
-        }else {
-            Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
-            ivCategory.setImageBitmap(bitmap);
-        }
-       */
-/*
-            if (cursor.getString(1).equals("Food")) {
-                ivCategory.setImageResource(R.drawable.food);
-            } else if (cursor.getString(1).equals("Personal")) {
-                ivCategory.setImageResource(R.drawable.personal);
-            } else if (cursor.getString(1).equals("Clothing")) {
-                ivCategory.setImageResource(R.drawable.clothing);
-            } else if (cursor.getString(1).equals("Drinks")) {
-                ivCategory.setImageResource(R.drawable.drinks);
-            }
-            */
 
             tvNotes.setText(cursor.getString(4));
         } else {
@@ -135,10 +110,8 @@ public class HistoryListViewAdapter extends CursorAdapter {
 
             tvSource.setTextColor(color);
 
-            //liv.setOval(true);
             liv.setLetter(letter);
             liv.setmBackgroundPaint(color);
-
 
         }
         return view;
@@ -153,7 +126,6 @@ public class HistoryListViewAdapter extends CursorAdapter {
             TextView tvCategory = (TextView) view.findViewById(R.id.tvCategory);
             TextView tvNotes = (TextView) view.findViewById(R.id.tvNotes);
             LetterImageView liv = (LetterImageView) view.findViewById(R.id.livhistory);
-            // ImageView ivCategory = (ImageView) view.findViewById(R.id.ivCategory);
 
             Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/font_exo2.otf");
             tvPrice.setTypeface(typeface);
@@ -171,26 +143,6 @@ public class HistoryListViewAdapter extends CursorAdapter {
 
             tvCategory.setText(cursor.getString(1));
 
-        /*
-        byte[] image=cursor.getBlob(5);
-        if(image==null){
-            ivCategory.setImageResource(R.drawable.food);
-        }else {
-            Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
-            ivCategory.setImageBitmap(bitmap);
-        }*/
-            /*
-
-            if (cursor.getString(1).equals("Food")) {
-                ivCategory.setImageResource(R.drawable.food);
-            } else if (cursor.getString(1).equals("Personal")) {
-                ivCategory.setImageResource(R.drawable.personal);
-            } else if (cursor.getString(1).equals("Clothing")) {
-                ivCategory.setImageResource(R.drawable.clothing);
-            } else if (cursor.getString(1).equals("Drinks")) {
-                ivCategory.setImageResource(R.drawable.drinks);
-            }
-            */
             tvNotes.setText(cursor.getString(4));
 
 

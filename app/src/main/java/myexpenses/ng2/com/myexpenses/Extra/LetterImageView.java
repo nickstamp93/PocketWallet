@@ -34,7 +34,6 @@ public class LetterImageView extends ImageView {
         mTextPaint.setColor(mTextColor);
         mBackgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mBackgroundPaint.setStyle(Paint.Style.FILL);
-        //mBackgroundPaint.setColor(randomColor());
     }
 
     public char getLetter() {
@@ -63,7 +62,7 @@ public class LetterImageView extends ImageView {
         return isOval;
     }
 
-    public void setmBackgroundPaint(int color){
+    public void setmBackgroundPaint(int color) {
         mBackgroundPaint.setColor(color);
     }
 

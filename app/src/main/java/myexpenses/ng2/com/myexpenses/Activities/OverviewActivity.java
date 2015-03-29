@@ -24,14 +24,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import myexpenses.ng2.com.myexpenses.Adapters.DrawerAdapter;
 import myexpenses.ng2.com.myexpenses.Data.CategoryDatabase;
 import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
-import myexpenses.ng2.com.myexpenses.Model.UserProfile;
-import myexpenses.ng2.com.myexpenses.R;
-import myexpenses.ng2.com.myexpenses.Adapters.DrawerAdapter;
 import myexpenses.ng2.com.myexpenses.Extra.LetterImageView;
 import myexpenses.ng2.com.myexpenses.Extra.MagnificentChart;
 import myexpenses.ng2.com.myexpenses.Extra.MagnificentChartItem;
+import myexpenses.ng2.com.myexpenses.Model.UserProfile;
+import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Utils.SharedPrefsManager;
 import myexpenses.ng2.com.myexpenses.Utils.Themer;
 
@@ -302,11 +302,6 @@ public class OverviewActivity extends Activity {
         }
 
         double balance = totalIncomes - totalExpenses;
-        //save balance to the prefs file
-        //(this is for the)
-        manager.startEditing();
-        manager.setPrefsBalance((float) balance);
-        manager.commit();
         //set the balance to the user profile object
         profile.setBalance((float) balance);
 
@@ -318,7 +313,8 @@ public class OverviewActivity extends Activity {
 
         //savings are : total income - total expense - balance + savings user defined at the creation of the profile
         double savings = mdb.getTotalIncome() - mdb.getTotalExpenses() - balance + profile.getSavings();
-        tvSavings.setText(savings + " " +  profile.getCurrency());
+        profile.setSavings((float) savings);
+        tvSavings.setText(savings + " " + profile.getCurrency());
 
         //set up the PieChart
         List<MagnificentChartItem> chartItemsList = new ArrayList<MagnificentChartItem>();

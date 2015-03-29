@@ -21,6 +21,7 @@ public class SharedPrefsManager {
     private static final String PREFS_IS_PROFILE = "isProfile";
     private static final String PREFS_USERNAME = "username";
     private static final String PREFS_BALANCE = "balance";
+    private static final String PREFS_SAVINGS = "savings";
     private static final String PREFS_REMINDER_TIME = "reminderTime";
     private static final String PREFS_GROUPING = "grouping";
     private static final String PREFS_THEME_CHANGED = "themeChanged";
@@ -56,6 +57,10 @@ public class SharedPrefsManager {
         return prefs.getString(PREFS_USERNAME, "");
     }
 
+    public float getPrefsSavings() {
+        return prefs.getFloat(PREFS_SAVINGS, 0);
+    }
+
 
     public float getPrefsBalance() {
         return prefs.getFloat(PREFS_BALANCE, 0);
@@ -84,7 +89,9 @@ public class SharedPrefsManager {
         //return the new formatted time string
         return formatted;
 
+
     }
+
 
     public String getPrefsGrouping() {
         return prefs.getString(PREFS_GROUPING, "monthly");
@@ -102,9 +109,14 @@ public class SharedPrefsManager {
         editor.putString(PREFS_USERNAME, username);
     }
 
+    public void setPrefsSavings(float savings) {
+        editor.putFloat(PREFS_SAVINGS, savings);
+    }
+
     public void setPrefsBalance(float balance) {
         editor.putFloat(PREFS_BALANCE, balance);
     }
+
 
     public void setPrefsReminderTime(int hour, int minute) {
         editor.putString(PREFS_REMINDER_TIME, hour + ":" + minute);
@@ -117,4 +129,5 @@ public class SharedPrefsManager {
     public void setPrefsThemeChanged(boolean value) {
         editor.putBoolean(PREFS_THEME_CHANGED, value);
     }
+
 }

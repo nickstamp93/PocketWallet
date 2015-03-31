@@ -20,9 +20,9 @@ import android.widget.Toast;
 import java.util.Calendar;
 
 import myexpenses.ng2.com.myexpenses.BroadcastReceivers.ReminderReceiver;
+import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
 import myexpenses.ng2.com.myexpenses.Extra.ColorPicker.ColorPickerDialog;
 import myexpenses.ng2.com.myexpenses.Extra.ColorPicker.ColorPickerSwatch;
-import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
 import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Utils.SharedPrefsManager;
 import myexpenses.ng2.com.myexpenses.Utils.Themer;
@@ -55,13 +55,13 @@ public class SettingsActivity extends PreferenceActivity
     private void setPreferenceActions() {
         //when user clicks on "categories" preference item
         //launch intent with target the CategoriesManagerActivity class
-        Preference screen = findPreference("pref_key_categories");
+        Preference screen = findPreference(getResources().getString(R.string.pref_key_categories));
         Intent i = new Intent(this, CategoriesManagerActivity.class);
         screen.setIntent(i);
 
         //when user clicks on "profile" preference item
         //launch intent with target the UserDetailsActivity class
-        screen = findPreference("pref_key_profile");
+        screen = findPreference(getResources().getString(R.string.pref_key_profile));
         i = new Intent(this, UserDetailsActivity.class);
         screen.setIntent(i);
 
@@ -69,7 +69,7 @@ public class SettingsActivity extends PreferenceActivity
         //start TransparentActivity which contains the RadialTimeDialog
         //doing it this way because the RadialTimePickerDialog must have FragmentActivity as a parent
         //and this activity is a PreferenceActivity
-        screen = findPreference("pref_key_reminder_time");
+        screen = findPreference(getResources().getString(R.string.pref_key_reminder_time));
         screen.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
@@ -80,19 +80,15 @@ public class SettingsActivity extends PreferenceActivity
 
         //when user clicks on "about" preference item
         //launch an alert dialog with the aboout text
-        screen = findPreference("pref_key_about");
+        screen = findPreference(getResources().getString(R.string.pref_key_about));
         screen.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
-//                builder.setMessage(getResources().getString(R.string.text_about));
-                builder.setMessage("This is an application for managing your personal expenses and incomes" +
-                        "\n\n\nCreated by Stampoulis Nikos and Zissis Nikos." +
-                        "\n\nNo external libraries were used in this project" +
-                        "\n\nSpecial thanks to A,B,C,D for the icons used in the app")
-                        .setTitle("About Us");
-                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                builder.setMessage(getResources().getString(R.string.text_about))
+                        .setTitle(getResources().getString(R.string.dialog_title_about));
+                builder.setPositiveButton(getResources().getString(R.string.button_ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -108,7 +104,7 @@ public class SettingsActivity extends PreferenceActivity
 
         //when user clicks on "rate app" preference item
         //launch the market with the app's page
-        screen = findPreference("pref_key_rate_app");
+        screen = findPreference(getResources().getString(R.string.pref_key_rate_app));
         screen.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
@@ -127,14 +123,14 @@ public class SettingsActivity extends PreferenceActivity
 
         //when user clicks on "delete income" preference item
         //ask for confirmation and delete the income data records
-        screen = findPreference("pref_key_delete_income");
+        screen = findPreference(getResources().getString(R.string.pref_key_delete_income));
         screen.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
 
-                builder.setMessage("Delete ALL income transactions?");
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                builder.setMessage(getResources().getString(R.string.dialog_text_delete_income_confirm));
+                builder.setPositiveButton(getResources().getString(R.string.button_ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //call delete income method from database
@@ -144,7 +140,7 @@ public class SettingsActivity extends PreferenceActivity
                         dialog.dismiss();
                     }
                 });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(getResources().getString(R.string.button_cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -160,15 +156,15 @@ public class SettingsActivity extends PreferenceActivity
 
         //when user clicks on "delete expense" preference item
         //ask for confirmation and delete the expense data records
-        screen = findPreference("pref_key_delete_expense");
+        screen = findPreference(getResources().getString(R.string.pref_key_delete_expense));
         screen.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
 
-                builder.setMessage("Delete ALL expense transactions?")
-                        .setTitle("Caution");
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                builder.setMessage(getResources().getString(R.string.dialog_text_delete_expense_confirm))
+                        .setTitle(getResources().getString(R.string.dialog_title_caution));
+                builder.setPositiveButton(getResources().getString(R.string.button_ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //call delete expense method from database
@@ -179,7 +175,7 @@ public class SettingsActivity extends PreferenceActivity
                         dialog.dismiss();
                     }
                 });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(getResources().getString(R.string.button_cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -193,7 +189,7 @@ public class SettingsActivity extends PreferenceActivity
         });
 
         //when the user clicks on the "theme" preference item
-        screen = findPreference("pref_key_theme");
+        screen = findPreference(getResources().getString(R.string.pref_key_theme));
         screen.setDefaultValue(getResources().getColor(R.color.bg_dark));
         screen.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
@@ -208,7 +204,7 @@ public class SettingsActivity extends PreferenceActivity
                 };
                 ColorPickerDialog dialog = ColorPickerDialog.newInstance(R.string.color_picker_default_title, mColor, 0, 5, ColorPickerDialog.SIZE_SMALL);
 
-                dialog.setSelectedColor(prefs.getInt("pref_key_theme", getResources().getColor(R.color.bg_dark)));
+                dialog.setSelectedColor(prefs.getInt(getResources().getString(R.string.pref_key_theme), getResources().getColor(R.color.bg_dark)));
                 dialog.setOnColorSelectedListener(colorSetListener);
                 dialog.show(getFragmentManager(), "color");
                 return false;
@@ -226,7 +222,7 @@ public class SettingsActivity extends PreferenceActivity
             SharedPreferences.Editor editor = prefs.edit();
 
             //save the new theme color
-            editor.putInt("pref_key_theme", color);
+            editor.putInt(getResources().getString(R.string.pref_key_theme), color);
             editor.commit();
 
             //set the theme changed variable to true
@@ -259,34 +255,34 @@ public class SettingsActivity extends PreferenceActivity
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
 
-        if (key.equals("pref_key_password")) {
+        if (key.equals(getResources().getString(R.string.pref_key_password))) {
 
             //if the pass just been enabled
-            if (sharedPreferences.getBoolean("pref_key_password", false)) {
+            if (sharedPreferences.getBoolean(getResources().getString(R.string.pref_key_password), false)) {
                 //alert the user
-                Toast.makeText(this, "Password protection enabled", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getResources().getString(R.string.toast_text_password_on), Toast.LENGTH_SHORT).show();
 
                 //if this is the first time
-                if (sharedPreferences.getString("pref_key_password_value", "").equals("")) {
+                if (sharedPreferences.getString(getResources().getString(R.string.pref_key_password_value), "").equals("")) {
 
                     //make the default pass to be 1234
-                    PreferenceManager.getDefaultSharedPreferences(this).edit().putString("pref_key_password_value", "1234").commit();
+                    PreferenceManager.getDefaultSharedPreferences(this).edit().putString(getResources().getString(R.string.pref_key_password_value), "1234").commit();
                     //and alert the user
-                    Toast.makeText(this, "Default pass is \"1234\"", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, getResources().getString(R.string.toast_text_password_default_alert), Toast.LENGTH_LONG).show();
                 }
 
             } else {
                 //alert the user
-                Toast.makeText(this, "Password protection disabled", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getResources().getString(R.string.toast_text_password_off), Toast.LENGTH_SHORT).show();
             }
 
         }
 
-        if (key.equals("pref_key_reminder") && sharedPreferences.getBoolean("pref_key_reminder", false)) {
+        if (key.equals(getResources().getString(R.string.pref_key_reminder)) && sharedPreferences.getBoolean(getResources().getString(R.string.pref_key_reminder), false)) {
 
             //alert the user
             SharedPrefsManager manager = new SharedPrefsManager(SettingsActivity.this);
-            Toast.makeText(getApplicationContext(), "Daily Reminder activated\nNext reminder at " + manager.getPrefsReminderTime(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.toast_text_reminder) + manager.getPrefsReminderTime(), Toast.LENGTH_SHORT).show();
 
             setAlarm();
         }
@@ -312,10 +308,10 @@ public class SettingsActivity extends PreferenceActivity
     //update summary accordingly to preference key
     private void updatePrefSummary(Preference p) {
 
-        if (p.getKey().equals("pref_key_currency")) {
+        if (p.getKey().equals(getResources().getString(R.string.pref_key_currency))) {
             ListPreference pref = (ListPreference) p;
             pref.setSummary(pref.getValue());
-        } else if (p.getKey().equals("pref_key_reminder_time")) {
+        } else if (p.getKey().equals(getResources().getString(R.string.pref_key_reminder_time))) {
             String sum = new SharedPrefsManager(SettingsActivity.this).getPrefsReminderTime();
             p.setSummary(sum);
         }
@@ -323,8 +319,8 @@ public class SettingsActivity extends PreferenceActivity
 
     //sets the password off
     public void disablePassword() {
-        SwitchPreference p = (SwitchPreference) findPreference("pref_key_password");
-        PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putBoolean("pref_key_password", false).commit();
+        SwitchPreference p = (SwitchPreference) findPreference(getResources().getString(R.string.pref_key_password));
+        PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putBoolean(getResources().getString(R.string.pref_key_password), false).commit();
         p.setChecked(false);
     }
 

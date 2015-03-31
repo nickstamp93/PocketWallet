@@ -78,7 +78,8 @@ public class PasswordDialog extends DialogPreference {
 
                 SharedPreferences prefs = getSharedPreferences();
 
-                String pass = prefs.getString("pref_key_password_value", "");
+
+                String pass = prefs.getString(getContext().getResources().getString(R.string.pref_key_password_value), "");
 
                 //check if the 2 new passes are the same , not empty and the current pass is correct
                 if (etCurrent.getText().toString().equals(pass) &&
@@ -87,17 +88,17 @@ public class PasswordDialog extends DialogPreference {
 
                     //if all that are ok , store the new pass to the prefs file
                     SharedPreferences.Editor editor = prefs.edit();
-                    editor.putString("pref_key_password_value", etNew.getText().toString());
+                    editor.putString(getContext().getResources().getString(R.string.pref_key_password_value), etNew.getText().toString());
                     editor.commit();
 
                     //notify the user
-                    Toast.makeText(getContext(), "Pass Changed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getContext().getResources().getString(R.string.toast_text_password_changed), Toast.LENGTH_SHORT).show();
 
                     //close dialog
                     getDialog().dismiss();
                 } else {
                     //else , something went wrong , don't change a thing
-                    Toast.makeText(getContext(), "Failed to change password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getContext().getResources().getString(R.string.toast_text_password_failed_change), Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -117,7 +118,7 @@ public class PasswordDialog extends DialogPreference {
 
         SharedPreferences prefs = getSharedPreferences();
 
-        String pass = prefs.getString("pref_key_password_value", "");
+        String pass = prefs.getString(getContext().getResources().getString(R.string.pref_key_password_value), "");
         if (pass.trim().equals("1234")) {
             etCurrent.setText("1234");
             etCurrent.setEnabled(false);

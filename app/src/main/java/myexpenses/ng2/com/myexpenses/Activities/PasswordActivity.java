@@ -85,7 +85,7 @@ public class PasswordActivity extends Activity {
             if (v.getId() == R.id.bOk) {
                 //check if password is right
                 //if(manager.getPrefsPassword().equals(text)){
-                if (PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("pref_key_password_value", "").equals(text)) {
+                if (PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString(getResources().getString(R.string.pref_key_password_value), "").equals(text)) {
                     //correct password
                     //launch overview activity
                     Intent intent = new Intent(getApplicationContext(), OverviewActivity.class);
@@ -95,7 +95,7 @@ public class PasswordActivity extends Activity {
                 } else {
                     //wrong password
                     //warn the user
-                    Toast.makeText(getApplicationContext(), "Wrong Password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_password), Toast.LENGTH_SHORT).show();
                     //clear the password edit text
                     etPassword.setText("");
                 }

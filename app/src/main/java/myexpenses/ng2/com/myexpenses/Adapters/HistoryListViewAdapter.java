@@ -2,7 +2,6 @@ package myexpenses.ng2.com.myexpenses.Adapters;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Typeface;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +25,7 @@ public class HistoryListViewAdapter extends CursorAdapter {
 
     public HistoryListViewAdapter(Context context, Cursor c) {
         super(context, c);
-        currency = PreferenceManager.getDefaultSharedPreferences(context).getString("pref_key_currency", "€");
+        currency = PreferenceManager.getDefaultSharedPreferences(context).getString(context.getResources().getString(R.string.pref_key_currency), context.getResources().getString(R.string.pref_currency_default_value));
         cdb = new CategoryDatabase(context);
 
     }
@@ -46,18 +45,12 @@ public class HistoryListViewAdapter extends CursorAdapter {
         if (expense) {
             view = inflater.inflate(R.layout.list_expense_item_history, parent, false);
 
+
             TextView tvPrice = (TextView) view.findViewById(R.id.tvPrice);
             TextView tvDate = (TextView) view.findViewById(R.id.tvDate);
             TextView tvCategory = (TextView) view.findViewById(R.id.tvCategory);
             TextView tvNotes = (TextView) view.findViewById(R.id.tvNotes);
             LetterImageView liv = (LetterImageView) view.findViewById(R.id.livhistory);
-            Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/font_exo2.otf");
-
-            tvPrice.setTypeface(typeface);
-            tvDate.setTypeface(typeface);
-            tvCategory.setTypeface(typeface);
-            tvNotes.setTypeface(typeface);
-
 
             tvPrice.setText(cursor.getString(3) + " " + currency);
             //We take the date from the cursor we reformed it and we add it to TextView tvDate. We do that cause the format of
@@ -89,12 +82,6 @@ public class HistoryListViewAdapter extends CursorAdapter {
             TextView tvSource = (TextView) view.findViewById(R.id.tvHSource);
             LetterImageView liv = (LetterImageView) view.findViewById(R.id.livhistoryincome);
 
-
-            Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/font_exo2.otf");
-            tvIncome.setTypeface(typeface);
-            tvDate.setTypeface(typeface);
-            tvSource.setTypeface(typeface);
-
             tvIncome.setText(cursor.getString(1) + " " + currency);
             //We take the date from the cursor we reformed it and we add it to TextView tvDate. We do that cause the format of
             //date in MoneyDatabase is YYYY-MM-DD and we want the user to see it like DD-MM-YYYY
@@ -121,17 +108,12 @@ public class HistoryListViewAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
 
         if (expense) {
+
             TextView tvPrice = (TextView) view.findViewById(R.id.tvPrice);
             TextView tvDate = (TextView) view.findViewById(R.id.tvDate);
             TextView tvCategory = (TextView) view.findViewById(R.id.tvCategory);
             TextView tvNotes = (TextView) view.findViewById(R.id.tvNotes);
             LetterImageView liv = (LetterImageView) view.findViewById(R.id.livhistory);
-
-            Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/font_exo2.otf");
-            tvPrice.setTypeface(typeface);
-            tvDate.setTypeface(typeface);
-            tvCategory.setTypeface(typeface);
-            tvNotes.setTypeface(typeface);
 
             tvPrice.setText(cursor.getString(3) + " " + currency);
             //We take the date from the cursor we reformed it and we add it to TextView tvDate. We do that cause the format of
@@ -160,10 +142,6 @@ public class HistoryListViewAdapter extends CursorAdapter {
             TextView tvSource = (TextView) view.findViewById(R.id.tvHSource);
             LetterImageView liv = (LetterImageView) view.findViewById(R.id.livhistoryincome);
 
-            Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/font_exo2.otf");
-            tvIncome.setTypeface(typeface);
-            tvDate.setTypeface(typeface);
-            tvSource.setTypeface(typeface);
 
             tvIncome.setText(cursor.getString(1) + " " + currency);
             //We take the date from the cursor we reformed it and we add it to TextView tvDate. We do that cause the format of

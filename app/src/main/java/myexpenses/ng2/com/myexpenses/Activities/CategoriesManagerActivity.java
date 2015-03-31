@@ -117,12 +117,12 @@ public class CategoriesManagerActivity extends Activity {
             //switch between income-expense categories
             if (expense) {
                 expense = false;
-                item.setTitle("EXPENSE");
+                item.setTitle(getResources().getString(R.string.action_expense));
                 c = db.getAllCategories(expense);
                 refreshList(c);
             } else {
                 expense = true;
-                item.setTitle("INCOME");
+                item.setTitle(getResources().getString(R.string.action_income));
                 c = db.getAllCategories(expense);
                 refreshList(c);
             }

@@ -3,93 +3,93 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
-        android:key="pref_key_general_settings"
+        android:key="@string/pref_key_general"
         android:title="@string/pref_category_general">
 
         <ListPreference
-            android:dialogTitle="Select Currency"
+            android:dialogTitle="@string/dialog_title_currency"
             android:entries="@array/currency_entries"
             android:entryValues="@array/currency_values"
-            android:defaultValue="€"
-            android:key="pref_key_currency"
+            android:defaultValue="@string/pref_currency_default_value"
+            android:key="@string/pref_key_currency"
             android:title="@string/pref_title_currency" />
 
         <PreferenceScreen
-            android:key="pref_key_password_settings"
+            android:key="@string/pref_key_password_settings"
             android:title="@string/pref_title_password">
 
             <SwitchPreference
                 android:defaultValue="false"
-                android:key="pref_key_password"
+                android:key="@string/pref_key_password"
                 android:summary="@string/pref_summary_password"
                 android:title="@string/pref_title_password" />
 
             <myexpenses.ng2.com.myexpenses.Dialogs.PasswordDialog
-                android:dependency="pref_key_password"
+                android:dependency="@string/pref_key_password"
                 android:inputType="numberPassword"
-                android:key="pref_key_password_value"
+                android:key="@string/pref_key_password_value"
                 android:title="@string/pref_title_password_change" />
 
         </PreferenceScreen>
 
         <Preference
-            android:key="pref_key_categories"
+            android:key="@string/pref_key_categories"
             android:title="@string/pref_title_categories" />
 
         <Preference
-            android:key="pref_key_theme"
+            android:key="@string/pref_key_theme"
             android:title="@string/pref_title_theme" />
 
 
     </PreferenceCategory>
     <PreferenceCategory
-        android:key="pref_key_data_settings"
+        android:key="@string/pref_key_data_settings"
         android:title="@string/pref_title_data_settings">
 
         <Preference
-            android:key="pref_key_profile"
+            android:key="@string/pref_key_profile"
             android:title="@string/pref_title_profile" />
 
         <PreferenceScreen
-            android:key="pref_key_database_settings"
+            android:key="@string/pref_key_database_settings"
             android:title="@string/pref_title_data">
 
             <Preference
-                android:key="pref_key_delete_income"
+                android:key="@string/pref_key_delete_income"
                 android:title="@string/pref_title_delete_income" />
 
             <Preference
-                android:key="pref_key_delete_expense"
+                android:key="@string/pref_key_delete_expense"
                 android:title="@string/pref_title_delete_expense" />
 
         </PreferenceScreen>
 
     </PreferenceCategory>
     <PreferenceCategory
-        android:key="pref_key_notifications_settings"
+        android:key="@string/pref_key_notification_settings"
         android:title="@string/pref_category_notifications">
 
         <SwitchPreference
-            android:key="pref_key_reminder"
+            android:key="@string/pref_key_reminder"
             android:defaultValue="false"
             android:summary="@string/pref_summary_reminder"
             android:title="@string/pref_title_reminder" />
         <Preference
-            android:dependency="pref_key_reminder"
-            android:key="pref_key_reminder_time"
+            android:dependency="@string/pref_key_reminder"
+            android:key="@string/pref_key_reminder_time"
             android:defaultValue="00:00"
             android:title="@string/pref_title_reminder_time" />
 
     </PreferenceCategory>
     <PreferenceCategory
-        android:key="pref_key_about_settings"
+        android:key="@string/pref_key_about_settings"
         android:title="@string/pref_category_about">
 
         <Preference
-            android:key="pref_key_rate_app"
+            android:key="@string/pref_key_rate_app"
             android:title="@string/pref_title_rate_app" />
         <Preference
-            android:key="pref_key_about"
+            android:key="@string/pref_key_about"
             android:title="@string/pref_title_about" />
 
 

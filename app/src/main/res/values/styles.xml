@@ -85,7 +85,7 @@
     </style>
 
     <!--transparent theme-->
-    <style name="Theme.Transparent" parent="android:Theme">
+    <style name="Theme.Transparent" parent="android:Theme.Black">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowIsFloating">true</item>
     </style>

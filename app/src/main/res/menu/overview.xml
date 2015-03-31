@@ -1,7 +1,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".OverviewActivity" >
-    <item android:id="@+id/action_addExpense"
+    tools:context=".OverviewActivity">
+    <item
+        android:id="@+id/action_addExpense"
         android:title="@string/action_add_expense"
         android:orderInCategory="100"
         android:icon="@drawable/ic_action_new"

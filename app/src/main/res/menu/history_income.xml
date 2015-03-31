@@ -12,31 +12,33 @@
         <menu>
 
             <item
+                android:id="@+id/IncomeNTO"
+                android:title="@string/filter_recent" />
+
+            <item
                 android:id="@+id/IncomeSource"
-                android:title="By Source" />
+                android:title="@string/filter_category" />
 
             <item
                 android:id="@+id/IncomeAmount"
-                android:title="By Amount" />
-            <item
-                android:id="@+id/IncomeDate"
-                android:title="By Date" />
-            <item
-                android:id="@+id/IncomeDTD"
-                android:title="From Date to Date" />
+                android:title="@string/filter_amount" />
 
             <item
-                android:id="@+id/IncomeNTO"
-                android:title="By Most Recent" />
+                android:id="@+id/IncomeDate"
+                android:title="@string/filter_date" />
+
+            <item
+                android:id="@+id/IncomeDTD"
+                android:title="@string/filter_date_to_date" />
 
 
         </menu>
 
-
     </item>
+
     <item
         android:id="@+id/toggleButton"
         android:showAsAction="always"
-        android:title="Expense" />
+        android:title="@string/action_expense" />
 
 </menu>

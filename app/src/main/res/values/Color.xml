@@ -122,6 +122,48 @@
     <color name="OliveDrab">#6B8E23</color>
     <color name="SlateBlue">#6A5ACD</color>
 
+    <string-array name="categoryColors" translatable="false">
+        <!--white : 0-->
+        <item>#CDC0B0</item>
+        <item>#EECFA1</item>
+        <item>#D9D9F3</item>
+        <!--yellow - green : 3-->
+        <item>#32CD32</item>
+        <item>#FFB90F</item>
+        <item>#FFD700</item>
+        <item>#00FA9A</item>
+        <item>#029D74</item>
+        <item>#8B814C</item>
+        <item>#8B8B00</item>
+        <!--orange : 10-->
+        <item>#EE7600</item>
+        <item>#CD8162</item>
+        <item>#8B5742</item>
+        <item>#8B3E2F</item>
+        <item>#8E2323</item>
+        <!--red : 15-->
+        <item>#FF82AB</item>
+        <item>#FF1493</item>
+        <item>#CD1076</item>
+        <item>#9932CC</item>
+        <item>#8B3A62</item>
+        <item>#8B008B</item>
+        <item>#8B0000</item>
+        <item>#FF0000</item>
+        <!--blue : 23-->
+        <item>#00688B</item>
+        <item>#20B2AA</item>
+        <item>#436EEE</item>
+        <item>#0000EE</item>
+        <!--black-brown : 27-->
+        <item>#8B4513</item>
+        <item>#5C4033</item>
+        <item>#2F4F4F</item>
+        <item>#7A7A7A</item>
+        <item>#545454</item>
+        <item>#0A0A0A</item>
+
+    </string-array>
 
     <color name="bg_pink">#EC407A</color>
     <color name="action_bar_pink">#C2185B</color>

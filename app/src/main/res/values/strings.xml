@@ -1,62 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
+    <!--App-->
     <string name="app_name">My Expenses</string>
     <string name="action_settings">Settings</string>
-
-    <!-- activity titles -->
-    <string name="title_activity_add_expense">AddExpenseActivity</string>
-    <string name="title_activity_add_income">AddIncomeActivity</string>
-    <string name="title_activity_history">HistoryActivity</string>
-    <string name="title_activity_settings">SettingsActivity</string>
-    <string name="title_activity_user_details">UserDetailsActivity</string>
-    <string name="title_activity_overview">OverviewActivity</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="title_activity_reminder_settings">ReminderSettingsActivity</string>
-
+    <string name="action_delete">Delete</string>
+    <string name="action_expense">Expense</string>
+    <string name="action_income">Income</string>
+    <string name="error_database">Database Error</string>
+    <string name="error_number">Invalid Number Input</string>
+    <string name="error_password">Wrong password</string>
+    <string name="error_form">The form is not complete</string>
+    <string name="error_category">Invalid Category Name</string>
+    <string name="error_category_name_conflict">There is already a category with this name</string>
+    <string name="error_category_color_combination">There is already a category with this letter and color combination</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_ok">OK</string>
 
-    <!-- AddExpenseActivity -->
-    <string name="textview_hint_notes">Enter some notes...</string>
-    <string name="action_add_expense">Add Expense</string>
-    <string name="textview_headline_category">Category</string>
-    <string name="textview_headline_date">Date</string>
-    <string name="textview_headline_notes">Notes</string>
+    <!-- activity titles -->
+    <string name="title_activity_add_expense">New Expense Transaction</string>
+    <string name="title_activity_add_income">New Income Transaction</string>
+    <string name="title_activity_history">History</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_user_details">Profile</string>
+    <string name="title_activity_overview">Overview</string>
+    <string name="title_activity_categories_manager">Categories</string>
+    <string name="title_activity_transparent">TransparentActivity</string>
+    <string name="title_activity_create_category">New Category</string>
 
-    <!-- AddIncomeActivity -->
-    <string name="textview_headline_source">Source</string>
+    <!--dialog titles-->
+    <string name="dialog_title_categories">Categories</string>
+    <string name="dialog_title_currency">Currency</string>
+    <string name="dialog_title_price">Price Order</string>
+    <string name="dialog_title_amount">Amount order</string>
+    <string name="dialog_title_about">About Us</string>
+    <string name="dialog_title_caution">Caution</string>
 
-    <!-- CreateCategoryActivity -->
-    <string name="textview_headline_category_name">Category Name</string>
-    <string name="textview_hint_headline_category_name">e.g. Food</string>
-    <string name="textview_headline_category_color">Color</string>
-    <string name="textview_headline_category_preview">Preview Icon</string>
+    <!--Preferences - Settings-->
+    <string name="pref_key_general">pref_key_general</string>
+    <string name="pref_key_currency">pref_key_currency</string>
+    <string name="pref_key_password_settings">pref_key_password_settings</string>
+    <string name="pref_key_password">pref_key_password</string>
+    <string name="pref_key_password_value">pref_key_password_value</string>
+    <string name="pref_key_categories">pref_key_categories</string>
+    <string name="pref_key_theme">pref_key_theme</string>
+    <string name="pref_key_data_settings">pref_key_data_settings</string>
+    <string name="pref_key_profile">pref_key_profile</string>
+    <string name="pref_key_database_settings">pref_key_database_settings</string>
+    <string name="pref_key_delete_income">pref_key_delete_income</string>
+    <string name="pref_key_delete_expense">pref_key_delete_expense</string>
+    <string name="pref_key_notification_settings">pref_key_notification_settins</string>
+    <string name="pref_key_reminder">pref_key_reminder</string>
+    <string name="pref_key_reminder_time">pref_key_reminder_time</string>
+    <string name="pref_key_about_settings">pref_key_about_settings</string>
+    <string name="pref_key_rate_app">pref_key_rate_app</string>
+    <string name="pref_key_about">pref_key_about</string>
 
-    <!-- UserDetailsActivity -->
-    <string name="textview_headline_username">Username</string>
-    <string name="textview_headline_savings">Savings</string>
-    <string name="textview_headline_grouping">Grouping</string>
+    <string name="pref_category_general">General</string>
+    <string name="pref_title_currency">Currency</string>
+    <string name="pref_title_password">Password Protection</string>
+    <string name="pref_title_categories">Categories</string>
+    <string name="pref_category_notifications">Notifications</string>
+    <string name="pref_title_reminder">Daily Reminder</string>
+    <string name="pref_title_reminder_time">Reminder Time</string>
+    <string name="pref_category_about">About</string>
+    <string name="pref_title_rate_app">Rate App</string>
+    <string name="pref_title_about">About</string>
+    <string name="pref_title_password_change">Edit Password</string>
+    <string name="pref_title_data_settings">Data</string>
+    <string name="pref_title_profile">Profile</string>
+    <string name="pref_title_data">Database</string>
+    <string name="pref_title_delete_income">Delete Income History</string>
+    <string name="pref_title_delete_expense">Delete Expense history</string>
+    <string name="pref_title_theme">Theme</string>
+    <string name="pref_summary_password">Protect app with a password lock on launch</string>
+    <string name="pref_summary_reminder">Let us remind you on a daily base to track your finances</string>
 
-    <!-- DeleteCategoryDialog -->
-    <string name="dialog_delete_category_text">There are items of this category in your history. Delete or move them to another category.</string>
-    <string name="dialog_delete_category_move">Move To</string>
-
-    <string-array name="drawer_menu">
-        <item>History</item>
-        <item>Add Income</item>
-        <item>Add Expense</item>
-        <item>Settings</item>
-        <item>Exit</item>
-    </string-array>
-    <string-array name="filters">
-        <item>Standard</item>
-        <item>Category</item>
-        <item>Order depended on price</item>
-        <item>Date</item>
-        <item>Date to Date</item>
-        <item>Newest expense to oldest</item>
-    </string-array>
     <string-array name="currency_entries">
         <item>European Euro(€)</item>
         <item>American Dollar($)</item>
@@ -73,107 +92,117 @@
         <item>CHF</item>
         <item>₹</item>
     </string-array>
-    <string-array name="categoryColors" translatable="false">
-        <!--white : 0-->
-        <item>#CDC0B0</item>
-        <item>#EECFA1</item>
-        <item>#D9D9F3</item>
-        <!--yellow - green : 3-->
-        <item>#32CD32</item>
-        <item>#FFB90F</item>
-        <item>#FFD700</item>
-        <item>#00FA9A</item>
-        <item>#029D74</item>
-        <item>#8B814C</item>
-        <item>#8B8B00</item>
-        <!--orange : 10-->
-        <item>#EE7600</item>
-        <item>#CD8162</item>
-        <item>#8B5742</item>
-        <item>#8B3E2F</item>
-        <item>#8E2323</item>
-        <!--red : 15-->
-        <item>#FF82AB</item>
-        <item>#FF1493</item>
-        <item>#CD1076</item>
-        <item>#9932CC</item>
-        <item>#8B3A62</item>
-        <item>#8B008B</item>
-        <item>#8B0000</item>
-        <item>#FF0000</item>
-        <!--blue : 23-->
-        <item>#00688B</item>
-        <item>#20B2AA</item>
-        <item>#436EEE</item>
-        <item>#0000EE</item>
-        <!--black-brown : 27-->
-        <item>#8B4513</item>
-        <item>#5C4033</item>
-        <item>#2F4F4F</item>
-        <item>#7A7A7A</item>
-        <item>#545454</item>
-        <item>#0A0A0A</item>
-        <!--<item>#70DB93</item>-->
-        <!--<item>#241882</item>-->
-        <!--<item>#547bca</item>-->
-        <!--<item>#aa66cc</item>-->
-        <!--<item>#9933cc</item>-->
-        <!--<item>#4F2F4F</item>-->
-        <!--<item>#aeb857</item>-->
-        <!--<item>#FF0000</item>-->
-        <!--<item>#df5948</item>-->
-        <!--<item>#8E2323</item>-->
-        <!--<item>#ae6b23</item>-->
-        <!--<item>#ff8800</item>-->
-        <!--<item>#e5ae4f</item>-->
-        <!--<item>#ffbb33</item>-->
 
-    </string-array>
+    <string name="pref_currency_default_value">€</string>
+    <string name="pref_grouping_weekly">weekly</string>
+    <string name="pref_grouping_monthly">monthly</string>
 
-    <string name="color_picker_default_title">Select a Color</string>
-    <!-- Content description for a color square. -->
-    <string name="color_swatch_description">Color <xliff:g id="color_index" example="14">%1$d</xliff:g></string>
-    <!-- Content description for a selected color square. -->
-    <string name="color_swatch_description_selected">Color <xliff:g id="color_index" example="14">%1$d</xliff:g> selected</string>
-    <string name="currency_euro">€</string>
-    <string name="currency_dollar">$</string>
-    <string name="currency_yen">¥</string>
-    <string name="currency_pound">£</string>
-    <string name="currency_swiss_franc">CHF</string>
-    <string name="currency_rupee">₹</string>
-    <string name="title_activity_main_activity2">MainActivity2</string>
-    <string name="title_activity_password">PasswordActivity</string>
-    <string name="title_activity_launcher_picker">Launcher</string>
-    <string name="title_activity_password_settings">PasswordSettingsActivity</string>
-    <string name="title_activity_categories_manager">CategoriesManagerActivity</string>
-    <string name="action_add_category">Add Category</string>
-    <string name="pref_title_currency">Currency</string>
-    <string name="title_activity_settings_activity2">SettingsActivity2</string>
-    <string name="pref_category_general">General</string>
-    <string name="pref_title_password">Password Protection</string>
-    <string name="pref_title_categories">Categories</string>
-    <string name="pref_category_notifications">Notifications</string>
-    <string name="pref_title_reminder">Daily Reminder</string>
-    <string name="pref_summary_reminder">Let us remind you on a daily base to track your finances</string>
-    <string name="pref_title_reminder_time">Reminder Time</string>
-    <string name="pref_category_about">About</string>
-    <string name="pref_title_rate_app">Rate App</string>
-    <string name="pref_title_about">About</string>
-    <string name="pref_summary_password">Protect app with a password lock on lauch</string>
-    <string name="pref_title_password_change">Change Password</string>
-    <string name="pref_title_data_settings">Databases</string>
-    <string name="pref_title_profile">Profile</string>
-    <string name="pref_title_data">Database</string>
-    <string name="pref_title_delete_income">Delete Income History</string>
-    <string name="pref_title_delete_expense">Delete expense history</string>
-    <string name="title_activity_transparent">TransparentActivity</string>
-    <string name="pref_title_theme">App Theme</string>
-    <string name="title_activity_create_category">CreateCategoryActivity</string>
-    <string name="close_drawer">Closing Drawer</string>
-    <string name="open_drawer">Opening Drawer</string>
+    <string name="text_about">This is the about text</string>
+
+    <string name="dialog_text_delete_income_confirm">Delete ALL income transactions?</string>
+    <string name="dialog_text_delete_expense_confirm">Delete ALL expense transactions?</string>
+
+    <string name="toast_text_password_on">Password protection enabled</string>
+    <string name="toast_text_password_off">Password protection disabled</string>
+    <string name="toast_text_password_changed">Password changed</string>
+    <string name="toast_text_password_failed_change">Failed to change password</string>
+
+    <string name="text_current_pass">Current Password</string>
+    <string name="text_new_pass">New Password</string>
+    <string name="text_confirm_passs">Confirm New Password</string>
+    <string name="text_show_pass">Show Password</string>
+
+    <string name="toast_text_password_default_alert">Default pass is "1234"</string>
+    <string name="toast_text_reminder">Daily Reminder activated \n Next reminder at </string>
+
+    <!--OverviewActivity-->
     <string name="string_balance">Balance :</string>
     <string name="string_savings">Savings :</string>
-    <string name="string_pie_heading">This week\'s transactions</string>
-    <string name="text_about">text about us</string>
+
+    <string name="text_pie_heading">This week\'s transactions</string>
+    <string name="legend_text_expense">Expense</string>
+    <string name="legend_text_income">Income</string>
+    <string name="text_no_records">No recorded transactions for the current week</string>
+    <string name="text_last_expense">Last Expense</string>
+    <string name="text_last_income">Last Income</string>
+
+    <string name="close_drawer">Closing Drawer</string>
+    <string name="open_drawer">Opening Drawer</string>
+
+    <string-array name="drawer_menu">
+        <item>History</item>
+        <item>Add Income</item>
+        <item>Add Expense</item>
+        <item>Settings</item>
+        <item>Exit</item>
+    </string-array>
+
+    <string name="category_food">Food</string>
+    <string name="category_drinks">Drinks</string>
+    <string name="category_leisure">Leisure</string>
+    <string name="category_personal">Personal</string>
+    <string name="category_health">Health</string>
+    <string name="category_bills">Bills</string>
+    <string name="category_transportation">Transportation</string>
+    <string name="category_clothing">Clothing</string>
+    <string name="category_housekeeping">Housekeeping</string>
+    <string name="category_work_epsenses">Work Expenses</string>
+    <string name="category_miscellaneous">Miscellaneous</string>
+    <string name="category_salary">Salary</string>
+    <string name="category_bonus">Bonus</string>
+
+    <!-- AddExpenseActivity -->
+    <string name="textview_hint_notes">Enter some notes...</string>
+    <string name="action_add_expense">Add Expense</string>
+    <string name="textview_headline_category">Category</string>
+    <string name="textview_headline_date">Date</string>
+    <string name="textview_headline_notes">Notes</string>
+
+    <!-- AddIncomeActivity -->
+    <string name="textview_headline_source">Source</string>
+
+    <!-- CreateCategoryActivity -->
+    <string name="toast_category_deleted"> category deleted</string>
+
+    <string name="textview_headline_category_name">Category Name</string>
+    <string name="textview_hint_headline_category_name">e.g. Food</string>
+    <string name="textview_headline_category_color">Color</string>
+    <string name="textview_headline_category_preview">Preview Icon</string>
+
+    <!--CategoriesManagerActivity-->
+    <string name="action_add_category">New Category</string>
+
+    <!--HistoryActivity-->
+    <string name="text_ascending">Ascending</string>
+    <string name="text_declining">Declining</string>
+
+    <!-- UserDetailsActivity -->
+    <string name="textview_headline_username">Username</string>
+    <string name="textview_headline_savings">Savings</string>
+    <string name="textview_headline_grouping">Grouping</string>
+
+    <!-- DeleteCategoryDialog -->
+    <string name="dialog_delete_category_text">There are items of this category in your history. Delete or move them to another category.</string>
+    <string name="dialog_delete_category_move">Move To</string>
+
+    <!--Reminder Notification-->
+    <string name="text_reminder_message">Track your transactions</string>
+    <string name="text_reminder_content">Don\'t forget to record your daily transactions</string>
+
+    <!--Filters-->
+    <string name="filter_category">By Category</string>
+    <string name="filter_price">By Price</string>
+    <string name="filter_date">By Date</string>
+    <string name="filter_date_to_date">By period</string>
+    <string name="filter_recent">By Most Recent</string>
+    <string name="filter_amount">By Amount</string>
+
+    <string name="text_from">From :</string>
+    <string name="text_to">To :</string>
+
+    <!--ColorPickerLibrary-->
+    <string name="color_picker_default_title">Select a Color</string>
+    <string name="color_swatch_description">Color <xliff:g id="color_index" example="14">%1$d</xliff:g></string>
+    <string name="color_swatch_description_selected">Color <xliff:g id="color_index" example="14">%1$d</xliff:g> selected</string>
 
 </resources>

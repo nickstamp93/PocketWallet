@@ -22,12 +22,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import myexpenses.ng2.com.myexpenses.Data.CategoryDatabase;
-import myexpenses.ng2.com.myexpenses.Model.ExpenseItem;
-import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
-import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Adapters.SpinnerAdapter;
+import myexpenses.ng2.com.myexpenses.Data.CategoryDatabase;
+import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
+import myexpenses.ng2.com.myexpenses.Model.ExpenseItem;
 import myexpenses.ng2.com.myexpenses.Model.SpinnerItem;
+import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Utils.Themer;
 
 /*
@@ -41,13 +41,13 @@ Future Modules
 7)Switch on History Activity Income-Expense with filters (Toggle Button) DONE
 8)Filters change in DropDown Menu in ActionBar DONE
 TO DO LIST
-1) Icons for whole app
+1) Icons for whole app OK
 2) translate the strings in greek
 3)fix the dimensions
 4)cleaning and debugging
 5)Notification fixed
-6)Styles for dialogs
-7)Default Categories
+6)Styles for dialogs OK
+7)Default Categories OK
  */
 public class AddExpenseActivity extends FragmentActivity implements NumberPickerDialogFragment.NumberPickerDialogHandler {
 
@@ -106,7 +106,7 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
         try {
             mydb.openDatabase();
         } catch (SQLException e) {
-            Toast.makeText(getApplicationContext(), "Database Error", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_database), Toast.LENGTH_SHORT).show();
         }
 
         update = false;
@@ -137,7 +137,7 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
     private void initUiValues() {
         cdb = new CategoryDatabase(AddExpenseActivity.this);
 
-        tvPrice.setText(item.getPrice() + " " + PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("pref_key_currency", "€"));
+        tvPrice.setText(item.getPrice() + " " + PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString(getResources().getString(R.string.pref_key_currency), getResources().getString(R.string.pref_currency_default_value)));
         etNotes.setText(item.getNotes());
         sCategories.setSelection(cdb.getPositionFromValue(item.getCategory(), true));
         cdb.close();
@@ -157,7 +157,8 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
     private void initUi() {
 
         tvPrice = (TextView) findViewById(R.id.tvPrice);
-        tvPrice.setText("0.00 " + PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("pref_key_currency", "€"));
+        tvPrice.setText("0.00 " +
+                PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString(getResources().getString(R.string.pref_key_currency), getResources().getString(R.string.pref_currency_default_value)));
 
         sCategories = (Spinner) findViewById(R.id.sCategories);
 
@@ -223,11 +224,11 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
                 String category, notes;
                 //get the price of the expense if it has problem a Toast appear and say to correct it
                 try {
-                    int currencyLength = PreferenceManager.getDefaultSharedPreferences(AddExpenseActivity.this).getString("pref_key_currency" , "€").length();
+                    int currencyLength = PreferenceManager.getDefaultSharedPreferences(AddExpenseActivity.this).getString(getResources().getString(R.string.pref_key_currency), "€").length();
                     price = Double.parseDouble(tvPrice.getText().subSequence(0, tvPrice.getText().length() - currencyLength).toString());
                 } catch (NumberFormatException e) {
                     ok = false;
-                    Toast.makeText(getApplicationContext(), "Plz Press a numerical in Price and not a character", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_number), Toast.LENGTH_LONG).show();
                 }
                 //if we took the price correctly we continue to retrieve the other information of the expense
                 if (ok) {
@@ -303,7 +304,7 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
         //is used for deletion of this expense.
         if (update) {
 
-            MenuItem delete = menu.add("Delete").setIcon(getResources().getDrawable(android.R.drawable.ic_menu_delete));
+            MenuItem delete = menu.add(getResources().getString(R.string.action_delete)).setIcon(getResources().getDrawable(android.R.drawable.ic_menu_delete));
             delete.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
             delete.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
@@ -330,7 +331,7 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
 
     @Override
     public void onDialogNumberSet(int reference, int number, double decimal, boolean isNumber, double fullNumber) {
-        String currency = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("pref_key_currency", "€");
+        String currency = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString(getResources().getString(R.string.pref_key_currency), getResources().getString(R.string.pref_currency_default_value));
         tvPrice.setText(fullNumber + " " + currency);
     }
 }

@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.preference.PreferenceManager;
 
 import myexpenses.ng2.com.myexpenses.Activities.LauncherPickerActivity;
-import myexpenses.ng2.com.myexpenses.Activities.OverviewActivity;
 import myexpenses.ng2.com.myexpenses.R;
 
 //broadcast receiver that receives the intents broadcasted by the alarm manager and starts our alarm service
@@ -22,7 +21,7 @@ public class ReminderReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         //if the daily reminder is enabled then go on to the procedure
-        if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean("pref_key_reminder", false)) {
+        if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(context.getResources().getString(R.string.pref_key_reminder), false)) {
 
             //get the notification service from the system
             NotificationManager manager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
@@ -30,7 +29,7 @@ public class ReminderReceiver extends BroadcastReceiver {
             Intent intent1 = new Intent(context, LauncherPickerActivity.class);
 
             //create the notification and add flags
-            Notification notification = new Notification(R.drawable.ic_launcher, "This is a test message", System.currentTimeMillis());
+            Notification notification = new Notification(R.drawable.ic_launcher, context.getResources().getString(R.string.text_reminder_message), System.currentTimeMillis());
             intent1.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
             //this ensures that clicking on the notification opens up the overview activity
@@ -38,7 +37,7 @@ public class ReminderReceiver extends BroadcastReceiver {
             notification.flags |= Notification.FLAG_AUTO_CANCEL;
 
             //add the notification details
-            notification.setLatestEventInfo(context, "Alarm Manager Demo", "notification content", pendingNotificationIntent);
+            notification.setLatestEventInfo(context, context.getResources().getString(R.string.app_name), context.getResources().getString(R.string.text_reminder_content), pendingNotificationIntent);
 
             //build the notification and issue it
             manager.notify(0, notification);

@@ -22,12 +22,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import myexpenses.ng2.com.myexpenses.Data.CategoryDatabase;
-import myexpenses.ng2.com.myexpenses.Model.IncomeItem;
-import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
-import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Adapters.SpinnerAdapter;
+import myexpenses.ng2.com.myexpenses.Data.CategoryDatabase;
+import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
+import myexpenses.ng2.com.myexpenses.Model.IncomeItem;
 import myexpenses.ng2.com.myexpenses.Model.SpinnerItem;
+import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Utils.Themer;
 
 public class AddIncomeActivity extends FragmentActivity implements NumberPickerDialogFragment.NumberPickerDialogHandler {
@@ -75,7 +75,7 @@ public class AddIncomeActivity extends FragmentActivity implements NumberPickerD
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         if (update) {
-            MenuItem delete = menu.add("Delete").setIcon(getResources().getDrawable(android.R.drawable.ic_menu_delete));
+            MenuItem delete = menu.add(getResources().getString(R.string.action_delete)).setIcon(getResources().getDrawable(android.R.drawable.ic_menu_delete));
             delete.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
             delete.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
@@ -94,7 +94,7 @@ public class AddIncomeActivity extends FragmentActivity implements NumberPickerD
 
     private void initUiValues() {
         cdb = new CategoryDatabase(AddIncomeActivity.this);
-        tvAmount.setText(income.getAmount() + " " + PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("pref_key_currency", "€"));
+        tvAmount.setText(income.getAmount() + " " + PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString(getResources().getString(R.string.pref_key_currency), getResources().getString(R.string.pref_currency_default_value)));
         sCategories.setSelection(cdb.getPositionFromValue(income.getSource(), false));
         cdb.close();
 
@@ -114,7 +114,7 @@ public class AddIncomeActivity extends FragmentActivity implements NumberPickerD
         try {
             db.openDatabase();
         } catch (SQLException e) {
-            Toast.makeText(getApplicationContext(), "Database Error", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_database), Toast.LENGTH_SHORT).show();
         }
 
         cdb = new CategoryDatabase(getApplicationContext());
@@ -148,7 +148,7 @@ public class AddIncomeActivity extends FragmentActivity implements NumberPickerD
     private void initUI() {
 
         tvAmount = (TextView) findViewById(R.id.tvAmount);
-        tvAmount.setText("0.00 " + PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("pref_key_currency", "€"));
+        tvAmount.setText("0.00 " + PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString(getResources().getString(R.string.pref_key_currency), getResources().getString(R.string.pref_currency_default_value)));
 
         sCategories = (Spinner) findViewById(R.id.sIncomeCategories);
 
@@ -197,11 +197,11 @@ public class AddIncomeActivity extends FragmentActivity implements NumberPickerD
                 String source;
                 //get the price of the income if it has problem a Toast appear and say to correct it
                 try {
-                    int currencyLength = PreferenceManager.getDefaultSharedPreferences(AddIncomeActivity.this).getString("pref_key_currency" , "€").length();
+                    int currencyLength = PreferenceManager.getDefaultSharedPreferences(AddIncomeActivity.this).getString(getResources().getString(R.string.pref_key_currency), getResources().getString(R.string.pref_currency_default_value)).length();
                     amount = Double.parseDouble(tvAmount.getText().subSequence(0, tvAmount.getText().length() - currencyLength).toString());
                 } catch (NumberFormatException e) {
                     ok = false;
-                    Toast.makeText(getApplicationContext(), "Not a valid number on amount", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_number), Toast.LENGTH_LONG).show();
                 }
 
                 //if we took the price correctly we continue to retrieve the other information of the income item
@@ -276,7 +276,6 @@ public class AddIncomeActivity extends FragmentActivity implements NumberPickerD
     };
 
 
-
     private String reverseDate() {
 
         String tokens[] = date.split("-");
@@ -286,7 +285,7 @@ public class AddIncomeActivity extends FragmentActivity implements NumberPickerD
 
     @Override
     public void onDialogNumberSet(int reference, int number, double decimal, boolean isNumber, double fullNumber) {
-        String currency = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("pref_key_currency", "€");
+        String currency = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString(getResources().getString(R.string.pref_key_currency), getResources().getString(R.string.pref_currency_default_value));
         tvAmount.setText(fullNumber + " " + currency);
     }
 }

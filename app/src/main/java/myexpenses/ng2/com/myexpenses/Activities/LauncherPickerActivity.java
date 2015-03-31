@@ -20,7 +20,7 @@ public class LauncherPickerActivity extends Activity {
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
         //if password protection is enabled
-        boolean isPass = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("pref_key_password", false);
+        boolean isPass = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(getResources().getString(R.string.pref_key_password), false);
 
         //if enabled , launch the password activity
         if (isPass) {

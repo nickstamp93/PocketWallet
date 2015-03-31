@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,12 +18,12 @@ import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDi
 
 import java.util.Calendar;
 
+import myexpenses.ng2.com.myexpenses.Adapters.HistoryListViewAdapter;
 import myexpenses.ng2.com.myexpenses.Data.CategoryDatabase;
+import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
 import myexpenses.ng2.com.myexpenses.Model.ExpenseItem;
 import myexpenses.ng2.com.myexpenses.Model.IncomeItem;
-import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
 import myexpenses.ng2.com.myexpenses.R;
-import myexpenses.ng2.com.myexpenses.Adapters.HistoryListViewAdapter;
 import myexpenses.ng2.com.myexpenses.Utils.Themer;
 
 
@@ -180,7 +179,7 @@ public class HistoryActivity extends FragmentActivity {
                     categories[counter++] = cats.getString(1);
                 }
 
-                builder.setTitle("Categories");
+                builder.setTitle(getResources().getString(R.string.dialog_title_categories));
 
                 builder.setItems(categories, new DialogInterface.OnClickListener() {
                     @Override
@@ -199,8 +198,9 @@ public class HistoryActivity extends FragmentActivity {
                 break;
 
             case R.id.OrderPrice:
-                final CharSequence[] orderItems = {"Ascending", "Declining"};
-                builder.setTitle("Price Order");
+
+                final CharSequence[] orderItems = {getResources().getString(R.string.text_ascending), getResources().getString(R.string.text_declining)};
+                builder.setTitle(getResources().getString(R.string.dialog_title_price));
                 builder.setSingleChoiceItems(orderItems, -1, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int pos) {
@@ -246,7 +246,7 @@ public class HistoryActivity extends FragmentActivity {
                     sources[counter++] = cSource.getString(1);
                 }
 
-                builder.setTitle("Categories");
+                builder.setTitle(getResources().getString(R.string.dialog_title_categories));
 
                 builder.setItems(sources, new DialogInterface.OnClickListener() {
                     @Override
@@ -281,8 +281,8 @@ public class HistoryActivity extends FragmentActivity {
                 break;
 
             case R.id.IncomeAmount:
-                final CharSequence[] Items = {"Ascending", "Declining"};
-                builder.setTitle("Amount Order");
+                final CharSequence[] Items = {getResources().getString(R.string.text_ascending), getResources().getString(R.string.text_declining)};
+                builder.setTitle(getResources().getString(R.string.dialog_title_amount));
                 builder.setSingleChoiceItems(Items, -1, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int pos) {
@@ -379,7 +379,6 @@ public class HistoryActivity extends FragmentActivity {
     protected void onResume() {
         super.onResume();
         if (update) {
-            Log.i("Resume", "requery");
             update = false;
             c.requery();
         }

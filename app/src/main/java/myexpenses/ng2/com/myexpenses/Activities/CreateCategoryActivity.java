@@ -163,11 +163,11 @@ public class CreateCategoryActivity extends Activity implements ColorPickerSwatc
                 name = etName.getText().toString().trim();
                 //Check if the user gave a name
                 if (name.length() == 0) {
-                    Toast.makeText(getApplicationContext(), "Invalid category name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_category), Toast.LENGTH_SHORT).show();
                 } else {
 
                     if (cdb.checkIfNameExists(name, expense) && id == -1) {
-                        Toast.makeText(getApplicationContext(), "There is already a category with this name", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),getResources().getString(R.string.error_category_name_conflict), Toast.LENGTH_SHORT).show();
                     } else {
                         String newCat = etName.getText().toString().trim().toUpperCase();
                         letter = newCat.charAt(0);
@@ -176,7 +176,7 @@ public class CreateCategoryActivity extends Activity implements ColorPickerSwatc
                         color = dialog.getSelectedColor();
                         //if we are trying to add a category with color-letter already in db , prevent it
                         if (cdb.checkIfLetterAndColorExists(sletter, color, expense) && (id == -1)) {
-                            Toast.makeText(getApplicationContext(), "There is already a category with this letter and color combination", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_category_color_combination), Toast.LENGTH_SHORT).show();
 
                         } else {
                             if (id == -1) {
@@ -213,7 +213,7 @@ public class CreateCategoryActivity extends Activity implements ColorPickerSwatc
         // Inflate the menu; this adds items to the action bar if it is present.
         //if it's edit mode , add the action in the action bar for deleting the category
         if (id != -1) {
-            final MenuItem delete = menu.add("Delete").setIcon(getResources().getDrawable(android.R.drawable.ic_menu_delete));
+            final MenuItem delete = menu.add(getResources().getString(R.string.action_delete)).setIcon(getResources().getDrawable(android.R.drawable.ic_menu_delete));
             delete.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
             delete.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
@@ -226,7 +226,7 @@ public class CreateCategoryActivity extends Activity implements ColorPickerSwatc
 
                     } else {
                         cdb.deleteCategory(name, expense);
-                        Toast.makeText(CreateCategoryActivity.this, "Category " + name + " deleted", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CreateCategoryActivity.this, name + getResources().getString(R.string.toast_category_deleted), Toast.LENGTH_SHORT).show();
                         finish();
                     }
                     mdb.close();

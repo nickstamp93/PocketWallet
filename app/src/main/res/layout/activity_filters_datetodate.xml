@@ -15,7 +15,7 @@
         <TextView
             style="@style/Headline"
             android:layout_weight="3"
-            android:text="From :" />
+            android:text="@string/text_from" />
 
         <EditText
             android:id="@+id/etDateFrom"
@@ -46,7 +46,7 @@
         <TextView
             style="@style/Headline"
             android:layout_weight="3"
-            android:text="To :" />
+            android:text="@string/text_to" />
 
         <EditText
             android:id="@+id/etDateTo"

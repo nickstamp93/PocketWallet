@@ -9,7 +9,6 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -87,7 +86,6 @@ public class OverviewActivity extends Activity {
     private void setUpUI() {
 
         //==================================Navigation Drawer=======================================
-
         //get the string array with the Navigation drawer items
         String drawerItems[] = getResources().getStringArray(R.array.drawer_menu);
 
@@ -101,19 +99,16 @@ public class OverviewActivity extends Activity {
         //set shadow for the navigation drawer
         drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
-
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.ic_drawer, R.string.open_drawer, R.string.close_drawer) {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                getActionBar().setTitle("Drawer Just Opened");
                 invalidateOptionsMenu();
             }
 
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
-                getActionBar().setTitle("Drawer just closed");
                 invalidateOptionsMenu();
 
             }
@@ -122,7 +117,6 @@ public class OverviewActivity extends Activity {
         drawerLayout.setDrawerListener(drawerToggle);
 
     }
-
 
     @Override
     protected void onRestart() {
@@ -136,7 +130,6 @@ public class OverviewActivity extends Activity {
             manager.setPrefsThemeChanged(false);
             manager.commit();
 
-            Log.i("nikos", "overview recreated");
         }
 
     }
@@ -176,7 +169,7 @@ public class OverviewActivity extends Activity {
         String username = manager.getPrefsUsername();
         float savings = manager.getPrefsSavings();
         float balance = manager.getPrefsBalance();
-        String currency = PreferenceManager.getDefaultSharedPreferences(this).getString("pref_key_currency", "€");
+        String currency = PreferenceManager.getDefaultSharedPreferences(this).getString(getResources().getString(R.string.pref_key_currency), getResources().getString(R.string.pref_currency_default_value));
         String grouping = manager.getPrefsGrouping();
 
         profile = new UserProfile(username, savings, balance, currency, grouping);
@@ -286,14 +279,14 @@ public class OverviewActivity extends Activity {
 
         tvUsername.setText(profile.getUsername());
 
-        Themer.setLinearLayoutBackround(this, llBalance);
-        Themer.setLinearLayoutBackround(this, llLastTransactions);
-        Themer.setLinearLayoutBackround(this, llPiewView);
+        Themer.setBackgroundColorCard(this, llBalance);
+        Themer.setBackgroundColorCard(this, llLastTransactions);
+        Themer.setBackgroundColorCard(this, llPiewView);
 
 
         double totalExpenses;
         double totalIncomes;
-        if (profile.getGrouping().equalsIgnoreCase("monthly")) {
+        if (profile.getGrouping().equalsIgnoreCase(getResources().getString(R.string.pref_grouping_monthly))) {
             totalExpenses = mdb.getTotalExpensePriceForCurrentMonth();
             totalIncomes = mdb.getTotalIncomePriceForCurrentMonth();
         } else {
@@ -308,8 +301,8 @@ public class OverviewActivity extends Activity {
         //set balance to UI
         tvBalance.setText(balance + " " + profile.getCurrency());
         //set legends' text
-        tvLegendTotalExpense.setText("Expense \n(" + (totalExpenses + " " + profile.getCurrency()) + ")");
-        tvLegendTotalIncome.setText("Income \n(" + (totalIncomes + " " + profile.getCurrency()) + ")");
+        tvLegendTotalExpense.setText(getResources().getString(R.string.action_expense) + "\n(" + (totalExpenses + " " + profile.getCurrency()) + ")");
+        tvLegendTotalIncome.setText(getResources().getString(R.string.action_expense) + "\n(" + (totalIncomes + " " + profile.getCurrency()) + ")");
 
         //savings are : total income - total expense - balance + savings user defined at the creation of the profile
         double savings = mdb.getTotalIncome() - mdb.getTotalExpenses() - balance + profile.getSavings();
@@ -336,7 +329,7 @@ public class OverviewActivity extends Activity {
             //set the parts to the pie chart
             mcPie.setChartItemsList(chartItemsList);
 
-            mcPie.setAnimationSpeed(MagnificentChart.ANIMATION_SPEED_NORMAL);
+            mcPie.setAnimationSpeed(MagnificentChart.ANIMATION_SPEED_FAST);
 
             //apply the pie's background to be the same with the section's color
             Themer.setPieBackgroundColor(this, mcPie);
@@ -350,8 +343,8 @@ public class OverviewActivity extends Activity {
         }
 
         //set the heading of the PieChart according to the preferred grouping
-        if (manager.getPrefsGrouping().equalsIgnoreCase("weekly")) {
-            tvPieHeading.setText("This week's transactions");
+        if (manager.getPrefsGrouping().equalsIgnoreCase(getResources().getString(R.string.pref_grouping_weekly))) {
+            tvPieHeading.setText(getResources().getString(R.string.text_pie_heading));
             tvPieHeading.setTextSize(20);
         } else {
             Calendar c = Calendar.getInstance();
@@ -473,7 +466,7 @@ public class OverviewActivity extends Activity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        boolean drawerOpen = drawerLayout.isDrawerOpen(drawer);
+//        boolean drawerOpen = drawerLayout.isDrawerOpen(drawer);
         return super.onPrepareOptionsMenu(menu);
     }
 

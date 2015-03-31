@@ -60,71 +60,84 @@ public class CategoryDatabase extends SQLiteOpenHelper {
         }
 
         ContentValues cv = new ContentValues();
-        cv.put(COLUMN_ENAME, "Food");
+        String name = context.getResources().getString(R.string.category_food);
+        cv.put(COLUMN_ENAME, name);
         cv.put(COLUMN_COLOR, colors.get(7));
-        cv.put(COLUMN_LETTER, "F");
+        cv.put(COLUMN_LETTER, name.toUpperCase().substring(0, 1));
         db.insert(TABLE_EXPENSE_CATEGORIES, null, cv);
 
-        cv.put(COLUMN_ENAME, "Drinks");
+        name = context.getResources().getString(R.string.category_drinks);
+        cv.put(COLUMN_ENAME, name);
         cv.put(COLUMN_COLOR, colors.get(23));
-        cv.put(COLUMN_LETTER, "D");
+        cv.put(COLUMN_LETTER, name.toUpperCase().substring(0, 1));
         db.insert(TABLE_EXPENSE_CATEGORIES, null, cv);
 
-        cv.put(COLUMN_ENAME, "Leisure");
+        name = context.getResources().getString(R.string.category_leisure);
+        cv.put(COLUMN_ENAME, name);
         cv.put(COLUMN_COLOR, colors.get(20));
-        cv.put(COLUMN_LETTER, "L");
+        cv.put(COLUMN_LETTER, name.toUpperCase().substring(0, 1));
         db.insert(TABLE_EXPENSE_CATEGORIES, null, cv);
 
-        cv.put(COLUMN_ENAME, "Personal");
+        name = context.getResources().getString(R.string.category_personal);
+        cv.put(COLUMN_ENAME, name);
         cv.put(COLUMN_COLOR, colors.get(16));
-        cv.put(COLUMN_LETTER, "P");
+        cv.put(COLUMN_LETTER, name.toUpperCase().substring(0, 1));
         db.insert(TABLE_EXPENSE_CATEGORIES, null, cv);
 
-        cv.put(COLUMN_ENAME, "Health");
+        name = context.getResources().getString(R.string.category_health);
+        cv.put(COLUMN_ENAME, name);
         cv.put(COLUMN_COLOR, colors.get(3));
-        cv.put(COLUMN_LETTER, "H");
+        cv.put(COLUMN_LETTER, name.toUpperCase().substring(0, 1));
         db.insert(TABLE_EXPENSE_CATEGORIES, null, cv);
 
-        cv.put(COLUMN_ENAME, "Bills");
+        name = context.getResources().getString(R.string.category_bills);
+        cv.put(COLUMN_ENAME, name);
         cv.put(COLUMN_COLOR, colors.get(22));
-        cv.put(COLUMN_LETTER, "B");
+        cv.put(COLUMN_LETTER, name.toUpperCase().substring(0, 1));
         db.insert(TABLE_EXPENSE_CATEGORIES, null, cv);
 
-        cv.put(COLUMN_ENAME, "Transportation");
+        name = context.getResources().getString(R.string.category_transportation);
+        cv.put(COLUMN_ENAME, name);
         cv.put(COLUMN_COLOR, colors.get(27));
-        cv.put(COLUMN_LETTER, "T");
+        cv.put(COLUMN_LETTER, name.toUpperCase().substring(0, 1));
         db.insert(TABLE_EXPENSE_CATEGORIES, null, cv);
 
-        cv.put(COLUMN_ENAME, "Clothing");
+        name = context.getResources().getString(R.string.category_clothing);
+        cv.put(COLUMN_ENAME, name);
         cv.put(COLUMN_COLOR, colors.get(10));
-        cv.put(COLUMN_LETTER, "C");
+        cv.put(COLUMN_LETTER, name.toUpperCase().substring(0, 1));
         db.insert(TABLE_EXPENSE_CATEGORIES, null, cv);
 
-        cv.put(COLUMN_ENAME, "Housekeeping");
+        name = context.getResources().getString(R.string.category_housekeeping);
+        cv.put(COLUMN_ENAME, name);
         cv.put(COLUMN_COLOR, colors.get(29));
-        cv.put(COLUMN_LETTER, "H");
+        cv.put(COLUMN_LETTER, name.toUpperCase().substring(0, 1));
         db.insert(TABLE_EXPENSE_CATEGORIES, null, cv);
 
-        cv.put(COLUMN_ENAME, "Work Expenses");
+        name = context.getResources().getString(R.string.category_work_epsenses);
+        cv.put(COLUMN_ENAME, name);
         cv.put(COLUMN_COLOR, colors.get(8));
-        cv.put(COLUMN_LETTER, "W");
+        cv.put(COLUMN_LETTER, name.toUpperCase().substring(0, 1));
         db.insert(TABLE_EXPENSE_CATEGORIES, null, cv);
 
-        cv.put(COLUMN_ENAME, "Miscellaneous");
+        name = context.getResources().getString(R.string.category_miscellaneous);
+        cv.put(COLUMN_ENAME, name);
         cv.put(COLUMN_COLOR, colors.get(31));
-        cv.put(COLUMN_LETTER, "M");
+        cv.put(COLUMN_LETTER, name.toUpperCase().substring(0, 1));
         db.insert(TABLE_EXPENSE_CATEGORIES, null, cv);
 
         cv = new ContentValues();
 
-        cv.put(COLUMN_INAME, "Salary");
+        name = context.getResources().getString(R.string.category_salary);
+        cv.put(COLUMN_ENAME, name);
         cv.put(COLUMN_ICOLOR, colors.get(4));
-        cv.put(COLUMN_ILETTER, "S");
+        cv.put(COLUMN_LETTER, name.toUpperCase().substring(0, 1));
         db.insert(TABLE_INCOME_CATEGORIES, null, cv);
 
-        cv.put(COLUMN_INAME, "Bonus");
+        name = context.getResources().getString(R.string.category_bonus);
+        cv.put(COLUMN_ENAME, name);
         cv.put(COLUMN_ICOLOR, colors.get(6));
-        cv.put(COLUMN_ILETTER, "B");
+        cv.put(COLUMN_LETTER, name.toUpperCase().substring(0, 1));
         db.insert(TABLE_INCOME_CATEGORIES, null, cv);
 
     }

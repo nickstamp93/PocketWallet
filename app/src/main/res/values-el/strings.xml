@@ -17,7 +17,7 @@
     <!-- Overview -->
     <string name="string_balance">Ισολογισμός :</string>
     <string name="string_savings">Οικονομίες :</string>
-    <string name="string_pie_heading">Συναλλαγές αυτήν την εβδομάδα</string>
+    <string name="text_pie_heading">Συναλλαγές αυτήν την εβδομάδα</string>
 
     <string-array name="expenses_category">
         <item>Φαγητά</item>

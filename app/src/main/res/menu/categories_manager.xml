@@ -8,7 +8,7 @@
         android:showAsAction="always" />
 
     <item android:id="@+id/action_switcher"
-          android:title="INCOME"
+          android:title="@string/action_income"
           android:showAsAction="always"/>
 
 </menu>

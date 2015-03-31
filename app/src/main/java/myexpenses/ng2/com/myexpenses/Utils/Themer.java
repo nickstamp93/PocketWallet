@@ -6,7 +6,6 @@ import android.graphics.drawable.GradientDrawable;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -83,23 +82,23 @@ public class Themer {
         }
     }
 
-    public static void setLinearLayoutBackround(Activity act, View view) {
+    public static void setBackgroundColorCard(Activity act, View view) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(act);
         try {
             if (prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_pink)) {
-                GradientDrawable d = (GradientDrawable) ((LinearLayout) view).getBackground();
+                GradientDrawable d = (GradientDrawable) view.getBackground();
                 d.setColor(act.getResources().getColor(R.color.action_bar_pink));
             } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_dark))) {
-                GradientDrawable d = (GradientDrawable) ((LinearLayout) view).getBackground();
+                GradientDrawable d = (GradientDrawable) view.getBackground();
                 d.setColor(act.getResources().getColor(R.color.action_bar_dark));
             } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_green))) {
-                GradientDrawable d = (GradientDrawable) ((LinearLayout) view).getBackground();
+                GradientDrawable d = (GradientDrawable) view.getBackground();
                 d.setColor(act.getResources().getColor(R.color.action_bar_green));
             } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_teal))) {
-                GradientDrawable d = (GradientDrawable) ((LinearLayout) view).getBackground();
+                GradientDrawable d = (GradientDrawable) view.getBackground();
                 d.setColor(act.getResources().getColor(R.color.action_bar_teal));
             } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_light))) {
-                GradientDrawable d = (GradientDrawable) ((LinearLayout) view).getBackground();
+                GradientDrawable d = (GradientDrawable) view.getBackground();
                 d.setColor(act.getResources().getColor(R.color.backround_pie_light));
             }
         } catch (Exception e) {

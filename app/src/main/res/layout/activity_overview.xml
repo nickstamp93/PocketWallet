@@ -53,7 +53,7 @@
                         style="@style/Headline"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
-                        android:text="50 $"
+                        android:text="0 €"
                         android:textSize="@dimen/value_size_big" />
                 </LinearLayout>
 
@@ -75,7 +75,7 @@
                         style="@style/Headline"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
-                        android:text="140 $"
+                        android:text="0 €"
                         android:textSize="@dimen/value_size_big" />
                 </LinearLayout>
 
@@ -110,7 +110,7 @@
                         android:id="@+id/tvPieHeading"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/string_pie_heading"
+                        android:text="@string/text_pie_heading"
                         android:textSize="18sp"
                         android:gravity="center"
                         android:layout_weight="1" />
@@ -139,7 +139,7 @@
                                 android:id="@+id/tvLegendExpenseText"
                                 android:layout_width="wrap_content"
                                 android:layout_height="fill_parent"
-                                android:text="Expense"
+                                android:text="@string/legend_text_expense"
                                 android:paddingLeft="10dp"
                                 android:gravity="left|center_vertical" />
                         </LinearLayout>
@@ -162,7 +162,7 @@
                                 android:id="@+id/tvLegendIncomeText"
                                 android:layout_width="wrap_content"
                                 android:layout_height="fill_parent"
-                                android:text="Expense"
+                                android:text="@string/legend_text_income"
                                 android:paddingLeft="10dp"
                                 android:gravity="left|center_vertical" />
                         </LinearLayout>
@@ -202,7 +202,7 @@
                         style="@style/Headline"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
-                        android:text="Last Expense" />
+                        android:text="@string/text_last_expense" />
 
                     <View
                         android:layout_width="wrap_content"
@@ -261,7 +261,7 @@
                         style="@style/Headline"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
-                        android:text="Last Income" />
+                        android:text="@string/text_last_income" />
 
                     <View
                         android:layout_width="wrap_content"

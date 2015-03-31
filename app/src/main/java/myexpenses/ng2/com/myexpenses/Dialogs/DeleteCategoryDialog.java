@@ -13,11 +13,11 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import myexpenses.ng2.com.myexpenses.Adapters.SpinnerAdapter;
 import myexpenses.ng2.com.myexpenses.Data.CategoryDatabase;
 import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
-import myexpenses.ng2.com.myexpenses.R;
-import myexpenses.ng2.com.myexpenses.Adapters.SpinnerAdapter;
 import myexpenses.ng2.com.myexpenses.Model.SpinnerItem;
+import myexpenses.ng2.com.myexpenses.R;
 
 /**
  * Created by Vromia on 17/10/2014.
@@ -132,7 +132,7 @@ public class DeleteCategoryDialog extends DialogFragment {
                     getActivity().finish();
 
                 }
-                Toast.makeText(getActivity(), "Category " + delCategory + " deleted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), delCategory + getResources().getString(R.string.toast_category_deleted), Toast.LENGTH_SHORT).show();
 
             }
         });

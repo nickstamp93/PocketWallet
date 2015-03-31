@@ -3,7 +3,8 @@
     tools:context="myexpenses.ng2.com.myexpenses.Activities.HistoryActivity">
 
 
-    <item android:id="@+id/Filters"
+    <item
+        android:id="@+id/Filters"
         android:icon="@drawable/ic_action_filter"
         android:showAsAction="always"
         android:title="Filters"
@@ -12,36 +13,31 @@
         <menu>
 
             <item
+                android:id="@+id/FiltersNTO"
+                android:title="@string/filter_recent" />
+
+            <item
                 android:id="@+id/FiltersCategory"
-                android:title="By Category"
-                />
+                android:title="@string/filter_category" />
 
             <item
                 android:id="@+id/OrderPrice"
-                android:title="By Price"
-                />
+                android:title="@string/filter_price" />
             <item
                 android:id="@+id/FiltersDate"
-                android:title="By Date"
-                />
+                android:title="@string/filter_date" />
 
             <item
                 android:id="@+id/FiltersDTD"
-                android:title="From Date to Date"
-                />
+                android:title="@string/filter_date_to_date" />
 
-            <item
-                android:id="@+id/FiltersNTO"
-                android:title="By Most Recent"
-                />
+        </menu>
 
-
-            </menu>
-        </item>
+    </item>
 
     <item
         android:id="@+id/toggleButton"
-        android:title="Income"
+        android:title="@string/action_income"
         android:showAsAction="always"
 
         />

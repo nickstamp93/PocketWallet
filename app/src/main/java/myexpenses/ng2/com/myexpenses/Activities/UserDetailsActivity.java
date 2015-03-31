@@ -25,7 +25,7 @@ public class UserDetailsActivity extends Activity {
     LinearLayout llSavings;
 
     //variables set by user
-    float savings ;
+    float savings;
     String username, grouping;
 
     @Override
@@ -76,7 +76,7 @@ public class UserDetailsActivity extends Activity {
         etUsername.setText(manager.getPrefsUsername());
         etSavings.setText(manager.getPrefsSavings() + "");
 
-        if (manager.getPrefsGrouping().equalsIgnoreCase("monthly")) {
+        if (manager.getPrefsGrouping().equalsIgnoreCase(getResources().getString(R.string.pref_grouping_monthly))) {
             radioGroup.check(R.id.rbMonthly);
         } else {
             radioGroup.check(R.id.rbWeekly);
@@ -91,7 +91,6 @@ public class UserDetailsActivity extends Activity {
     }
 
 
-
     //the buttons listener
     private View.OnClickListener buttonListener = new View.OnClickListener() {
         @Override
@@ -101,7 +100,7 @@ public class UserDetailsActivity extends Activity {
                 case R.id.bOk:
                     //if form is not complete, alert the user
                     if (!isFormComplete()) {
-                        Toast.makeText(getApplicationContext(), "The form is not complete", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_form), Toast.LENGTH_SHORT).show();
                         break;
                     }
                     //if form is complete , store these data to the shared prefs file
@@ -147,10 +146,10 @@ public class UserDetailsActivity extends Activity {
         savings = Float.parseFloat(etSavings.getText().toString());
         switch (radioGroup.getCheckedRadioButtonId()) {
             case R.id.rbWeekly:
-                grouping = "weekly";
+                grouping = getResources().getString(R.string.pref_grouping_weekly);
                 break;
             case R.id.rbMonthly:
-                grouping = "monthly";
+                grouping = getResources().getString(R.string.pref_grouping_monthly);
                 break;
         }
     }

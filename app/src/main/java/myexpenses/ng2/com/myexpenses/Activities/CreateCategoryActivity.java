@@ -52,6 +52,8 @@ public class CreateCategoryActivity extends Activity implements ColorPickerSwatc
         setUpUI();
         init();
 
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
     }
 
 

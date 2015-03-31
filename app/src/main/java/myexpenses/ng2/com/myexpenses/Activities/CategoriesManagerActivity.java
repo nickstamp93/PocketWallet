@@ -49,6 +49,9 @@ public class CategoriesManagerActivity extends Activity {
         //set up listeners , adapter etc
         setUpUI();
 
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+
     }
 
 

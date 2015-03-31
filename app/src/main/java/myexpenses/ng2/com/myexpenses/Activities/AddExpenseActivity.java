@@ -96,6 +96,9 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
             initUiValues();
         }
 
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+
     }
 
 

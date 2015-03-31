@@ -1,14 +1,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="myexpenses.ng2.com.myexpenses.Activities.CategoriesManagerActivity" >
-    <item android:id="@+id/action_addCategory"
+    tools:context="myexpenses.ng2.com.myexpenses.Activities.CategoriesManagerActivity">
+    <item
+        android:id="@+id/action_addCategory"
         android:title="@string/action_add_category"
         android:orderInCategory="100"
         android:icon="@drawable/ic_action_new"
         android:showAsAction="always" />
 
-    <item android:id="@+id/action_switcher"
-          android:title="@string/action_income"
-          android:showAsAction="always"/>
+    <item
+        android:id="@+id/action_switcher"
+        android:title="@string/action_income"
+        android:showAsAction="always" />
 
 </menu>

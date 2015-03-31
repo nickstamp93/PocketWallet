@@ -4,4 +4,5 @@
     android:layout_height="wrap_content"
     android:dividerHeight="5dp"
     android:divider="@color/transparent"
+    android:scrollbars="none"
     android:padding="@dimen/layout_padding" />

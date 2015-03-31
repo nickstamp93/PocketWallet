@@ -46,6 +46,7 @@ public class UserDetailsActivity extends Activity {
         //init values
         fillUIValues();
 
+
     }
 
     //init the UI Views

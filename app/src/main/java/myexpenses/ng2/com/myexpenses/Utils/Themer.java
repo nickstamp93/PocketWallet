@@ -119,7 +119,7 @@ public class Themer {
             } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_teal))) {
                 ((ListView) view).setBackgroundColor(act.getResources().getColor(R.color.bg_teal));
             } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_light))) {
-                ((ListView) view).setBackgroundColor(act.getResources().getColor(R.color.action_bar_dark));
+                ((ListView) view).setBackgroundColor(act.getResources().getColor(R.color.drawer_light));
             }
         } catch (Exception e) {
             e.printStackTrace();

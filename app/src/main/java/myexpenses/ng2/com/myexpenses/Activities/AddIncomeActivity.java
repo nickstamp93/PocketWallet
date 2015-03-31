@@ -68,6 +68,9 @@ public class AddIncomeActivity extends FragmentActivity implements NumberPickerD
             id = income.getId();
             initUiValues();
         }
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
     }
 
 

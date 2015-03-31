@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/rounded_color_background"
-    android:padding="5dp"
-    android:id="@+id/item_layout">
+    android:padding="5dp">
 
     <myexpenses.ng2.com.myexpenses.Extra.LetterImageView
         android:id="@+id/livhistory"

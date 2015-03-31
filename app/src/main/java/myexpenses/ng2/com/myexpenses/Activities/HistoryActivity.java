@@ -61,6 +61,9 @@ public class HistoryActivity extends FragmentActivity {
 
         setUpUI();
 
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+
     }
 
     private void setUpUI() {

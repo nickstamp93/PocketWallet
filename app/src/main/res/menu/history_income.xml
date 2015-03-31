@@ -7,7 +7,7 @@
         android:icon="@drawable/ic_action_filter"
         android:orderInCategory="10"
         android:showAsAction="always"
-        android:title="Filters">
+        android:title="@string/text_filter">
 
         <menu>
 

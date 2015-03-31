@@ -21,7 +21,6 @@
         android:text="Nikos"
         android:textAppearance="?android:textAppearanceMedium"
         android:gravity="center"
-        android:textColor="@color/white"
         android:textStyle="italic"
         android:padding="5dp" />
 

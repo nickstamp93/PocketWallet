@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -294,7 +295,11 @@ public class OverviewActivity extends Activity {
             totalIncomes = mdb.getTotalIncomePriceForCurrentWeek();
         }
 
+        Log.i("nikos" , "Expense:" + totalExpenses);
+        Log.i("nikos" , "Income:" + totalIncomes);
         double balance = totalIncomes - totalExpenses;
+        balance = Math.round(balance*100)/100.0;
+        Log.i("nikos" , "Balance:" + balance);
         //set the balance to the user profile object
         profile.setBalance((float) balance);
 
@@ -307,6 +312,7 @@ public class OverviewActivity extends Activity {
         //savings are : total income - total expense - balance + savings user defined at the creation of the profile
         double savings = mdb.getTotalIncome() - mdb.getTotalExpenses() - balance + profile.getSavings();
         profile.setSavings((float) savings);
+        savings = Math.round(savings*100)/100.0;
         tvSavings.setText(savings + " " + profile.getCurrency());
 
         //set up the PieChart

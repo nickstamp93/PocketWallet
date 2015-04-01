@@ -53,12 +53,11 @@
 
         <activity
             android:name=".Activities.PasswordActivity"
-            android:label="@string/title_activity_password"
+            android:label="@string/app_name"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".Activities.OverviewActivity"
-            android:label="@string/title_activity_launcher_picker"
             android:screenOrientation="portrait" />
 
         <activity
@@ -68,14 +67,13 @@
 
         <activity
             android:name=".Activities.SettingsActivity"
-            android:label="@string/title_activity_settings_activity2"
+            android:label="@string/title_activity_settings"
             android:parentActivityName=".Activities.OverviewActivity"
             android:screenOrientation="portrait" />
 
         <activity
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:name=".Activities.TransparentActivity"
-            android:label="@string/title_activity_transparent"
             android:screenOrientation="portrait" />
 
         <activity

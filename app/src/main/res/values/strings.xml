@@ -25,7 +25,6 @@
     <string name="title_activity_user_details">Profile</string>
     <string name="title_activity_overview">Overview</string>
     <string name="title_activity_categories_manager">Categories</string>
-    <string name="title_activity_transparent">TransparentActivity</string>
     <string name="title_activity_create_category">New Category</string>
 
     <!--dialog titles-->
@@ -126,8 +125,8 @@
     <string name="text_last_expense">Last Expense</string>
     <string name="text_last_income">Last Income</string>
 
-    <string name="close_drawer">Closing Drawer</string>
-    <string name="open_drawer">Opening Drawer</string>
+    <string name="close_drawer">Closing Menu</string>
+    <string name="open_drawer">Opening Menu</string>
 
     <string-array name="drawer_menu">
         <item>History</item>

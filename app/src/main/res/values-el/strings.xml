@@ -1,62 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
+    <!--App-->
+    <string name="app_name">Τα Έξοδα μου</string>
+    <string name="action_settings">Ρυθμίσεις</string>
+    <string name="action_delete">Διαγραφή</string>
+    <string name="action_expense">Έξοδα</string>
+    <string name="action_income">Έσοδα</string>
+    <string name="error_database">Σφάλμα βάσης Δεδομένων</string>
+    <string name="error_number">Μη έγκυρη είσοδος αριθμού</string>
+    <string name="error_password">Λάθος κωδικός</string>
+    <string name="error_form">Η φόρμα δεν είναι πλήρης</string>
+    <string name="error_category">Μη έγκυρο όνομα κατηγορίας</string>
+    <string name="error_category_name_conflict">Υπάρχει ήδη κατηγορία με αυτό το όνομα</string>
+    <string name="error_category_color_combination">Υπάρχει ήδη αυτός ο συνδυασμός χρώματος - γράμματος</string>
+    <string name="button_cancel">Άκυρο </string>
+    <string name="button_ok">ΟΚ</string>
 
-
-    <string name="app_name">Τα έξοδα μου</string>
-    <string name="action_settings">Settings</string>
-
-
-    <string name="title_activity_add_expense">Προσθήκη Εξόδου</string>
-    <string name="title_activity_add_income">Προσθήκη Εσόδου</string>
-    <string name="title_activity_history">Ιστορικό</string>
+    <!-- activity titles -->
+    <string name="title_activity_add_expense">Νέο Έξοδο</string>
+    <string name="title_activity_add_income">Νέο Έσοδο</string>
+    <string name="title_activity_history">Ιστορικό Συναλλαγών</string>
     <string name="title_activity_settings">Ρυθμίσεις</string>
-    <string name="title_activity_user_details">Στοιχεία Χρήστη</string>
-    <string name="action_add_expense">Add Expense</string>
+    <string name="title_activity_user_details">Προφίλ</string>
+    <string name="title_activity_overview">Overview</string>
+    <string name="title_activity_categories_manager">Κατηγορίες</string>
+    <string name="title_activity_create_category">Νέα Κατηγορία</string>
 
-    <!-- Overview -->
-    <string name="string_balance">Ισολογισμός :</string>
-    <string name="string_savings">Οικονομίες :</string>
-    <string name="text_pie_heading">Συναλλαγές αυτήν την εβδομάδα</string>
+    <!--dialog titles-->
+    <string name="dialog_title_categories">Κατηγορίες</string>
+    <string name="dialog_title_currency">Νόμισμα</string>
+    <string name="dialog_title_price">Σειρά Τιμών</string>
+    <string name="dialog_title_amount">Σειρά Ποσών</string>
+    <string name="dialog_title_about">Σχετικά</string>
+    <string name="dialog_title_caution">Προσοχή</string>
 
-    <string-array name="expenses_category">
-        <item>Φαγητά</item>
-        <item>Ποτά</item>
-        <item>Προσωπικό</item>
-        <item>Ρούχα</item>
-    </string-array>
-    <string-array name="date_formats">
-        <item>dd/MM/yyyy</item>
-        <item>MM/dd/yyyy</item>
-        <item>dd/MM/yy</item>
-        <item>MM/dd/yy</item>
-        <item>yyyy/MM/dd</item>
-        <item>yyyy/dd/MM</item>
-        <item>yy/dd/MM</item>
-        <item>yy/MM/dd</item>
-    </string-array>
-    <string-array name="drawer_menu" >
-        <item>History</item>
-        <item>Add Income</item>
-        <item>Add Expense</item>
-        <item>Settings</item>
-        <item>Exit</item>
-    </string-array>
-    <string-array name="filters">
-        <item>Standar</item>
-        <item>Category</item>
-        <item>Order depended on price</item>
-        <item>Date</item>
-        <item>Date to Date</item>
-        <item>Newest expense to oldest</item>
-    </string-array>
+    <!--Preferences - Settings-->
+    <string name="pref_key_general">pref_key_general</string>
+    <string name="pref_key_currency">pref_key_currency</string>
+    <string name="pref_key_password_settings">pref_key_password_settings</string>
+    <string name="pref_key_password">pref_key_password</string>
+    <string name="pref_key_password_value">pref_key_password_value</string>
+    <string name="pref_key_categories">pref_key_categories</string>
+    <string name="pref_key_theme">pref_key_theme</string>
+    <string name="pref_key_data_settings">pref_key_data_settings</string>
+    <string name="pref_key_profile">pref_key_profile</string>
+    <string name="pref_key_database_settings">pref_key_database_settings</string>
+    <string name="pref_key_delete_income">pref_key_delete_income</string>
+    <string name="pref_key_delete_expense">pref_key_delete_expense</string>
+    <string name="pref_key_notification_settings">pref_key_notification_settins</string>
+    <string name="pref_key_reminder">pref_key_reminder</string>
+    <string name="pref_key_reminder_time">pref_key_reminder_time</string>
+    <string name="pref_key_about_settings">pref_key_about_settings</string>
+    <string name="pref_key_rate_app">pref_key_rate_app</string>
+    <string name="pref_key_about">pref_key_about</string>
+
+    <string name="pref_category_general">Γενικά</string>
+    <string name="pref_title_currency">Νόμισμα</string>
+    <string name="pref_title_password">Κωδικός Πρόσβασης</string>
+    <string name="pref_title_categories">Κατηγορίες</string>
+    <string name="pref_category_notifications">Ειδοποιήσεις</string>
+    <string name="pref_title_reminder">Ημερήσια Υπενθύμιση</string>
+    <string name="pref_title_reminder_time">Ώρα Υπενθύμισης</string>
+    <string name="pref_category_about">Σχετικά με εμάς</string>
+    <string name="pref_title_rate_app">Αξιολόγηση Εφαρμογής</string>
+    <string name="pref_title_about">Σχετικά</string>
+    <string name="pref_title_password_change">Επεξεργασία Κωδικού</string>
+    <string name="pref_title_data_settings">Δεδομένα</string>
+    <string name="pref_title_profile">Προφίλ</string>
+    <string name="pref_title_data">Βάσεις Δεδομένων</string>
+    <string name="pref_title_delete_income">Διαγραφή Ιστορικού Εισοδήματος</string>
+    <string name="pref_title_delete_expense">Διαγραφή Ιστορικού Εξόδων</string>
+    <string name="pref_title_theme">Θέμα</string>
+    <string name="pref_summary_password">Κλείδωμα εφαρμογής με κωδικό πρόσβασης κατά την εκκίνηση</string>
+    <string name="pref_summary_reminder">Υπενθύμιση σε καθημερινή βάση για την καταγραφή των συναλλαγών σας</string>
+
     <string-array name="currency_entries">
-        <item>European Euro(€)</item>
-        <item>American Dollar($)</item>
-        <item>Japanese Yen(¥)</item>
-        <item>British Pound(£)</item>
-        <item>Swiss Franc(CHF)</item>
-        <item>Indian Rupee(₹)</item>
+        <item>Ευρώ(€)</item>
+        <item>Αμερικάνικο Δολαριο($)</item>
+        <item>Ιαπωνικό Γεν(¥)</item>
+        <item>Βρετανική Λίρα(£)</item>
+        <item>Ελβετικό Φράγκο(CHF)</item>
+        <item>Ινδικές Ρούπιες(₹)</item>
     </string-array>
     <string-array name="currency_values">
         <item>€</item>
@@ -66,66 +91,118 @@
         <item>CHF</item>
         <item>₹</item>
     </string-array>
-    <string-array name="colors" translatable="false">
-        <item>#99cc00</item>
-        <item>#33b5e5</item>
-        <item>#0099cc</item>
-        <item>#547bca</item>
-        <item>#aa66cc</item>
-        <item>#9933cc</item>
-        <item>#669900</item>
-        <item>#aeb857</item>
-        <item>#cc0000</item>
-        <item>#df5948</item>
-        <item>#ff4444</item>
-        <item>#ae6b23</item>
-        <item>#ff8800</item>
-        <item>#e5ae4f</item>
-        <item>#ffbb33</item>
-        <item>#cccccc</item>
-        <item>#888888</item>
+
+    <string name="pref_currency_default_value">€</string>
+    <string name="pref_grouping_weekly">Ανά Εβδομάδα</string>
+    <string name="pref_grouping_monthly">Ανα μήνα</string>
+
+    <string name="text_about">This is the about text</string>
+
+    <string name="dialog_text_delete_income_confirm">Διαγραφή όλων των συναλλαγών εσόδου από την βάση δεδομένων?</string>
+    <string name="dialog_text_delete_expense_confirm">Διαγραφή όλων των συναλλαγών εξόδου από την βάση δεδομένων?</string>
+
+    <string name="toast_text_password_on">Κωδικός προστασίας ενεργοποιήθηκε</string>
+    <string name="toast_text_password_off">Κωδικός προστασίας απενεργοποιήθηκε</string>
+    <string name="toast_text_password_changed">Ο κωδικός άλλαξε</string>
+    <string name="toast_text_password_failed_change">Αποτυχία αλλαγής κωδικού</string>
+
+    <string name="text_current_pass">Τρέχων Κωδικός</string>
+    <string name="text_new_pass">Νέος Κωδικός</string>
+    <string name="text_confirm_passs">Επαλήθευση Νέου Κωδικού</string>
+    <string name="text_show_pass">Προβολή Κωδικού</string>
+
+    <string name="toast_text_password_default_alert">Ο προεπιλεγμένος κωδικός είναι "1234"</string>
+    <string name="toast_text_reminder">Ημερήσιες Υπενθυμίσεις ενεργοποιήθηκαν \n Επόμενη Υπενθύμιση : </string>
+
+    <!--OverviewActivity-->
+    <string name="string_balance">Τρέχων  :</string>
+    <string name="string_savings">Αποταμίευση :</string>
+
+    <string name="text_pie_heading">Συναλλαγές αυτήν την εβδομάδα</string>
+    <string name="legend_text_expense">Έξοδα</string>
+    <string name="legend_text_income">Έσοδα</string>
+    <string name="text_no_records">Δεν υπάρχουν συναλλαγές για την τρέχουσα περίοδο</string>
+    <string name="text_last_expense">Τελευταία Σπατάλη</string>
+    <string name="text_last_income">Τελευταίο εισόδημα</string>
+
+    <string name="close_drawer">Άνοιγμα Μενού</string>
+    <string name="open_drawer">Κλείσιμο Μενού</string>
+
+    <string-array name="drawer_menu">
+        <item>Συναλλαγές</item>
+        <item>Νέο Έξοδο</item>
+        <item>Νέο εισόδημα</item>
+        <item>Ρυθμίσεις</item>
+        <item>Έξοδος</item>
     </string-array>
 
-    <string name="color_picker_default_title">Select a Color</string>
-    <!-- Content description for a color square. -->
+    <string name="category_food">Φαγητό</string>
+    <string name="category_drinks">Ποτά</string>
+    <string name="category_leisure">Διασκέδαση</string>
+    <string name="category_personal">Προσωπικά</string>
+    <string name="category_health">Υγεία</string>
+    <string name="category_bills">Λογαριασμοί</string>
+    <string name="category_transportation">Μετακινήσεις</string>
+    <string name="category_clothing">Ρουχισμός</string>
+    <string name="category_housekeeping">Νοικοκυριό</string>
+    <string name="category_work_epsenses">Εργασιακά Έξοδα</string>
+    <string name="category_miscellaneous">Άλλο</string>
+    <string name="category_salary">Μισθός</string>
+    <string name="category_bonus">Bonus</string>
+
+    <!-- AddExpenseActivity -->
+    <string name="textview_hint_notes">Σημειώσεις...</string>
+    <string name="action_add_expense">Νέο Έξοδο</string>
+    <string name="textview_headline_category">Κατηγορία</string>
+    <string name="textview_headline_date">Ημερομηνία</string>
+    <string name="textview_headline_notes">Σημειώσεις</string>
+
+    <!-- AddIncomeActivity -->
+    <string name="textview_headline_source">Κατηγορία</string>
+
+    <!-- CreateCategoryActivity -->
+    <string name="toast_category_deleted"> διαγράφηκε από τις κατηγορίες</string>
+
+    <string name="textview_headline_category_name">Όνομα Κατηγορίας</string>
+    <string name="textview_hint_headline_category_name">π.χ. Φαγητό</string>
+    <string name="textview_headline_category_color">Χρώμα</string>
+    <string name="textview_headline_category_preview">Επισκόπηση</string>
+
+    <!--CategoriesManagerActivity-->
+    <string name="action_add_category">Νέα Κατηγορία</string>
+
+    <!--HistoryActivity-->
+    <string name="text_ascending">Αύξουσα</string>
+    <string name="text_declining">Φθίνουσα</string>
+
+    <!-- UserDetailsActivity -->
+    <string name="textview_headline_username">Όνομα χρήστη</string>
+    <string name="textview_headline_savings">Αποταμίευση</string>
+    <string name="textview_headline_grouping">Ομαδοποιηση</string>
+
+    <!-- DeleteCategoryDialog -->
+    <string name="dialog_delete_category_text">Υπάρχουν συναλλαγές αυτής της κατηγορίας στο ιστορικό . Διαγραφή ή Μετακίνηση αυτών των συναλλαγών σε άλλη κατηγορία.</string>
+    <string name="dialog_delete_category_move">Μετακίνηση σε :</string>
+
+    <!--Reminder Notification-->
+    <string name="text_reminder_message">Καταγράψτε τις σημερινές συναλλαγές σας</string>
+    <string name="text_reminder_content">Μην ξεχάσετε να καταγράψεται τις σημερίνές συναλλαγές σας</string>
+
+    <!--Filters-->
+    <string name="filter_category">Ανά Κατηγορία</string>
+    <string name="filter_price">Ανά Τιμή</string>
+    <string name="filter_date">Μία Συγκεκριμενη Μέρα Ημερομηνία</string>
+    <string name="filter_date_to_date">Ανά Χρονική Περίοδο</string>
+    <string name="filter_recent">Ανά Ημερομηνία</string>
+    <string name="filter_amount">Ανά Ποσό</string>
+
+    <string name="text_from">Από :</string>
+    <string name="text_to">To :</string>
+
+    <!--ColorPickerLibrary-->
+    <string name="color_picker_default_title">Διάλεξε χρώμα</string>
     <string name="color_swatch_description">Color <xliff:g id="color_index" example="14">%1$d</xliff:g></string>
-    <!-- Content description for a selected color square. -->
-    <string name="color_swatch_description_selected">Color <xliff:g id="color_index" example="14">%1$d</xliff:g> selected</string>
-    <string name="currency_euro">€</string>
-    <string name="currency_dollar">$</string>
-    <string name="currency_yen">¥</string>
-    <string name="currency_pound">£</string>
-    <string name="currency_swiss_franc">CHF</string>
-    <string name="currency_rupee">₹</string>
-    <string name="title_activity_main_activity2">MainActivity2</string>
-    <string name="title_activity_password">PasswordActivity</string>
-    <string name="title_activity_launcher_picker">Launcher</string>
-    <string name="title_activity_password_settings">PasswordSettingsActivity</string>
-    <string name="title_activity_categories_manager">CategoriesManagerActivity</string>
-    <string name="action_add_category">Add Category</string>
-    <string name="pref_title_currency">Currency</string>
-    <string name="title_activity_settings_activity2">SettingsActivity2</string>
-    <string name="pref_category_general">General</string>
-    <string name="pref_title_password">Password Protection</string>
-    <string name="pref_title_categories">Categories</string>
-    <string name="pref_category_notifications">Notifications</string>
-    <string name="pref_title_reminder">Daily Reminder</string>
-    <string name="pref_summary_reminder">Let us remind you on a daily base to track your finances</string>
-    <string name="pref_title_reminder_time">Reminder Time</string>
-    <string name="pref_category_about">About</string>
-    <string name="pref_title_rate_app">Rate App</string>
-    <string name="pref_title_about">About</string>
-    <string name="pref_summary_password">Protect app with a password lock on lauch</string>
-    <string name="pref_title_password_change">Change Password</string>
-    <string name="pref_title_data_settings">Databases</string>
-    <string name="pref_title_profile">Profile</string>
-    <string name="pref_title_data">Database</string>
-    <string name="pref_title_delete_income">Delete Income History</string>
-    <string name="pref_title_delete_expense">Delete expense history</string>
-    <string name="title_activity_transparent">TransparentActivity</string>
-    <string name="pref_title_theme">App Theme</string>
-    <string name="title_activity_create_category">CreateCategoryActivity</string>
-    <string name="close_drawer">Closing Drawer</string>
-    <string name="open_drawer">Opening Drawer</string>
+    <string name="color_swatch_description_selected">Color <xliff:g id="color_index" example="14">%1$d</xliff:g> επιλέχθηκε</string>
+    <string name="text_filter">Φίλτρα</string>
 
 </resources>

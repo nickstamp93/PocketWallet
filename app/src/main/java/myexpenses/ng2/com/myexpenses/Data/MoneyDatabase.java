@@ -363,15 +363,23 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         int currentDay = c.get(Calendar.DAY_OF_WEEK);
         int endDay = Calendar.MONDAY;
 
-        while (currentDay != endDay) {
-            c.add(Calendar.DATE, 1);
-            currentDay = c.get(Calendar.DAY_OF_WEEK);
+        Date startDate, endDate;
+
+        if (currentDay == endDay) {
+            startDate = c.getTime();
+            c.add(Calendar.DAY_OF_YEAR, 6);
+            endDate = c.getTime();
+        } else {
+            while (currentDay != endDay) {
+                c.add(Calendar.DATE, 1);
+                currentDay = c.get(Calendar.DAY_OF_WEEK);
+            }
+            endDate = c.getTime();
+
+            c.add(Calendar.DAY_OF_YEAR, -6);
+            startDate = c.getTime();
+
         }
-        Date endDate = c.getTime();
-
-        c.add(Calendar.DAY_OF_YEAR, -6);
-        Date startDate = c.getTime();
-
 
         c.setTime(startDate);
 
@@ -421,15 +429,23 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         int currentDay = c.get(Calendar.DAY_OF_WEEK);
         int endDay = Calendar.MONDAY;
 
-        while (currentDay != endDay) {
-            c.add(Calendar.DATE, 1);
-            currentDay = c.get(Calendar.DAY_OF_WEEK);
+        Date startDate, endDate;
+        if (currentDay == endDay) {
+            startDate = c.getTime();
+            c.add(Calendar.DAY_OF_YEAR, -6);
+            endDate = c.getTime();
+        } else {
+
+            while (currentDay != endDay) {
+                c.add(Calendar.DATE, 1);
+                currentDay = c.get(Calendar.DAY_OF_WEEK);
+            }
+            endDate = c.getTime();
+
+            c.add(Calendar.DAY_OF_YEAR, -6);
+            startDate = c.getTime();
+
         }
-        Date endDate = c.getTime();
-
-        c.add(Calendar.DAY_OF_YEAR, -6);
-        Date startDate = c.getTime();
-
 
         c.setTime(startDate);
 

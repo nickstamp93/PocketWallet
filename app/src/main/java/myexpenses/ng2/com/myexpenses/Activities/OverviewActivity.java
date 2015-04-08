@@ -307,7 +307,7 @@ public class OverviewActivity extends Activity {
         tvBalance.setText(balance + " " + profile.getCurrency());
         //set legends' text
         tvLegendTotalExpense.setText(getResources().getString(R.string.action_expense) + "\n(" + (totalExpenses + " " + profile.getCurrency()) + ")");
-        tvLegendTotalIncome.setText(getResources().getString(R.string.action_expense) + "\n(" + (totalIncomes + " " + profile.getCurrency()) + ")");
+        tvLegendTotalIncome.setText(getResources().getString(R.string.action_income) + "\n(" + (totalIncomes + " " + profile.getCurrency()) + ")");
 
         //savings are : total income - total expense - balance + savings user defined at the creation of the profile
         double savings = mdb.getTotalIncome() - mdb.getTotalExpenses() - balance + profile.getSavings();

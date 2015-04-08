@@ -129,15 +129,15 @@ public class CategoryDatabase extends SQLiteOpenHelper {
         cv = new ContentValues();
 
         name = context.getResources().getString(R.string.category_salary);
-        cv.put(COLUMN_ENAME, name);
+        cv.put(COLUMN_INAME, name);
         cv.put(COLUMN_ICOLOR, colors.get(4));
-        cv.put(COLUMN_LETTER, name.toUpperCase().substring(0, 1));
+        cv.put(COLUMN_ILETTER, name.toUpperCase().substring(0, 1));
         db.insert(TABLE_INCOME_CATEGORIES, null, cv);
 
         name = context.getResources().getString(R.string.category_bonus);
-        cv.put(COLUMN_ENAME, name);
+        cv.put(COLUMN_INAME, name);
         cv.put(COLUMN_ICOLOR, colors.get(6));
-        cv.put(COLUMN_LETTER, name.toUpperCase().substring(0, 1));
+        cv.put(COLUMN_ILETTER, name.toUpperCase().substring(0, 1));
         db.insert(TABLE_INCOME_CATEGORIES, null, cv);
 
     }

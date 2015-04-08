@@ -96,7 +96,13 @@
     <string name="pref_grouping_weekly">weekly</string>
     <string name="pref_grouping_monthly">monthly</string>
 
-    <string name="text_about">This is the about text</string>
+    <string name="text_about">The application Pocket Wallet was developed by the software developing team NG^2
+        , by Nick Stampoulis and Nick Zissis.
+        \n\nLibraries used:
+        \n-Google Color Picker
+        \n-LetterImageView by Melnykov Oleksandr
+        \n-AndroidBetterPickers by Derek Brameyer
+        \n-MagnificentChart by Ahmed Sulaiman</string>
 
     <string name="dialog_text_delete_income_confirm">Delete ALL income transactions?</string>
     <string name="dialog_text_delete_expense_confirm">Delete ALL expense transactions?</string>

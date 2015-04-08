@@ -96,7 +96,14 @@
     <string name="pref_grouping_weekly">Ανά Εβδομάδα</string>
     <string name="pref_grouping_monthly">Ανα μήνα</string>
 
-    <string name="text_about">This is the about text</string>
+    <string name="text_about">Η εφαρμογή Pocket Wallet αναπτύχθηκε από την προγραμματιστική ομάδα NG^2
+        , από τους Νίκο Σταμπουλή και Νίκο Ζήση.
+        \n\nΒιβλιοθήκες που χρησιμοποιήθηκαν:
+        \n-Google Color Picker
+        \n-LetterImageView από τον Melnykov Oleksandr
+        \n-AndroidBetterPickers από τον Derek Brameyer
+        \n-MagnificentChart από τον Ahmed Sulaiman
+    </string>
 
     <string name="dialog_text_delete_income_confirm">Διαγραφή όλων των συναλλαγών εσόδου από την βάση δεδομένων?</string>
     <string name="dialog_text_delete_expense_confirm">Διαγραφή όλων των συναλλαγών εξόδου από την βάση δεδομένων?</string>

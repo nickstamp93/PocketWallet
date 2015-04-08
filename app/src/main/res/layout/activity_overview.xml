@@ -216,7 +216,7 @@
                         android:layout_gravity="center_horizontal"
                         android:gravity="center"
                         android:orientation="horizontal"
-                        android:weightSum="2">
+                        android:weightSum="3">
 
                         <myexpenses.ng2.com.myexpenses.Extra.LetterImageView
                             android:id="@+id/livLastExpense"
@@ -227,7 +227,7 @@
                         <TextView
                             android:id="@+id/tvLastExpenseDate"
                             style="@style/Headline"
-                            android:layout_weight="1"
+                            android:layout_weight="1.3"
                             android:layout_width="match_parent"
                             android:gravity="center_horizontal"
                             android:text="21/05/15" />
@@ -235,7 +235,7 @@
                         <TextView
                             android:id="@+id/tvLastExpenseValue"
                             style="@style/Headline"
-                            android:layout_weight="1"
+                            android:layout_weight="1.7"
                             android:layout_width="match_parent"
                             android:gravity="center_horizontal"
                             android:textColor="@color/red"
@@ -275,7 +275,7 @@
                         android:layout_gravity="center_horizontal"
                         android:gravity="center"
                         android:orientation="horizontal"
-                        android:weightSum="2">
+                        android:weightSum="3">
 
                         <myexpenses.ng2.com.myexpenses.Extra.LetterImageView
                             android:id="@+id/livLastIncome"
@@ -286,7 +286,7 @@
                         <TextView
                             android:id="@+id/tvLastIncomeDate"
                             style="@style/Headline"
-                            android:layout_weight="1"
+                            android:layout_weight="1.3"
                             android:layout_width="match_parent"
                             android:gravity="center_horizontal"
                             android:text="1/03/15" />
@@ -294,7 +294,7 @@
                         <TextView
                             android:id="@+id/tvLastIncomeValue"
                             style="@style/Headline"
-                            android:layout_weight="1"
+                            android:layout_weight="1.7"
                             android:layout_width="match_parent"
                             android:gravity="center_horizontal"
                             android:textColor="@color/green"

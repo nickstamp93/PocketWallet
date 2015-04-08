@@ -295,11 +295,8 @@ public class OverviewActivity extends Activity {
             totalIncomes = mdb.getTotalIncomePriceForCurrentWeek();
         }
 
-        Log.i("nikos" , "Expense:" + totalExpenses);
-        Log.i("nikos" , "Income:" + totalIncomes);
         double balance = totalIncomes - totalExpenses;
         balance = Math.round(balance*100)/100.0;
-        Log.i("nikos" , "Balance:" + balance);
         //set the balance to the user profile object
         profile.setBalance((float) balance);
 

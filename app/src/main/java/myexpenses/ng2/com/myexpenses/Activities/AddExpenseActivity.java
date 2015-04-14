@@ -84,7 +84,7 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
         setUpUI();
 
         //This activity contains 2 modules. Add a new expense in Database or update an exist one.
-        //When the user wants to update a expense he just click the history item. From History
+        //When the user wants to update a expense he just click the history item or click the last expense from overview. From History
         //we start an Intent to open this activity. So we use a ExpenseItem variable to get the
         //expense that the user wants to update.
         item = (ExpenseItem) getIntent().getSerializableExtra("Expense");

@@ -30,6 +30,8 @@ import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
 import myexpenses.ng2.com.myexpenses.Extra.LetterImageView;
 import myexpenses.ng2.com.myexpenses.Extra.MagnificentChart;
 import myexpenses.ng2.com.myexpenses.Extra.MagnificentChartItem;
+import myexpenses.ng2.com.myexpenses.Model.ExpenseItem;
+import myexpenses.ng2.com.myexpenses.Model.IncomeItem;
 import myexpenses.ng2.com.myexpenses.Model.UserProfile;
 import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Utils.SharedPrefsManager;
@@ -58,6 +60,8 @@ public class OverviewActivity extends Activity {
 
     private MoneyDatabase mdb;
 
+    private Cursor cursorLastExpense, cursorLastIncome;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +85,7 @@ public class OverviewActivity extends Activity {
         //manage the user profile
         checkUserProfile();
 
+        initListeners();
 
     }
 
@@ -360,7 +365,7 @@ public class OverviewActivity extends Activity {
             tvPieHeading.setTextSize(30);
         }
 
-        Cursor cursorLastExpense, cursorLastIncome;
+      //  Cursor cursorLastExpense, cursorLastIncome;
         cursorLastExpense = mdb.getExpensesFromNewestToOldest();
         cursorLastIncome = mdb.getIncomeByNewestToOldest();
 
@@ -430,6 +435,37 @@ public class OverviewActivity extends Activity {
         }
 
     }
+
+
+    private void initListeners(){
+
+        llLastExpense.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cursorLastExpense.moveToFirst();
+                Intent processExpense = new Intent(OverviewActivity.this, AddExpenseActivity.class);
+                ExpenseItem expense = new ExpenseItem(cursorLastExpense.getString(1), cursorLastExpense.getString(4), Double.parseDouble(cursorLastExpense.getString(3)), cursorLastExpense.getString(2));
+                expense.setId(Integer.parseInt(cursorLastExpense.getString(0)));
+                processExpense.putExtra("Expense", expense);
+                startActivity(processExpense);
+            }
+        });
+
+        llLastIncome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cursorLastIncome.moveToFirst();
+                Intent processIncome = new Intent(OverviewActivity.this, AddIncomeActivity.class);
+                IncomeItem income = new IncomeItem(Double.parseDouble(cursorLastIncome.getString(1)), cursorLastIncome.getString(3), cursorLastIncome.getString(2));
+                income.setId(Integer.parseInt(cursorLastIncome.getString(0)));
+                processIncome.putExtra("Income", income);
+                startActivity(processIncome);
+            }
+        });
+
+
+    }
+
 
     private ListView.OnItemClickListener drawerClickListener = new ListView.OnItemClickListener() {
 

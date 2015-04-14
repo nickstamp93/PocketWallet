@@ -9,6 +9,10 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import myexpenses.ng2.com.myexpenses.Data.CategoryDatabase;
 import myexpenses.ng2.com.myexpenses.Extra.LetterImageView;
 import myexpenses.ng2.com.myexpenses.R;
@@ -27,6 +31,9 @@ public class HistoryListViewAdapter extends CursorAdapter {
         super(context, c);
         currency = PreferenceManager.getDefaultSharedPreferences(context).getString(context.getResources().getString(R.string.pref_key_currency), context.getResources().getString(R.string.pref_currency_default_value));
         cdb = new CategoryDatabase(context);
+
+
+
 
     }
 
@@ -58,7 +65,16 @@ public class HistoryListViewAdapter extends CursorAdapter {
             String date = cursor.getString(2);
             String dateTokens[] = date.split("-");
             String reformedDate = dateTokens[2] + "-" + dateTokens[1] + "-" + dateTokens[0];
-            tvDate.setText(reformedDate);
+
+            SimpleDateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
+            try {
+                Date d = fmt.parse(reformedDate);
+                tvDate.setText(fmtOut.format(d));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+
 
 
             tvCategory.setText(cursor.getString(1));
@@ -88,7 +104,13 @@ public class HistoryListViewAdapter extends CursorAdapter {
             String date = cursor.getString(3);
             String dateTokens[] = date.split("-");
             String reformedDate = dateTokens[2] + "-" + dateTokens[1] + "-" + dateTokens[0];
-            tvDate.setText(reformedDate);
+            SimpleDateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
+            try {
+                Date d = fmt.parse(reformedDate);
+                tvDate.setText(fmtOut.format(d));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
             tvSource.setText(cursor.getString(2));
 
@@ -121,7 +143,13 @@ public class HistoryListViewAdapter extends CursorAdapter {
             String date = cursor.getString(2);
             String dateTokens[] = date.split("-");
             String reformedDate = dateTokens[2] + "-" + dateTokens[1] + "-" + dateTokens[0];
-            tvDate.setText(reformedDate);
+            SimpleDateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
+            try {
+                Date d = fmt.parse(reformedDate);
+                tvDate.setText(fmtOut.format(d));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
             tvCategory.setText(cursor.getString(1));
 
@@ -149,7 +177,15 @@ public class HistoryListViewAdapter extends CursorAdapter {
             String date = cursor.getString(3);
             String dateTokens[] = date.split("-");
             String reformedDate = dateTokens[2] + "-" + dateTokens[1] + "-" + dateTokens[0];
-            tvDate.setText(reformedDate);
+
+            SimpleDateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
+            try {
+                Date d = fmt.parse(reformedDate);
+                tvDate.setText(fmtOut.format(d));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
             tvSource.setText(cursor.getString(2));
 
             int color = cdb.getColorFromCategory(cursor.getString(2), expense);

@@ -33,12 +33,12 @@
 
             <TextView
                 style="@style/Headline"
-                android:layout_weight="4"
+                android:layout_weight="3.5"
                 android:text="@string/textview_headline_category" />
 
             <Spinner
                 android:id="@+id/sCategories"
-                android:layout_weight="2"
+                android:layout_weight="2.5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -58,14 +58,14 @@
 
             <TextView
                 style="@style/Headline"
-                android:layout_weight="3"
+                android:layout_weight="2.5"
                 android:text="@string/textview_headline_date" />
 
             <EditText
                 android:id="@+id/etDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_weight="2.5"
                 android:gravity="center"
                 android:editable="false"
                 android:focusable="false" />
@@ -95,14 +95,14 @@
 
             <TextView
                 style="@style/Headline"
-                android:layout_weight="4"
+                android:layout_weight="3.5"
                 android:text="@string/textview_headline_notes" />
 
             <EditText
                 android:id="@+id/etNotes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_weight="2.5"
                 android:hint="@string/textview_hint_notes"
                 android:ellipsize="end"
                 android:lines="2" />

@@ -34,13 +34,13 @@
 
             <TextView
                 style="@style/Headline"
-                android:layout_weight="4"
+                android:layout_weight="3.5"
                 android:text="@string/textview_headline_source" />
 
 
             <Spinner
                 android:id="@+id/sIncomeCategories"
-                android:layout_weight="2"
+                android:layout_weight="2.5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -61,14 +61,14 @@
 
             <TextView
                 style="@style/Headline"
-                android:layout_weight="3"
+                android:layout_weight="2.5"
                 android:text="@string/textview_headline_date" />
 
             <EditText
                 android:id="@+id/etIncomeDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_weight="2.5"
                 android:gravity="center"
                 android:editable="false"
                 android:focusable="false" />

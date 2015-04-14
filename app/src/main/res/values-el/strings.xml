@@ -129,7 +129,7 @@
     <string name="legend_text_expense">Έξοδα</string>
     <string name="legend_text_income">Έσοδα</string>
     <string name="text_no_records">Δεν υπάρχουν συναλλαγές για την τρέχουσα περίοδο</string>
-    <string name="text_last_expense">Τελευταία Σπατάλη</string>
+    <string name="text_last_expense">Τελευταίο έξοδο</string>
     <string name="text_last_income">Τελευταίο εισόδημα</string>
 
     <string name="close_drawer">Άνοιγμα Μενού</string>
@@ -137,8 +137,8 @@
 
     <string-array name="drawer_menu">
         <item>Συναλλαγές</item>
+        <item>Νέο Εισόδημα</item>
         <item>Νέο Έξοδο</item>
-        <item>Νέο εισόδημα</item>
         <item>Ρυθμίσεις</item>
         <item>Έξοδος</item>
     </string-array>

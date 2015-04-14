@@ -78,7 +78,7 @@
 
         <activity
             android:name=".Activities.CreateCategoryActivity"
-            android:label="CreateCategoryActivity"
+            android:label="@string/title_activity_create_category"
             android:screenOrientation="portrait" />
 
         <activity

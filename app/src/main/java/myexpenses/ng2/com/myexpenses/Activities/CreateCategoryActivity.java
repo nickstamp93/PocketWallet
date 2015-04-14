@@ -228,7 +228,7 @@ public class CreateCategoryActivity extends Activity implements ColorPickerSwatc
 
                     } else {
                         cdb.deleteCategory(name, expense);
-                        Toast.makeText(CreateCategoryActivity.this, name + getResources().getString(R.string.toast_category_deleted), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CreateCategoryActivity.this, name + " " +getResources().getString(R.string.toast_category_deleted), Toast.LENGTH_SHORT).show();
                         finish();
                     }
                     mdb.close();

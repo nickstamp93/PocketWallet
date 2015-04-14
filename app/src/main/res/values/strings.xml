@@ -131,8 +131,8 @@
     <string name="text_last_expense">Last Expense</string>
     <string name="text_last_income">Last Income</string>
 
-    <string name="close_drawer">Closing Menu</string>
-    <string name="open_drawer">Opening Menu</string>
+    <string name="close_drawer">Open Menu</string>
+    <string name="open_drawer">Close Menu</string>
 
     <string-array name="drawer_menu">
         <item>History</item>

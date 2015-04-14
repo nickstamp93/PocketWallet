@@ -362,7 +362,7 @@ public class OverviewActivity extends Activity {
             String sMonth = getMonthForInt(month);
 
             tvPieHeading.setText(sMonth);
-            tvPieHeading.setTextSize(30);
+            tvPieHeading.setTextSize(26);
         }
 
       //  Cursor cursorLastExpense, cursorLastIncome;

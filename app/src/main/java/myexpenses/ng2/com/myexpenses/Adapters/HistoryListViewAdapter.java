@@ -69,6 +69,7 @@ public class HistoryListViewAdapter extends CursorAdapter {
             SimpleDateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
             try {
                 Date d = fmt.parse(reformedDate);
+                SimpleDateFormat fmtOut = new SimpleDateFormat("EEE d MMMM");
                 tvDate.setText(fmtOut.format(d));
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -107,6 +108,7 @@ public class HistoryListViewAdapter extends CursorAdapter {
             SimpleDateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
             try {
                 Date d = fmt.parse(reformedDate);
+                SimpleDateFormat fmtOut = new SimpleDateFormat("EEE d MMMM");
                 tvDate.setText(fmtOut.format(d));
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -146,6 +148,7 @@ public class HistoryListViewAdapter extends CursorAdapter {
             SimpleDateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
             try {
                 Date d = fmt.parse(reformedDate);
+                SimpleDateFormat fmtOut = new SimpleDateFormat("EEE d MMMM");
                 tvDate.setText(fmtOut.format(d));
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -181,6 +184,7 @@ public class HistoryListViewAdapter extends CursorAdapter {
             SimpleDateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
             try {
                 Date d = fmt.parse(reformedDate);
+                SimpleDateFormat fmtOut = new SimpleDateFormat("EEE d MMMM");
                 tvDate.setText(fmtOut.format(d));
             } catch (ParseException e) {
                 e.printStackTrace();

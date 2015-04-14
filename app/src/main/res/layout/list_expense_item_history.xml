@@ -59,12 +59,13 @@
         android:layout_height="wrap_content"
         android:lines="2"
         android:ellipsize="end"
+        android:gravity="center_vertical"
         android:layout_marginRight="20dp"
         android:layout_toRightOf="@+id/livhistory"
         android:layout_toLeftOf="@id/tvDate"
         android:layout_alignParentBottom="true"
         android:text="These are some notes"
-        android:textColor="@color/Gray"
+        android:textColor="@color/black"
         android:padding="5dp"
         android:textStyle="bold" />
 </RelativeLayout>

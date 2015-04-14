@@ -211,4 +211,6 @@
     <string name="color_swatch_description_selected">Color <xliff:g id="color_index" example="14">%1$d</xliff:g> selected</string>
     <string name="text_filter">Filter</string>
 
+    <string name="toast_savings">You can\'t change the stock savings value because you have transactions in your history</string>
+
 </resources>

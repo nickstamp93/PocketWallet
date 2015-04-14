@@ -1,7 +1,10 @@
 package myexpenses.ng2.com.myexpenses.Activities;
 
 import android.app.Activity;
+import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import myexpenses.ng2.com.myexpenses.Data.MoneyDatabase;
 import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Utils.SharedPrefsManager;
 import myexpenses.ng2.com.myexpenses.Utils.Themer;
@@ -21,8 +25,6 @@ public class UserDetailsActivity extends Activity {
     EditText etSavings, etUsername;
     Button bOk, bCancel;
     RadioGroup radioGroup;
-
-    LinearLayout llSavings;
 
     //variables set by user
     float savings;
@@ -54,10 +56,18 @@ public class UserDetailsActivity extends Activity {
 
         etUsername = (EditText) findViewById(R.id.etUsername);
 
-        //the linear layout for the savings
-        llSavings = (LinearLayout) findViewById(R.id.llSavings);
-
         etSavings = (EditText) findViewById(R.id.etSavings);
+        Cursor cursorExpense, cursorIncome;
+        MoneyDatabase db = new MoneyDatabase(this);
+        cursorExpense = db.getCursorExpense();
+        cursorIncome = db.getCursorIncomes();
+        if(cursorExpense.moveToFirst() || cursorIncome.moveToFirst()){
+                Toast.makeText(this , getString(R.string.toast_savings) , Toast.LENGTH_LONG).show();
+                etSavings.setEnabled(false);
+                etSavings.setTextColor(Color.GRAY);
+
+        }
+
         radioGroup = (RadioGroup) findViewById(R.id.rgGrouping);
 
         bOk = (Button) findViewById(R.id.bOk);

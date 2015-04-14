@@ -212,4 +212,6 @@
     <string name="color_swatch_description_selected">Color <xliff:g id="color_index" example="14">%1$d</xliff:g> επιλέχθηκε</string>
     <string name="text_filter">Φίλτρα</string>
 
+    <string name="toast_savings">Δεν μπορείς να αλλάξεις την τιμή της αποταμίευσης επειδή υπάρχουν συναλλαγές στο ιστορικό σου </string>
+
 </resources>

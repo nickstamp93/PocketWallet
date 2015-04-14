@@ -48,19 +48,19 @@ public class DrawerAdapter extends ArrayAdapter<String> {
         switch (position) {
 
             case 0:
-                holder.ivActivity.setImageResource(R.drawable.history);
+                holder.ivActivity.setImageResource(R.drawable.ic_action_database);
                 break;
             case 1:
-                holder.ivActivity.setImageResource(R.drawable.wallet);
+                holder.ivActivity.setImageResource(R.drawable.ic_action_creditcard);
                 break;
             case 2:
-                holder.ivActivity.setImageResource(R.drawable.expense);
+                holder.ivActivity.setImageResource(R.drawable.ic_action_cart);
                 break;
             case 3:
-                holder.ivActivity.setImageResource(R.drawable.settings);
+                holder.ivActivity.setImageResource(R.drawable.ic_action_gear);
                 break;
             case 4:
-                holder.ivActivity.setImageResource(R.drawable.exit);
+                holder.ivActivity.setImageResource(R.drawable.ic_action_exit);
                 break;
 
         }
@@ -89,19 +89,19 @@ public class DrawerAdapter extends ArrayAdapter<String> {
         switch (position) {
 
             case 0:
-                holder.ivActivity.setImageResource(R.drawable.history);
+                holder.ivActivity.setImageResource(R.drawable.ic_action_database);
                 break;
             case 1:
-                holder.ivActivity.setImageResource(R.drawable.wallet);
+                holder.ivActivity.setImageResource(R.drawable.ic_action_creditcard);
                 break;
             case 2:
-                holder.ivActivity.setImageResource(R.drawable.expense);
+                holder.ivActivity.setImageResource(R.drawable.ic_action_cart);
                 break;
             case 3:
-                holder.ivActivity.setImageResource(R.drawable.settings);
+                holder.ivActivity.setImageResource(R.drawable.ic_action_gear);
                 break;
             case 4:
-                holder.ivActivity.setImageResource(R.drawable.exit);
+                holder.ivActivity.setImageResource(R.drawable.ic_action_exit);
                 break;
 
 

@@ -216,6 +216,7 @@
                         android:layout_gravity="center_horizontal"
                         android:gravity="center"
                         android:orientation="horizontal"
+                        android:background="?android:attr/selectableItemBackground"
                         android:weightSum="3">
 
                         <myexpenses.ng2.com.myexpenses.Extra.LetterImageView
@@ -275,6 +276,7 @@
                         android:layout_gravity="center_horizontal"
                         android:gravity="center"
                         android:orientation="horizontal"
+                        android:background="?android:attr/selectableItemBackground"
                         android:weightSum="3">
 
                         <myexpenses.ng2.com.myexpenses.Extra.LetterImageView

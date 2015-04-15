@@ -46,7 +46,7 @@ public class CreateCategoryActivity extends Activity implements ColorPickerSwatc
 
         Themer.setThemeToActivity(this);
 
-        setContentView(R.layout.activity_create_category2);
+        setContentView(R.layout.activity_create_category);
 
         initUI();
         setUpUI();

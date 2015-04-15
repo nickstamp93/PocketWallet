@@ -4,11 +4,9 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -37,7 +35,7 @@ public class UserDetailsActivity extends Activity {
         //apply theme
         Themer.setThemeToActivity(this);
 
-        setContentView(R.layout.activity_user_details2);
+        setContentView(R.layout.activity_user_details);
 
         //init the UI
         initUI();

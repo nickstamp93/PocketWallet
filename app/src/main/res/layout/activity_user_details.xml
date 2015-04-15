@@ -7,87 +7,84 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView"
-            style="@style/Headline"
-            android:text="@string/textview_headline_username" />
-
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="2dp"
-            android:layout_marginBottom="3dp"
-            android:background="@drawable/line_seperator_solid" />
-
-        <EditText
-            android:id="@+id/etUsername"
-            style="@style/UserDetailsEditText"
-            android:inputType="textPersonName"
-            android:layout_marginBottom="@dimen/bottom_margin_headlines_small" />
-
         <LinearLayout
-            android:id="@+id/llSavings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:weightSum="2">
 
-            <TextView
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
 
-                android:id="@+id/textView2"
-                style="@style/Headline"
-                android:text="@string/textview_headline_savings" />
+                <TextView
+                    android:id="@+id/textView"
+                    style="@style/Headline"
+                    android:text="@string/textview_headline_username" />
 
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="2dp"
-                android:layout_marginBottom="3dp"
-                android:background="@drawable/line_seperator_solid" />
+                <TextView
+
+                    android:id="@+id/textView2"
+                    style="@style/Headline"
+                    android:text="@string/textview_headline_savings" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    style="@style/Headline"
+                    android:text="@string/textview_headline_grouping" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/etUsername"
+                    style="@style/UserDetailsEditText"
+                    android:inputType="textPersonName"
+                    android:layout_marginBottom="@dimen/bottom_margin_headlines_small" />
+
+                <EditText
+                    android:id="@+id/etSavings"
+                    style="@style/UserDetailsEditText"
+                    android:inputType="numberDecimal"
+                    android:layout_marginBottom="@dimen/bottom_margin_headlines_small" />
+
+                <RadioGroup
+                    android:id="@+id/rgGrouping"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="@dimen/bottom_margin_headlines_small">
+
+                    <RadioButton
+                        android:id="@+id/rbWeekly"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="@string/pref_grouping_weekly"
+                        android:textSize="20sp" />
+
+                    <RadioButton
+                        android:id="@+id/rbMonthly"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="@string/pref_grouping_monthly"
+                        android:textSize="20sp" />
+                </RadioGroup>
+
+            </LinearLayout>
 
 
-            <EditText
-                android:id="@+id/etSavings"
-                style="@style/UserDetailsEditText"
-                android:inputType="numberDecimal"
-                android:layout_marginBottom="@dimen/bottom_margin_headlines_small" />
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/textView3"
-            style="@style/Headline"
-            android:text="@string/textview_headline_grouping" />
-
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="2dp"
-            android:layout_marginBottom="3dp"
-            android:background="@drawable/line_seperator_solid" />
-
-        <RadioGroup
-            android:id="@+id/rgGrouping"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginBottom="@dimen/bottom_margin_headlines_small">
-
-            <RadioButton
-                android:id="@+id/rbWeekly"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:text="@string/pref_grouping_weekly"
-                android:textSize="20sp" />
-
-            <RadioButton
-                android:id="@+id/rbMonthly"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="@string/pref_grouping_monthly"
-                android:textSize="20sp" />
-        </RadioGroup>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -108,4 +105,5 @@
 
         </LinearLayout>
     </LinearLayout>
+
 </ScrollView>

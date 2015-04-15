@@ -19,6 +19,8 @@ import com.doomonafireball.betterpickers.numberpicker.NumberPickerBuilder;
 import com.doomonafireball.betterpickers.numberpicker.NumberPickerDialogFragment;
 
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -30,25 +32,6 @@ import myexpenses.ng2.com.myexpenses.Model.SpinnerItem;
 import myexpenses.ng2.com.myexpenses.R;
 import myexpenses.ng2.com.myexpenses.Utils.Themer;
 
-/*
-Future Modules
-1)Credit or Cash on Expenses
-2)Diagrams-Pites probably Done
-3)Repeat some of the expenses
-4)SubCategories
-5)User add a Category DONE
-6)Pattern custom DONE
-7)Switch on History Activity Income-Expense with filters (Toggle Button) DONE
-8)Filters change in DropDown Menu in ActionBar DONE
-TO DO LIST
-1) Icons for whole app OK
-2) translate the strings in greek
-3)fix the dimensions
-4)cleaning and debugging
-5)Notification fixed
-6)Styles for dialogs OK
-7)Default Categories OK
- */
 public class AddExpenseActivity extends FragmentActivity implements NumberPickerDialogFragment.NumberPickerDialogHandler {
 
     private Button bOk, bCancel;
@@ -152,7 +135,30 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
         d = CalendarDatePickerDialog.newInstance(listener,
                 Integer.parseInt(year), Integer.parseInt(month) - 1, Integer.parseInt(day));
         date = year + "-" + month + "-" + day;
-        etDate.setText(reverseDate());
+
+        try {
+            Calendar today = Calendar.getInstance();
+            Calendar yesterday = Calendar.getInstance();
+            yesterday.add(Calendar.DAY_OF_YEAR, -1);
+            Calendar item_date = Calendar.getInstance();
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            item_date.setTime(format.parse(date));
+
+            boolean isToday = today.get(Calendar.YEAR) == item_date.get(Calendar.YEAR) &&
+                    today.get(Calendar.DAY_OF_YEAR) == item_date.get(Calendar.DAY_OF_YEAR);
+            boolean isYesterday = yesterday.get(Calendar.YEAR) == item_date.get(Calendar.YEAR) &&
+                    yesterday.get(Calendar.DAY_OF_YEAR) == item_date.get(Calendar.DAY_OF_YEAR);
+            if (isToday) {
+                etDate.setText("Today");
+            } else if (isYesterday) {
+                etDate.setText("Yesterday");
+            } else {
+                etDate.setText(date);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -166,7 +172,7 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
         sCategories = (Spinner) findViewById(R.id.sCategories);
 
         etDate = (EditText) findViewById(R.id.etDate);
-        etDate.setText(reverseDate());
+        etDate.setText("Today");
         ibCalendar = (ImageButton) findViewById(R.id.ibCalendar);
 
         etNotes = (EditText) findViewById(R.id.etNotes);
@@ -296,7 +302,31 @@ public class AddExpenseActivity extends FragmentActivity implements NumberPicker
                 day = String.valueOf(cDay);
             }
             date = year + "-" + month + "-" + day;
-            etDate.setText(reverseDate());
+
+            try {
+                Calendar today = Calendar.getInstance();
+                Calendar yesterday = Calendar.getInstance();
+                yesterday.add(Calendar.DAY_OF_YEAR, -1);
+                Calendar item_date = Calendar.getInstance();
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                item_date.setTime(format.parse(date));
+
+                boolean isToday = today.get(Calendar.YEAR) == item_date.get(Calendar.YEAR) &&
+                        today.get(Calendar.DAY_OF_YEAR) == item_date.get(Calendar.DAY_OF_YEAR);
+                boolean isYesterday = yesterday.get(Calendar.YEAR) == item_date.get(Calendar.YEAR) &&
+                        yesterday.get(Calendar.DAY_OF_YEAR) == item_date.get(Calendar.DAY_OF_YEAR);
+                if (isToday) {
+                    etDate.setText("Today");
+                } else if (isYesterday) {
+                    etDate.setText("Yesterday");
+                } else {
+                    etDate.setText(date);
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+//            etDate.setText(reverseDate());
         }
     };
 

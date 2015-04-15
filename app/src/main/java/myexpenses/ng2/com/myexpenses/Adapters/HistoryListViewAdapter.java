@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import myexpenses.ng2.com.myexpenses.Data.CategoryDatabase;
@@ -63,19 +64,37 @@ public class HistoryListViewAdapter extends CursorAdapter {
             //We take the date from the cursor we reformed it and we add it to TextView tvDate. We do that cause the format of
             //date in MoneyDatabase is YYYY-MM-DD and we want the user to see it like DD-MM-YYYY
             String date = cursor.getString(2);
-            String dateTokens[] = date.split("-");
-            String reformedDate = dateTokens[2] + "-" + dateTokens[1] + "-" + dateTokens[0];
 
-            SimpleDateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
             try {
-                Date d = fmt.parse(reformedDate);
-                SimpleDateFormat fmtOut = new SimpleDateFormat("EEE d MMMM");
-                tvDate.setText(fmtOut.format(d));
+                Calendar today = Calendar.getInstance();
+                Calendar yesterday = Calendar.getInstance();
+                yesterday.add(Calendar.DAY_OF_YEAR, -1);
+                Calendar item_date = Calendar.getInstance();
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                item_date.setTime(format.parse(date));
+
+                boolean isToday = today.get(Calendar.YEAR) == item_date.get(Calendar.YEAR) &&
+                        today.get(Calendar.DAY_OF_YEAR) == item_date.get(Calendar.DAY_OF_YEAR);
+                boolean isYesterday = yesterday.get(Calendar.YEAR) == item_date.get(Calendar.YEAR) &&
+                        yesterday.get(Calendar.DAY_OF_YEAR) == item_date.get(Calendar.DAY_OF_YEAR);
+                if(isToday){
+                    tvDate.setText("Today");
+                }else if (isYesterday){
+                    tvDate.setText("Yesterday");
+                }else{
+                    String dateTokens[] = date.split("-");
+                    String reformedDate = dateTokens[2] + "-" + dateTokens[1] + "-" + dateTokens[0];
+
+                    SimpleDateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
+
+                    Date d = fmt.parse(reformedDate);
+                    SimpleDateFormat fmtOut = new SimpleDateFormat("EEE d MMMM");
+                    tvDate.setText(fmtOut.format(d));
+                }
+
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-
-
 
 
             tvCategory.setText(cursor.getString(1));
@@ -103,13 +122,33 @@ public class HistoryListViewAdapter extends CursorAdapter {
             //We take the date from the cursor we reformed it and we add it to TextView tvDate. We do that cause the format of
             //date in MoneyDatabase is YYYY-MM-DD and we want the user to see it like DD-MM-YYYY
             String date = cursor.getString(3);
-            String dateTokens[] = date.split("-");
-            String reformedDate = dateTokens[2] + "-" + dateTokens[1] + "-" + dateTokens[0];
-            SimpleDateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
             try {
-                Date d = fmt.parse(reformedDate);
-                SimpleDateFormat fmtOut = new SimpleDateFormat("EEE d MMMM");
-                tvDate.setText(fmtOut.format(d));
+                Calendar today = Calendar.getInstance();
+                Calendar yesterday = Calendar.getInstance();
+                yesterday.add(Calendar.DAY_OF_YEAR, -1);
+                Calendar item_date = Calendar.getInstance();
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                item_date.setTime(format.parse(date));
+
+                boolean isToday = today.get(Calendar.YEAR) == item_date.get(Calendar.YEAR) &&
+                        today.get(Calendar.DAY_OF_YEAR) == item_date.get(Calendar.DAY_OF_YEAR);
+                boolean isYesterday = yesterday.get(Calendar.YEAR) == item_date.get(Calendar.YEAR) &&
+                        yesterday.get(Calendar.DAY_OF_YEAR) == item_date.get(Calendar.DAY_OF_YEAR);
+                if(isToday){
+                    tvDate.setText("Today");
+                }else if (isYesterday){
+                    tvDate.setText("Yesterday");
+                }else{
+                    String dateTokens[] = date.split("-");
+                    String reformedDate = dateTokens[2] + "-" + dateTokens[1] + "-" + dateTokens[0];
+
+                    SimpleDateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
+
+                    Date d = fmt.parse(reformedDate);
+                    SimpleDateFormat fmtOut = new SimpleDateFormat("EEE d MMMM");
+                    tvDate.setText(fmtOut.format(d));
+                }
+
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -143,13 +182,33 @@ public class HistoryListViewAdapter extends CursorAdapter {
             //We take the date from the cursor we reformed it and we add it to TextView tvDate. We do that cause the format of
             //date in MoneyDatabase is YYYY-MM-DD and we want the user to see it like DD-MM-YYYY
             String date = cursor.getString(2);
-            String dateTokens[] = date.split("-");
-            String reformedDate = dateTokens[2] + "-" + dateTokens[1] + "-" + dateTokens[0];
-            SimpleDateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
             try {
-                Date d = fmt.parse(reformedDate);
-                SimpleDateFormat fmtOut = new SimpleDateFormat("EEE d MMMM");
-                tvDate.setText(fmtOut.format(d));
+                Calendar today = Calendar.getInstance();
+                Calendar yesterday = Calendar.getInstance();
+                yesterday.add(Calendar.DAY_OF_YEAR, -1);
+                Calendar item_date = Calendar.getInstance();
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                item_date.setTime(format.parse(date));
+
+                boolean isToday = today.get(Calendar.YEAR) == item_date.get(Calendar.YEAR) &&
+                        today.get(Calendar.DAY_OF_YEAR) == item_date.get(Calendar.DAY_OF_YEAR);
+                boolean isYesterday = yesterday.get(Calendar.YEAR) == item_date.get(Calendar.YEAR) &&
+                        yesterday.get(Calendar.DAY_OF_YEAR) == item_date.get(Calendar.DAY_OF_YEAR);
+                if(isToday){
+                    tvDate.setText("Today");
+                }else if (isYesterday){
+                    tvDate.setText("Yesterday");
+                }else{
+                    String dateTokens[] = date.split("-");
+                    String reformedDate = dateTokens[2] + "-" + dateTokens[1] + "-" + dateTokens[0];
+
+                    SimpleDateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
+
+                    Date d = fmt.parse(reformedDate);
+                    SimpleDateFormat fmtOut = new SimpleDateFormat("EEE d MMMM");
+                    tvDate.setText(fmtOut.format(d));
+                }
+
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -178,14 +237,33 @@ public class HistoryListViewAdapter extends CursorAdapter {
             //We take the date from the cursor we reformed it and we add it to TextView tvDate. We do that cause the format of
             //date in MoneyDatabase is YYYY-MM-DD and we want the user to see it like DD-MM-YYYY
             String date = cursor.getString(3);
-            String dateTokens[] = date.split("-");
-            String reformedDate = dateTokens[2] + "-" + dateTokens[1] + "-" + dateTokens[0];
-
-            SimpleDateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
             try {
-                Date d = fmt.parse(reformedDate);
-                SimpleDateFormat fmtOut = new SimpleDateFormat("EEE d MMMM");
-                tvDate.setText(fmtOut.format(d));
+                Calendar today = Calendar.getInstance();
+                Calendar yesterday = Calendar.getInstance();
+                yesterday.add(Calendar.DAY_OF_YEAR, -1);
+                Calendar item_date = Calendar.getInstance();
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                item_date.setTime(format.parse(date));
+
+                boolean isToday = today.get(Calendar.YEAR) == item_date.get(Calendar.YEAR) &&
+                        today.get(Calendar.DAY_OF_YEAR) == item_date.get(Calendar.DAY_OF_YEAR);
+                boolean isYesterday = yesterday.get(Calendar.YEAR) == item_date.get(Calendar.YEAR) &&
+                        yesterday.get(Calendar.DAY_OF_YEAR) == item_date.get(Calendar.DAY_OF_YEAR);
+                if(isToday){
+                    tvDate.setText("Today");
+                }else if (isYesterday){
+                    tvDate.setText("Yesterday");
+                }else{
+                    String dateTokens[] = date.split("-");
+                    String reformedDate = dateTokens[2] + "-" + dateTokens[1] + "-" + dateTokens[0];
+
+                    SimpleDateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
+
+                    Date d = fmt.parse(reformedDate);
+                    SimpleDateFormat fmtOut = new SimpleDateFormat("EEE d MMMM");
+                    tvDate.setText(fmtOut.format(d));
+                }
+
             } catch (ParseException e) {
                 e.printStackTrace();
             }

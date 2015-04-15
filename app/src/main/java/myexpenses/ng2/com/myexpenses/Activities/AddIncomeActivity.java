@@ -19,6 +19,8 @@ import com.doomonafireball.betterpickers.numberpicker.NumberPickerBuilder;
 import com.doomonafireball.betterpickers.numberpicker.NumberPickerDialogFragment;
 
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -108,7 +110,29 @@ public class AddIncomeActivity extends FragmentActivity implements NumberPickerD
         d = CalendarDatePickerDialog.newInstance(listener,
                 Integer.parseInt(year), Integer.parseInt(month) - 1, Integer.parseInt(day));
         date = year + "-" + month + "-" + day;
-        etDate.setText(reverseDate());
+
+        try {
+            Calendar today = Calendar.getInstance();
+            Calendar yesterday = Calendar.getInstance();
+            yesterday.add(Calendar.DAY_OF_YEAR, -1);
+            Calendar item_date = Calendar.getInstance();
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            item_date.setTime(format.parse(date));
+
+            boolean isToday = today.get(Calendar.YEAR) == item_date.get(Calendar.YEAR) &&
+                    today.get(Calendar.DAY_OF_YEAR) == item_date.get(Calendar.DAY_OF_YEAR);
+            boolean isYesterday = yesterday.get(Calendar.YEAR) == item_date.get(Calendar.YEAR) &&
+                    yesterday.get(Calendar.DAY_OF_YEAR) == item_date.get(Calendar.DAY_OF_YEAR);
+            if (isToday) {
+                etDate.setText("Today");
+            } else if (isYesterday) {
+                etDate.setText("Yesterday");
+            } else {
+                etDate.setText(date);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -156,14 +180,13 @@ public class AddIncomeActivity extends FragmentActivity implements NumberPickerD
         sCategories = (Spinner) findViewById(R.id.sIncomeCategories);
 
         etDate = (EditText) findViewById(R.id.etIncomeDate);
-        etDate.setText(reverseDate());
+        etDate.setText("Today");
         ibCalendar = (ImageButton) findViewById(R.id.ibIncomeCalendar);
 
         bOk = (Button) findViewById(R.id.bOK);
         bCancel = (Button) findViewById(R.id.bCancel);
         Themer.setBackgroundColor(this, bOk, false);
         Themer.setBackgroundColor(this, bCancel, true);
-
 
     }
 
@@ -274,7 +297,29 @@ public class AddIncomeActivity extends FragmentActivity implements NumberPickerD
                 day = String.valueOf(cDay);
             }
             date = year + "-" + month + "-" + day;
-            etDate.setText(reverseDate());
+
+            try {
+                Calendar today = Calendar.getInstance();
+                Calendar yesterday = Calendar.getInstance();
+                yesterday.add(Calendar.DAY_OF_YEAR, -1);
+                Calendar item_date = Calendar.getInstance();
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                item_date.setTime(format.parse(date));
+
+                boolean isToday = today.get(Calendar.YEAR) == item_date.get(Calendar.YEAR) &&
+                        today.get(Calendar.DAY_OF_YEAR) == item_date.get(Calendar.DAY_OF_YEAR);
+                boolean isYesterday = yesterday.get(Calendar.YEAR) == item_date.get(Calendar.YEAR) &&
+                        yesterday.get(Calendar.DAY_OF_YEAR) == item_date.get(Calendar.DAY_OF_YEAR);
+                if (isToday) {
+                    etDate.setText("Today");
+                } else if (isYesterday) {
+                    etDate.setText("Yesterday");
+                } else {
+                    etDate.setText(date);
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
     };
 

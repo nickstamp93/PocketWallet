@@ -9,7 +9,6 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,8 +19,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.text.DateFormatSymbols;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import myexpenses.ng2.com.myexpenses.Adapters.DrawerAdapter;
@@ -301,7 +303,7 @@ public class OverviewActivity extends Activity {
         }
 
         double balance = totalIncomes - totalExpenses;
-        balance = Math.round(balance*100)/100.0;
+        balance = Math.round(balance * 100) / 100.0;
         //set the balance to the user profile object
         profile.setBalance((float) balance);
 
@@ -314,7 +316,7 @@ public class OverviewActivity extends Activity {
         //savings are : total income - total expense - balance + savings user defined at the creation of the profile
         double savings = mdb.getTotalIncome() - mdb.getTotalExpenses() - balance + profile.getSavings();
         profile.setSavings((float) savings);
-        savings = Math.round(savings*100)/100.0;
+        savings = Math.round(savings * 100) / 100.0;
         tvSavings.setText(savings + " " + profile.getCurrency());
 
         //set up the PieChart
@@ -365,7 +367,7 @@ public class OverviewActivity extends Activity {
             tvPieHeading.setTextSize(26);
         }
 
-      //  Cursor cursorLastExpense, cursorLastIncome;
+        //  Cursor cursorLastExpense, cursorLastIncome;
         cursorLastExpense = mdb.getExpensesFromNewestToOldest();
         cursorLastIncome = mdb.getIncomeByNewestToOldest();
 
@@ -379,9 +381,33 @@ public class OverviewActivity extends Activity {
             String tokens[] = date.split("-");
             date = tokens[2] + "-" + tokens[1] + "-" + tokens[0];
 
+            try {
+                Calendar today = Calendar.getInstance();
+                Calendar yesterday = Calendar.getInstance();
+                yesterday.add(Calendar.DAY_OF_YEAR, -1);
+                Calendar item_calendar = Calendar.getInstance();
+                SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+
+                Date item_date = format.parse(date);
+                item_calendar.setTime(item_date);
+
+                boolean isToday = today.get(Calendar.YEAR) == item_calendar.get(Calendar.YEAR) &&
+                        today.get(Calendar.DAY_OF_YEAR) == item_calendar.get(Calendar.DAY_OF_YEAR);
+                boolean isYesterday = yesterday.get(Calendar.YEAR) == item_calendar.get(Calendar.YEAR) &&
+                        yesterday.get(Calendar.DAY_OF_YEAR) == item_calendar.get(Calendar.DAY_OF_YEAR);
+                if (isToday) {
+                    tvLastExpenseDate.setText("Today");
+                } else if (isYesterday) {
+                    tvLastExpenseDate.setText("Yesterday");
+                } else {
+                    tvLastExpenseDate.setText(new SimpleDateFormat("dd MMMM").format(item_date));
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
             //and fill the views with the values
             tvLastExpenseValue.setText(cursorLastExpense.getDouble(3) + " " + profile.getCurrency());
-            tvLastExpenseDate.setText(date);
 
             //open category database
             CategoryDatabase cdb = new CategoryDatabase(this);
@@ -409,9 +435,33 @@ public class OverviewActivity extends Activity {
             String tokens[] = date.split("-");
             date = tokens[2] + "-" + tokens[1] + "-" + tokens[0];
 
+            try {
+                Calendar today = Calendar.getInstance();
+                Calendar yesterday = Calendar.getInstance();
+                yesterday.add(Calendar.DAY_OF_YEAR, -1);
+                Calendar item_calendar = Calendar.getInstance();
+                SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+
+                Date item_date = format.parse(date);
+                item_calendar.setTime(item_date);
+
+                boolean isToday = today.get(Calendar.YEAR) == item_calendar.get(Calendar.YEAR) &&
+                        today.get(Calendar.DAY_OF_YEAR) == item_calendar.get(Calendar.DAY_OF_YEAR);
+                boolean isYesterday = yesterday.get(Calendar.YEAR) == item_calendar.get(Calendar.YEAR) &&
+                        yesterday.get(Calendar.DAY_OF_YEAR) == item_calendar.get(Calendar.DAY_OF_YEAR);
+                if (isToday) {
+                    tvLastIncomeDate.setText("Today");
+                } else if (isYesterday) {
+                    tvLastIncomeDate.setText("Yesterday");
+                } else {
+                    tvLastIncomeDate.setText(new SimpleDateFormat("dd MMMM").format(item_date));
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
             //and fill the views with the values
             tvLastIncomeValue.setText(cursorLastIncome.getDouble(1) + " " + profile.getCurrency());
-            tvLastIncomeDate.setText(date);
 
             //open category database
             CategoryDatabase cdb = new CategoryDatabase(this);
@@ -437,7 +487,7 @@ public class OverviewActivity extends Activity {
     }
 
 
-    private void initListeners(){
+    private void initListeners() {
 
         llLastExpense.setOnClickListener(new View.OnClickListener() {
             @Override

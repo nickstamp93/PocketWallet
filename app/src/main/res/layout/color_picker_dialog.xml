@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center" />
-        <myexpenses.ng2.com.myexpenses.Extra.ColorPicker.ColorPickerPalette
+        <com.ngngteam.pocketwallet.Extra.ColorPicker.ColorPickerPalette
             android:id="@+id/color_picker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

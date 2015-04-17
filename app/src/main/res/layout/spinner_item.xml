@@ -4,7 +4,7 @@
     android:layout_height="50dp"
     android:orientation="horizontal">
 
-    <myexpenses.ng2.com.myexpenses.Extra.LetterImageView
+    <com.ngngteam.pocketwallet.Extra.LetterImageView
         android:id="@+id/livSpinner"
         android:layout_width="@dimen/category_icon_width_spinner"
         android:layout_height="@dimen/category_icon_height_spinner"

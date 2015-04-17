@@ -6,7 +6,7 @@
     android:background="@drawable/rounded_color_background"
     android:padding="@dimen/layout_padding_small">
 
-    <myexpenses.ng2.com.myexpenses.Extra.LetterImageView
+    <com.ngngteam.pocketwallet.Extra.LetterImageView
         android:id="@+id/livhistory"
         android:layout_width="@dimen/category_icon_width"
         android:layout_height="@dimen/category_icon_height"

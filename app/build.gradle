@@ -5,7 +5,7 @@ android {
     buildToolsVersion "20.0.0"
 
     defaultConfig {
-        applicationId "myexpenses.ng2.com.myexpenses"
+        applicationId "com.ngngteam.pocketwallet"
         minSdkVersion 14
         targetSdkVersion 20
         versionCode 1

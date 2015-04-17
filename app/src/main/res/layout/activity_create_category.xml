@@ -29,7 +29,7 @@
             android:padding="@dimen/layout_inner_padding"
             android:orientation="horizontal">
 
-            <myexpenses.ng2.com.myexpenses.Extra.LetterImageView
+            <com.ngngteam.pocketwallet.Extra.LetterImageView
                 android:id="@+id/livCatPreview"
                 android:layout_width="@dimen/preview_icon_width"
                 android:layout_height="@dimen/preview_icon_height" />

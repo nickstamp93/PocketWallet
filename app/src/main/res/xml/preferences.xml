@@ -24,7 +24,7 @@
                 android:summary="@string/pref_summary_password"
                 android:title="@string/pref_title_password" />
 
-            <myexpenses.ng2.com.myexpenses.Dialogs.PasswordDialog
+            <com.ngngteam.pocketwallet.Dialogs.PasswordDialog
                 android:dependency="@string/pref_key_password"
                 android:inputType="numberPassword"
                 android:key="@string/pref_key_password_value"

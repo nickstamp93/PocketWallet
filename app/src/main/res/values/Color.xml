@@ -175,7 +175,7 @@
     <color name="action_bar_dark">#37474F</color>
     <!--<color name="bg_light">#F0F0F0</color>-->
     <color name="bg_light">#F6F6F6</color>
-    <color name="action_bar_light">#D0D0D0</color>
+    <color name="action_bar_light">#b8beb3</color>
     <color name="text_color_dark">#242429</color>
     <color name="drawer_light">#d5d5d5</color>
     <color name="backround_pie_light">#fff</color>

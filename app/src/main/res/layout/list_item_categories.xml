@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:padding="5dp">
+    android:padding="@dimen/layout_padding_small">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -16,8 +16,8 @@
 
         <myexpenses.ng2.com.myexpenses.Extra.LetterImageView
             android:id="@+id/livcat"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/category_icon_width"
+            android:layout_height="@dimen/category_icon_height"
             android:layout_marginLeft="15dp" />
 
         <TextView
@@ -26,8 +26,9 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Category Name"
             android:id="@+id/tvName"
-            android:padding="10dp"
+            android:padding="@dimen/layout_padding"
             android:gravity="center"
             android:layout_weight="0.8" />
     </LinearLayout>
+
 </LinearLayout>

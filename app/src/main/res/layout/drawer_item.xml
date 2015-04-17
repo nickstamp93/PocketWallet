@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="1"
-    android:padding="10dp">
+    android:padding="@dimen/layout_padding">
 
     <ImageView
         android:id="@+id/IvDrawer"
@@ -22,7 +22,6 @@
         android:textAppearance="?android:textAppearanceMedium"
         android:gravity="center"
         android:textStyle="italic"
-        android:padding="5dp" />
-
+        android:padding="@dimen/layout_padding_small" />
 
 </LinearLayout>

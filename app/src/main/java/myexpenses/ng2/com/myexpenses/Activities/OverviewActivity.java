@@ -9,7 +9,6 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -362,7 +361,7 @@ public class OverviewActivity extends Activity {
         //set the heading of the PieChart according to the preferred grouping
         if (manager.getPrefsGrouping().equalsIgnoreCase(getResources().getString(R.string.pref_grouping_weekly))) {
             tvPieHeading.setText(getResources().getString(R.string.text_pie_heading));
-            tvPieHeading.setTextSize(20);
+            tvPieHeading.setTextSize(getResources().getInteger(R.integer.text_size_pie_heading_small));
         } else {
             Calendar c = Calendar.getInstance();
             int month = c.get(Calendar.MONTH);
@@ -371,7 +370,7 @@ public class OverviewActivity extends Activity {
             String sMonth = getMonthForInt(month);
 
             tvPieHeading.setText(sMonth);
-            tvPieHeading.setTextSize(26);
+            tvPieHeading.setTextSize(getResources().getInteger(R.integer.text_size_pie_heading));
         }
 
         //  Cursor cursorLastExpense, cursorLastIncome;

@@ -12,9 +12,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="@dimen/layout_padding_small"
             android:textAppearance="?android:textAppearanceMedium"
             android:text="@string/dialog_delete_category_text" />
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,11 +30,10 @@
                 android:id="@+id/cbancat"
                 android:checked="false"
                 android:text="@string/dialog_delete_category_move"
-                android:textSize="20sp"
+                android:textSize="@dimen/text_size_checkbox_move"
                 android:layout_weight="1"
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp" />
-
 
             <Spinner
                 android:layout_width="match_parent"
@@ -58,7 +57,6 @@
                 android:id="@+id/bOK"
                 style="@style/ButtonStyleBottom"
                 android:text="@string/button_ok" />
-
 
         </LinearLayout>
 

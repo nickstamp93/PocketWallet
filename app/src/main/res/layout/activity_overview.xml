@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:id="@+id/drawer_layout">
 
-
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,9 +21,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:padding="10dp"
+                android:padding="@dimen/layout_padding"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="35sp"
+                android:textSize="@dimen/text_size_username"
+                android:text="Nikos"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -32,7 +32,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_color_background"
-                android:layout_margin="10dp"
+                android:layout_margin="@dimen/card_margin"
+                android:visibility="gone"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -40,11 +41,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:weightSum="3">
 
                     <TextView
                         style="@style/Headline"
-                        android:layout_weight="1"
+                        android:layout_weight="2"
                         android:gravity="center_horizontal"
                         android:text="@string/string_balance" />
 
@@ -53,7 +54,7 @@
                         style="@style/Headline"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
-                        android:text="0 €"
+                        android:text="1000.0 €"
                         android:textSize="@dimen/value_size_big" />
                 </LinearLayout>
 
@@ -62,11 +63,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:weightSum="3">
 
                     <TextView
                         style="@style/Headline"
-                        android:layout_weight="1"
+                        android:layout_weight="2"
                         android:gravity="center_horizontal"
                         android:text="@string/string_savings" />
 
@@ -75,7 +76,7 @@
                         style="@style/Headline"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
-                        android:text="0 €"
+                        android:text="1000.0 €"
                         android:textSize="@dimen/value_size_big" />
                 </LinearLayout>
 
@@ -93,7 +94,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/text_no_records"
-                    android:textSize="20sp" />
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
 
             </LinearLayout>
 
@@ -102,11 +103,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_color_background"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <myexpenses.ng2.com.myexpenses.Extra.MagnificentChart
-                    android:layout_width="180dp"
-                    android:layout_height="180dp"
+                    android:layout_width="@dimen/pie_view_width"
+                    android:layout_height="@dimen/pie_view_height"
                     android:layout_margin="20dp"
                     app:showTitle="true"
                     app:animation="true"
@@ -121,13 +123,11 @@
                     android:orientation="vertical"
                     android:weightSum="2">
 
-
                     <TextView
                         android:id="@+id/tvPieHeading"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/text_pie_heading"
-                        android:textSize="18sp"
                         android:gravity="center"
                         android:layout_weight="1" />
 
@@ -185,12 +185,9 @@
 
                     </LinearLayout>
 
-
                 </LinearLayout>
 
-
             </LinearLayout>
-
 
             <LinearLayout
                 android:id="@+id/llOverviewLastTransactions"
@@ -198,7 +195,7 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/rounded_color_background"
                 android:layout_marginTop="10dp"
-                android:padding="5dp"
+                android:padding="@dimen/layout_padding_small"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -237,17 +234,19 @@
 
                         <myexpenses.ng2.com.myexpenses.Extra.LetterImageView
                             android:id="@+id/livLastExpense"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
+                            android:layout_width="@dimen/category_icon_width"
+                            android:layout_height="@dimen/category_icon_height"
                             android:layout_margin="10dp" />
 
                         <TextView
                             android:id="@+id/tvLastExpenseDate"
-                            style="@style/Headline"
-                            android:layout_weight="1.3"
                             android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/layout_padding_small"
+                            android:textAppearance="?android:textAppearanceMedium"
+                            android:layout_weight="1.3"
                             android:gravity="center_horizontal"
-                            android:text="21/05/15" />
+                            android:text="Fri 25 April" />
 
                         <TextView
                             android:id="@+id/tvLastExpenseValue"
@@ -297,17 +296,19 @@
 
                         <myexpenses.ng2.com.myexpenses.Extra.LetterImageView
                             android:id="@+id/livLastIncome"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
+                            android:layout_width="@dimen/category_icon_width"
+                            android:layout_height="@dimen/category_icon_height"
                             android:layout_margin="10dp" />
 
                         <TextView
                             android:id="@+id/tvLastIncomeDate"
-                            style="@style/Headline"
-                            android:layout_weight="1.3"
                             android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/layout_padding_small"
+                            android:textAppearance="?android:textAppearanceMedium"
+                            android:layout_weight="1.3"
                             android:gravity="center_horizontal"
-                            android:text="1/03/15" />
+                            android:text="Mon 26 January" />
 
                         <TextView
                             android:id="@+id/tvLastIncomeValue"

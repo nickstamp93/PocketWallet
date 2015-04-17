@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -52,8 +53,8 @@ public class OverviewActivity extends Activity {
     //View objects for the XML management
     private TextView tvBalance, tvSavings, tvLastIncomeValue, tvLastExpenseValue, tvLastExpenseDate,
             tvLastIncomeDate, tvUsername, tvPieHeading, tvLegendTotalExpense, tvLegendTotalIncome;
-    private LinearLayout llPiewView, llBalance, llLastTransactions, llLastExpense, llLastIncome;
-    private LetterImageView livLastExpense, livLastIncome, livLegendIncome, livLegendExpense;
+    private LinearLayout llPiewView, llBalance, llLastTransactions, llLastExpense, llLastIncome , llMessage;
+    private LetterImageView livLastExpense, livLastIncome, livLegendIncome, livLegendExpense ;
     private DrawerLayout drawerLayout;
     private ListView drawer;
     private ActionBarDrawerToggle drawerToggle;
@@ -229,6 +230,9 @@ public class OverviewActivity extends Activity {
         tvBalance = (TextView) findViewById(R.id.tvOverviewBalance);
         tvSavings = (TextView) findViewById(R.id.tvOverviewSavings);
 
+        //=================Message section====================================================
+        llMessage = (LinearLayout) findViewById(R.id.llNoTransactionMessage);
+
         //=================Second section , Pie - Pie Heading - Pie Legends===================
         llPiewView = (LinearLayout) findViewById(R.id.llPieView);
         llPiewView.setVisibility(View.GONE);
@@ -290,6 +294,7 @@ public class OverviewActivity extends Activity {
         Themer.setBackgroundColorCard(this, llBalance);
         Themer.setBackgroundColorCard(this, llLastTransactions);
         Themer.setBackgroundColorCard(this, llPiewView);
+        Themer.setBackgroundColorCard(this , llMessage);
 
 
         double totalExpenses;
@@ -346,10 +351,12 @@ public class OverviewActivity extends Activity {
 
             //show the pie after set up
             llPiewView.setVisibility(View.VISIBLE);
+            llMessage.setVisibility(View.GONE);
 
         } else {
             //else the pie section should be invisible
             llPiewView.setVisibility(View.GONE);
+            llMessage.setVisibility(View.VISIBLE);
         }
 
         //set the heading of the PieChart according to the preferred grouping

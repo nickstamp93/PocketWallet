@@ -127,7 +127,7 @@
     <string name="text_pie_heading">This week\'s transactions</string>
     <string name="legend_text_expense">Expense</string>
     <string name="legend_text_income">Income</string>
-    <string name="text_no_records">No recorded transactions for the current week</string>
+    <string name="text_no_records">No recorded transactions for the current period</string>
     <string name="text_last_expense">Last Expense</string>
     <string name="text_last_income">Last Income</string>
 

@@ -212,5 +212,7 @@
     <string name="text_filter">Filter</string>
 
     <string name="toast_savings">You can\'t change the stock savings value because you have transactions in your history</string>
+    <string name="text_today">Today</string>
+    <string name="text_yesterday">Yesterday</string>
 
 </resources>

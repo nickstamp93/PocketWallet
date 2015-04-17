@@ -396,9 +396,9 @@ public class OverviewActivity extends Activity {
                 boolean isYesterday = yesterday.get(Calendar.YEAR) == item_calendar.get(Calendar.YEAR) &&
                         yesterday.get(Calendar.DAY_OF_YEAR) == item_calendar.get(Calendar.DAY_OF_YEAR);
                 if (isToday) {
-                    tvLastExpenseDate.setText("Today");
+                    tvLastExpenseDate.setText(getString(R.string.text_today));
                 } else if (isYesterday) {
-                    tvLastExpenseDate.setText("Yesterday");
+                    tvLastExpenseDate.setText(getString(R.string.text_yesterday));
                 } else {
                     tvLastExpenseDate.setText(new SimpleDateFormat("dd MMMM").format(item_date));
                 }
@@ -450,9 +450,9 @@ public class OverviewActivity extends Activity {
                 boolean isYesterday = yesterday.get(Calendar.YEAR) == item_calendar.get(Calendar.YEAR) &&
                         yesterday.get(Calendar.DAY_OF_YEAR) == item_calendar.get(Calendar.DAY_OF_YEAR);
                 if (isToday) {
-                    tvLastIncomeDate.setText("Today");
+                    tvLastIncomeDate.setText(getString(R.string.text_today));
                 } else if (isYesterday) {
-                    tvLastIncomeDate.setText("Yesterday");
+                    tvLastIncomeDate.setText(getString(R.string.text_yesterday));
                 } else {
                     tvLastIncomeDate.setText(new SimpleDateFormat("dd MMMM").format(item_date));
                 }

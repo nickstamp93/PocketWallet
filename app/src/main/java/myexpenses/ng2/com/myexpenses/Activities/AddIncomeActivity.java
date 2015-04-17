@@ -124,9 +124,9 @@ public class AddIncomeActivity extends FragmentActivity implements NumberPickerD
             boolean isYesterday = yesterday.get(Calendar.YEAR) == item_date.get(Calendar.YEAR) &&
                     yesterday.get(Calendar.DAY_OF_YEAR) == item_date.get(Calendar.DAY_OF_YEAR);
             if (isToday) {
-                etDate.setText("Today");
+                etDate.setText(getString(R.string.text_today));
             } else if (isYesterday) {
-                etDate.setText("Yesterday");
+                etDate.setText(getString(R.string.text_yesterday));
             } else {
                 etDate.setText(date);
             }
@@ -180,7 +180,7 @@ public class AddIncomeActivity extends FragmentActivity implements NumberPickerD
         sCategories = (Spinner) findViewById(R.id.sIncomeCategories);
 
         etDate = (EditText) findViewById(R.id.etIncomeDate);
-        etDate.setText("Today");
+        etDate.setText(getString(R.string.text_today));
         ibCalendar = (ImageButton) findViewById(R.id.ibIncomeCalendar);
 
         bOk = (Button) findViewById(R.id.bOK);
@@ -311,9 +311,9 @@ public class AddIncomeActivity extends FragmentActivity implements NumberPickerD
                 boolean isYesterday = yesterday.get(Calendar.YEAR) == item_date.get(Calendar.YEAR) &&
                         yesterday.get(Calendar.DAY_OF_YEAR) == item_date.get(Calendar.DAY_OF_YEAR);
                 if (isToday) {
-                    etDate.setText("Today");
+                    etDate.setText(getString(R.string.text_today));
                 } else if (isYesterday) {
-                    etDate.setText("Yesterday");
+                    etDate.setText(getString(R.string.text_yesterday));
                 } else {
                     etDate.setText(date);
                 }

@@ -62,9 +62,9 @@
     <string name="pref_category_notifications">Ειδοποιήσεις</string>
     <string name="pref_title_reminder">Ημερήσια Υπενθύμιση</string>
     <string name="pref_title_reminder_time">Ώρα Υπενθύμισης</string>
-    <string name="pref_category_about">Σχετικά με εμάς</string>
+    <string name="pref_category_about">Σχετικά</string>
     <string name="pref_title_rate_app">Αξιολόγηση Εφαρμογής</string>
-    <string name="pref_title_about">Σχετικά</string>
+    <string name="pref_title_about">Σχετικά με εμάς</string>
     <string name="pref_title_password_change">Επεξεργασία Κωδικού</string>
     <string name="pref_title_data_settings">Δεδομένα</string>
     <string name="pref_title_profile">Προφίλ</string>
@@ -213,5 +213,7 @@
     <string name="text_filter">Φίλτρα</string>
 
     <string name="toast_savings">Δεν μπορείς να αλλάξεις την τιμή της αποταμίευσης επειδή υπάρχουν συναλλαγές στο ιστορικό σου </string>
+    <string name="text_today">Σήμερα</string>
+    <string name="text_yesterday">Χθες</string>
 
 </resources>

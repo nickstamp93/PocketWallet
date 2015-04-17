@@ -78,9 +78,9 @@ public class HistoryListViewAdapter extends CursorAdapter {
                 boolean isYesterday = yesterday.get(Calendar.YEAR) == item_date.get(Calendar.YEAR) &&
                         yesterday.get(Calendar.DAY_OF_YEAR) == item_date.get(Calendar.DAY_OF_YEAR);
                 if(isToday){
-                    tvDate.setText("Today");
+                    tvDate.setText(context.getString(R.string.text_today));
                 }else if (isYesterday){
-                    tvDate.setText("Yesterday");
+                    tvDate.setText(context.getString(R.string.text_yesterday));
                 }else{
                     String dateTokens[] = date.split("-");
                     String reformedDate = dateTokens[2] + "-" + dateTokens[1] + "-" + dateTokens[0];
@@ -135,9 +135,9 @@ public class HistoryListViewAdapter extends CursorAdapter {
                 boolean isYesterday = yesterday.get(Calendar.YEAR) == item_date.get(Calendar.YEAR) &&
                         yesterday.get(Calendar.DAY_OF_YEAR) == item_date.get(Calendar.DAY_OF_YEAR);
                 if(isToday){
-                    tvDate.setText("Today");
+                    tvDate.setText(context.getString(R.string.text_today));
                 }else if (isYesterday){
-                    tvDate.setText("Yesterday");
+                    tvDate.setText(context.getString(R.string.text_yesterday));
                 }else{
                     String dateTokens[] = date.split("-");
                     String reformedDate = dateTokens[2] + "-" + dateTokens[1] + "-" + dateTokens[0];
@@ -195,9 +195,9 @@ public class HistoryListViewAdapter extends CursorAdapter {
                 boolean isYesterday = yesterday.get(Calendar.YEAR) == item_date.get(Calendar.YEAR) &&
                         yesterday.get(Calendar.DAY_OF_YEAR) == item_date.get(Calendar.DAY_OF_YEAR);
                 if(isToday){
-                    tvDate.setText("Today");
+                    tvDate.setText(context.getString(R.string.text_today));
                 }else if (isYesterday){
-                    tvDate.setText("Yesterday");
+                    tvDate.setText(context.getString(R.string.text_yesterday));
                 }else{
                     String dateTokens[] = date.split("-");
                     String reformedDate = dateTokens[2] + "-" + dateTokens[1] + "-" + dateTokens[0];
@@ -250,9 +250,9 @@ public class HistoryListViewAdapter extends CursorAdapter {
                 boolean isYesterday = yesterday.get(Calendar.YEAR) == item_date.get(Calendar.YEAR) &&
                         yesterday.get(Calendar.DAY_OF_YEAR) == item_date.get(Calendar.DAY_OF_YEAR);
                 if(isToday){
-                    tvDate.setText("Today");
+                    tvDate.setText(context.getString(R.string.text_today));
                 }else if (isYesterday){
-                    tvDate.setText("Yesterday");
+                    tvDate.setText(context.getString(R.string.text_yesterday));
                 }else{
                     String dateTokens[] = date.split("-");
                     String reformedDate = dateTokens[2] + "-" + dateTokens[1] + "-" + dateTokens[0];

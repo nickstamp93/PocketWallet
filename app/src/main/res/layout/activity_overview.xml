@@ -33,7 +33,6 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_color_background"
                 android:layout_margin="@dimen/card_margin"
-                android:visibility="gone"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -103,7 +102,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_color_background"
-                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <myexpenses.ng2.com.myexpenses.Extra.MagnificentChart

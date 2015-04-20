@@ -38,10 +38,24 @@ public class DeleteCategoryDialog extends DialogFragment {
     private ArrayList<String> categories;
     private SpinnerAdapter adapter;
 
-    public DeleteCategoryDialog(String delCategory, boolean expense) {
-        this.delCategory = delCategory;
-        this.expense = expense;
+    public DeleteCategoryDialog() {
+
     }
+
+    public static DeleteCategoryDialog newInstance(String delCategory, boolean expense){
+        DeleteCategoryDialog d = new DeleteCategoryDialog();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("key_category" , delCategory);
+        bundle.putBoolean("key_expense" , expense);
+
+        d.setArguments(bundle);
+
+        return d;
+
+    }
+
+
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -49,6 +63,9 @@ public class DeleteCategoryDialog extends DialogFragment {
         dialog = new Dialog(getActivity());
         dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.delete_category_dialog);
+
+        delCategory = getArguments().getString("key_category");
+        expense = getArguments().getBoolean("key_expense");
 
         init();
         initUI();
@@ -132,7 +149,7 @@ public class DeleteCategoryDialog extends DialogFragment {
                     getActivity().finish();
 
                 }
-                Toast.makeText(getActivity(), delCategory + getResources().getString(R.string.toast_category_deleted), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), delCategory + " " + getResources().getString(R.string.toast_category_deleted), Toast.LENGTH_SHORT).show();
 
             }
         });

@@ -41,4 +41,6 @@
     <dimen name="layout_padding">5dp</dimen>
     <dimen name="layout_padding_small">3dp</dimen>
     <dimen name="bottom_margin_headlines_small">15dp</dimen>
+
+    <integer name="color_columns">3</integer>
 </resources>

@@ -63,6 +63,7 @@
         <activity
             android:name=".Activities.CategoriesManagerActivity"
             android:label="@string/title_activity_categories_manager"
+            android:parentActivityName=".Activities.SettingsActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -79,6 +80,7 @@
         <activity
             android:name=".Activities.CreateCategoryActivity"
             android:label="@string/title_activity_create_category"
+            android:parentActivityName=".Activities.CreateCategoryActivity"
             android:screenOrientation="portrait" />
 
         <activity

@@ -223,7 +223,7 @@ public class CreateCategoryActivity extends Activity implements ColorPickerSwatc
                     MoneyDatabase mdb = new MoneyDatabase(CreateCategoryActivity.this);
                     if (mdb.CategoryHasItems(name, expense)) {
 
-                        deleteDialog = new DeleteCategoryDialog(name, expense);
+                        deleteDialog = DeleteCategoryDialog.newInstance(name, expense);
                         deleteDialog.show(getFragmentManager(), "Delete");
 
                     } else {

@@ -38,4 +38,6 @@
     <dimen name="layout_padding">15dp</dimen>
     <dimen name="layout_padding_small">10dp</dimen>
 
+    <integer name="color_columns">5</integer>
+
 </resources>

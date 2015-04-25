@@ -333,7 +333,7 @@ public class OverviewActivity extends Activity {
         //if there is income or expense for the current period (week or month)
         if (total != 0) {
 
-            mcPie.setMaxValue((int) total);
+            mcPie.setMaxValue(total);
 
             //expense part of the pie chart
             MagnificentChartItem item = new MagnificentChartItem("Expense", totalExpenses, getResources().getColor(R.color.red));

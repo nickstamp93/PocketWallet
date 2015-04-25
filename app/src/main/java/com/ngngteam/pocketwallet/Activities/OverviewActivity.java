@@ -306,6 +306,9 @@ public class OverviewActivity extends Activity {
             totalIncomes = mdb.getTotalIncomePriceForCurrentWeek();
         }
 
+        totalExpenses = Math.round(totalExpenses * 100) / 100.0;
+        totalIncomes = Math.round(totalIncomes * 100) / 100.0;
+
         double balance = totalIncomes - totalExpenses;
         balance = Math.round(balance * 100) / 100.0;
         //set the balance to the user profile object

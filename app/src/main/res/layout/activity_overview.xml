@@ -107,7 +107,7 @@
                 <com.ngngteam.pocketwallet.Extra.MagnificentChart
                     android:layout_width="@dimen/pie_view_width"
                     android:layout_height="@dimen/pie_view_height"
-                    android:layout_margin="20dp"
+                    android:layout_margin="10dp"
                     app:showTitle="true"
                     app:animation="true"
                     app:round="false"

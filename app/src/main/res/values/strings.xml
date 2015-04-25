@@ -124,7 +124,7 @@
     <string name="string_balance">Balance :</string>
     <string name="string_savings">Savings :</string>
 
-    <string name="text_pie_heading">This week\'s transactions</string>
+    <string name="text_pie_heading">This week:</string>
     <string name="legend_text_expense">Expense</string>
     <string name="legend_text_income">Income</string>
     <string name="text_no_records">No recorded transactions for the current period</string>

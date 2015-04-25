@@ -363,7 +363,39 @@ public class OverviewActivity extends Activity {
 
         //set the heading of the PieChart according to the preferred grouping
         if (manager.getPrefsGrouping().equalsIgnoreCase(getResources().getString(R.string.pref_grouping_weekly))) {
-            tvPieHeading.setText(getResources().getString(R.string.text_pie_heading));
+
+            Calendar c = Calendar.getInstance();
+
+            int currentDay = c.get(Calendar.DAY_OF_WEEK);
+            int endDay = Calendar.MONDAY;
+
+            Date startDate, endDate;
+
+            if(endDay == currentDay){
+                startDate = c.getTime();
+                c.add(Calendar.DAY_OF_YEAR , 6);
+                endDate = c.getTime();
+            }else{
+                while(currentDay != endDay) {
+                    c.add(Calendar.DATE, 1);
+                    currentDay = c.get(Calendar.DAY_OF_WEEK);
+                }
+                endDate = c.getTime();
+                c.add(Calendar.DAY_OF_YEAR , -6);
+                startDate = c.getTime();
+            }
+
+            if(startDate.getMonth() == endDate.getMonth()){
+                tvPieHeading.setText(getString(R.string.text_pie_heading) + "\n("
+                        + new SimpleDateFormat("dd").format(startDate) + "-" +
+                        new SimpleDateFormat("dd MMM").format(endDate) + ")");
+            }else{
+                tvPieHeading.setText(getString(R.string.text_pie_heading) + "\n("
+                        + new SimpleDateFormat("dd MMM").format(startDate) + "-" +
+                        new SimpleDateFormat("dd MMM").format(endDate) + ")");
+            }
+
+            //tvPieHeading.setText(getResources().getString(R.string.text_pie_heading));
             tvPieHeading.setTextSize(getResources().getInteger(R.integer.text_size_pie_heading_small));
         } else {
             Calendar c = Calendar.getInstance();

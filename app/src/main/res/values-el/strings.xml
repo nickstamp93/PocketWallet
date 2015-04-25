@@ -125,7 +125,7 @@
     <string name="string_balance">Τρέχων  :</string>
     <string name="string_savings">Αποταμίευση :</string>
 
-    <string name="text_pie_heading">Συναλλαγές αυτήν την εβδομάδα</string>
+    <string name="text_pie_heading">Εβδομάδα:</string>
     <string name="legend_text_expense">Έξοδα</string>
     <string name="legend_text_income">Έσοδα</string>
     <string name="text_no_records">Δεν υπάρχουν συναλλαγές για την τρέχουσα περίοδο</string>

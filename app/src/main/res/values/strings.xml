@@ -157,7 +157,7 @@
     <string name="category_bonus">Bonus</string>
 
     <!-- AddExpenseActivity -->
-    <string name="textview_hint_notes">Enter some notes...</string>
+    <string name="textview_hint_notes">Enter some notes…</string>
     <string name="action_add_expense">Add Expense</string>
     <string name="textview_headline_category">Category</string>
     <string name="textview_headline_date">Date</string>

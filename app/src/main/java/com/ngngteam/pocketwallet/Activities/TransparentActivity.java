@@ -7,13 +7,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
-import com.doomonafireball.betterpickers.radialtimepicker.RadialPickerLayout;
 import com.doomonafireball.betterpickers.radialtimepicker.RadialTimePickerDialog;
-
-import java.util.Calendar;
-
 import com.ngngteam.pocketwallet.BroadcastReceivers.ReminderReceiver;
 import com.ngngteam.pocketwallet.Utils.SharedPrefsManager;
+
+import java.util.Calendar;
 
 public class TransparentActivity extends FragmentActivity implements RadialTimePickerDialog.OnTimeSetListener, RadialTimePickerDialog.OnDialogDismissListener {
 
@@ -49,20 +47,6 @@ public class TransparentActivity extends FragmentActivity implements RadialTimeP
         timeDialog = RadialTimePickerDialog.newInstance(TransparentActivity.this, calendar.getTime().getHours(), calendar.getTime().getMinutes(), true);
     }
 
-    @Override
-    public void onTimeSet(RadialPickerLayout radialPickerLayout, int hour, int minutes) {
-
-        //on time set , save the new time in the preferences file
-        SharedPrefsManager manager = new SharedPrefsManager(getApplicationContext());
-        manager.startEditing();
-        manager.setPrefsReminderTime(hour, minutes);
-        manager.commit();
-
-        //and set the alarm to this time
-        setAlarm();
-        //destroy current activity
-        TransparentActivity.this.finish();
-    }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
@@ -111,4 +95,17 @@ public class TransparentActivity extends FragmentActivity implements RadialTimeP
 
     }
 
+    @Override
+    public void onTimeSet(RadialTimePickerDialog radialTimePickerDialog, int hour, int minutes) {
+        //on time set , save the new time in the preferences file
+        SharedPrefsManager manager = new SharedPrefsManager(getApplicationContext());
+        manager.startEditing();
+        manager.setPrefsReminderTime(hour, minutes);
+        manager.commit();
+
+        //and set the alarm to this time
+        setAlarm();
+        //destroy current activity
+        TransparentActivity.this.finish();
+    }
 }

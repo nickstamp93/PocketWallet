@@ -78,7 +78,7 @@ public class MagnificentChart extends View {
             boolean showShadow = typedArray.getBoolean(R.styleable.MagnificentChart_shadow, true);
             boolean showTitle = typedArray.getBoolean(R.styleable.MagnificentChart_showTitle, false);
             int shadowColor = typedArray.getColor(R.styleable.MagnificentChart_shadowColor, Color.parseColor("#F2F2F2"));
-            int backgroundColor = typedArray.getColor(R.styleable.MagnificentChart_background, Color.parseColor("#FFFFFF"));
+            int backgroundColor = typedArray.getColor(R.styleable.MagnificentChart_chartbackground, Color.parseColor("#FFFFFF"));
 
             init(context, null, 0, isAnimated, isRound, showShadow, showTitle, shadowColor, backgroundColor);
         } finally {

@@ -13,16 +13,16 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
-import com.ngngteam.pocketwallet.Extra.ColorPicker.ColorPickerDialog;
-import com.ngngteam.pocketwallet.Extra.ColorPicker.ColorPickerSwatch;
 import com.ngngteam.pocketwallet.Data.CategoryDatabase;
 import com.ngngteam.pocketwallet.Data.MoneyDatabase;
 import com.ngngteam.pocketwallet.Dialogs.DeleteCategoryDialog;
+import com.ngngteam.pocketwallet.Extra.ColorPicker.ColorPickerDialog;
+import com.ngngteam.pocketwallet.Extra.ColorPicker.ColorPickerSwatch;
 import com.ngngteam.pocketwallet.Extra.LetterImageView;
 import com.ngngteam.pocketwallet.R;
 import com.ngngteam.pocketwallet.Utils.Themer;
+
+import java.util.ArrayList;
 
 public class CreateCategoryActivity extends Activity implements ColorPickerSwatch.OnColorSelectedListener {
 
@@ -88,7 +88,6 @@ public class CreateCategoryActivity extends Activity implements ColorPickerSwatc
 
         //init the color picker dialog
         dialog = ColorPickerDialog.newInstance(R.string.color_picker_default_title, mColor, 0, 4, ColorPickerDialog.SIZE_SMALL);
-        dialog.setSelectedColor(Color.RED);
         dialog.setOnColorSelectedListener(this);
 
         //get the category name from the intent
@@ -106,6 +105,7 @@ public class CreateCategoryActivity extends Activity implements ColorPickerSwatc
             liv.setmBackgroundPaint(color);
             id = -1;
         }
+        dialog.setSelectedColor(color);
 
         expense = getIntent().getExtras().getBoolean("Expense");
 

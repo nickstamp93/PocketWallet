@@ -17,8 +17,6 @@ import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
 import android.widget.Toast;
 
-import java.util.Calendar;
-
 import com.ngngteam.pocketwallet.BroadcastReceivers.ReminderReceiver;
 import com.ngngteam.pocketwallet.Data.MoneyDatabase;
 import com.ngngteam.pocketwallet.Extra.ColorPicker.ColorPickerDialog;
@@ -26,6 +24,8 @@ import com.ngngteam.pocketwallet.Extra.ColorPicker.ColorPickerSwatch;
 import com.ngngteam.pocketwallet.R;
 import com.ngngteam.pocketwallet.Utils.SharedPrefsManager;
 import com.ngngteam.pocketwallet.Utils.Themer;
+
+import java.util.Calendar;
 
 public class SettingsActivity extends PreferenceActivity
         implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -281,7 +281,7 @@ public class SettingsActivity extends PreferenceActivity
 
             //alert the user
             SharedPrefsManager manager = new SharedPrefsManager(SettingsActivity.this);
-            Toast.makeText(getApplicationContext(), getResources().getString(R.string.toast_text_reminder) + manager.getPrefsReminderTime(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.toast_text_reminder) + " " + manager.getPrefsReminderTime(), Toast.LENGTH_SHORT).show();
 
             setAlarm();
         }

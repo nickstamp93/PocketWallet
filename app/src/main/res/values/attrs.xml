@@ -8,7 +8,7 @@
         <attr name="shadow" format="boolean" />
         <attr name="showTitle" format="boolean" />
         <attr name="shadowColor" format="color" />
-        <attr name="background" format="color" />
+        <attr name="chartbackground" format="color" />
     </declare-styleable>
 
 </resources>

@@ -22,6 +22,12 @@ You can be always informed about all your latest transactions and be aware of wh
 12. Password protection(default pass:1234)
 13. Initial saved amount of money
 
+## Under Development
+1. Lock app with pattern instead of number password
+2. Recurrent expenses-incomes(such as salary , bills etc)
+3. Advanced visual analysis of transactions in a particular period
+4. Data synchronization between devices
+
 ## Screenshots 
 
 <div>

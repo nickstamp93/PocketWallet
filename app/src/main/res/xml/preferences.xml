@@ -7,10 +7,10 @@
         android:title="@string/pref_category_general">
 
         <ListPreference
+            android:defaultValue="@string/pref_currency_default_value"
             android:dialogTitle="@string/dialog_title_currency"
             android:entries="@array/currency_entries"
             android:entryValues="@array/currency_values"
-            android:defaultValue="@string/pref_currency_default_value"
             android:key="@string/pref_key_currency"
             android:title="@string/pref_title_currency" />
 
@@ -24,11 +24,11 @@
                 android:summary="@string/pref_summary_password"
                 android:title="@string/pref_title_password" />
 
-            <com.ngngteam.pocketwallet.Dialogs.PasswordDialog
-                android:dependency="@string/pref_key_password"
-                android:inputType="numberPassword"
-                android:key="@string/pref_key_password_value"
-                android:title="@string/pref_title_password_change" />
+            <Preference
+                android:key="@string/pref_key_pattern"
+                android:title="@string/pref_title_pattern"
+                android:dependency="@string/pref_key_password"/>
+
 
         </PreferenceScreen>
 
@@ -70,14 +70,14 @@
         android:title="@string/pref_category_notifications">
 
         <SwitchPreference
-            android:key="@string/pref_key_reminder"
             android:defaultValue="false"
+            android:key="@string/pref_key_reminder"
             android:summary="@string/pref_summary_reminder"
             android:title="@string/pref_title_reminder" />
         <Preference
+            android:defaultValue="00:00"
             android:dependency="@string/pref_key_reminder"
             android:key="@string/pref_key_reminder_time"
-            android:defaultValue="00:00"
             android:title="@string/pref_title_reminder_time" />
 
     </PreferenceCategory>

@@ -57,7 +57,7 @@
 
     <string name="pref_category_general">General</string>
     <string name="pref_title_currency">Currency</string>
-    <string name="pref_title_password">Password Protection</string>
+    <string name="pref_title_password">Pattern lock</string>
     <string name="pref_title_categories">Categories</string>
     <string name="pref_category_notifications">Notifications</string>
     <string name="pref_title_reminder">Daily Reminder</string>
@@ -72,7 +72,7 @@
     <string name="pref_title_delete_income">Delete Income History</string>
     <string name="pref_title_delete_expense">Delete Expense history</string>
     <string name="pref_title_theme">Theme</string>
-    <string name="pref_summary_password">Protect app with a password lock on launch</string>
+    <string name="pref_summary_password">Protect app data with pattern on startup</string>
     <string name="pref_summary_reminder">Let us remind you on a daily base to track your finances</string>
 
     <string-array name="currency_entries">
@@ -214,5 +214,15 @@
     <string name="toast_savings">You can\'t change the stock savings value because you have transactions in your history</string>
     <string name="text_today">Today</string>
     <string name="text_yesterday">Yesterday</string>
+    <string name="title_activity_pattern_lock">PatternLockActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+
+    <string name="textview_enter_pattern">Enter pattern to unlock :</string>
+    <string name="pref_title_pattern">Set startup lock pattern</string>
+    <string name="pref_key_pattern">pref_key_pattern</string>
+    <string name="textview_confirm_pattern">Confirm pattern :</string>
+    <string name="textview_new_pattern">Enter new lock pattern :</string>
+    <string name="textview_wrong_pattern">Wrong pattern , try again :</string>
 
 </resources>

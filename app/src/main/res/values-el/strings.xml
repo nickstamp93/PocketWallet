@@ -57,7 +57,7 @@
 
     <string name="pref_category_general">Γενικά</string>
     <string name="pref_title_currency">Νόμισμα</string>
-    <string name="pref_title_password">Κωδικός Πρόσβασης</string>
+    <string name="pref_title_password">Μοτίβο κλειδώματος</string>
     <string name="pref_title_categories">Κατηγορίες</string>
     <string name="pref_category_notifications">Ειδοποιήσεις</string>
     <string name="pref_title_reminder">Ημερήσια Υπενθύμιση</string>
@@ -72,7 +72,7 @@
     <string name="pref_title_delete_income">Διαγραφή Ιστορικού Εισοδήματος</string>
     <string name="pref_title_delete_expense">Διαγραφή Ιστορικού Εξόδων</string>
     <string name="pref_title_theme">Θέμα</string>
-    <string name="pref_summary_password">Κλείδωμα εφαρμογής με κωδικό πρόσβασης κατά την εκκίνηση</string>
+    <string name="pref_summary_password">Προστασία εφαρμογής με μοτίβο κατά την εκκίνηση</string>
     <string name="pref_summary_reminder">Υπενθύμιση σε καθημερινή βάση για την καταγραφή των συναλλαγών σας</string>
 
     <string-array name="currency_entries">
@@ -215,5 +215,12 @@
     <string name="toast_savings">Δεν μπορείς να αλλάξεις την τιμή της αποταμίευσης επειδή υπάρχουν συναλλαγές στο ιστορικό σου </string>
     <string name="text_today">Σήμερα</string>
     <string name="text_yesterday">Χθες</string>
+
+    <string name="textview_enter_pattern">Εισάγετε το δικό σας μοτίβο :</string>
+    <string name="pref_title_pattern">Ορισμός μοτίβου</string>
+    <string name="pref_key_pattern">pref_key_pattern</string>
+    <string name="textview_confirm_pattern">Επιβεβαίωση μοτίβου κλειδώματος :</string>
+    <string name="textview_new_pattern">Εισαγωγή μοτίβου κλειδώματος :</string>
+    <string name="textview_wrong_pattern">Λάθος μοτίβο , ξαναδοκιμάστε :</string>
 
 </resources>

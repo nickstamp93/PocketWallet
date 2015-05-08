@@ -21,6 +21,7 @@ import com.ngngteam.pocketwallet.BroadcastReceivers.ReminderReceiver;
 import com.ngngteam.pocketwallet.Data.MoneyDatabase;
 import com.ngngteam.pocketwallet.Extra.ColorPicker.ColorPickerDialog;
 import com.ngngteam.pocketwallet.Extra.ColorPicker.ColorPickerSwatch;
+import com.ngngteam.pocketwallet.PatternLockActivity;
 import com.ngngteam.pocketwallet.R;
 import com.ngngteam.pocketwallet.Utils.SharedPrefsManager;
 import com.ngngteam.pocketwallet.Utils.Themer;
@@ -77,6 +78,12 @@ public class SettingsActivity extends PreferenceActivity
                 return false;
             }
         });
+
+        //when user clicks on "pattern lock" preference item
+        //launch intent with target the PatternLockActivity class
+        screen = findPreference(getResources().getString(R.string.pref_key_pattern));
+        i = new Intent(this, PatternLockActivity.class).putExtra("mode" , "edit");
+        screen.setIntent(i);
 
         //when user clicks on "about" preference item
         //launch an alert dialog with the aboout text
@@ -258,19 +265,14 @@ public class SettingsActivity extends PreferenceActivity
 
             //if the pass just been enabled
             if (sharedPreferences.getBoolean(getResources().getString(R.string.pref_key_password), false)) {
-                //alert the user
-                Toast.makeText(this, getResources().getString(R.string.toast_text_password_on), Toast.LENGTH_SHORT).show();
 
-                //if this is the first time
-                if (sharedPreferences.getString(getResources().getString(R.string.pref_key_password_value), "").equals("")) {
-
-                    //make the default pass to be 1234
-                    PreferenceManager.getDefaultSharedPreferences(this).edit().putString(getResources().getString(R.string.pref_key_password_value), "1234").commit();
-                    //and alert the user
-                    Toast.makeText(this, getResources().getString(R.string.toast_text_password_default_alert), Toast.LENGTH_LONG).show();
-                }
-
+                //launch pattern activity to enter new pattern
+                Intent i = new Intent(SettingsActivity.this, PatternLockActivity.class);
+                i.putExtra("mode", "edit");
+                startActivity(i);
             } else {
+                PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().
+                        putString(getString(R.string.pref_key_pattern), "1234").commit();
                 //alert the user
                 Toast.makeText(this, getResources().getString(R.string.toast_text_password_off), Toast.LENGTH_SHORT).show();
             }

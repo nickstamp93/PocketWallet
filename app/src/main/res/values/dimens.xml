@@ -43,4 +43,7 @@
     <dimen name="bottom_margin_headlines_small">15dp</dimen>
 
     <integer name="color_columns">3</integer>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
 </resources>

@@ -1,0 +1,25 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/layout_padding">
+
+
+    <com.eftimoff.patternview.PatternView xmlns:patternview="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/patternView"
+        android:layout_width="360dp"
+        android:layout_height="360dp"
+        android:layout_centerInParent="true"
+        patternview:circleColor="@color/highlighted_text_material_light"
+        patternview:gridSize="3"
+        patternview:pathColor="@color/primary_dark_material_light" />
+
+    <TextView
+        android:id="@+id/tvPatternTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/patternView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/minimum_margin_top_bottom"
+        android:text="@string/textview_enter_pattern" />
+
+</RelativeLayout>

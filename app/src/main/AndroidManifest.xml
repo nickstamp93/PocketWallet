@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ngngteam.pocketwallet">
+    package="com.ngngteam.pocketwallet" >
 
     <uses-permission android:name="android.permission.VIBRATE" />
 
@@ -8,7 +8,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppThemeBlack">
+        android:theme="@style/AppThemeBlack" >
         <activity
             android:name=".Activities.LauncherPickerActivity"
             android:clearTaskOnLaunch="true"
@@ -16,7 +16,7 @@
             android:label="@string/app_name"
             android:noHistory="true"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoDisplay">
+            android:theme="@android:style/Theme.NoDisplay" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,19 +28,16 @@
             android:label="@string/title_activity_add_expense"
             android:parentActivityName=".Activities.OverviewActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".Activities.AddIncomeActivity"
             android:label="@string/title_activity_add_income"
             android:parentActivityName=".Activities.OverviewActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".Activities.HistoryActivity"
             android:label="@string/title_activity_history"
             android:parentActivityName=".Activities.OverviewActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".Activities.UserDetailsActivity"
             android:label="@string/title_activity_user_details"
@@ -54,40 +51,37 @@
             android:name=".Activities.PasswordActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".Activities.OverviewActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".Activities.CategoriesManagerActivity"
             android:label="@string/title_activity_categories_manager"
             android:parentActivityName=".Activities.SettingsActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".Activities.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:parentActivityName=".Activities.OverviewActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".Activities.TransparentActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
         <activity
             android:name=".Activities.CreateCategoryActivity"
             android:label="@string/title_activity_create_category"
             android:parentActivityName=".Activities.CreateCategoryActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".Activities.FiltersDateToDateActivity"
             android:label="FiltersDateToDate"
             android:parentActivityName=".Activities.HistoryActivity"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name=".PatternLockActivity"
+            android:label="@string/title_activity_pattern_lock" >
+        </activity>
     </application>
 
 </manifest>

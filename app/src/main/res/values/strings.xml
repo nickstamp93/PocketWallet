@@ -40,7 +40,7 @@
     <string name="pref_key_currency">pref_key_currency</string>
     <string name="pref_key_password_settings">pref_key_password_settings</string>
     <string name="pref_key_password">pref_key_password</string>
-    <string name="pref_key_password_value">pref_key_password_value</string>
+    <string name="pref_key_pattern">pref_key_pattern</string>
     <string name="pref_key_categories">pref_key_categories</string>
     <string name="pref_key_theme">pref_key_theme</string>
     <string name="pref_key_data_settings">pref_key_data_settings</string>
@@ -58,6 +58,7 @@
     <string name="pref_category_general">General</string>
     <string name="pref_title_currency">Currency</string>
     <string name="pref_title_password">Pattern lock</string>
+    <string name="pref_title_pattern">Set startup lock pattern</string>
     <string name="pref_title_categories">Categories</string>
     <string name="pref_category_notifications">Notifications</string>
     <string name="pref_title_reminder">Daily Reminder</string>
@@ -72,7 +73,7 @@
     <string name="pref_title_delete_income">Delete Income History</string>
     <string name="pref_title_delete_expense">Delete Expense history</string>
     <string name="pref_title_theme">Theme</string>
-    <string name="pref_summary_password">Protect app data with pattern on startup</string>
+    <string name="pref_summary_password">Unlock app with pattern on startup</string>
     <string name="pref_summary_reminder">Let us remind you on a daily base to track your finances</string>
 
     <string-array name="currency_entries">
@@ -207,22 +208,21 @@
 
     <!--ColorPickerLibrary-->
     <string name="color_picker_default_title">Select a Color</string>
-    <string name="color_swatch_description">Color <xliff:g id="color_index" example="14">%1$d</xliff:g></string>
-    <string name="color_swatch_description_selected">Color <xliff:g id="color_index" example="14">%1$d</xliff:g> selected</string>
+    <string name="color_swatch_description">Color <xliff:g example="14" id="color_index">%1$d</xliff:g></string>
+    <string name="color_swatch_description_selected">Color <xliff:g example="14" id="color_index">%1$d</xliff:g> selected</string>
     <string name="text_filter">Filter</string>
 
     <string name="toast_savings">You can\'t change the stock savings value because you have transactions in your history</string>
     <string name="text_today">Today</string>
     <string name="text_yesterday">Yesterday</string>
-    <string name="title_activity_pattern_lock">PatternLockActivity</string>
+    <string name="title_activity_pattern_lock">Pattern lock</string>
 
-    <string name="hello_world">Hello world!</string>
-
+    <!-- PatternLockActivity -->
     <string name="textview_enter_pattern">Enter pattern to unlock :</string>
-    <string name="pref_title_pattern">Set startup lock pattern</string>
-    <string name="pref_key_pattern">pref_key_pattern</string>
     <string name="textview_confirm_pattern">Confirm pattern :</string>
     <string name="textview_new_pattern">Enter new lock pattern :</string>
     <string name="textview_wrong_pattern">Wrong pattern , try again :</string>
+    <string name="toast_pattern_changed">Pattern lock set</string>
+    <string name="toast_pattern_not_chaged">Patterns don\'t match!</string>
 
 </resources>

@@ -40,7 +40,7 @@
     <string name="pref_key_currency">pref_key_currency</string>
     <string name="pref_key_password_settings">pref_key_password_settings</string>
     <string name="pref_key_password">pref_key_password</string>
-    <string name="pref_key_password_value">pref_key_password_value</string>
+    <string name="pref_key_pattern">pref_key_pattern</string>
     <string name="pref_key_categories">pref_key_categories</string>
     <string name="pref_key_theme">pref_key_theme</string>
     <string name="pref_key_data_settings">pref_key_data_settings</string>
@@ -58,6 +58,7 @@
     <string name="pref_category_general">Γενικά</string>
     <string name="pref_title_currency">Νόμισμα</string>
     <string name="pref_title_password">Μοτίβο κλειδώματος</string>
+    <string name="pref_title_pattern">Ορισμός μοτίβου</string>
     <string name="pref_title_categories">Κατηγορίες</string>
     <string name="pref_category_notifications">Ειδοποιήσεις</string>
     <string name="pref_title_reminder">Ημερήσια Υπενθύμιση</string>
@@ -72,7 +73,7 @@
     <string name="pref_title_delete_income">Διαγραφή Ιστορικού Εισοδήματος</string>
     <string name="pref_title_delete_expense">Διαγραφή Ιστορικού Εξόδων</string>
     <string name="pref_title_theme">Θέμα</string>
-    <string name="pref_summary_password">Προστασία εφαρμογής με μοτίβο κατά την εκκίνηση</string>
+    <string name="pref_summary_password">Ξεκλείδωμα εφαρμογής με μοτίβο κατά την εκκίνηση</string>
     <string name="pref_summary_reminder">Υπενθύμιση σε καθημερινή βάση για την καταγραφή των συναλλαγών σας</string>
 
     <string-array name="currency_entries">
@@ -108,22 +109,14 @@
     <string name="dialog_text_delete_income_confirm">Διαγραφή όλων των συναλλαγών εσόδου από την βάση δεδομένων?</string>
     <string name="dialog_text_delete_expense_confirm">Διαγραφή όλων των συναλλαγών εξόδου από την βάση δεδομένων?</string>
 
-    <string name="toast_text_password_on">Κωδικός προστασίας ενεργοποιήθηκε</string>
-    <string name="toast_text_password_off">Κωδικός προστασίας απενεργοποιήθηκε</string>
-    <string name="toast_text_password_changed">Ο κωδικός άλλαξε</string>
-    <string name="toast_text_password_failed_change">Αποτυχία αλλαγής κωδικού</string>
+    <string name="toast_text_password_on">Κλείδωμα με μοτίβο ενεργοποιήθηκε</string>
+    <string name="toast_text_password_off">Κλείδωμα με μοτίβο απενεργοποιήθηκε</string>
 
-    <string name="text_current_pass">Τρέχων Κωδικός</string>
-    <string name="text_new_pass">Νέος Κωδικός</string>
-    <string name="text_confirm_passs">Επαλήθευση Νέου Κωδικού</string>
-    <string name="text_show_pass">Προβολή Κωδικού</string>
-
-    <string name="toast_text_password_default_alert">Ο προεπιλεγμένος κωδικός είναι "1234"</string>
     <string name="toast_text_reminder">Ημερήσιες Υπενθυμίσεις ενεργοποιήθηκαν \n Επόμενη Υπενθύμιση : </string>
 
     <!--OverviewActivity-->
-    <string name="string_balance">Τρέχων  :</string>
-    <string name="string_savings">Αποταμίευση :</string>
+    <string name="string_balance">Τρέχων:</string>
+    <string name="string_savings">Αποταμίευση:</string>
 
     <string name="text_pie_heading">Εβδομάδα:</string>
     <string name="legend_text_expense">Έξοδα</string>
@@ -193,7 +186,7 @@
 
     <!--Reminder Notification-->
     <string name="text_reminder_message">Καταγράψτε τις σημερινές συναλλαγές σας</string>
-    <string name="text_reminder_content">Μην ξεχάσετε να καταγράψεται τις σημερίνές συναλλαγές σας</string>
+    <string name="text_reminder_content">Μην ξεχάσετε να καταγράψετε τις σημερίνές συναλλαγές σας</string>
 
     <!--Filters-->
     <string name="filter_category">Ανά Κατηγορία</string>
@@ -216,11 +209,13 @@
     <string name="text_today">Σήμερα</string>
     <string name="text_yesterday">Χθες</string>
 
+    <!--PatternLockActivity-->
+    <string name="title_activity_pattern_lock">Μοτίβο κλειδώματος</string>
     <string name="textview_enter_pattern">Εισάγετε το δικό σας μοτίβο :</string>
-    <string name="pref_title_pattern">Ορισμός μοτίβου</string>
-    <string name="pref_key_pattern">pref_key_pattern</string>
     <string name="textview_confirm_pattern">Επιβεβαίωση μοτίβου κλειδώματος :</string>
     <string name="textview_new_pattern">Εισαγωγή μοτίβου κλειδώματος :</string>
     <string name="textview_wrong_pattern">Λάθος μοτίβο , ξαναδοκιμάστε :</string>
+    <string name="toast_pattern_changed">Το μοτίβο καταγράφηκε</string>
+    <string name="toast_pattern_not_chaged">Τα μοτίβα δεν είναι ίδια!</string>
 
 </resources>

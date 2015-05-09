@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ngngteam.pocketwallet" >
+    package="com.ngngteam.pocketwallet">
 
     <uses-permission android:name="android.permission.VIBRATE" />
 
@@ -8,7 +8,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppThemeBlack" >
+        android:theme="@style/AppThemeBlack">
         <activity
             android:name=".Activities.LauncherPickerActivity"
             android:clearTaskOnLaunch="true"
@@ -16,7 +16,7 @@
             android:label="@string/app_name"
             android:noHistory="true"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoDisplay" >
+            android:theme="@android:style/Theme.NoDisplay">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -48,10 +48,6 @@
             android:enabled="true" />
 
         <activity
-            android:name=".Activities.PasswordActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".Activities.OverviewActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -79,9 +75,9 @@
             android:parentActivityName=".Activities.HistoryActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".PatternLockActivity"
-            android:label="@string/title_activity_pattern_lock" >
-        </activity>
+            android:name=".Activities.PatternLockActivity"
+            android:label="@string/title_activity_pattern_lock"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -6,8 +6,8 @@
 
     <com.eftimoff.patternview.PatternView xmlns:patternview="http://schemas.android.com/apk/res-auto"
         android:id="@+id/patternView"
-        android:layout_width="360dp"
-        android:layout_height="360dp"
+        android:layout_width="@dimen/pattern_view_size"
+        android:layout_height="@dimen/pattern_view_size"
         android:layout_centerInParent="true"
         patternview:circleColor="@color/highlighted_text_material_light"
         patternview:gridSize="3"
@@ -20,6 +20,9 @@
         android:layout_above="@id/patternView"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/minimum_margin_top_bottom"
-        android:text="@string/textview_enter_pattern" />
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:gravity="center"
+        android:text="@string/textview_enter_pattern"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
 
 </RelativeLayout>

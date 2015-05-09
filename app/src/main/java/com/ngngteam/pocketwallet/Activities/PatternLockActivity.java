@@ -1,4 +1,4 @@
-package com.ngngteam.pocketwallet;
+package com.ngngteam.pocketwallet.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,7 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.eftimoff.patternview.PatternView;
-import com.ngngteam.pocketwallet.Activities.OverviewActivity;
+import com.ngngteam.pocketwallet.R;
 import com.ngngteam.pocketwallet.Utils.Themer;
 
 
@@ -17,6 +17,8 @@ public class PatternLockActivity extends Activity {
     private PatternView patternView;
     private TextView tvPatternTitle;
     private String patternString;
+
+    private String mode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +29,7 @@ public class PatternLockActivity extends Activity {
         patternView = (PatternView) findViewById(R.id.patternView);
         tvPatternTitle = (TextView) findViewById(R.id.tvPatternTitle);
 
-        String mode = (String) getIntent().getExtras().get("mode");
+        mode = (String) getIntent().getExtras().get("mode");
         //if we are in create mode
         if (mode.equals("edit")) {
             //enter the create title
@@ -45,7 +47,7 @@ public class PatternLockActivity extends Activity {
                         return;
                     }
                     if (patternString.equals(patternView.getPatternString())) {
-                        Toast.makeText(getApplicationContext(), "Pattern changed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.toast_pattern_changed), Toast.LENGTH_SHORT).show();
                         PreferenceManager.getDefaultSharedPreferences(PatternLockActivity.this).edit().
                                 putString(getString(R.string.pref_key_pattern), patternString).commit();
 
@@ -54,14 +56,14 @@ public class PatternLockActivity extends Activity {
                     }else{
                         tvPatternTitle.setText(R.string.textview_new_pattern);
                         patternString = null;
-                        Toast.makeText(getApplicationContext(), "Patterns don't match", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.toast_pattern_not_chaged), Toast.LENGTH_SHORT).show();
                         patternView.clearPattern();
                     }
                 }
             });
         }else{
             patternString = PreferenceManager.getDefaultSharedPreferences(PatternLockActivity.this).
-                    getString(getString(R.string.pref_key_pattern), "1234");
+                    getString(getString(R.string.pref_key_pattern), "none");
             patternView.setOnPatternDetectedListener(new PatternView.OnPatternDetectedListener() {
                 @Override
                 public void onPatternDetected() {
@@ -80,8 +82,24 @@ public class PatternLockActivity extends Activity {
                 }
             });
         }
-
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        //if this was edit mode
+        if(mode.equals("edit")){
+            //and if pattern not set
+            if(PreferenceManager.getDefaultSharedPreferences(PatternLockActivity.this).
+                    getString(getString(R.string.pref_key_pattern), "none").equals("none")){
+                //disable the startup lock
+                PreferenceManager.getDefaultSharedPreferences(PatternLockActivity.this)
+                        .edit()
+                        .putBoolean(getResources().getString(R.string.pref_key_password), false)
+                        .commit();
+                //an exit
+                finish();
+            }
+        }
+    }
 }

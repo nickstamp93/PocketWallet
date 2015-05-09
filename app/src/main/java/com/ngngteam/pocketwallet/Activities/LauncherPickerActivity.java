@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
-import com.ngngteam.pocketwallet.PatternLockActivity;
 import com.ngngteam.pocketwallet.R;
 
 
@@ -25,8 +24,9 @@ public class LauncherPickerActivity extends Activity {
         boolean isPass = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(getResources().getString(R.string.pref_key_password), false);
 
         //if enabled , launch the password activity
-        if (isPass) {
-            intent = new Intent(getApplicationContext(), PatternLockActivity.class).putExtra("mode" , "unlock");
+        if (isPass && !PreferenceManager.getDefaultSharedPreferences(this).
+                getString(getResources().getString(R.string.pref_key_pattern), "none").equals("none")) {
+            intent = new Intent(getApplicationContext(), PatternLockActivity.class).putExtra("mode", "unlock");
         }//else launch the overview activity
         else {
             intent = new Intent(getApplicationContext(), OverviewActivity.class);

@@ -38,6 +38,7 @@
 
     <dimen name="layout_padding">10dp</dimen>
     <dimen name="layout_padding_small">5dp</dimen>
+    <dimen name="pattern_view_size" >240dp</dimen>
 
     <integer name="color_columns">5</integer>
 

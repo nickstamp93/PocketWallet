@@ -21,7 +21,6 @@ import com.ngngteam.pocketwallet.BroadcastReceivers.ReminderReceiver;
 import com.ngngteam.pocketwallet.Data.MoneyDatabase;
 import com.ngngteam.pocketwallet.Extra.ColorPicker.ColorPickerDialog;
 import com.ngngteam.pocketwallet.Extra.ColorPicker.ColorPickerSwatch;
-import com.ngngteam.pocketwallet.PatternLockActivity;
 import com.ngngteam.pocketwallet.R;
 import com.ngngteam.pocketwallet.Utils.SharedPrefsManager;
 import com.ngngteam.pocketwallet.Utils.Themer;
@@ -54,6 +53,12 @@ public class SettingsActivity extends PreferenceActivity
 
     //set all the preferences and their actions
     private void setPreferenceActions() {
+
+        if(PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).
+                getString(getString(R.string.pref_key_pattern), "1234").equals("1234")){
+            disablePassword();
+        }
+
         //when user clicks on "categories" preference item
         //launch intent with target the CategoriesManagerActivity class
         Preference screen = findPreference(getResources().getString(R.string.pref_key_categories));
@@ -254,7 +259,14 @@ public class SettingsActivity extends PreferenceActivity
         //on resume , update the summaries , and  any preferences changed
         initSummaries(getPreferenceScreen());
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+    }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        //on resume , update the summaries , and  any preferences changed
+        initSummaries(getPreferenceScreen());
+        getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override
@@ -272,7 +284,7 @@ public class SettingsActivity extends PreferenceActivity
                 startActivity(i);
             } else {
                 PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().
-                        putString(getString(R.string.pref_key_pattern), "1234").commit();
+                        putString(getString(R.string.pref_key_pattern), "none").commit();
                 //alert the user
                 Toast.makeText(this, getResources().getString(R.string.toast_text_password_off), Toast.LENGTH_SHORT).show();
             }
@@ -303,6 +315,13 @@ public class SettingsActivity extends PreferenceActivity
         } else {
             //else just update this item's summary
             updatePrefSummary(p);
+        }
+
+        //if pattern lock disabled
+        if(!PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this)
+                .getBoolean(getResources().getString(R.string.pref_key_password), false)){
+            SwitchPreference pattern = (SwitchPreference) findPreference(getResources().getString(R.string.pref_key_password));
+            pattern.setChecked(false);
         }
     }
 

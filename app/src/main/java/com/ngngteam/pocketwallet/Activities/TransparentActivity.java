@@ -6,9 +6,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.widget.Toast;
 
 import com.doomonafireball.betterpickers.radialtimepicker.RadialTimePickerDialog;
 import com.ngngteam.pocketwallet.BroadcastReceivers.ReminderReceiver;
+import com.ngngteam.pocketwallet.R;
 import com.ngngteam.pocketwallet.Utils.SharedPrefsManager;
 
 import java.util.Calendar;
@@ -105,6 +107,8 @@ public class TransparentActivity extends FragmentActivity implements RadialTimeP
 
         //and set the alarm to this time
         setAlarm();
+        Toast.makeText(getApplicationContext(), getResources().getString(R.string.toast_text_reminder) + " " + manager.getPrefsReminderTime(), Toast.LENGTH_SHORT).show();
+
         //destroy current activity
         TransparentActivity.this.finish();
     }

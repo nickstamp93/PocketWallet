@@ -1,9 +1,13 @@
 package com.ngngteam.pocketwallet.Activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,11 +24,20 @@ public class PatternLockActivity extends Activity {
 
     private String mode;
 
+    Context context;
+    LayoutInflater inflater;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Themer.setThemeToActivity(this);
         setContentView(R.layout.activity_pattern_lock);
+
+        inflater = getLayoutInflater();
+
+        context = this;
+
 
         patternView = (PatternView) findViewById(R.id.patternView);
         tvPatternTitle = (TextView) findViewById(R.id.tvPatternTitle);
@@ -47,13 +60,25 @@ public class PatternLockActivity extends Activity {
                         return;
                     }
                     if (patternString.equals(patternView.getPatternString())) {
-                        Toast.makeText(getApplicationContext(), getString(R.string.toast_pattern_changed), Toast.LENGTH_SHORT).show();
-                        PreferenceManager.getDefaultSharedPreferences(PatternLockActivity.this).edit().
-                                putString(getString(R.string.pref_key_pattern), patternString).commit();
 
-                        //TODO get confirmation from the user
-                        finish();
-                    }else{
+
+                        View actionBarButtons = inflater.inflate(R.layout.custom_action_bar_buttons, new LinearLayout(context), false);
+                        View cancelActionView = actionBarButtons.findViewById(R.id.action_cancel);
+                        cancelActionView.setOnClickListener(actionBarListener);
+                        View doneActionView = actionBarButtons.findViewById(R.id.action_done);
+                        doneActionView.setOnClickListener(actionBarListener);
+
+                        getActionBar().setHomeButtonEnabled(false);
+                        getActionBar().setDisplayShowHomeEnabled(false);
+                        getActionBar().setDisplayHomeAsUpEnabled(false);
+                        getActionBar().setDisplayShowTitleEnabled(false);
+
+                        getActionBar().setDisplayShowCustomEnabled(true);
+                        getActionBar().setCustomView(actionBarButtons);
+
+
+//                        finish();
+                    } else {
                         tvPatternTitle.setText(R.string.textview_new_pattern);
                         patternString = null;
                         Toast.makeText(getApplicationContext(), getString(R.string.toast_pattern_not_chaged), Toast.LENGTH_SHORT).show();
@@ -61,7 +86,7 @@ public class PatternLockActivity extends Activity {
                     }
                 }
             });
-        }else{
+        } else {
             patternString = PreferenceManager.getDefaultSharedPreferences(PatternLockActivity.this).
                     getString(getString(R.string.pref_key_pattern), "none");
             patternView.setOnPatternDetectedListener(new PatternView.OnPatternDetectedListener() {
@@ -74,7 +99,7 @@ public class PatternLockActivity extends Activity {
                         startActivity(intent);
                         //and destroy this one
                         finish();
-                    }else{
+                    } else {
                         tvPatternTitle.setText(R.string.textview_wrong_pattern);
                         tvPatternTitle.setTextColor(getResources().getColor(R.color.red));
                         patternView.clearPattern();
@@ -84,14 +109,36 @@ public class PatternLockActivity extends Activity {
         }
     }
 
+    private View.OnClickListener actionBarListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (v.getId() == R.id.action_done) {
+                Toast.makeText(getApplicationContext(), getString(R.string.toast_pattern_changed), Toast.LENGTH_SHORT).show();
+                PreferenceManager.getDefaultSharedPreferences(PatternLockActivity.this).edit().
+                        putString(getString(R.string.pref_key_pattern), patternString).commit();
+            } else {
+                if (PreferenceManager.getDefaultSharedPreferences(PatternLockActivity.this).
+                        getString(getString(R.string.pref_key_pattern), "none").equals("none")) {
+                    //disable the startup lock
+                    PreferenceManager.getDefaultSharedPreferences(PatternLockActivity.this)
+                            .edit()
+                            .putBoolean(getResources().getString(R.string.pref_key_password), false)
+                            .commit();
+                }
+            }
+            finish();
+        }
+    };
+
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         //if this was edit mode
-        if(mode.equals("edit")){
+        if (mode.equals("edit")) {
             //and if pattern not set
-            if(PreferenceManager.getDefaultSharedPreferences(PatternLockActivity.this).
-                    getString(getString(R.string.pref_key_pattern), "none").equals("none")){
+            if (PreferenceManager.getDefaultSharedPreferences(PatternLockActivity.this).
+                    getString(getString(R.string.pref_key_pattern), "none").equals("none")) {
                 //disable the startup lock
                 PreferenceManager.getDefaultSharedPreferences(PatternLockActivity.this)
                         .edit()

@@ -1,9 +1,9 @@
 package com.ngngteam.pocketwallet.Activities;
 
-import android.app.Activity;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,7 +15,7 @@ import com.ngngteam.pocketwallet.R;
 import com.ngngteam.pocketwallet.Utils.SharedPrefsManager;
 import com.ngngteam.pocketwallet.Utils.Themer;
 
-public class UserDetailsActivity extends Activity {
+public class UserDetailsActivity extends AppCompatActivity {
 
     //SharedPrefsManager object
     SharedPrefsManager manager;
@@ -33,7 +33,7 @@ public class UserDetailsActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         //apply theme
-        Themer.setThemeToActivity(this);
+//        Themer.setThemeToActivity(this);
 
         setContentView(R.layout.activity_user_details);
 

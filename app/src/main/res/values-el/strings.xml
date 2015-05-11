@@ -9,7 +9,6 @@
     <string name="action_income">Έσοδα</string>
     <string name="error_database">Σφάλμα βάσης Δεδομένων</string>
     <string name="error_number">Μη έγκυρη είσοδος αριθμού</string>
-    <string name="error_password">Λάθος κωδικός</string>
     <string name="error_form">Η φόρμα δεν είναι πλήρης</string>
     <string name="error_category">Μη έγκυρο όνομα κατηγορίας</string>
     <string name="error_category_name_conflict">Υπάρχει ήδη κατηγορία με αυτό το όνομα</string>
@@ -66,7 +65,6 @@
     <string name="pref_category_about">Σχετικά</string>
     <string name="pref_title_rate_app">Αξιολόγηση Εφαρμογής</string>
     <string name="pref_title_about">Σχετικά με εμάς</string>
-    <string name="pref_title_password_change">Επεξεργασία Κωδικού</string>
     <string name="pref_title_data_settings">Δεδομένα</string>
     <string name="pref_title_profile">Προφίλ</string>
     <string name="pref_title_data">Βάσεις Δεδομένων</string>
@@ -217,5 +215,10 @@
     <string name="textview_wrong_pattern">Λάθος μοτίβο , ξαναδοκιμάστε :</string>
     <string name="toast_pattern_changed">Το μοτίβο καταγράφηκε</string>
     <string name="toast_pattern_not_chaged">Τα μοτίβα δεν είναι ίδια!</string>
+
+
+    <string name="title_activity_new_overview">NewOverview</string>
+
+    <string name="hello_world">Hello world!</string>
 
 </resources>

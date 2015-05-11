@@ -9,7 +9,7 @@
         android:layout_width="@dimen/pattern_view_size"
         android:layout_height="@dimen/pattern_view_size"
         android:layout_centerInParent="true"
-        patternview:circleColor="@color/highlighted_text_material_light"
+        patternview:circleColor="@color/material_deep_teal_500"
         patternview:gridSize="3"
         patternview:pathColor="@color/primary_dark_material_light" />
 

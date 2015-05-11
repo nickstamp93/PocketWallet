@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.GradientDrawable;
 import android.preference.PreferenceManager;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,15 +20,20 @@ public class Themer {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(act);
         try {
             if (prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_pink)) {
-                act.setTheme(R.style.AppThemePink);
+//                act.setTheme(R.style.AppThemePink);
+                act.getWindow().setBackgroundDrawableResource(R.color.bg_pink);
             } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_dark))) {
-                act.setTheme(R.style.AppThemeBlack);
+//                act.setTheme(R.style.AppThemeBlack);
+                act.getWindow().setBackgroundDrawableResource(R.color.bg_dark);
             } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_green))) {
-                act.setTheme(R.style.AppThemeGreen);
+//                act.setTheme(R.style.AppThemeGreen);
+                act.getWindow().setBackgroundDrawableResource(R.color.bg_green);
             } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_teal))) {
-                act.setTheme(R.style.AppThemeLightBlue);
+//                act.setTheme(R.style.AppThemeLightBlue);
+                act.getWindow().setBackgroundDrawableResource(R.color.bg_teal);
             } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_light))) {
-                act.setTheme(R.style.AppThemeWhite);
+//                act.setTheme(R.style.AppThemeWhite);
+                act.getWindow().setBackgroundDrawableResource(R.color.bg_light);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -48,16 +52,17 @@ public class Themer {
     }
 
     public static void setBackgroundColor(Activity act, View view, boolean isRed) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(act);
-        if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_dark))
-                || (prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_teal))
-                || (prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_light))) {
-            if (isRed)
-                ((Button) view).setBackgroundColor(act.getResources().getColor(R.color.red));
-            else
-                ((Button) view).setBackgroundColor(act.getResources().getColor(R.color.YellowGreen));
-
-        }
+        if (isRed)
+            view.setBackgroundColor(act.getResources().getColor(R.color.red));
+        else
+            view.setBackgroundColor(act.getResources().getColor(R.color.YellowGreen));
+//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(act);
+//        if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_dark))
+//                || (prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_teal))
+//                || (prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.bg_dark)) == act.getResources().getColor(R.color.bg_light))) {
+//
+//
+//        }
 
 
     }

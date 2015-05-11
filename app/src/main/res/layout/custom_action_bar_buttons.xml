@@ -44,7 +44,7 @@
 
         <TextView
             style="@style/EditEventCustomActionButtonText"
-            android:text="@string/button_ok" />
+            android:text="@string/done_label" />
 
     </LinearLayout>
 

@@ -1,10 +1,10 @@
 package com.ngngteam.pocketwallet.Activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -13,10 +13,9 @@ import android.widget.Toast;
 
 import com.eftimoff.patternview.PatternView;
 import com.ngngteam.pocketwallet.R;
-import com.ngngteam.pocketwallet.Utils.Themer;
 
 
-public class PatternLockActivity extends Activity {
+public class PatternLockActivity extends AppCompatActivity {
 
     private PatternView patternView;
     private TextView tvPatternTitle;
@@ -31,7 +30,7 @@ public class PatternLockActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Themer.setThemeToActivity(this);
+//        Themer.setThemeToActivity(this);
         setContentView(R.layout.activity_pattern_lock);
 
         inflater = getLayoutInflater();
@@ -68,13 +67,13 @@ public class PatternLockActivity extends Activity {
                         View doneActionView = actionBarButtons.findViewById(R.id.action_done);
                         doneActionView.setOnClickListener(actionBarListener);
 
-                        getActionBar().setHomeButtonEnabled(false);
-                        getActionBar().setDisplayShowHomeEnabled(false);
-                        getActionBar().setDisplayHomeAsUpEnabled(false);
-                        getActionBar().setDisplayShowTitleEnabled(false);
+                        getSupportActionBar().setHomeButtonEnabled(false);
+                        getSupportActionBar().setDisplayShowHomeEnabled(false);
+                        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-                        getActionBar().setDisplayShowCustomEnabled(true);
-                        getActionBar().setCustomView(actionBarButtons);
+                        getSupportActionBar().setDisplayShowCustomEnabled(true);
+                        getSupportActionBar().setCustomView(actionBarButtons);
 
 
 //                        finish();
@@ -95,7 +94,7 @@ public class PatternLockActivity extends Activity {
                     if (patternString.equals(patternView.getPatternString())) {
                         //correct pattern
                         //launch overview activity
-                        Intent intent = new Intent(getApplicationContext(), OverviewActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), NewOverviewActivity.class);
                         startActivity(intent);
                         //and destroy this one
                         finish();

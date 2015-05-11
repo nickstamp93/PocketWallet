@@ -109,7 +109,6 @@
     <string name="toast_text_password_on">Pattern lock enabled</string>
     <string name="toast_text_password_off">Pattern lock disabled</string>
 
-    <string name="toast_text_password_default_alert">Default pass is "1234"</string>
     <string name="toast_text_reminder">Daily Reminder activated \n Next reminder at </string>
 
     <!--OverviewActivity-->
@@ -215,5 +214,10 @@
     <string name="textview_wrong_pattern">Wrong pattern , try again :</string>
     <string name="toast_pattern_changed">Pattern lock set</string>
     <string name="toast_pattern_not_chaged">Patterns don\'t match!</string>
+
+    <string name="title_activity_new_overview">NewOverview</string>
+
+    <string name="hello_world">Hello world!</string>
+
 
 </resources>

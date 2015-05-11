@@ -1,10 +1,10 @@
 package com.ngngteam.pocketwallet.Activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,10 +18,9 @@ import android.widget.TextView;
 import com.ngngteam.pocketwallet.Data.CategoryDatabase;
 import com.ngngteam.pocketwallet.Extra.LetterImageView;
 import com.ngngteam.pocketwallet.R;
-import com.ngngteam.pocketwallet.Utils.Themer;
 
 //activity managind the categories
-public class CategoriesManagerActivity extends Activity {
+public class CategoriesManagerActivity extends AppCompatActivity {
 
     //listview
     private ListView lv;
@@ -37,7 +36,7 @@ public class CategoriesManagerActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Themer.setThemeToActivity(this);
+//        Themer.setThemeToActivity(this);
         setContentView(R.layout.activity_categories_manager);
 
         //init variables
@@ -49,8 +48,8 @@ public class CategoriesManagerActivity extends Activity {
         //set up listeners , adapter etc
         setUpUI();
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
     }
 
@@ -165,7 +164,7 @@ public class CategoriesManagerActivity extends Activity {
             //and fill them with the correct values from the db's cursor
             final String name = cursor.getString(1);
             tvName.setText(name);
-            Themer.setTextviewTextColor(CategoriesManagerActivity.this, tvName);
+//            Themer.setTextviewTextColor(CategoriesManagerActivity.this, tvName);
 
             String sletter = cursor.getString(3);
             char cletter = sletter.charAt(0);
@@ -188,7 +187,7 @@ public class CategoriesManagerActivity extends Activity {
             //and update them with the correct values
             final String name = cursor.getString(1);
             tvName.setText(name);
-            Themer.setTextviewTextColor(CategoriesManagerActivity.this, tvName);
+//            Themer.setTextviewTextColor(CategoriesManagerActivity.this, tvName);
 
             String sletter = cursor.getString(3);
             char cletter = sletter.charAt(0);

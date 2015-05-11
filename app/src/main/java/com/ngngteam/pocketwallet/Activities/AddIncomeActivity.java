@@ -2,7 +2,7 @@ package com.ngngteam.pocketwallet.Activities;
 
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 
-public class AddIncomeActivity extends FragmentActivity implements NumberPickerDialogFragment.NumberPickerDialogHandler {
+public class AddIncomeActivity extends AppCompatActivity implements NumberPickerDialogFragment.NumberPickerDialogHandler {
 
     private EditText etDate;
     private TextView tvAmount;
@@ -55,7 +55,7 @@ public class AddIncomeActivity extends FragmentActivity implements NumberPickerD
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Themer.setThemeToActivity(this);
+//        Themer.setThemeToActivity(this);
 
         setContentView(R.layout.activity_add_income);
 
@@ -71,8 +71,8 @@ public class AddIncomeActivity extends FragmentActivity implements NumberPickerD
             initUiValues();
         }
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
     }
 
 

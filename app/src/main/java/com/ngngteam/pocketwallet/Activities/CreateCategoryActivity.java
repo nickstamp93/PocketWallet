@@ -1,8 +1,8 @@
 package com.ngngteam.pocketwallet.Activities;
 
-import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
@@ -24,7 +24,7 @@ import com.ngngteam.pocketwallet.Utils.Themer;
 
 import java.util.ArrayList;
 
-public class CreateCategoryActivity extends Activity implements ColorPickerSwatch.OnColorSelectedListener {
+public class CreateCategoryActivity extends AppCompatActivity implements ColorPickerSwatch.OnColorSelectedListener {
 
     private EditText etName;
     private ImageButton ibColor;
@@ -44,7 +44,7 @@ public class CreateCategoryActivity extends Activity implements ColorPickerSwatc
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Themer.setThemeToActivity(this);
+//        Themer.setThemeToActivity(this);
 
         setContentView(R.layout.activity_create_category);
 
@@ -52,8 +52,8 @@ public class CreateCategoryActivity extends Activity implements ColorPickerSwatc
         setUpUI();
         init();
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
     }
 
 

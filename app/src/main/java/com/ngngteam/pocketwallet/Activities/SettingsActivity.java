@@ -30,7 +30,6 @@ import java.util.Calendar;
 public class SettingsActivity extends PreferenceActivity
         implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -45,9 +44,6 @@ public class SettingsActivity extends PreferenceActivity
         initSummaries(getPreferenceScreen());
 
         setPreferenceActions();
-
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
 
     }
 

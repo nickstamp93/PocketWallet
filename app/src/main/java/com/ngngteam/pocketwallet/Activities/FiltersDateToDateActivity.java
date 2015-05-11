@@ -3,25 +3,24 @@ package com.ngngteam.pocketwallet.Activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
-
-import java.util.Calendar;
-
 import com.ngngteam.pocketwallet.R;
 import com.ngngteam.pocketwallet.Utils.Themer;
+
+import java.util.Calendar;
 
 /**
  * Created by Vromia on 15/9/2014.
  * FiltersDateToDateDialog class that extends DialogFragment is used when we want to find expenses or incomes with date between two
  * dates. HistoryActivity calls this class more specific in filters.
  */
-public class FiltersDateToDateActivity extends FragmentActivity {
+public class FiltersDateToDateActivity extends AppCompatActivity {
 
     private Button bOk, bCancel;
     private ImageButton ibFrom, ibTo;
@@ -36,15 +35,15 @@ public class FiltersDateToDateActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Themer.setThemeToActivity(this);
+//        Themer.setThemeToActivity(this);
 
         setContentView(R.layout.activity_filters_datetodate);
 
         initUI();
         setUpUI();
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
     }
 
@@ -73,6 +72,7 @@ public class FiltersDateToDateActivity extends FragmentActivity {
 
         bOk = (Button) findViewById(R.id.bOK);
         bCancel = (Button) findViewById(R.id.bCancel);
+
         Themer.setBackgroundColor(this, bOk, false);
         Themer.setBackgroundColor(this, bCancel, true);
 

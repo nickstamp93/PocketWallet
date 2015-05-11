@@ -8,7 +8,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppThemeBlack">
+        android:theme="@style/Theme.Appcompat_custom_light">
         <activity
             android:name=".Activities.LauncherPickerActivity"
             android:clearTaskOnLaunch="true"
@@ -58,7 +58,7 @@
         <activity
             android:name=".Activities.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName=".Activities.OverviewActivity"
+            android:parentActivityName=".Activities.NewOverviewActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activities.TransparentActivity"
@@ -78,6 +78,10 @@
             android:name=".Activities.PatternLockActivity"
             android:label="@string/title_activity_pattern_lock"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.NewOverviewActivity"
+            android:label="@string/title_activity_new_overview"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

@@ -1,14 +1,13 @@
 package com.ngngteam.pocketwallet.Activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,14 +16,6 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import java.text.DateFormatSymbols;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 import com.ngngteam.pocketwallet.Adapters.DrawerAdapter;
 import com.ngngteam.pocketwallet.Data.CategoryDatabase;
@@ -37,9 +28,16 @@ import com.ngngteam.pocketwallet.Model.IncomeItem;
 import com.ngngteam.pocketwallet.Model.UserProfile;
 import com.ngngteam.pocketwallet.R;
 import com.ngngteam.pocketwallet.Utils.SharedPrefsManager;
-import com.ngngteam.pocketwallet.Utils.Themer;
 
-public class OverviewActivity extends Activity {
+import java.text.DateFormatSymbols;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+public class OverviewActivity extends AppCompatActivity {
 
     //request code for the UserDetails sub-Activity
     private static final int USER_DETAILS_SUB_ACTIVITY = 1;
@@ -69,12 +67,12 @@ public class OverviewActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         //apply theme
-        Themer.setThemeToActivity(this);
+//        Themer.setThemeToActivity(this);
 
         setContentView(R.layout.activity_overview);
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         init();
 
@@ -104,10 +102,8 @@ public class OverviewActivity extends Activity {
         //set on drawer item click listener
         drawer.setOnItemClickListener(drawerClickListener);
 
-        //set shadow for the navigation drawer
-        drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
-        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.ic_drawer, R.string.open_drawer, R.string.close_drawer) {
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open_drawer, R.string.close_drawer) {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
@@ -118,7 +114,6 @@ public class OverviewActivity extends Activity {
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
                 invalidateOptionsMenu();
-
             }
         };
 
@@ -270,7 +265,7 @@ public class OverviewActivity extends Activity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         drawer = (ListView) findViewById(R.id.nav_drawer);
-        Themer.setDrawerBackground(this, drawer);
+//        Themer.setDrawerBackground(this, drawer);
 
 
     }
@@ -290,10 +285,10 @@ public class OverviewActivity extends Activity {
 
         tvUsername.setText(profile.getUsername());
 
-        Themer.setBackgroundColorCard(this, llBalance);
-        Themer.setBackgroundColorCard(this, llLastTransactions);
-        Themer.setBackgroundColorCard(this, llPiewView);
-        Themer.setBackgroundColorCard(this , llMessage);
+//        Themer.setBackgroundColorCard(this, llBalance);
+//        Themer.setBackgroundColorCard(this, llLastTransactions);
+//        Themer.setBackgroundColorCard(this, llPiewView);
+//        Themer.setBackgroundColorCard(this , llMessage);
 
 
         double totalExpenses;
@@ -349,7 +344,7 @@ public class OverviewActivity extends Activity {
             mcPie.setAnimationSpeed(MagnificentChart.ANIMATION_SPEED_FAST);
 
             //apply the pie's background to be the same with the section's color
-            Themer.setPieBackgroundColor(this, mcPie);
+//            Themer.setPieBackgroundColor(this, mcPie);
 
             //show the pie after set up
             llPiewView.setVisibility(View.VISIBLE);

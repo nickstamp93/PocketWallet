@@ -29,7 +29,7 @@ public class LauncherPickerActivity extends Activity {
             intent = new Intent(getApplicationContext(), PatternLockActivity.class).putExtra("mode", "unlock");
         }//else launch the overview activity
         else {
-            intent = new Intent(getApplicationContext(), OverviewActivity.class);
+            intent = new Intent(getApplicationContext(), NewOverviewActivity.class);
         }
 
         //start the correct activity with the chosen intent

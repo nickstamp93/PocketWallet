@@ -23,7 +23,6 @@ import com.ngngteam.pocketwallet.Extra.ColorPicker.ColorPickerDialog;
 import com.ngngteam.pocketwallet.Extra.ColorPicker.ColorPickerSwatch;
 import com.ngngteam.pocketwallet.R;
 import com.ngngteam.pocketwallet.Utils.SharedPrefsManager;
-import com.ngngteam.pocketwallet.Utils.Themer;
 
 import java.util.Calendar;
 
@@ -32,8 +31,6 @@ public class SettingsActivity extends PreferenceActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        Themer.setThemeToActivity(this);
 
         super.onCreate(savedInstanceState);
 
@@ -223,7 +220,6 @@ public class SettingsActivity extends PreferenceActivity
     private ColorPickerSwatch.OnColorSelectedListener colorSetListener = new ColorPickerSwatch.OnColorSelectedListener() {
         @Override
         public void onColorSelected(int color) {
-
             //when color is selected
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this);
             SharedPreferences.Editor editor = prefs.edit();

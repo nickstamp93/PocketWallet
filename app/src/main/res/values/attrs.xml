@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <attr name="cardCustomBackground" format="color|reference" />
+    <attr name="windowCustomBackground" format="color|reference" />
+    <attr name="cardCustomStyle" format="reference" />
 
     <declare-styleable name="MagnificentChart">
         <attr name="animation" format="boolean" />

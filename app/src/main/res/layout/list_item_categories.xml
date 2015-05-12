@@ -26,7 +26,6 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Category Name"
             android:id="@+id/tvName"
-            android:textColor="@color/primary_text_default_material_light"
             android:padding="@dimen/layout_padding"
             android:gravity="center"
             android:layout_weight="0.8" />

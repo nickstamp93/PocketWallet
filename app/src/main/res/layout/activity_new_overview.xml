@@ -21,6 +21,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/card_margin"
+                card_view:cardBackgroundColor="?cardCustomBackground"
                 card_view:cardCornerRadius="4dp">
 
                 <LinearLayout
@@ -94,6 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/card_margin"
+                card_view:cardBackgroundColor="?cardCustomBackground"
                 card_view:cardCornerRadius="4dp">
 
                 <LinearLayout
@@ -119,6 +121,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/card_margin"
+                card_view:cardBackgroundColor="?cardCustomBackground"
                 card_view:cardCornerRadius="4dp">
 
                 <LinearLayout
@@ -131,6 +134,7 @@
                         android:layout_width="@dimen/pie_view_width"
                         android:layout_height="@dimen/pie_view_height"
                         android:layout_margin="10dp"
+                        app:chartbackground="?cardCustomBackground"
                         app:animation="true"
                         app:round="false"
                         app:shadow="false"
@@ -217,6 +221,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/card_margin"
+                card_view:cardBackgroundColor="?cardCustomBackground"
                 card_view:cardCornerRadius="4dp">
 
                 <LinearLayout

@@ -2,5 +2,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/lvCategories"
+    android:scrollbars="none"
     android:padding="@dimen/layout_padding"
     android:focusable="true"/>

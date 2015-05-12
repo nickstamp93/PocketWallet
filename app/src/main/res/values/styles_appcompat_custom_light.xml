@@ -18,15 +18,42 @@
 
 <resources>
 
-    <style name="Theme.Appcompat_custom_light" parent="Theme.AppCompat.Light">
+    <style name="Theme.Appcompat_custom_light" parent="Theme.MyAppcompat">
+
+        <item name="cardCustomBackground">@color/cardview_light_background</item>
+        <item name="android:windowBackground">@color/background_material_light</item>
+        <item name="android:textColorPrimary">@color/primary_text_default_material_light</item>
+        <item name="android:textColorSecondary">@color/secondary_text_default_material_light</item>
+
+    </style>
+
+    <style name="Theme.Appcompat_custom_dark" parent="Theme.MyAppcompat">
+
+        <item name="android:actionMenuTextColor">@color/DeepPink</item>
+        <item name="cardCustomBackground">@color/cardview_dark_background</item>
+        <item name="android:windowBackground">@color/background_material_dark</item>
+        <item name="android:textColorPrimary">@color/primary_text_default_material_dark</item>
+        <item name="android:textColorSecondary">@color/secondary_text_default_material_dark</item>
+
+        <item name="android:textColorHint">@color/secondary_text_default_material_dark</item>
+
+        <item name="android:itemTextAppearance">@style/MenuTextAppearance</item>
+        <item name="android:itemBackground">@color/background_material_dark</item>
+
+        <item name="windowCustomBackground">@color/background_material_dark</item>
 
 
-        <item name="android:textColorPrimary">#333333</item>
-        <!--<item name="android:textColorSecondary">#ad5f2f</item>-->
-        <!--<item name="android:textColorSecondaryNoDisable">#982742</item>-->
-        <!--<item name="android:textColorHighlight">#ff7f00</item>-->
-        <!--<item name="android:textColorTertiary">#500000</item>-->
-        <!--<item name="android:textColorHint">#584385</item>-->
+    </style>
+
+    <style name="MyCardView" parent="CardView.Dark">
+        <item name="cardBackgroundColor">@color/yellow</item>
+    </style>
+
+    <style name="MenuTextAppearance">
+        <item name="android:textColor">@color/material_deep_teal_500</item>
+    </style>
+
+    <style name="Theme.MyAppcompat" parent="Theme.AppCompat.Light">
 
         <item name="android:actionBarItemBackground">
             @drawable/selectable_background_appcompat_custom_light
@@ -103,7 +130,8 @@
 
 
     <style name="PopupMenu.Appcompat_custom_light" parent="@style/Widget.AppCompat.Light.PopupMenu">
-        <item name="android:popupBackground">@drawable/menu_dropdown_panel_appcompat_custom_light</item>
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_appcompat_custom_light
+        </item>
     </style>
 
     <style name="DropDownListView.Appcompat_custom_light" parent="@style/Widget.AppCompat.Light.ListView.DropDown">

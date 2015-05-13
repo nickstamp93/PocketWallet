@@ -184,7 +184,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:gravity="left|center_vertical"
-                                    android:lines="2"
+                                    android:maxLines="2"
                                     android:paddingLeft="10dp"
                                     android:text="@string/legend_text_expense"
                                     android:textColor="?textCustomColor" />
@@ -209,7 +209,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:gravity="left|center_vertical"
-                                    android:lines="2"
+                                    android:maxLines="2"
                                     android:paddingLeft="10dp"
                                     android:text="@string/legend_text_income"
                                     android:textColor="?textCustomColor" />

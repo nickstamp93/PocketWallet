@@ -64,6 +64,6 @@
         android:lines="2"
         android:padding="@dimen/layout_padding_small"
         android:text="These are some notes"
-        android:textColor="@color/black"
+        android:textColor="?textCustomColor"
         android:textStyle="bold" />
 </RelativeLayout>

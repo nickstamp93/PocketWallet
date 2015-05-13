@@ -293,6 +293,7 @@ public class OverviewActivity extends AppCompatActivity {
 
         double totalExpenses;
         double totalIncomes;
+
         if (profile.getGrouping().equalsIgnoreCase(getResources().getString(R.string.pref_grouping_monthly))) {
             totalExpenses = mdb.getTotalExpensePriceForCurrentMonth();
             totalIncomes = mdb.getTotalIncomePriceForCurrentMonth();
@@ -302,7 +303,18 @@ public class OverviewActivity extends AppCompatActivity {
         }
 
         totalExpenses = Math.round(totalExpenses * 100) / 100.0;
+        if (totalExpenses == (int) totalExpenses) {
+            tvLegendTotalExpense.setText(getResources().getString(R.string.action_expense) + "  (" + ((int) totalExpenses + " " + profile.getCurrency()) + ")");
+        }else{
+            tvLegendTotalExpense.setText(getResources().getString(R.string.action_expense) + "  (" + (totalExpenses + " " + profile.getCurrency()) + ")");
+        }
+
         totalIncomes = Math.round(totalIncomes * 100) / 100.0;
+        if (totalIncomes == (int) totalIncomes) {
+            tvLegendTotalIncome.setText(getResources().getString(R.string.action_income) + "  (" + ((int)totalIncomes + " " + profile.getCurrency()) + ")");
+        }else{
+            tvLegendTotalIncome.setText(getResources().getString(R.string.action_income) + "  (" + (totalIncomes + " " + profile.getCurrency()) + ")");
+        }
 
         double balance = totalIncomes - totalExpenses;
         balance = Math.round(balance * 100) / 100.0;
@@ -310,16 +322,25 @@ public class OverviewActivity extends AppCompatActivity {
         profile.setBalance((float) balance);
 
         //set balance to UI
-        tvBalance.setText(balance + " " + profile.getCurrency());
+        if (balance == (int) balance) {
+            tvBalance.setText((int) balance + " " + profile.getCurrency());
+        } else {
+            tvBalance.setText(balance + " " + profile.getCurrency());
+        }
         //set legends' text
-        tvLegendTotalExpense.setText(getResources().getString(R.string.action_expense) + "\n(" + (totalExpenses + " " + profile.getCurrency()) + ")");
-        tvLegendTotalIncome.setText(getResources().getString(R.string.action_income) + "\n(" + (totalIncomes + " " + profile.getCurrency()) + ")");
+
+
+
 
         //savings are : total income - total expense - balance + savings user defined at the creation of the profile
         double savings = mdb.getTotalIncome() - mdb.getTotalExpenses() - balance + profile.getSavings();
         profile.setSavings((float) savings);
         savings = Math.round(savings * 100) / 100.0;
-        tvSavings.setText(savings + " " + profile.getCurrency());
+        if (savings == (int) savings) {
+            tvSavings.setText((int) savings + " " + profile.getCurrency());
+        } else {
+            tvSavings.setText(savings + " " + profile.getCurrency());
+        }
 
         //set up the PieChart
         List<MagnificentChartItem> chartItemsList = new ArrayList<MagnificentChartItem>();
@@ -441,7 +462,11 @@ public class OverviewActivity extends AppCompatActivity {
             }
 
             //and fill the views with the values
-            tvLastExpenseValue.setText(cursorLastExpense.getDouble(3) + " " + profile.getCurrency());
+            if (cursorLastExpense.getDouble(3) == (int) cursorLastExpense.getDouble(3)) {
+                tvLastExpenseValue.setText((int) cursorLastExpense.getDouble(3) + " " + profile.getCurrency());
+            } else {
+                tvLastExpenseValue.setText(cursorLastExpense.getDouble(3) + " " + profile.getCurrency());
+            }
 
             //open category database
             CategoryDatabase cdb = new CategoryDatabase(this);
@@ -495,7 +520,11 @@ public class OverviewActivity extends AppCompatActivity {
             }
 
             //and fill the views with the values
-            tvLastIncomeValue.setText(cursorLastIncome.getDouble(1) + " " + profile.getCurrency());
+            if (cursorLastIncome.getDouble(1) == (int) cursorLastIncome.getDouble(1)) {
+                tvLastIncomeValue.setText((int) cursorLastIncome.getDouble(1) + " " + profile.getCurrency());
+            } else {
+                tvLastIncomeValue.setText(cursorLastIncome.getDouble(1) + " " + profile.getCurrency());
+            }
 
             //open category database
             CategoryDatabase cdb = new CategoryDatabase(this);

@@ -322,11 +322,16 @@ public class OverviewActivity extends AppCompatActivity {
         profile.setBalance((float) balance);
 
         //set balance to UI
+        String sign = (balance >= 0 ) ? "+" : "";
+        int drawable = (balance >= 0 ) ? R.drawable.rounded_bounds_green_empty : R.drawable.rounded_bounds_red_empty;
+        int paint = (balance >= 0 ) ? R.color.YellowGreen : R.color.bpRed;
         if (balance == (int) balance) {
-            tvBalance.setText((int) balance + " " + profile.getCurrency());
+            tvBalance.setText(sign + (int) balance + " " + profile.getCurrency());
         } else {
-            tvBalance.setText(balance + " " + profile.getCurrency());
+            tvBalance.setText(sign + balance + " " + profile.getCurrency());
         }
+        tvBalance.setBackgroundResource(drawable);
+        tvBalance.setTextColor(getResources().getColor(paint));
         //set legends' text
 
 
@@ -336,11 +341,16 @@ public class OverviewActivity extends AppCompatActivity {
         double savings = mdb.getTotalIncome() - mdb.getTotalExpenses() - balance + profile.getSavings();
         profile.setSavings((float) savings);
         savings = Math.round(savings * 100) / 100.0;
+        sign = (savings >= 0 ) ? "+" : "";
+        drawable = (savings >= 0 ) ? R.drawable.rounded_bounds_green_empty : R.drawable.rounded_bounds_red_empty;
+        paint = (savings >= 0 ) ? R.color.YellowGreen : R.color.bpRed;
         if (savings == (int) savings) {
-            tvSavings.setText((int) savings + " " + profile.getCurrency());
+            tvSavings.setText(sign + (int) savings + " " + profile.getCurrency());
         } else {
-            tvSavings.setText(savings + " " + profile.getCurrency());
+            tvSavings.setText(sign + savings + " " + profile.getCurrency());
         }
+        tvSavings.setBackgroundResource(drawable);
+        tvSavings.setTextColor(getResources().getColor(paint));
 
         //set up the PieChart
         List<MagnificentChartItem> chartItemsList = new ArrayList<MagnificentChartItem>();
@@ -503,6 +513,7 @@ public class OverviewActivity extends AppCompatActivity {
 
                 Date item_date = format.parse(date);
                 item_calendar.setTime(item_date);
+
 
                 boolean isToday = today.get(Calendar.YEAR) == item_calendar.get(Calendar.YEAR) &&
                         today.get(Calendar.DAY_OF_YEAR) == item_calendar.get(Calendar.DAY_OF_YEAR);

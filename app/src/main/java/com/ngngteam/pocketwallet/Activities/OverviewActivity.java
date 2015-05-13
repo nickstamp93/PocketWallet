@@ -40,6 +40,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import me.grantland.widget.AutofitTextView;
+
 public class OverviewActivity extends AppCompatActivity {
 
     //request code for the UserDetails sub-Activity
@@ -51,9 +53,10 @@ public class OverviewActivity extends AppCompatActivity {
     private UserProfile profile;
 
     //View objects for the XML management
-    private TextView tvBalance, tvSavings, tvLastIncomeValue, tvLastExpenseValue, tvLastExpenseDate,
-            tvLastIncomeDate, tvUsername, tvPieHeading, tvLegendTotalExpense, tvLegendTotalIncome;
-    private LinearLayout llBalance, llLastExpense, llLastIncome;
+    private TextView tvUsername;
+    private AutofitTextView tvBalance, tvSavings, tvLastIncomeValue, tvLastExpenseValue, tvLastExpenseDate,
+            tvLastIncomeDate, tvPieHeading, tvLegendTotalExpense, tvLegendTotalIncome;
+    private LinearLayout llLastExpense, llLastIncome;
     private CardView card_message, card_pie, card_last_transactions;
     private LetterImageView livLastExpense, livLastIncome, livLegendIncome, livLegendExpense;
     private DrawerLayout drawerLayout;
@@ -73,7 +76,7 @@ public class OverviewActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_new_overview);
+        setContentView(R.layout.activity_overview);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -225,8 +228,8 @@ public class OverviewActivity extends AppCompatActivity {
         //name
         tvUsername = (TextView) findViewById(R.id.tvUsername);
 
-        tvBalance = (TextView) findViewById(R.id.tvOverviewBalance);
-        tvSavings = (TextView) findViewById(R.id.tvOverviewSavings);
+        tvBalance = (AutofitTextView) findViewById(R.id.tvOverviewBalance);
+        tvSavings = (AutofitTextView) findViewById(R.id.tvOverviewSavings);
 
         //=================Message section====================================================
         card_message = (CardView) findViewById(R.id.cardview_message);
@@ -237,7 +240,7 @@ public class OverviewActivity extends AppCompatActivity {
 
         mcPie = (MagnificentChart) findViewById(R.id.mcPie);
 
-        tvPieHeading = (TextView) findViewById(R.id.tvPieHeading);
+        tvPieHeading = (AutofitTextView) findViewById(R.id.tvPieHeading);
 
         livLegendExpense = (LetterImageView) findViewById(R.id.livLegendExpense);
         livLegendIncome = (LetterImageView) findViewById(R.id.livLegendIncome);
@@ -246,8 +249,8 @@ public class OverviewActivity extends AppCompatActivity {
         livLegendExpense.setOval(true);
         livLegendIncome.setOval(true);
 
-        tvLegendTotalExpense = (TextView) findViewById(R.id.tvLegendExpenseText);
-        tvLegendTotalIncome = (TextView) findViewById(R.id.tvLegendIncomeText);
+        tvLegendTotalExpense = (AutofitTextView) findViewById(R.id.tvLegendExpenseText);
+        tvLegendTotalIncome = (AutofitTextView) findViewById(R.id.tvLegendIncomeText);
 
         //==================Third Section , Last Transactions=================================
         card_last_transactions = (CardView) findViewById(R.id.cardview_last_transactions);
@@ -256,11 +259,11 @@ public class OverviewActivity extends AppCompatActivity {
         llLastExpense = (LinearLayout) findViewById(R.id.llOverviewLastExpense);
         llLastIncome = (LinearLayout) findViewById(R.id.llOverviewLastIncome);
 
-        tvLastExpenseValue = (TextView) findViewById(R.id.tvLastExpenseValue);
-        tvLastIncomeValue = (TextView) findViewById(R.id.tvLastIncomeValue);
+        tvLastExpenseValue = (AutofitTextView) findViewById(R.id.tvLastExpenseValue);
+        tvLastIncomeValue = (AutofitTextView) findViewById(R.id.tvLastIncomeValue);
 
-        tvLastExpenseDate = (TextView) findViewById(R.id.tvLastExpenseDate);
-        tvLastIncomeDate = (TextView) findViewById(R.id.tvLastIncomeDate);
+        tvLastExpenseDate = (AutofitTextView) findViewById(R.id.tvLastExpenseDate);
+        tvLastIncomeDate = (AutofitTextView) findViewById(R.id.tvLastIncomeDate);
 
         livLastExpense = (LetterImageView) findViewById(R.id.livLastExpense);
         livLastIncome = (LetterImageView) findViewById(R.id.livLastIncome);
@@ -269,7 +272,6 @@ public class OverviewActivity extends AppCompatActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         drawer = (ListView) findViewById(R.id.nav_drawer);
-//        Themer.setDrawerBackground(this, drawer);
 
 
     }
@@ -387,7 +389,7 @@ public class OverviewActivity extends AppCompatActivity {
             }
 
             //tvPieHeading.setText(getResources().getString(R.string.text_pie_heading));
-            tvPieHeading.setTextSize(getResources().getInteger(R.integer.text_size_pie_heading_small));
+            tvPieHeading.setMaxTextSize(getResources().getInteger(R.integer.text_size_pie_heading_small));
         } else {
             Calendar c = Calendar.getInstance();
             int month = c.get(Calendar.MONTH);
@@ -396,7 +398,7 @@ public class OverviewActivity extends AppCompatActivity {
             String sMonth = getMonthForInt(month);
 
             tvPieHeading.setText(sMonth);
-            tvPieHeading.setTextSize(getResources().getInteger(R.integer.text_size_pie_heading));
+            tvPieHeading.setMaxTextSize(getResources().getInteger(R.integer.text_size_pie_heading));
         }
 
         //  Cursor cursorLastExpense, cursorLastIncome;

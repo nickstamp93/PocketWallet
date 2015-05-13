@@ -22,7 +22,6 @@
     <string name="title_activity_history">Ιστορικό Συναλλαγών</string>
     <string name="title_activity_settings">Ρυθμίσεις</string>
     <string name="title_activity_user_details">Προφίλ</string>
-    <string name="title_activity_overview">Overview</string>
     <string name="title_activity_categories_manager">Κατηγορίες</string>
     <string name="title_activity_create_category">Νέα Κατηγορία</string>
 
@@ -113,10 +112,10 @@
     <string name="toast_text_reminder">Ημερήσιες Υπενθυμίσεις ενεργοποιήθηκαν \n Επόμενη Υπενθύμιση : </string>
 
     <!--OverviewActivity-->
-    <string name="string_balance">Τρέχων:</string>
-    <string name="string_savings">Αποταμίευση:</string>
+    <string name="string_balance">Τρέχων Ποσό :</string>
+    <string name="string_savings">Ποσό Αποταμίευσης :</string>
 
-    <string name="text_pie_heading">Εβδομάδα:</string>
+    <string name="text_pie_heading">Εβδομάδα :</string>
     <string name="legend_text_expense">Έξοδα</string>
     <string name="legend_text_income">Έσοδα</string>
     <string name="text_no_records">Δεν υπάρχουν συναλλαγές για την τρέχουσα περίοδο</string>
@@ -216,9 +215,5 @@
     <string name="toast_pattern_changed">Το μοτίβο καταγράφηκε</string>
     <string name="toast_pattern_not_chaged">Τα μοτίβα δεν είναι ίδια!</string>
 
-
-    <string name="title_activity_new_overview">NewOverview</string>
-
-    <string name="hello_world">Hello world!</string>
 
 </resources>

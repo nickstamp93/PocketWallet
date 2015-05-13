@@ -26,6 +26,7 @@
     <dimen name="text_size_spinner">16sp</dimen>
 
     <dimen name="text_size_username">35sp</dimen>
+    <dimen name="text_size_headlines">24sp</dimen>
     <dimen name="card_margin">10dp</dimen>
     <dimen name="value_size_big">35sp</dimen>
 
@@ -40,6 +41,5 @@
     <dimen name="layout_padding_small">5dp</dimen>
     <dimen name="pattern_view_size" >240dp</dimen>
 
-    <integer name="color_columns">5</integer>
 
 </resources>

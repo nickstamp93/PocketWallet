@@ -25,6 +25,7 @@
     <dimen name="text_size_spinner">14sp</dimen>
 
     <dimen name="text_size_username">30sp</dimen>
+    <dimen name="text_size_headlines">20sp</dimen>
     <dimen name="card_margin">7dp</dimen>
     <dimen name="value_size_big">30sp</dimen>
 

@@ -215,9 +215,6 @@
     <string name="toast_pattern_changed">Pattern lock set</string>
     <string name="toast_pattern_not_chaged">Patterns don\'t match!</string>
 
-    <string name="title_activity_new_overview">NewOverview</string>
-
-    <string name="hello_world">Hello world!</string>
 
 
 </resources>

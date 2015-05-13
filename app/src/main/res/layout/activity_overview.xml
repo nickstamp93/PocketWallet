@@ -29,14 +29,14 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <TextView
+                    <me.grantland.widget.AutofitTextView
                         android:id="@+id/tvUsername"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:padding="@dimen/layout_padding"
+                        android:maxLines="2"
                         android:text="Nikos"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textSize="@dimen/text_size_username"
                         android:textStyle="bold" />
 
@@ -47,16 +47,16 @@
                         android:orientation="horizontal"
                         android:weightSum="3">
 
-                        <TextView
+                        <me.grantland.widget.AutofitTextView
                             style="@style/Headline"
-                            android:layout_weight="1.8"
+                            android:layout_weight="1.5"
                             android:gravity="center_horizontal"
                             android:text="@string/string_balance" />
 
-                        <TextView
+                        <me.grantland.widget.AutofitTextView
                             android:id="@+id/tvOverviewBalance"
                             style="@style/Headline"
-                            android:layout_weight="1.2"
+                            android:layout_weight="1.5"
                             android:gravity="center_horizontal"
                             android:text="1000.0 €"
                             android:textSize="@dimen/value_size_big" />
@@ -70,16 +70,16 @@
                         android:orientation="horizontal"
                         android:weightSum="3">
 
-                        <TextView
+                        <me.grantland.widget.AutofitTextView
                             style="@style/Headline"
-                            android:layout_weight="1.8"
+                            android:layout_weight="1.5"
                             android:gravity="center_horizontal"
                             android:text="@string/string_savings" />
 
-                        <TextView
+                        <me.grantland.widget.AutofitTextView
                             android:id="@+id/tvOverviewSavings"
                             style="@style/Headline"
-                            android:layout_weight="1.2"
+                            android:layout_weight="1.5"
                             android:gravity="center_horizontal"
                             android:text="1000.0 €"
                             android:textSize="@dimen/value_size_big" />
@@ -104,12 +104,14 @@
                     android:orientation="horizontal"
                     android:padding="@dimen/layout_padding_small">
 
-                    <TextView
+                    <me.grantland.widget.AutofitTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
+                        android:lines="2"
                         android:text="@string/text_no_records"
-                        android:textAppearance="?android:attr/textAppearanceLarge" />
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="?textCustomColor" />
 
                 </LinearLayout>
 
@@ -134,8 +136,8 @@
                         android:layout_width="@dimen/pie_view_width"
                         android:layout_height="@dimen/pie_view_height"
                         android:layout_margin="10dp"
-                        app:chartbackground="?cardCustomBackground"
                         app:animation="true"
+                        app:chartbackground="?cardCustomBackground"
                         app:round="false"
                         app:shadow="false"
                         app:showTitle="true" />
@@ -147,13 +149,15 @@
                         android:orientation="vertical"
                         android:weightSum="2">
 
-                        <TextView
+                        <me.grantland.widget.AutofitTextView
                             android:id="@+id/tvPieHeading"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="@string/text_pie_heading" />
+                            android:lines="2"
+                            android:text="@string/text_pie_heading"
+                            android:textColor="?textCustomColor" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -175,13 +179,15 @@
                                     android:layout_height="20dp"
                                     android:layout_gravity="center" />
 
-                                <TextView
+                                <me.grantland.widget.AutofitTextView
                                     android:id="@+id/tvLegendExpenseText"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="fill_parent"
+                                    android:layout_height="wrap_content"
                                     android:gravity="left|center_vertical"
+                                    android:lines="2"
                                     android:paddingLeft="10dp"
-                                    android:text="@string/legend_text_expense" />
+                                    android:text="@string/legend_text_expense"
+                                    android:textColor="?textCustomColor" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -198,13 +204,15 @@
                                     android:layout_height="20dp"
                                     android:layout_gravity="center" />
 
-                                <TextView
+                                <me.grantland.widget.AutofitTextView
                                     android:id="@+id/tvLegendIncomeText"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="fill_parent"
+                                    android:layout_height="wrap_content"
                                     android:gravity="left|center_vertical"
+                                    android:lines="2"
                                     android:paddingLeft="10dp"
-                                    android:text="@string/legend_text_income" />
+                                    android:text="@string/legend_text_income"
+                                    android:textColor="?textCustomColor" />
                             </LinearLayout>
 
                         </LinearLayout>
@@ -242,7 +250,7 @@
                             android:layout_marginTop="10dp"
                             android:background="@drawable/line_seperator_fade" />
 
-                        <TextView
+                        <me.grantland.widget.AutofitTextView
                             style="@style/Headline"
                             android:layout_weight="1"
                             android:gravity="center_horizontal"
@@ -269,7 +277,7 @@
                                 android:layout_height="@dimen/category_icon_height"
                                 android:layout_margin="10dp" />
 
-                            <TextView
+                            <me.grantland.widget.AutofitTextView
                                 android:id="@+id/tvLastExpenseDate"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -277,9 +285,10 @@
                                 android:gravity="center_horizontal"
                                 android:padding="@dimen/layout_padding_small"
                                 android:text="Fri 25 April"
-                                android:textAppearance="?android:textAppearanceMedium" />
+                                android:textAppearance="?android:textAppearanceMedium"
+                                android:textColor="?textCustomColor" />
 
-                            <TextView
+                            <me.grantland.widget.AutofitTextView
                                 android:id="@+id/tvLastExpenseValue"
                                 style="@style/Headline"
                                 android:layout_width="match_parent"
@@ -303,7 +312,7 @@
                             android:layout_marginTop="10dp"
                             android:background="@drawable/line_seperator_fade" />
 
-                        <TextView
+                        <me.grantland.widget.AutofitTextView
                             android:id="@+id/tvLastIncome"
                             style="@style/Headline"
                             android:layout_weight="1"
@@ -331,7 +340,7 @@
                                 android:layout_height="@dimen/category_icon_height"
                                 android:layout_margin="10dp" />
 
-                            <TextView
+                            <me.grantland.widget.AutofitTextView
                                 android:id="@+id/tvLastIncomeDate"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -339,9 +348,10 @@
                                 android:gravity="center_horizontal"
                                 android:padding="@dimen/layout_padding_small"
                                 android:text="Mon 26 January"
-                                android:textAppearance="?android:textAppearanceMedium" />
+                                android:textAppearance="?android:textAppearanceMedium"
+                                android:textColor="?textCustomColor" />
 
-                            <TextView
+                            <me.grantland.widget.AutofitTextView
                                 android:id="@+id/tvLastIncomeValue"
                                 style="@style/Headline"
                                 android:layout_width="match_parent"

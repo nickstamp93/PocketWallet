@@ -93,16 +93,18 @@
     </style>
 
     <!--headline style , used as a header in many activities-->
-    <style name="Headline" parent="android:Theme.Holo.Light.DarkActionBar">
+    <style name="Headline" >
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
+        <item name="android:textSize">@dimen/text_size_headlines</item>
+        <item name="android:textColor">?textCustomColor</item>
+        <item name="android:singleLine">true</item>
         <item name="android:textStyle">bold</item>
         <item name="android:padding">10dp</item>
     </style>
 
     <!--style for edittext in userDetails activity-->
-    <style name="UserDetailsEditText" parent="android:Theme.Holo.Light.DarkActionBar">
+    <style name="UserDetailsEditText">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:ems">10</item>

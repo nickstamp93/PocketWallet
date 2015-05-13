@@ -39,7 +39,7 @@
                 android:layout_marginBottom="@dimen/bottom_margin_headlines_small"
                 android:weightSum="6">
 
-                <TextView
+                <me.grantland.widget.AutofitTextView
                     style="@style/Headline"
                     android:layout_weight="3.5"
                     android:text="@string/textview_headline_category" />
@@ -65,7 +65,7 @@
                 android:orientation="horizontal"
                 android:weightSum="9">
 
-                <TextView
+                <me.grantland.widget.AutofitTextView
                     style="@style/Headline"
                     android:layout_weight="2.5"
                     android:text="@string/textview_headline_date" />
@@ -102,7 +102,7 @@
                 android:orientation="horizontal"
                 android:weightSum="6">
 
-                <TextView
+                <me.grantland.widget.AutofitTextView
                     style="@style/Headline"
                     android:layout_weight="3.5"
                     android:text="@string/textview_headline_notes" />

@@ -6,12 +6,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.ngngteam.pocketwallet.Model.ExpenseItem;
+import com.ngngteam.pocketwallet.Model.IncomeItem;
+
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
-
-import com.ngngteam.pocketwallet.Model.ExpenseItem;
-import com.ngngteam.pocketwallet.Model.IncomeItem;
 
 /**
  * Created by Nikos on 7/26/2014.
@@ -100,7 +100,8 @@ public class MoneyDatabase extends SQLiteOpenHelper {
     //return a cursor which contains the tuples with Category equal to the parameter category of table Expenses
     public Cursor getExpensesByCategory(String category) {
 
-        return getReadableDatabase().rawQuery("SELECT * FROM " + Table_Expense + " WHERE " + Key_ECategory + " LIKE " + "'" + category + "'",
+        return getReadableDatabase().rawQuery("SELECT * FROM " + Table_Expense + " WHERE " + Key_ECategory + " LIKE " + "'" + category +
+                        "' ORDER BY " + Key_EDate + " DESC, " + Key_EId + " DESC",
                 null);
     }
 
@@ -110,7 +111,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         if (!asc) {
             order = " DESC";
         }
-        return getReadableDatabase().rawQuery("SELECT * FROM " + Table_Expense + " ORDER BY " + Key_EPrice + order, null);
+        return getReadableDatabase().rawQuery("SELECT * FROM " + Table_Expense + " ORDER BY " + Key_EPrice + order + " , " + Key_EDate + " DESC", null);
 
     }
 
@@ -120,7 +121,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         String dateTokens[] = date.split("-");
         String reformedDate = dateTokens[2] + "-" + dateTokens[1] + "-" + dateTokens[0];
 
-        return getReadableDatabase().rawQuery("SELECT * FROM " + Table_Expense + " WHERE " + Key_EDate + " LIKE " + "'" + reformedDate + "'",
+        return getReadableDatabase().rawQuery("SELECT * FROM " + Table_Expense + " WHERE " + Key_EDate + " LIKE " + "'" + reformedDate + "' ORDER BY " + Key_EId + " DESC",
                 null);
     }
 
@@ -133,7 +134,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         String reformedDateTo = DateTo[2] + "-" + DateTo[1] + "-" + DateTo[0];
 
         return getReadableDatabase().rawQuery("SELECT * FROM " + Table_Expense + " WHERE " + Key_EDate + ">=" + "'" + reformedDateFrom + "'" +
-                " AND " + Key_EDate + "<=" + "'" + reformedDateTo + "'", null);
+                " AND " + Key_EDate + "<=" + "'" + reformedDateTo + "' ORDER BY " + Key_EDate + " DESC, " + Key_EId + " DESC", null);
 
     }
 
@@ -152,7 +153,8 @@ public class MoneyDatabase extends SQLiteOpenHelper {
 
     //return a cursor which contains all the tuples of table income with Source = to parameter source
     public Cursor getIncomesBySource(String source) {
-        return getReadableDatabase().rawQuery("SELECT * FROM " + Table_Income + " WHERE " + Key_ISource + "=" + "'" + source + "'", null);
+        return getReadableDatabase().rawQuery("SELECT * FROM " + Table_Income +
+                " WHERE " + Key_ISource + "=" + "'" + source + "' ORDER BY " + Key_IDate + " DESC, " + Key_Iid + " DESC", null);
     }
 
     //return a cursor which contains the tuples of table income with Date equal to parameter date
@@ -161,7 +163,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         String dateTokens[] = date.split("-");
         String reformedDate = dateTokens[2] + "-" + dateTokens[1] + "-" + dateTokens[0];
 
-        return getReadableDatabase().rawQuery("SELECT * FROM " + Table_Income + " WHERE " + Key_IDate + " LIKE " + "'" + reformedDate + "'",
+        return getReadableDatabase().rawQuery("SELECT * FROM " + Table_Income + " WHERE " + Key_IDate + " LIKE " + "'" + reformedDate + "' ORDER BY " + Key_Iid + " DESC",
                 null);
     }
 
@@ -177,7 +179,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         if (!asc) {
             order = " DESC";
         }
-        return getReadableDatabase().rawQuery("SELECT * FROM " + Table_Income + " ORDER BY " + Key_IAmount + order, null);
+        return getReadableDatabase().rawQuery("SELECT * FROM " + Table_Income + " ORDER BY " + Key_IAmount + order + " , " + Key_IDate + " DESC", null);
     }
 
 
@@ -190,7 +192,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         String reformedDateTo = DateTo[2] + "-" + DateTo[1] + "-" + DateTo[0];
 
         return getReadableDatabase().rawQuery("SELECT * FROM " + Table_Income + " WHERE " + Key_IDate + ">=" + "'" + reformedDateFrom + "'" +
-                " AND " + Key_IDate + "<=" + "'" + reformedDateTo + "'", null);
+                " AND " + Key_IDate + "<=" + "'" + reformedDateTo + "' ORDER BY " + Key_IDate + " DESC , " + Key_Iid + " DESC", null);
     }
 
 
@@ -374,7 +376,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
                 c.add(Calendar.DATE, 1);
                 currentDay = c.get(Calendar.DAY_OF_WEEK);
             }
-            c.add(Calendar.DAY_OF_YEAR , -1);
+            c.add(Calendar.DAY_OF_YEAR, -1);
             endDate = c.getTime();
 
             c.add(Calendar.DAY_OF_YEAR, -6);
@@ -441,7 +443,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
                 c.add(Calendar.DATE, 1);
                 currentDay = c.get(Calendar.DAY_OF_WEEK);
             }
-            c.add(Calendar.DAY_OF_YEAR , -1);
+            c.add(Calendar.DAY_OF_YEAR, -1);
             endDate = c.getTime();
 
             c.add(Calendar.DAY_OF_YEAR, -6);

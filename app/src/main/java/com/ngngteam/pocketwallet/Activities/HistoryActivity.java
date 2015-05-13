@@ -74,7 +74,6 @@ public class HistoryActivity extends AppCompatActivity {
 
                 c.moveToPosition(position);
                 update = true;
-                stopManagingCursor(c);
 
                 if (switcher) {
                     Intent processExpense = new Intent(HistoryActivity.this, AddExpenseActivity.class);
@@ -101,7 +100,6 @@ public class HistoryActivity extends AppCompatActivity {
         db = new MoneyDatabase(HistoryActivity.this);
         c = db.getExpensesFromNewestToOldest();
 
-        startManagingCursor(c);
         adapter = new HistoryListViewAdapter(HistoryActivity.this, c);
     }
 
@@ -226,7 +224,6 @@ public class HistoryActivity extends AppCompatActivity {
                 break;
 
             case R.id.FiltersDTD:
-                stopManagingCursor(c);
                 Intent ExpenseFilterDTD = new Intent(HistoryActivity.this, FiltersDateToDateActivity.class);
                 startActivityForResult(ExpenseFilterDTD, result);
                 break;
@@ -270,7 +267,6 @@ public class HistoryActivity extends AppCompatActivity {
                 break;
 
             case R.id.IncomeDTD:
-                stopManagingCursor(c);
                 Intent IncomeFilterDTD = new Intent(HistoryActivity.this, FiltersDateToDateActivity.class);
                 startActivityForResult(IncomeFilterDTD, result);
                 break;

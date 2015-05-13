@@ -29,6 +29,7 @@ import java.util.Calendar;
 public class SettingsActivity extends PreferenceActivity
         implements SharedPreferences.OnSharedPreferenceChangeListener {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -47,8 +48,8 @@ public class SettingsActivity extends PreferenceActivity
     //set all the preferences and their actions
     private void setPreferenceActions() {
 
-        if(PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).
-                getString(getString(R.string.pref_key_pattern), "1234").equals("1234")){
+        if (PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).
+                getString(getString(R.string.pref_key_pattern), "1234").equals("1234")) {
             disablePassword();
         }
 
@@ -80,7 +81,7 @@ public class SettingsActivity extends PreferenceActivity
         //when user clicks on "pattern lock" preference item
         //launch intent with target the PatternLockActivity class
         screen = findPreference(getResources().getString(R.string.pref_key_pattern));
-        i = new Intent(this, PatternLockActivity.class).putExtra("mode" , "edit");
+        i = new Intent(this, PatternLockActivity.class).putExtra("mode", "edit");
         screen.setIntent(i);
 
         //when user clicks on "about" preference item
@@ -248,17 +249,15 @@ public class SettingsActivity extends PreferenceActivity
     @Override
     protected void onResume() {
         super.onResume();
-        //on resume , update the summaries , and  any preferences changed
+        //on resume , update the summaries , and  any preferences launched
         initSummaries(getPreferenceScreen());
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override
-    protected void onRestart() {
-        super.onRestart();
-        //on resume , update the summaries , and  any preferences changed
-        initSummaries(getPreferenceScreen());
-        getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+    protected void onPause() {
+        super.onPause();
+        getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
     }
 
     @Override
@@ -270,11 +269,14 @@ public class SettingsActivity extends PreferenceActivity
             //if the pass just been enabled
             if (PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).getBoolean(getResources().getString(R.string.pref_key_password), false)) {
 
+
                 //launch pattern activity to enter new pattern
                 Intent i = new Intent(SettingsActivity.this, PatternLockActivity.class);
                 i.putExtra("mode", "edit");
                 startActivity(i);
             } else {
+
+                sharedPreferences.registerOnSharedPreferenceChangeListener(this);
                 PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().
                         putString(getString(R.string.pref_key_pattern), "none").commit();
                 //alert the user
@@ -310,8 +312,8 @@ public class SettingsActivity extends PreferenceActivity
         }
 
         //if pattern lock disabled
-        if(!PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this)
-                .getBoolean(getResources().getString(R.string.pref_key_password), false)){
+        if (!PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this)
+                .getBoolean(getResources().getString(R.string.pref_key_password), false)) {
             SwitchPreference pattern = (SwitchPreference) findPreference(getResources().getString(R.string.pref_key_password));
             pattern.setChecked(false);
         }

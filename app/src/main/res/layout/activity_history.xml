@@ -2,7 +2,7 @@
     android:id="@+id/lvHistory"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:dividerHeight="5dp"
-    android:divider="@color/transparent"
+    android:dividerHeight="1dp"
+    android:divider="@color/secondary_text_default_material_light"
     android:scrollbars="none"
     android:padding="@dimen/layout_padding" />

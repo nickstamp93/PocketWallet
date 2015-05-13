@@ -9,14 +9,14 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
+import com.ngngteam.pocketwallet.Data.CategoryDatabase;
+import com.ngngteam.pocketwallet.Extra.LetterImageView;
+import com.ngngteam.pocketwallet.R;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
-import com.ngngteam.pocketwallet.Data.CategoryDatabase;
-import com.ngngteam.pocketwallet.Extra.LetterImageView;
-import com.ngngteam.pocketwallet.R;
 
 /**
  * Created by Nikos on 7/26/2014.
@@ -49,7 +49,7 @@ public class HistoryListViewAdapter extends CursorAdapter {
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = null;
+        View view;
         if (expense) {
             view = inflater.inflate(R.layout.list_expense_item_history, parent, false);
 
@@ -92,6 +92,7 @@ public class HistoryListViewAdapter extends CursorAdapter {
                     tvDate.setText(fmtOut.format(d));
                 }
 
+
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -101,7 +102,6 @@ public class HistoryListViewAdapter extends CursorAdapter {
 
             int color = cdb.getColorFromCategory(cursor.getString(1), expense);
             char letter = cdb.getLetterFromCategory(cursor.getString(1), expense);
-
 
             tvCategory.setTextColor(color);
 

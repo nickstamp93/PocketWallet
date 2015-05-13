@@ -268,7 +268,7 @@ public class SettingsActivity extends PreferenceActivity
         if (key.equals(getResources().getString(R.string.pref_key_password))) {
 
             //if the pass just been enabled
-            if (sharedPreferences.getBoolean(getResources().getString(R.string.pref_key_password), false)) {
+            if (PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).getBoolean(getResources().getString(R.string.pref_key_password), false)) {
 
                 //launch pattern activity to enter new pattern
                 Intent i = new Intent(SettingsActivity.this, PatternLockActivity.class);

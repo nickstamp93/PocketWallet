@@ -64,11 +64,11 @@ public class CategoriesManagerActivity extends AppCompatActivity {
 
         expense = true;
 
-        db = new CategoryDatabase(getApplicationContext());
+        db = new CategoryDatabase(CategoriesManagerActivity.this);
 
         c = db.getAllCategories(expense);
         //init adapter
-        adapter = new MyAdapter(getApplicationContext(), c);
+        adapter = new MyAdapter(CategoriesManagerActivity.this, c);
 
     }
 
@@ -164,7 +164,6 @@ public class CategoriesManagerActivity extends AppCompatActivity {
             //and fill them with the correct values from the db's cursor
             final String name = cursor.getString(1);
             tvName.setText(name);
-//            Themer.setTextviewTextColor(CategoriesManagerActivity.this, tvName);
 
             String sletter = cursor.getString(3);
             char cletter = sletter.charAt(0);
@@ -187,7 +186,6 @@ public class CategoriesManagerActivity extends AppCompatActivity {
             //and update them with the correct values
             final String name = cursor.getString(1);
             tvName.setText(name);
-//            Themer.setTextviewTextColor(CategoriesManagerActivity.this, tvName);
 
             String sletter = cursor.getString(3);
             char cletter = sletter.charAt(0);

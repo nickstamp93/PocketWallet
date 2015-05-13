@@ -53,6 +53,7 @@ public class AddExpenseActivity extends AppCompatActivity implements NumberPicke
 
     private ArrayList<String> allCategories;
 
+    //TODO find a solution for the button bar when the keyboard appears or switch back to the old version
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

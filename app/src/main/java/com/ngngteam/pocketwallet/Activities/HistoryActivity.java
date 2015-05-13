@@ -49,7 +49,6 @@ public class HistoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        Themer.setThemeToActivity(this);
 
         setContentView(R.layout.activity_history);
 
@@ -99,11 +98,11 @@ public class HistoryActivity extends AppCompatActivity {
     }
 
     private void init() {
-        db = new MoneyDatabase(getApplicationContext());
+        db = new MoneyDatabase(HistoryActivity.this);
         c = db.getExpensesFromNewestToOldest();
 
         startManagingCursor(c);
-        adapter = new HistoryListViewAdapter(getApplicationContext(), c);
+        adapter = new HistoryListViewAdapter(HistoryActivity.this, c);
     }
 
     // Refresh the view of HistoryActivity using different cursor
@@ -315,7 +314,7 @@ public class HistoryActivity extends AppCompatActivity {
                     getMenuInflater().inflate(R.menu.history_income, menu);
                     c = db.getIncomeByNewestToOldest();
                     adapter.closeCDB();
-                    adapter = new HistoryListViewAdapter(getApplicationContext(), c);
+                    adapter = new HistoryListViewAdapter(HistoryActivity.this, c);
                     adapter.setTheView(switcher);
                     lv.setAdapter(adapter);
                 } else {
@@ -323,7 +322,7 @@ public class HistoryActivity extends AppCompatActivity {
                     getMenuInflater().inflate(R.menu.history_expense, menu);
                     c = db.getExpensesFromNewestToOldest();
                     adapter.closeCDB();
-                    adapter = new HistoryListViewAdapter(getApplicationContext(), c);
+                    adapter = new HistoryListViewAdapter(HistoryActivity.this, c);
                     adapter.setTheView(switcher);
                     lv.setAdapter(adapter);
                 }

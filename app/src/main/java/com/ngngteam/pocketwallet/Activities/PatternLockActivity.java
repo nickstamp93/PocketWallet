@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -33,6 +34,7 @@ public class PatternLockActivity extends AppCompatActivity {
 //        Themer.setThemeToActivity(this);
         setContentView(R.layout.activity_pattern_lock);
 
+
         inflater = getLayoutInflater();
 
         context = this;
@@ -42,6 +44,8 @@ public class PatternLockActivity extends AppCompatActivity {
         tvPatternTitle = (TextView) findViewById(R.id.tvPatternTitle);
 
         mode = (String) getIntent().getExtras().get("mode");
+
+        Log.i("nikos" , "Pattern created--->mode:" + mode);
         //if we are in create mode
         if (mode.equals("edit")) {
             //enter the create title
@@ -115,6 +119,8 @@ public class PatternLockActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), getString(R.string.toast_pattern_changed), Toast.LENGTH_SHORT).show();
                 PreferenceManager.getDefaultSharedPreferences(PatternLockActivity.this).edit().
                         putString(getString(R.string.pref_key_pattern), patternString).commit();
+
+                finish();
             } else {
                 if (PreferenceManager.getDefaultSharedPreferences(PatternLockActivity.this).
                         getString(getString(R.string.pref_key_pattern), "none").equals("none")) {
@@ -144,8 +150,8 @@ public class PatternLockActivity extends AppCompatActivity {
                         .putBoolean(getResources().getString(R.string.pref_key_password), false)
                         .commit();
                 //an exit
-                finish();
             }
         }
+        finish();
     }
 }

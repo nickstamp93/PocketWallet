@@ -1,59 +1,69 @@
-<?xml version="1.0" encoding="utf-8"?><!-- File created by the Android Action Bar Style Generator
-
-     Copyright (C) 2011 The Android Open Source Project
-     Copyright (C) 2012 readyState Software Ltd
-
-     Licensed under the Apache License, Version 2.0 (the "License");
-     you may not use this file except in compliance with the License.
-     You may obtain a copy of the License at
-  
-          http://www.apache.org/licenses/LICENSE-2.0
-  
-     Unless required by applicable law or agreed to in writing, software
-     distributed under the License is distributed on an "AS IS" BASIS,
-     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-     See the License for the specific language governing permissions and
-     limitations under the License.
--->
-
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--Light Theme-->
     <style name="Theme.Appcompat_custom_light" parent="Theme.MyAppcompat">
 
         <item name="cardCustomBackground">@color/cardview_light_background</item>
         <item name="android:windowBackground">@color/background_material_light</item>
         <item name="android:textColorPrimary">@color/primary_text_default_material_light</item>
         <item name="android:textColorSecondary">@color/secondary_text_default_material_light</item>
+        <item name="android:textColorHint">@color/secondary_text_default_material_light</item>
+
+        <!--for spinner items-->
+        <item name="windowCustomBackground">@color/background_material_light</item>
+
+        <!--dialog theme-->
+        <item name="android:alertDialogTheme">@style/MyDialogThemeLight</item>
 
     </style>
 
+    <!--Dark Theme-->
     <style name="Theme.Appcompat_custom_dark" parent="Theme.MyAppcompat">
 
-        <item name="android:actionMenuTextColor">@color/DeepPink</item>
         <item name="cardCustomBackground">@color/cardview_dark_background</item>
         <item name="android:windowBackground">@color/background_material_dark</item>
         <item name="android:textColorPrimary">@color/primary_text_default_material_dark</item>
         <item name="android:textColorSecondary">@color/secondary_text_default_material_dark</item>
-
         <item name="android:textColorHint">@color/secondary_text_default_material_dark</item>
 
-        <item name="android:itemTextAppearance">@style/MenuTextAppearance</item>
+        <!--Action bar dialog menu item (history filters)-->
+        <item name="android:itemTextAppearance">@style/MenuItemTextAppearance</item>
         <item name="android:itemBackground">@color/background_material_dark</item>
 
+        <!--for spinner items-->
         <item name="windowCustomBackground">@color/background_material_dark</item>
 
+        <!--dialog theme-->
+        <item name="android:alertDialogTheme">@style/MyDialogThemeDark</item>
 
     </style>
 
-    <style name="MyCardView" parent="CardView.Dark">
-        <item name="cardBackgroundColor">@color/yellow</item>
+    <style name="myTextView" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:textColor">@color/material_deep_teal_500</item>
     </style>
 
-    <style name="MenuTextAppearance">
+    <style name="MyDialogThemeDark" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowCloseOnTouchOutside">false</item>
+    </style>
+
+    <style name="MyDialogThemeLight" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowCloseOnTouchOutside">false</item>
+    </style>
+
+    <style name="MenuItemTextAppearance">
         <item name="android:textColor">@color/material_deep_teal_500</item>
     </style>
 
     <style name="Theme.MyAppcompat" parent="Theme.AppCompat.Light">
+
+        <item name="android:textViewStyle">@style/myTextView</item>
 
         <item name="android:actionBarItemBackground">
             @drawable/selectable_background_appcompat_custom_light
@@ -124,10 +134,6 @@
         <item name="popupMenuStyle">@style/PopupMenu.Appcompat_custom_light</item>
         <item name="dropDownListViewStyle">@style/DropDownListView.Appcompat_custom_light</item>
     </style>
-
-
-    <!--gkjfevjgsbejklljgbksjkgjsj-->
-
 
     <style name="PopupMenu.Appcompat_custom_light" parent="@style/Widget.AppCompat.Light.PopupMenu">
         <item name="android:popupBackground">@drawable/menu_dropdown_panel_appcompat_custom_light

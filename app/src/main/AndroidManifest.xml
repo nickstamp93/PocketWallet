@@ -8,7 +8,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.Appcompat_custom_dark">
+        android:theme="@style/Theme.Appcompat_custom_light">
         <activity
             android:name=".Activities.LauncherPickerActivity"
             android:clearTaskOnLaunch="true"

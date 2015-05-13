@@ -51,6 +51,8 @@ public class AddIncomeActivity extends AppCompatActivity implements NumberPicker
     private CalendarDatePickerDialog d;
     private NumberPickerBuilder npb;
 
+    //TODO find a solution for the button bar when the keyboard appears or switch back to the old version
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

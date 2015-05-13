@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 
 import com.ngngteam.pocketwallet.R;
+import com.ngngteam.pocketwallet.Utils.Themer;
 
 
 //launcher activity of the app
@@ -16,6 +17,9 @@ public class LauncherPickerActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Themer.setThemeToActivity(this);
+
         super.onCreate(savedInstanceState);
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);

@@ -23,6 +23,7 @@ import com.ngngteam.pocketwallet.Data.MoneyDatabase;
 import com.ngngteam.pocketwallet.Model.ExpenseItem;
 import com.ngngteam.pocketwallet.Model.SpinnerItem;
 import com.ngngteam.pocketwallet.R;
+import com.ngngteam.pocketwallet.Utils.Themer;
 
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -56,8 +57,11 @@ public class AddExpenseActivity extends AppCompatActivity implements NumberPicke
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Themer.setThemeToActivity(this);
+
         super.onCreate(savedInstanceState);
-//        Themer.setThemeToActivity(this);
+
         setContentView(R.layout.activity_add_expense);
 
 
@@ -178,10 +182,6 @@ public class AddExpenseActivity extends AppCompatActivity implements NumberPicke
 
         bOk = (Button) findViewById(R.id.bOK);
         bCancel = (Button) findViewById(R.id.bCancel);
-
-//        Themer.setBackgroundColor(this, bOk, false);
-//        Themer.setBackgroundColor(this, bCancel, true);
-
 
     }
 

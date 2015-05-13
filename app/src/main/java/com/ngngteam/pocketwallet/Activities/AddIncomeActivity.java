@@ -23,6 +23,7 @@ import com.ngngteam.pocketwallet.Data.MoneyDatabase;
 import com.ngngteam.pocketwallet.Model.IncomeItem;
 import com.ngngteam.pocketwallet.Model.SpinnerItem;
 import com.ngngteam.pocketwallet.R;
+import com.ngngteam.pocketwallet.Utils.Themer;
 
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -50,13 +51,12 @@ public class AddIncomeActivity extends AppCompatActivity implements NumberPicker
     private CalendarDatePickerDialog d;
     private NumberPickerBuilder npb;
 
-    //TODO find a solution for the button bar when the keyboard appears or switch back to the old version
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-//        Themer.setThemeToActivity(this);
+        Themer.setThemeToActivity(this);
+
+        super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_add_income);
 
@@ -186,8 +186,6 @@ public class AddIncomeActivity extends AppCompatActivity implements NumberPicker
 
         bOk = (Button) findViewById(R.id.bOK);
         bCancel = (Button) findViewById(R.id.bCancel);
-//        Themer.setBackgroundColor(this, bOk, false);
-//        Themer.setBackgroundColor(this, bCancel, true);
 
     }
 
@@ -324,13 +322,6 @@ public class AddIncomeActivity extends AppCompatActivity implements NumberPicker
         }
     };
 
-
-    private String reverseDate() {
-
-        String tokens[] = date.split("-");
-        return tokens[2] + "-" + tokens[1] + "-" + tokens[0];
-
-    }
 
     @Override
     public void onDialogNumberSet(int reference, int number, double decimal, boolean isNumber, double fullNumber) {

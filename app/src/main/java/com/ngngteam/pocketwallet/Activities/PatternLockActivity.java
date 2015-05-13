@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.eftimoff.patternview.PatternView;
 import com.ngngteam.pocketwallet.R;
+import com.ngngteam.pocketwallet.Utils.Themer;
 
 
 public class PatternLockActivity extends AppCompatActivity {
@@ -30,8 +31,10 @@ public class PatternLockActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Themer.setThemeToActivity(this);
+
         super.onCreate(savedInstanceState);
-//        Themer.setThemeToActivity(this);
         setContentView(R.layout.activity_pattern_lock);
 
 

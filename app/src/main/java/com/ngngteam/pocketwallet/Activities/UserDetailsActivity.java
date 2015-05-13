@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.ngngteam.pocketwallet.Data.MoneyDatabase;
 import com.ngngteam.pocketwallet.R;
 import com.ngngteam.pocketwallet.Utils.SharedPrefsManager;
+import com.ngngteam.pocketwallet.Utils.Themer;
 
 public class UserDetailsActivity extends AppCompatActivity {
 
@@ -29,10 +30,11 @@ public class UserDetailsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Themer.setThemeToActivity(this);
+
         super.onCreate(savedInstanceState);
 
-        //apply theme
-//        Themer.setThemeToActivity(this);
 
         setContentView(R.layout.activity_user_details);
 
@@ -69,10 +71,6 @@ public class UserDetailsActivity extends AppCompatActivity {
 
         bOk = (Button) findViewById(R.id.bOK);
         bCancel = (Button) findViewById(R.id.bCancel);
-
-        //apply button coloring to the buttons
-//        Themer.setBackgroundColor(this, bOk, false);
-//        Themer.setBackgroundColor(this, bCancel, true);
 
     }
 

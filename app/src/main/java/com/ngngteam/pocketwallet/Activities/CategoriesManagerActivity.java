@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.ngngteam.pocketwallet.Data.CategoryDatabase;
 import com.ngngteam.pocketwallet.Extra.LetterImageView;
 import com.ngngteam.pocketwallet.R;
+import com.ngngteam.pocketwallet.Utils.Themer;
 
 //activity managind the categories
 public class CategoriesManagerActivity extends AppCompatActivity {
@@ -35,8 +36,10 @@ public class CategoriesManagerActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Themer.setThemeToActivity(this);
+
         super.onCreate(savedInstanceState);
-//        Themer.setThemeToActivity(this);
         setContentView(R.layout.activity_categories_manager);
 
         //init variables

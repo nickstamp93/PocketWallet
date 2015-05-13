@@ -20,6 +20,7 @@ import com.ngngteam.pocketwallet.Extra.ColorPicker.ColorPickerDialog;
 import com.ngngteam.pocketwallet.Extra.ColorPicker.ColorPickerSwatch;
 import com.ngngteam.pocketwallet.Extra.LetterImageView;
 import com.ngngteam.pocketwallet.R;
+import com.ngngteam.pocketwallet.Utils.Themer;
 
 import java.util.ArrayList;
 
@@ -41,9 +42,11 @@ public class CreateCategoryActivity extends AppCompatActivity implements ColorPi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Themer.setThemeToActivity(this);
+
         super.onCreate(savedInstanceState);
 
-//        Themer.setThemeToActivity(this);
 
         setContentView(R.layout.activity_create_category);
 
@@ -67,8 +70,6 @@ public class CreateCategoryActivity extends AppCompatActivity implements ColorPi
 
         bOk = (Button) findViewById(R.id.bOK);
         bCancel = (Button) findViewById(R.id.bCancel);
-//        Themer.setBackgroundColor(this, bOk, false);
-//        Themer.setBackgroundColor(this, bCancel, true);
     }
 
     private void init() {
@@ -168,7 +169,7 @@ public class CreateCategoryActivity extends AppCompatActivity implements ColorPi
                 } else {
 
                     if (cdb.checkIfNameExists(name, expense) && id == -1) {
-                        Toast.makeText(getApplicationContext(),getResources().getString(R.string.error_category_name_conflict), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_category_name_conflict), Toast.LENGTH_SHORT).show();
                     } else {
                         String newCat = etName.getText().toString().trim().toUpperCase();
                         letter = newCat.charAt(0);
@@ -227,7 +228,7 @@ public class CreateCategoryActivity extends AppCompatActivity implements ColorPi
 
                     } else {
                         cdb.deleteCategory(name, expense);
-                        Toast.makeText(CreateCategoryActivity.this, name + " " +getResources().getString(R.string.toast_category_deleted), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CreateCategoryActivity.this, name + " " + getResources().getString(R.string.toast_category_deleted), Toast.LENGTH_SHORT).show();
                         finish();
                     }
                     mdb.close();

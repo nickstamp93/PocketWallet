@@ -10,6 +10,10 @@
         <item name="android:textColorSecondary">@color/secondary_text_default_material_light</item>
         <item name="android:textColorHint">@color/secondary_text_default_material_light</item>
 
+        <!--Action bar dialog menu item (history filters)-->
+        <item name="android:itemTextAppearance">@style/MenuItemTextAppearanceDark</item>
+        <item name="android:itemBackground">@color/background_material_light</item>
+
         <!--for spinner items-->
         <item name="windowCustomBackground">@color/background_material_light</item>
 
@@ -28,7 +32,7 @@
         <item name="android:textColorHint">@color/secondary_text_default_material_dark</item>
 
         <!--Action bar dialog menu item (history filters)-->
-        <item name="android:itemTextAppearance">@style/MenuItemTextAppearance</item>
+        <item name="android:itemTextAppearance">@style/MenuItemTextAppearanceTeal</item>
         <item name="android:itemBackground">@color/background_material_dark</item>
 
         <!--for spinner items-->
@@ -57,8 +61,11 @@
         <item name="android:windowCloseOnTouchOutside">true</item>
     </style>
 
-    <style name="MenuItemTextAppearance">
+    <style name="MenuItemTextAppearanceTeal">
         <item name="android:textColor">@color/material_deep_teal_500</item>
+    </style>
+    <style name="MenuItemTextAppearanceDark">
+        <item name="android:textColor">@color/primary_text_default_material_light</item>
     </style>
 
     <style name="Theme.MyAppcompat" parent="Theme.AppCompat.Light">

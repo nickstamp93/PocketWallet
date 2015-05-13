@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
 
@@ -47,6 +48,11 @@ public class TransparentActivity extends FragmentActivity implements RadialTimeP
         calendar = Calendar.getInstance();
 
         timeDialog = RadialTimePickerDialog.newInstance(TransparentActivity.this, calendar.getTime().getHours(), calendar.getTime().getMinutes(), true);
+        if (PreferenceManager.getDefaultSharedPreferences(this).getInt("pref_key_theme", getResources().getColor(R.color.background_material_dark)) == getResources().getColor(R.color.background_material_dark)) {
+            timeDialog.setThemeDark(true);
+        } else if ((PreferenceManager.getDefaultSharedPreferences(this).getInt("pref_key_theme", getResources().getColor(R.color.background_material_dark)) == getResources().getColor(R.color.background_material_light))) {
+            timeDialog.setThemeDark(false);
+        }
     }
 
 

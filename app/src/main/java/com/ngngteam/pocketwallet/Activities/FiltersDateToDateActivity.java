@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 
 import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
 import com.ngngteam.pocketwallet.R;
+import com.ngngteam.pocketwallet.Utils.Themer;
 
 import java.util.Calendar;
 
@@ -33,8 +34,10 @@ public class FiltersDateToDateActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Themer.setThemeToActivity(this);
+
         super.onCreate(savedInstanceState);
-//        Themer.setThemeToActivity(this);
 
         setContentView(R.layout.activity_filters_datetodate);
 
@@ -72,8 +75,6 @@ public class FiltersDateToDateActivity extends AppCompatActivity {
         bOk = (Button) findViewById(R.id.bOK);
         bCancel = (Button) findViewById(R.id.bCancel);
 
-//        Themer.setBackgroundColor(this, bOk, false);
-//        Themer.setBackgroundColor(this, bCancel, true);
 
     }
 

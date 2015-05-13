@@ -30,6 +30,7 @@ import com.ngngteam.pocketwallet.Model.IncomeItem;
 import com.ngngteam.pocketwallet.Model.UserProfile;
 import com.ngngteam.pocketwallet.R;
 import com.ngngteam.pocketwallet.Utils.SharedPrefsManager;
+import com.ngngteam.pocketwallet.Utils.Themer;
 
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
@@ -67,6 +68,9 @@ public class OverviewActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Themer.setThemeToActivity(this);
+
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_new_overview);

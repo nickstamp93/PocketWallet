@@ -23,6 +23,7 @@ import com.ngngteam.pocketwallet.Extra.ColorPicker.ColorPickerDialog;
 import com.ngngteam.pocketwallet.Extra.ColorPicker.ColorPickerSwatch;
 import com.ngngteam.pocketwallet.R;
 import com.ngngteam.pocketwallet.Utils.SharedPrefsManager;
+import com.ngngteam.pocketwallet.Utils.Themer;
 
 import java.util.Calendar;
 
@@ -32,6 +33,8 @@ public class SettingsActivity extends PreferenceActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Themer.setThemeToActivity(this);
 
         super.onCreate(savedInstanceState);
 
@@ -196,20 +199,17 @@ public class SettingsActivity extends PreferenceActivity
 
         //when the user clicks on the "theme" preference item
         screen = findPreference(getResources().getString(R.string.pref_key_theme));
-        screen.setDefaultValue(getResources().getColor(R.color.bg_dark));
+        screen.setDefaultValue(getResources().getColor(R.color.background_material_dark));
         screen.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this);
                 int[] mColor = new int[]{
-                        getResources().getColor(R.color.bg_light),
-                        getResources().getColor(R.color.bg_dark),
-                        getResources().getColor(R.color.bg_green),
-                        getResources().getColor(R.color.bg_teal),
-                        getResources().getColor(R.color.bg_pink)
+                        getResources().getColor(R.color.background_material_dark),
+                        getResources().getColor(R.color.background_material_light)
                 };
-                ColorPickerDialog dialog = ColorPickerDialog.newInstance(R.string.color_picker_default_title, mColor, 0, getResources().getInteger(R.integer.color_columns), ColorPickerDialog.SIZE_SMALL);
-                dialog.setSelectedColor(prefs.getInt(getResources().getString(R.string.pref_key_theme), getResources().getColor(R.color.bg_dark)));
+                ColorPickerDialog dialog = ColorPickerDialog.newInstance(R.string.color_picker_default_title, mColor, 0, 2, ColorPickerDialog.SIZE_LARGE);
+                dialog.setSelectedColor(prefs.getInt(getResources().getString(R.string.pref_key_theme), getResources().getColor(R.color.background_material_dark)));
                 dialog.setOnColorSelectedListener(colorSetListener);
                 dialog.show(getFragmentManager(), "color");
                 return false;

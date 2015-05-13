@@ -8,7 +8,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.Appcompat_custom_light">
+        android:theme="@style/Theme.Appcompat_custom_dark">
         <activity
             android:name=".Activities.LauncherPickerActivity"
             android:clearTaskOnLaunch="true"
@@ -24,20 +24,42 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".Activities.OverviewActivity"
+            android:label="@string/title_activity_new_overview"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".Activities.AddExpenseActivity"
             android:label="@string/title_activity_add_expense"
             android:parentActivityName=".Activities.OverviewActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.OverviewActivity" />
+
+        </activity>
         <activity
             android:name=".Activities.AddIncomeActivity"
             android:label="@string/title_activity_add_income"
             android:parentActivityName=".Activities.OverviewActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.OverviewActivity" />
+
+        </activity>
         <activity
             android:name=".Activities.HistoryActivity"
             android:label="@string/title_activity_history"
             android:parentActivityName=".Activities.OverviewActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.OverviewActivity" />
+
+        </activity>
         <activity
             android:name=".Activities.UserDetailsActivity"
             android:label="@string/title_activity_user_details"
@@ -48,9 +70,6 @@
             android:enabled="true" />
 
         <activity
-            android:name=".Activities.OverviewActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".Activities.CategoriesManagerActivity"
             android:label="@string/title_activity_categories_manager"
             android:parentActivityName=".Activities.SettingsActivity"
@@ -58,7 +77,7 @@
         <activity
             android:name=".Activities.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName=".Activities.NewOverviewActivity"
+            android:parentActivityName=".Activities.OverviewActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activities.TransparentActivity"
@@ -78,10 +97,7 @@
             android:name=".Activities.PatternLockActivity"
             android:label="@string/title_activity_pattern_lock"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".Activities.NewOverviewActivity"
-            android:label="@string/title_activity_new_overview"
-            android:screenOrientation="portrait"/>
+
     </application>
 
 </manifest>

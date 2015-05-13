@@ -98,7 +98,7 @@ public class PatternLockActivity extends AppCompatActivity {
                     if (patternString.equals(patternView.getPatternString())) {
                         //correct pattern
                         //launch overview activity
-                        Intent intent = new Intent(getApplicationContext(), NewOverviewActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), OverviewActivity.class);
                         startActivity(intent);
                         //and destroy this one
                         finish();

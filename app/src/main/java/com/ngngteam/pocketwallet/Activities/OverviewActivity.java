@@ -5,9 +5,11 @@ import android.content.res.Configuration;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -50,8 +52,9 @@ public class OverviewActivity extends AppCompatActivity {
     //View objects for the XML management
     private TextView tvBalance, tvSavings, tvLastIncomeValue, tvLastExpenseValue, tvLastExpenseDate,
             tvLastIncomeDate, tvUsername, tvPieHeading, tvLegendTotalExpense, tvLegendTotalIncome;
-    private LinearLayout llPiewView, llBalance, llLastTransactions, llLastExpense, llLastIncome , llMessage;
-    private LetterImageView livLastExpense, livLastIncome, livLegendIncome, livLegendExpense ;
+    private LinearLayout llBalance, llLastExpense, llLastIncome;
+    private CardView card_message, card_pie, card_last_transactions;
+    private LetterImageView livLastExpense, livLastIncome, livLegendIncome, livLegendExpense;
     private DrawerLayout drawerLayout;
     private ListView drawer;
     private ActionBarDrawerToggle drawerToggle;
@@ -66,10 +69,7 @@ public class OverviewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //apply theme
-//        Themer.setThemeToActivity(this);
-
-        setContentView(R.layout.activity_overview);
+        setContentView(R.layout.activity_new_overview);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -102,6 +102,8 @@ public class OverviewActivity extends AppCompatActivity {
         //set on drawer item click listener
         drawer.setOnItemClickListener(drawerClickListener);
 
+        //set shadow for the navigation drawer
+        drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open_drawer, R.string.close_drawer) {
             @Override
@@ -114,6 +116,7 @@ public class OverviewActivity extends AppCompatActivity {
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
                 invalidateOptionsMenu();
+
             }
         };
 
@@ -218,18 +221,15 @@ public class OverviewActivity extends AppCompatActivity {
         //name
         tvUsername = (TextView) findViewById(R.id.tvUsername);
 
-        //=================First card , Balance - Savings=====================================
-        llBalance = (LinearLayout) findViewById(R.id.llOverviewStatus);
-
         tvBalance = (TextView) findViewById(R.id.tvOverviewBalance);
         tvSavings = (TextView) findViewById(R.id.tvOverviewSavings);
 
         //=================Message section====================================================
-        llMessage = (LinearLayout) findViewById(R.id.llNoTransactionMessage);
+        card_message = (CardView) findViewById(R.id.cardview_message);
 
         //=================Second section , Pie - Pie Heading - Pie Legends===================
-        llPiewView = (LinearLayout) findViewById(R.id.llPieView);
-        llPiewView.setVisibility(View.GONE);
+        card_pie = (CardView) findViewById(R.id.cardview_pie);
+        card_pie.setVisibility(View.GONE);
 
         mcPie = (MagnificentChart) findViewById(R.id.mcPie);
 
@@ -246,8 +246,8 @@ public class OverviewActivity extends AppCompatActivity {
         tvLegendTotalIncome = (TextView) findViewById(R.id.tvLegendIncomeText);
 
         //==================Third Section , Last Transactions=================================
-        llLastTransactions = (LinearLayout) findViewById(R.id.llOverviewLastTransactions);
-        llLastTransactions.setVisibility(View.GONE);
+        card_last_transactions = (CardView) findViewById(R.id.cardview_last_transactions);
+        card_last_transactions.setVisibility(View.GONE);
 
         llLastExpense = (LinearLayout) findViewById(R.id.llOverviewLastExpense);
         llLastIncome = (LinearLayout) findViewById(R.id.llOverviewLastIncome);
@@ -284,12 +284,6 @@ public class OverviewActivity extends AppCompatActivity {
     private void refreshUI() {
 
         tvUsername.setText(profile.getUsername());
-
-//        Themer.setBackgroundColorCard(this, llBalance);
-//        Themer.setBackgroundColorCard(this, llLastTransactions);
-//        Themer.setBackgroundColorCard(this, llPiewView);
-//        Themer.setBackgroundColorCard(this , llMessage);
-
 
         double totalExpenses;
         double totalIncomes;
@@ -343,17 +337,14 @@ public class OverviewActivity extends AppCompatActivity {
 
             mcPie.setAnimationSpeed(MagnificentChart.ANIMATION_SPEED_FAST);
 
-            //apply the pie's background to be the same with the section's color
-//            Themer.setPieBackgroundColor(this, mcPie);
-
             //show the pie after set up
-            llPiewView.setVisibility(View.VISIBLE);
-            llMessage.setVisibility(View.GONE);
+            card_pie.setVisibility(View.VISIBLE);
+            card_message.setVisibility(View.GONE);
 
         } else {
             //else the pie section should be invisible
-            llPiewView.setVisibility(View.GONE);
-            llMessage.setVisibility(View.VISIBLE);
+            card_pie.setVisibility(View.GONE);
+            card_message.setVisibility(View.VISIBLE);
         }
 
         //set the heading of the PieChart according to the preferred grouping
@@ -366,26 +357,26 @@ public class OverviewActivity extends AppCompatActivity {
 
             Date startDate, endDate;
 
-            if(endDay == currentDay){
+            if (endDay == currentDay) {
                 startDate = c.getTime();
-                c.add(Calendar.DAY_OF_YEAR , 6);
+                c.add(Calendar.DAY_OF_YEAR, 6);
                 endDate = c.getTime();
-            }else{
-                while(currentDay != endDay) {
+            } else {
+                while (currentDay != endDay) {
                     c.add(Calendar.DATE, 1);
                     currentDay = c.get(Calendar.DAY_OF_WEEK);
                 }
-                c.add(Calendar.DAY_OF_YEAR , -1);
+                c.add(Calendar.DAY_OF_YEAR, -1);
                 endDate = c.getTime();
-                c.add(Calendar.DAY_OF_YEAR , -6);
+                c.add(Calendar.DAY_OF_YEAR, -6);
                 startDate = c.getTime();
             }
 
-            if(startDate.getMonth() == endDate.getMonth()){
+            if (startDate.getMonth() == endDate.getMonth()) {
                 tvPieHeading.setText(getString(R.string.text_pie_heading) + "\n("
                         + new SimpleDateFormat("dd").format(startDate) + "-" +
                         new SimpleDateFormat("dd MMM").format(endDate) + ")");
-            }else{
+            } else {
                 tvPieHeading.setText(getString(R.string.text_pie_heading) + "\n("
                         + new SimpleDateFormat("dd MMM").format(startDate) + "-" +
                         new SimpleDateFormat("dd MMM").format(endDate) + ")");
@@ -410,7 +401,7 @@ public class OverviewActivity extends AppCompatActivity {
 
         //if there isn't currently an expense
         if (cursorLastExpense.moveToFirst()) {
-            llLastTransactions.setVisibility(View.VISIBLE);
+            card_last_transactions.setVisibility(View.VISIBLE);
             llLastExpense.setVisibility(View.VISIBLE);
 
             //get last expense's date
@@ -464,7 +455,7 @@ public class OverviewActivity extends AppCompatActivity {
             llLastExpense.setVisibility(View.GONE);
         }
         if (cursorLastIncome.moveToFirst()) {
-            llLastTransactions.setVisibility(View.VISIBLE);
+            card_last_transactions.setVisibility(View.VISIBLE);
             llLastIncome.setVisibility(View.VISIBLE);
 
             //get last income's date
@@ -518,7 +509,7 @@ public class OverviewActivity extends AppCompatActivity {
         }
         //if neither expense or income exists , disappear the last transactions section
         if (!cursorLastIncome.moveToFirst() && !cursorLastExpense.moveToFirst()) {
-            llLastTransactions.setVisibility(View.GONE);
+            card_last_transactions.setVisibility(View.GONE);
         }
 
     }
@@ -599,7 +590,7 @@ public class OverviewActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.overview, menu);
+        getMenuInflater().inflate(R.menu.menu_new_overview, menu);
         return true;
     }
 

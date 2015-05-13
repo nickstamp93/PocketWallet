@@ -20,7 +20,6 @@ import com.ngngteam.pocketwallet.Extra.ColorPicker.ColorPickerDialog;
 import com.ngngteam.pocketwallet.Extra.ColorPicker.ColorPickerSwatch;
 import com.ngngteam.pocketwallet.Extra.LetterImageView;
 import com.ngngteam.pocketwallet.R;
-import com.ngngteam.pocketwallet.Utils.Themer;
 
 import java.util.ArrayList;
 
@@ -68,8 +67,8 @@ public class CreateCategoryActivity extends AppCompatActivity implements ColorPi
 
         bOk = (Button) findViewById(R.id.bOK);
         bCancel = (Button) findViewById(R.id.bCancel);
-        Themer.setBackgroundColor(this, bOk, false);
-        Themer.setBackgroundColor(this, bCancel, true);
+//        Themer.setBackgroundColor(this, bOk, false);
+//        Themer.setBackgroundColor(this, bCancel, true);
     }
 
     private void init() {

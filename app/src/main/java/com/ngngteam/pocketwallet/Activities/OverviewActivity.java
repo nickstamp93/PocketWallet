@@ -237,8 +237,8 @@ public class OverviewActivity extends AppCompatActivity {
 
         livLegendExpense = (LetterImageView) findViewById(R.id.livLegendExpense);
         livLegendIncome = (LetterImageView) findViewById(R.id.livLegendIncome);
-        livLegendExpense.setmBackgroundPaint(getResources().getColor(R.color.red));
-        livLegendIncome.setmBackgroundPaint(getResources().getColor(R.color.green));
+        livLegendExpense.setmBackgroundPaint(getResources().getColor(R.color.bpRed));
+        livLegendIncome.setmBackgroundPaint(getResources().getColor(R.color.bg_green));
         livLegendExpense.setOval(true);
         livLegendIncome.setOval(true);
 
@@ -325,11 +325,11 @@ public class OverviewActivity extends AppCompatActivity {
             mcPie.setMaxValue(total);
 
             //expense part of the pie chart
-            MagnificentChartItem item = new MagnificentChartItem("Expense", totalExpenses, getResources().getColor(R.color.red));
+            MagnificentChartItem item = new MagnificentChartItem("Expense", totalExpenses, getResources().getColor(R.color.bpRed));
             chartItemsList.add(item);
 
             //income part of the pie chart
-            item = new MagnificentChartItem("Income", totalIncomes, getResources().getColor(R.color.green));
+            item = new MagnificentChartItem("Income", totalIncomes, getResources().getColor(R.color.bg_green));
             chartItemsList.add(item);
 
             //set the parts to the pie chart

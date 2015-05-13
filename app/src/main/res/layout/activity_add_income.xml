@@ -5,7 +5,12 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/layout_padding">
+        android:isScrollContainer="false"
+        android:paddingBottom="50dp"
+        android:paddingLeft="@dimen/layout_padding"
+        android:paddingRight="@dimen/layout_padding"
+        android:paddingTop="@dimen/layout_padding"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -101,11 +106,13 @@
         <Button
             android:id="@+id/bCancel"
             style="@style/ButtonStyleBottom"
+            android:background="@color/bpRed"
             android:text="@string/button_cancel" />
 
         <Button
             android:id="@+id/bOK"
             style="@style/ButtonStyleBottom"
+            android:background="@color/YellowGreen"
             android:text="@string/button_ok" />
 
     </LinearLayout>

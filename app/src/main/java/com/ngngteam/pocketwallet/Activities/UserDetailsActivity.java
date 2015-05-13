@@ -13,7 +13,6 @@ import android.widget.Toast;
 import com.ngngteam.pocketwallet.Data.MoneyDatabase;
 import com.ngngteam.pocketwallet.R;
 import com.ngngteam.pocketwallet.Utils.SharedPrefsManager;
-import com.ngngteam.pocketwallet.Utils.Themer;
 
 public class UserDetailsActivity extends AppCompatActivity {
 
@@ -68,12 +67,12 @@ public class UserDetailsActivity extends AppCompatActivity {
 
         radioGroup = (RadioGroup) findViewById(R.id.rgGrouping);
 
-        bOk = (Button) findViewById(R.id.bOk);
+        bOk = (Button) findViewById(R.id.bOK);
         bCancel = (Button) findViewById(R.id.bCancel);
 
         //apply button coloring to the buttons
-        Themer.setBackgroundColor(this, bOk, false);
-        Themer.setBackgroundColor(this, bCancel, true);
+//        Themer.setBackgroundColor(this, bOk, false);
+//        Themer.setBackgroundColor(this, bCancel, true);
 
     }
 
@@ -106,7 +105,7 @@ public class UserDetailsActivity extends AppCompatActivity {
         public void onClick(View v) {
 
             switch (v.getId()) {
-                case R.id.bOk:
+                case R.id.bOK:
                     //if form is not complete, alert the user
                     if (!isFormComplete()) {
                         Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_form), Toast.LENGTH_SHORT).show();

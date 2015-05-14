@@ -14,9 +14,9 @@ public class Themer {
     public static void setThemeToActivity(Activity act) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(act);
         try {
-            if (prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.background_material_dark)) == act.getResources().getColor(R.color.background_material_dark)) {
+            if (prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.background_material_light)) == act.getResources().getColor(R.color.background_material_dark)) {
                 act.setTheme(R.style.Theme_Appcompat_custom_dark);
-            } else if ((prefs.getInt("pref_key_theme", act.getResources().getColor(R.color.background_material_dark)) == act.getResources().getColor(R.color.background_material_light))) {
+            } else {
                 act.setTheme(R.style.Theme_Appcompat_custom_light);
             }
         } catch (Exception e) {

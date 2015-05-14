@@ -28,6 +28,8 @@
     <!--dialog titles-->
     <string name="dialog_title_categories">Κατηγορίες</string>
     <string name="dialog_title_currency">Νόμισμα</string>
+    <string name="dialog_title_price">Ταξινόμηση Τιμών</string>
+    <string name="dialog_title_amount">Ταξινόμηση Ποσών</string>
     <string name="dialog_title_about">Σχετικά</string>
     <string name="dialog_title_caution">Προσοχή</string>
 

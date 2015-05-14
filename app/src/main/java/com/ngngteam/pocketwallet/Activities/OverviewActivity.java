@@ -304,16 +304,16 @@ public class OverviewActivity extends AppCompatActivity {
 
         totalExpenses = Math.round(totalExpenses * 100) / 100.0;
         if (totalExpenses == (int) totalExpenses) {
-            tvLegendTotalExpense.setText(getResources().getString(R.string.action_expense) + "  (" + ((int) totalExpenses + " " + profile.getCurrency()) + ")");
-        }else{
-            tvLegendTotalExpense.setText(getResources().getString(R.string.action_expense) + "  (" + (totalExpenses + " " + profile.getCurrency()) + ")");
+            tvLegendTotalExpense.setText(getResources().getString(R.string.action_expense) + "  (" + ((int) totalExpenses + profile.getCurrency()) + ")");
+        } else {
+            tvLegendTotalExpense.setText(getResources().getString(R.string.action_expense) + "  (" + (totalExpenses + profile.getCurrency()) + ")");
         }
 
         totalIncomes = Math.round(totalIncomes * 100) / 100.0;
         if (totalIncomes == (int) totalIncomes) {
-            tvLegendTotalIncome.setText(getResources().getString(R.string.action_income) + "  (" + ((int)totalIncomes + " " + profile.getCurrency()) + ")");
-        }else{
-            tvLegendTotalIncome.setText(getResources().getString(R.string.action_income) + "  (" + (totalIncomes + " " + profile.getCurrency()) + ")");
+            tvLegendTotalIncome.setText(getResources().getString(R.string.action_income) + "  (" + ((int) totalIncomes + profile.getCurrency()) + ")");
+        } else {
+            tvLegendTotalIncome.setText(getResources().getString(R.string.action_income) + "  (" + (totalIncomes + profile.getCurrency()) + ")");
         }
 
         double balance = totalIncomes - totalExpenses;
@@ -322,9 +322,9 @@ public class OverviewActivity extends AppCompatActivity {
         profile.setBalance((float) balance);
 
         //set balance to UI
-        String sign = (balance >= 0 ) ? "+" : "";
-        int drawable = (balance >= 0 ) ? R.drawable.rounded_bounds_green_empty : R.drawable.rounded_bounds_red_empty;
-        int paint = (balance >= 0 ) ? R.color.YellowGreen : R.color.bpRed;
+        String sign = (balance >= 0) ? "+" : "";
+        int drawable = (balance >= 0) ? R.drawable.rounded_bounds_green_empty : R.drawable.rounded_bounds_red_empty;
+        int paint = (balance >= 0) ? R.color.YellowGreen : R.color.bpRed;
         if (balance == (int) balance) {
             tvBalance.setText(sign + (int) balance + " " + profile.getCurrency());
         } else {
@@ -337,9 +337,9 @@ public class OverviewActivity extends AppCompatActivity {
         double savings = mdb.getTotalIncome() - mdb.getTotalExpenses() - balance + profile.getSavings();
         profile.setSavings((float) savings);
         savings = Math.round(savings * 100) / 100.0;
-        sign = (savings >= 0 ) ? "+" : "";
-        drawable = (savings >= 0 ) ? R.drawable.rounded_bounds_green_empty : R.drawable.rounded_bounds_red_empty;
-        paint = (savings >= 0 ) ? R.color.YellowGreen : R.color.bpRed;
+        sign = (savings >= 0) ? "+" : "";
+        drawable = (savings >= 0) ? R.drawable.rounded_bounds_green_empty : R.drawable.rounded_bounds_red_empty;
+        paint = (savings >= 0) ? R.color.YellowGreen : R.color.bpRed;
         if (savings == (int) savings) {
             tvSavings.setText(sign + (int) savings + " " + profile.getCurrency());
         } else {

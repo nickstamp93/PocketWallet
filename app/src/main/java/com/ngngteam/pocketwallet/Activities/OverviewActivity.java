@@ -332,10 +332,6 @@ public class OverviewActivity extends AppCompatActivity {
         }
         tvBalance.setBackgroundResource(drawable);
         tvBalance.setTextColor(getResources().getColor(paint));
-        //set legends' text
-
-
-
 
         //savings are : total income - total expense - balance + savings user defined at the creation of the profile
         double savings = mdb.getTotalIncome() - mdb.getTotalExpenses() - balance + profile.getSavings();

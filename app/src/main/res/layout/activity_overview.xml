@@ -34,8 +34,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:padding="@dimen/layout_padding"
                         android:maxLines="2"
+                        android:padding="@dimen/layout_padding"
                         android:text="Nikos"
                         android:textSize="@dimen/text_size_username"
                         android:textStyle="bold" />
@@ -49,6 +49,7 @@
 
                         <me.grantland.widget.AutofitTextView
                             style="@style/Headline"
+                            android:layout_gravity="center"
                             android:layout_weight="1.5"
                             android:gravity="center_horizontal"
                             android:text="@string/string_balance" />
@@ -72,8 +73,9 @@
 
                         <me.grantland.widget.AutofitTextView
                             style="@style/Headline"
+                            android:layout_gravity="center"
                             android:layout_weight="1.5"
-                            android:gravity="center_horizontal"
+                            android:gravity="center"
                             android:text="@string/string_savings" />
 
                         <me.grantland.widget.AutofitTextView

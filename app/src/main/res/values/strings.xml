@@ -9,7 +9,6 @@
     <string name="action_income">Income</string>
     <string name="error_database">Database Error</string>
     <string name="error_number">Invalid Number Input</string>
-    <string name="error_form">The form is not complete</string>
     <string name="error_category">Invalid Category Name</string>
     <string name="error_category_name_conflict">There is already a category with this name</string>
     <string name="error_category_color_combination">There is already a category with this letter and color combination</string>
@@ -22,7 +21,6 @@
     <string name="title_activity_history">History</string>
     <string name="title_activity_settings">Settings</string>
     <string name="title_activity_user_details">Profile</string>
-    <string name="title_activity_overview">Overview</string>
     <string name="title_activity_categories_manager">Categories</string>
     <string name="title_activity_create_category">New Category</string>
 
@@ -101,7 +99,8 @@
         \n-Google Color Picker
         \n-LetterImageView by Melnykov Oleksandr
         \n-AndroidBetterPickers by Derek Brameyer
-        \n-MagnificentChart by Ahmed Sulaiman</string>
+        \n-MagnificentChart by Ahmed Sulaiman
+        \n-AutofitTextView by Grantland Chew</string>
 
     <string name="dialog_text_delete_income_confirm">Delete ALL income transactions?</string>
     <string name="dialog_text_delete_expense_confirm">Delete ALL expense transactions?</string>

@@ -28,8 +28,6 @@
     <!--dialog titles-->
     <string name="dialog_title_categories">Κατηγορίες</string>
     <string name="dialog_title_currency">Νόμισμα</string>
-    <string name="dialog_title_price">Σειρά Τιμών</string>
-    <string name="dialog_title_amount">Σειρά Ποσών</string>
     <string name="dialog_title_about">Σχετικά</string>
     <string name="dialog_title_caution">Προσοχή</string>
 
@@ -101,6 +99,7 @@
         \n-LetterImageView από τον Melnykov Oleksandr
         \n-AndroidBetterPickers από τον Derek Brameyer
         \n-MagnificentChart από τον Ahmed Sulaiman
+        \n-AutofitTextView από Grantland Chew
     </string>
 
     <string name="dialog_text_delete_income_confirm">Διαγραφή όλων των συναλλαγών εσόδου από την βάση δεδομένων?</string>
@@ -126,7 +125,7 @@
     <string name="open_drawer">Κλείσιμο Μενού</string>
 
     <string-array name="drawer_menu">
-        <item>Συναλλαγές</item>
+        <item>Ιστορικό</item>
         <item>Νέο Εισόδημα</item>
         <item>Νέο Έξοδο</item>
         <item>Ρυθμίσεις</item>
@@ -140,7 +139,7 @@
     <string name="category_health">Υγεία</string>
     <string name="category_bills">Λογαριασμοί</string>
     <string name="category_transportation">Μετακινήσεις</string>
-    <string name="category_clothing">Ρουχισμός</string>
+    <string name="category_clothing">Ρούχα</string>
     <string name="category_housekeeping">Νοικοκυριό</string>
     <string name="category_work_epsenses">Εργασιακά Έξοδα</string>
     <string name="category_miscellaneous">Άλλο</string>
@@ -163,7 +162,7 @@
     <string name="textview_headline_category_name">Όνομα Κατηγορίας</string>
     <string name="textview_hint_headline_category_name">π.χ. Φαγητό</string>
     <string name="textview_headline_category_color">Χρώμα</string>
-    <string name="textview_headline_category_preview">Επισκόπηση</string>
+    <string name="textview_headline_category_preview">Επισκόπηση εικονιδίου</string>
 
     <!--CategoriesManagerActivity-->
     <string name="action_add_category">Νέα Κατηγορία</string>
@@ -174,8 +173,8 @@
 
     <!-- UserDetailsActivity -->
     <string name="textview_headline_username">Όνομα χρήστη</string>
-    <string name="textview_headline_savings">Αποταμίευση</string>
-    <string name="textview_headline_grouping">Ομαδοποιηση</string>
+    <string name="textview_headline_savings">Αρχικά χρήματα</string>
+    <string name="textview_headline_grouping">Κατανομή συναλλαγών</string>
 
     <!-- DeleteCategoryDialog -->
     <string name="dialog_delete_category_text">Υπάρχουν συναλλαγές αυτής της κατηγορίας στο ιστορικό . Διαγραφή ή Μετακίνηση αυτών των συναλλαγών σε άλλη κατηγορία.</string>
@@ -183,7 +182,7 @@
 
     <!--Reminder Notification-->
     <string name="text_reminder_message">Καταγράψτε τις σημερινές συναλλαγές σας</string>
-    <string name="text_reminder_content">Μην ξεχάσετε να καταγράψετε τις σημερίνές συναλλαγές σας</string>
+    <string name="text_reminder_content">Μην ξεχάσετε να καταγράψετε τις σημερινές συναλλαγές σας</string>
 
     <!--Filters-->
     <string name="filter_category">Ανά Κατηγορία</string>
@@ -202,7 +201,7 @@
     <string name="color_swatch_description_selected">Color <xliff:g id="color_index" example="14">%1$d</xliff:g> επιλέχθηκε</string>
     <string name="text_filter">Φίλτρα</string>
 
-    <string name="toast_savings">Δεν μπορείς να αλλάξεις την τιμή της αποταμίευσης επειδή υπάρχουν συναλλαγές στο ιστορικό σου </string>
+    <string name="toast_savings">Δεν μπορείς να αλλάξεις τα αρχικά σου χρήματα επειδή υπάρχουν συναλλαγές στο ιστορικό σου </string>
     <string name="text_today">Σήμερα</string>
     <string name="text_yesterday">Χθες</string>
 

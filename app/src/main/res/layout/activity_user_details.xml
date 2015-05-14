@@ -30,18 +30,18 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <TextView
+                    <me.grantland.widget.AutofitTextView
                         android:id="@+id/textView"
                         style="@style/Headline"
                         android:text="@string/textview_headline_username" />
 
-                    <TextView
+                    <me.grantland.widget.AutofitTextView
 
                         android:id="@+id/textView2"
                         style="@style/Headline"
                         android:text="@string/textview_headline_savings" />
 
-                    <TextView
+                    <me.grantland.widget.AutofitTextView
                         android:id="@+id/textView3"
                         style="@style/Headline"
                         android:text="@string/textview_headline_grouping" />
@@ -79,6 +79,7 @@
                             android:layout_height="wrap_content"
                             android:checked="false"
                             android:text="@string/pref_grouping_weekly"
+                            android:textColor="?textCustomColor"
                             android:textSize="20sp" />
 
                         <RadioButton
@@ -87,6 +88,7 @@
                             android:layout_height="wrap_content"
                             android:checked="true"
                             android:text="@string/pref_grouping_monthly"
+                            android:textColor="?textCustomColor"
                             android:textSize="20sp" />
                     </RadioGroup>
 

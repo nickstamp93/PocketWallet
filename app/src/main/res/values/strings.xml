@@ -125,14 +125,6 @@
     <string name="close_drawer">Open Menu</string>
     <string name="open_drawer">Close Menu</string>
 
-    <string-array name="drawer_menu">
-        <item>History</item>
-        <item>Add Income</item>
-        <item>Add Expense</item>
-        <item>Settings</item>
-        <item>Exit</item>
-    </string-array>
-
     <string name="category_food">Food</string>
     <string name="category_drinks">Drinks</string>
     <string name="category_leisure">Leisure</string>
@@ -215,6 +207,8 @@
     <string name="toast_pattern_changed">Pattern lock set</string>
     <string name="toast_pattern_not_chaged">Patterns don\'t match!</string>
 
+    <string name="title_activity_pie_distribution">Pie Distribution</string>
+    <string name="title_activity_bars_distribution">Income vs Expense</string>
 
 
 </resources>

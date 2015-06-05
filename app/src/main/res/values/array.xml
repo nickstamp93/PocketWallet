@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="drawer_menu">
+        <item>History</item>
+        <item>Add Income</item>
+        <item>Add Expense</item>
+        <item>Pie Disribution</item>
+        <item>Income vs Expense</item>
+        <item>Settings</item>
+        <item>Exit</item>
+    </string-array>
+
+</resources>

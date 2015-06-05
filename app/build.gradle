@@ -19,16 +19,21 @@ android {
     }
 }
 
+repositories {
+    maven { url "https://jitpack.io" }
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile ('com.android.support:support-v4:22.1.1')
+    compile('com.android.support:support-v4:22.1.1')
     compile 'com.android.support:cardview-v7:21.0.0'
     compile 'me.grantland:autofittextview:0.2.1'
-    compile ('com.android.support:appcompat-v7:22.1.1'){
+    compile 'com.github.PhilJay:MPAndroidChart:v2.1.0'
+    compile('com.android.support:appcompat-v7:22.1.1') {
         exclude group: 'com.android.support', module: 'support-v4'
     }
     compile 'org.jraf:android-switch-backport:1.4.0@aar'
-    compile ("com.doomonafireball.betterpickers:library:1.5.5"){
+    compile("com.doomonafireball.betterpickers:library:1.5.5") {
         exclude group: 'com.android.support', module: 'support-v4'
     }
     compile 'com.eftimoff:android-patternview:1.0.1@aar'

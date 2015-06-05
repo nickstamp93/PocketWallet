@@ -602,9 +602,15 @@ public class OverviewActivity extends AppCompatActivity {
                     startActivity(new Intent(OverviewActivity.this, AddExpenseActivity.class));
                     break;
                 case 3:
-                    startActivity(new Intent(OverviewActivity.this, SettingsActivity.class));
+                    startActivity(new Intent(OverviewActivity.this, PieDistributionActivity.class));
                     break;
                 case 4:
+                    startActivity(new Intent(OverviewActivity.this, BarsDistributionActivity.class));
+                    break;
+                case 5:
+                    startActivity(new Intent(OverviewActivity.this, SettingsActivity.class));
+                    break;
+                case 6:
                     finish();
                     break;
             }

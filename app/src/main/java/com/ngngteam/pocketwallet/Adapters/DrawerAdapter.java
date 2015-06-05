@@ -58,9 +58,15 @@ public class DrawerAdapter extends ArrayAdapter<String> {
                 holder.ivActivity.setImageResource(R.drawable.ic_action_cart);
                 break;
             case 3:
-                holder.ivActivity.setImageResource(R.drawable.ic_action_gear);
+                holder.ivActivity.setImageResource(R.drawable.ic_action_pie_chart);
                 break;
             case 4:
+                holder.ivActivity.setImageResource(R.drawable.ic_action_bargraph);
+                break;
+            case 5:
+                holder.ivActivity.setImageResource(R.drawable.ic_action_gear);
+                break;
+            case 6:
                 holder.ivActivity.setImageResource(R.drawable.ic_action_exit);
                 break;
 
@@ -99,9 +105,15 @@ public class DrawerAdapter extends ArrayAdapter<String> {
                 holder.ivActivity.setImageResource(R.drawable.ic_action_cart);
                 break;
             case 3:
-                holder.ivActivity.setImageResource(R.drawable.ic_action_gear);
+                holder.ivActivity.setImageResource(R.drawable.ic_action_pie_chart);
                 break;
             case 4:
+                holder.ivActivity.setImageResource(R.drawable.ic_action_bargraph);
+                break;
+            case 5:
+                holder.ivActivity.setImageResource(R.drawable.ic_action_gear);
+                break;
+            case 6:
                 holder.ivActivity.setImageResource(R.drawable.ic_action_exit);
                 break;
 

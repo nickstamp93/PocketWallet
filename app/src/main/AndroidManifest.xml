@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ngngteam.pocketwallet">
+    package="com.ngngteam.pocketwallet" >
 
     <uses-permission android:name="android.permission.VIBRATE" />
 
@@ -8,7 +8,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.Appcompat_custom_light">
+        android:theme="@style/Theme.Appcompat_custom_light" >
         <activity
             android:name=".Activities.LauncherPickerActivity"
             android:clearTaskOnLaunch="true"
@@ -16,7 +16,7 @@
             android:label="@string/app_name"
             android:noHistory="true"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoDisplay">
+            android:theme="@android:style/Theme.NoDisplay" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,29 +31,30 @@
             android:name=".Activities.AddExpenseActivity"
             android:label="@string/title_activity_add_expense"
             android:parentActivityName=".Activities.OverviewActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
+
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activities.OverviewActivity" />
-
         </activity>
         <activity
             android:name=".Activities.AddIncomeActivity"
             android:label="@string/title_activity_add_income"
             android:parentActivityName=".Activities.OverviewActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
+
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activities.OverviewActivity" />
-
         </activity>
         <activity
             android:name=".Activities.HistoryActivity"
             android:label="@string/title_activity_history"
             android:parentActivityName=".Activities.OverviewActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
+
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -63,6 +64,7 @@
             android:name=".Activities.UserDetailsActivity"
             android:label="@string/title_activity_user_details"
             android:screenOrientation="portrait" />
+
         <receiver
             android:name=".BroadcastReceivers.ReminderReceiver"
             android:enabled="true" />
@@ -95,7 +97,14 @@
             android:name=".Activities.PatternLockActivity"
             android:label="@string/title_activity_pattern_lock"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name=".Activities.PieDistributionActivity"
+            android:label="@string/title_activity_pie_distribution" >
+        </activity>
+        <activity
+            android:name=".Activities.BarsDistributionActivity"
+            android:label="@string/title_activity_bars_distribution" >
+        </activity>
     </application>
 
 </manifest>

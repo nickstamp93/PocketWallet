@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="drawer_menu">
+        <item>Ιστορικό</item>
+        <item>Νέο Εισόδημα</item>
+        <item>Νέο Έξοδο</item>
+        <item>Κατανομές</item>
+        <item>Έσοδα - Έξοδα</item>
+        <item>Ρυθμίσεις</item>
+        <item>Έξοδος</item>
+    </string-array>
+
+</resources>

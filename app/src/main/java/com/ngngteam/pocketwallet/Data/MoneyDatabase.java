@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.ngngteam.pocketwallet.Model.ExpenseItem;
 import com.ngngteam.pocketwallet.Model.IncomeItem;
@@ -38,6 +39,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
     private static final String Key_IDate = "date";
 
     private SQLiteDatabase mydb;
+
 
     private static final String Create_Expense_Table = "CREATE TABLE " + Table_Expense + "(" + Key_EId + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             Key_ECategory + " TEXT NOT NULL," + Key_EDate + " TEXT NOT NULL," + Key_EPrice + " DOUBLE," + Key_ENotes + " TEXT)";
@@ -503,5 +505,473 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         getWritableDatabase().update(Table_Income, newValues, Key_ISource + "='" + oldSource + "'", null);
 
     }
+
+    public Cursor getExpensesByDateToDate(String date1, String date2, String category) {
+        String DateFrom[] = date1.split("-");
+        String DateTo[] = date2.split("-");
+        String reformedDateFrom = DateFrom[2] + "-" + DateFrom[1] + "-" + DateFrom[0];
+        String reformedDateTo = DateTo[2] + "-" + DateTo[1] + "-" + DateTo[0];
+
+        return getReadableDatabase().rawQuery("SELECT * FROM " + Table_Expense +
+                " WHERE " + Key_EDate + ">=" + "'" + reformedDateFrom + "'" +
+                " AND " + Key_EDate + "<=" + "'" + reformedDateTo +
+                "' AND " + Key_ECategory + "='" + category +
+                "' ORDER BY " + Key_EDate + " DESC, " + Key_EId + " DESC", null);
+
+    }
+
+    //return a cursor which contains the tuples of table income with date between of parameter date1 and parameter date2
+    public Cursor getIncomeByDateToDate(String date1, String date2, String category) {
+
+        String DateFrom[] = date1.split("-");
+        String DateTo[] = date2.split("-");
+        String reformedDateFrom = DateFrom[2] + "-" + DateFrom[1] + "-" + DateFrom[0];
+        String reformedDateTo = DateTo[2] + "-" + DateTo[1] + "-" + DateTo[0];
+
+        return getReadableDatabase().rawQuery("SELECT * FROM " + Table_Income +
+                " WHERE " + Key_IDate + ">=" + "'" + reformedDateFrom + "'" +
+                " AND " + Key_IDate + "<=" + "'" + reformedDateTo + "'" +
+                " AND " + Key_ISource + "='" + category +
+                "' ORDER BY " + Key_IDate + " DESC , " + Key_Iid + " DESC", null);
+    }
+
+    public double getMonthTotalExpenseCategory(String category) {
+
+        Calendar c = Calendar.getInstance();
+        int currentMonth = c.get(Calendar.MONTH) + 1;
+
+        String month = currentMonth + "";
+        if (currentMonth < 10) {
+            month = "0" + currentMonth;
+        }
+
+        String firstOfMonth = "01" + "-" + month + "-" + c.get(Calendar.YEAR);
+        String lastOfMonth = "31" + "-" + month + "-" + c.get(Calendar.YEAR);
+
+        Cursor cursor = this.getExpensesByDateToDate(firstOfMonth, lastOfMonth, category);
+
+        double total = 0;
+
+        if (cursor.getCount() != 0) {
+            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                total += Double.parseDouble(cursor.getString(3));
+            }
+        }
+
+        Log.i("nikos", "Total expense for " + category + " : " + total);
+
+
+        return total;
+    }
+
+    public double getMonthTotalIncomeCategory(String category) {
+
+        Calendar c = Calendar.getInstance();
+        int currentMonth = c.get(Calendar.MONTH) + 1;
+
+        String month = currentMonth + "";
+        if (currentMonth < 10) {
+            month = "0" + currentMonth;
+        }
+
+        String firstOfMonth = "01" + "-" + month + "-" + c.get(Calendar.YEAR);
+        String lastOfMonth = "31" + "-" + month + "-" + c.get(Calendar.YEAR);
+
+        Cursor cursor = this.getIncomeByDateToDate(firstOfMonth, lastOfMonth, category);
+
+        double total = 0;
+
+        if (cursor.getCount() != 0) {
+            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                total += Double.parseDouble(cursor.getString(1));
+            }
+        }
+
+        Log.i("nikos", "Total expense for " + category + " : " + total);
+
+
+        return total;
+    }
+
+    public double getWeekTotalExpenseCategory(String category) {
+
+        double total = 0;
+
+        Calendar c = Calendar.getInstance();
+
+        int currentDay = c.get(Calendar.DAY_OF_WEEK);
+        int endDay = Calendar.MONDAY;
+
+        Date startDate, endDate;
+
+        if (currentDay == endDay) {
+            startDate = c.getTime();
+            c.add(Calendar.DAY_OF_YEAR, 6);
+            endDate = c.getTime();
+        } else {
+            while (currentDay != endDay) {
+                c.add(Calendar.DATE, 1);
+                currentDay = c.get(Calendar.DAY_OF_WEEK);
+            }
+            c.add(Calendar.DAY_OF_YEAR, -1);
+            endDate = c.getTime();
+
+            c.add(Calendar.DAY_OF_YEAR, -6);
+            startDate = c.getTime();
+
+        }
+
+        c.setTime(startDate);
+
+        String day = c.get(Calendar.DAY_OF_MONTH) + "";
+        String month = (c.get(Calendar.MONTH) + 1) + "";
+        if (c.get(Calendar.DAY_OF_MONTH) < 10) {
+            day = "0" + c.get(Calendar.DAY_OF_MONTH);
+        }
+        if (c.get(Calendar.MONTH) + 1 < 10) {
+            month = "0" + (c.get(Calendar.MONTH) + 1);
+        }
+
+        String firstOfWeek = day + "-" + month + "-" + c.get(Calendar.YEAR);
+        c.setTime(endDate);
+
+        day = c.get(Calendar.DAY_OF_MONTH) + "";
+        month = (c.get(Calendar.MONTH) + 1) + "";
+        if (c.get(Calendar.DAY_OF_MONTH) < 10) {
+            day = "0" + c.get(Calendar.DAY_OF_MONTH);
+        }
+        if (c.get(Calendar.MONTH) + 1 < 10) {
+            month = "0" + (c.get(Calendar.MONTH) + 1);
+        }
+
+        String lastOfWeek = day + "-" + month + "-" + c.get(Calendar.YEAR);
+
+        Cursor cursor = this.getExpensesByDateToDate(firstOfWeek, lastOfWeek, category);
+
+        if (cursor.getCount() != 0) {
+            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                total += Double.parseDouble(cursor.getString(3));
+            }
+        }
+
+        return total;
+    }
+
+    public double getWeekTotalIncomeCategory(String category) {
+
+
+        double total = 0;
+
+        Calendar c = Calendar.getInstance();
+
+        int currentDay = c.get(Calendar.DAY_OF_WEEK);
+        int endDay = Calendar.MONDAY;
+
+        Date startDate, endDate;
+        if (currentDay == endDay) {
+            startDate = c.getTime();
+            c.add(Calendar.DAY_OF_YEAR, 6);
+            endDate = c.getTime();
+        } else {
+
+            while (currentDay != endDay) {
+                c.add(Calendar.DATE, 1);
+                currentDay = c.get(Calendar.DAY_OF_WEEK);
+            }
+            c.add(Calendar.DAY_OF_YEAR, -1);
+            endDate = c.getTime();
+
+            c.add(Calendar.DAY_OF_YEAR, -6);
+            startDate = c.getTime();
+
+        }
+
+        c.setTime(startDate);
+
+        String day = c.get(Calendar.DAY_OF_MONTH) + "";
+        String month = (c.get(Calendar.MONTH) + 1) + "";
+        if (c.get(Calendar.DAY_OF_MONTH) < 10) {
+            day = "0" + c.get(Calendar.DAY_OF_MONTH);
+        }
+        if (c.get(Calendar.MONTH) + 1 < 10) {
+            month = "0" + (c.get(Calendar.MONTH) + 1);
+        }
+
+        String firstOfWeek = day + "-" + month + "-" + c.get(Calendar.YEAR);
+        c.setTime(endDate);
+
+        day = c.get(Calendar.DAY_OF_MONTH) + "";
+        month = (c.get(Calendar.MONTH) + 1) + "";
+        if (c.get(Calendar.DAY_OF_MONTH) < 10) {
+            day = "0" + c.get(Calendar.DAY_OF_MONTH);
+        }
+        if (c.get(Calendar.MONTH) + 1 < 10) {
+            month = "0" + (c.get(Calendar.MONTH) + 1);
+        }
+
+        String lastOfWeek = day + "-" + month + "-" + c.get(Calendar.YEAR);
+
+        Cursor cursor = this.getIncomeByDateToDate(firstOfWeek, lastOfWeek, category);
+
+        if (cursor.getCount() != 0) {
+            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                total += Double.parseDouble(cursor.getString(1));
+            }
+        }
+
+        return total;
+    }
+
+    public double getCustomTotalExpenseCategory(String startDate, String endDate, String category) {
+
+        Cursor cursor = this.getExpensesByDateToDate(startDate, endDate, category);
+
+        double total = 0;
+
+        if (cursor.getCount() != 0) {
+            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                total += Double.parseDouble(cursor.getString(3));
+            }
+        }
+
+
+        return total;
+    }
+
+    public double getCustomTotalIncomeCategory(String startDate, String endDate, String category) {
+
+        Cursor cursor = this.getIncomeByDateToDate(startDate, endDate, category);
+
+        double total = 0;
+
+        if (cursor.getCount() != 0) {
+            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                total += Double.parseDouble(cursor.getString(1));
+            }
+        }
+
+        return total;
+    }
+
+    public double getMonthTotalExpense(int year, int month) {
+
+        month++;
+        String m = month + "";
+        if (month < 10) {
+            m = "0" + month;
+        }
+
+        String firstOfMonth = "01" + "-" + m + "-" + year;
+        String lastOfMonth = "31" + "-" + m + "-" + year;
+
+        Cursor cursor = this.getExpensesByDateToDate(firstOfMonth, lastOfMonth);
+
+        double total = 0;
+
+        if (cursor.getCount() != 0) {
+            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                total += Double.parseDouble(cursor.getString(3));
+            }
+        }
+
+        return total;
+    }
+
+    public double getMonthTotalIncome(int year, int month) {
+
+        month++;
+        String m = month + "";
+        if (month < 10) {
+            m = "0" + month;
+        }
+
+        String firstOfMonth = "01" + "-" + m + "-" + year;
+        String lastOfMonth = "31" + "-" + m + "-" + year;
+
+        Cursor cursor = this.getIncomeByDateToDate(firstOfMonth, lastOfMonth);
+
+        double total = 0;
+
+        if (cursor.getCount() != 0) {
+            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                total += Double.parseDouble(cursor.getString(1));
+            }
+        }
+
+        return total;
+    }
+
+    public double getWeekTotalExpense(int year, int month, int day) {
+        double total = 0;
+
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.DAY_OF_YEAR, day);
+        c.set(Calendar.YEAR, year);
+
+//        c.set(year, month, day);
+
+        int currentDay = day;
+        int endDay = Calendar.MONDAY;
+
+        Date startDate, endDate;
+
+        if (currentDay == endDay) {
+            startDate = c.getTime();
+            c.add(Calendar.DAY_OF_YEAR, 6);
+            endDate = c.getTime();
+        } else {
+            while (currentDay != endDay) {
+                c.add(Calendar.DATE, 1);
+                currentDay = c.get(Calendar.DAY_OF_WEEK);
+            }
+            c.add(Calendar.DAY_OF_YEAR, -1);
+            endDate = c.getTime();
+
+            c.add(Calendar.DAY_OF_YEAR, -6);
+            startDate = c.getTime();
+
+        }
+
+        c.setTime(startDate);
+
+        String sDay = c.get(Calendar.DAY_OF_MONTH) + "";
+        String sMonth = (c.get(Calendar.MONTH) + 1) + "";
+
+        if (c.get(Calendar.DAY_OF_MONTH) < 10) {
+            sDay = "0" + c.get(Calendar.DAY_OF_MONTH);
+        }
+        if (c.get(Calendar.MONTH) + 1 < 10) {
+            sMonth = "0" + (c.get(Calendar.MONTH) + 1);
+        }
+
+        String firstOfWeek = sDay + "-" + sMonth + "-" + c.get(Calendar.YEAR);
+        c.setTime(endDate);
+
+        sDay = c.get(Calendar.DAY_OF_MONTH) + "";
+        sMonth = (c.get(Calendar.MONTH) + 1) + "";
+        if (c.get(Calendar.DAY_OF_MONTH) < 10) {
+            sDay = "0" + c.get(Calendar.DAY_OF_MONTH);
+        }
+        if (c.get(Calendar.MONTH) + 1 < 10) {
+            sMonth = "0" + (c.get(Calendar.MONTH) + 1);
+        }
+
+        String lastOfWeek = sDay + "-" + sMonth + "-" + c.get(Calendar.YEAR);
+
+        Cursor cursor = this.getExpensesByDateToDate(firstOfWeek, lastOfWeek);
+
+        if (cursor.getCount() != 0) {
+            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                total += Double.parseDouble(cursor.getString(3));
+            }
+        }
+
+        Log.i("nikos", "Expense for : " + startDate + " to " + endDate + " is " + total);
+        return total;
+    }
+
+    public double getWeekTotalIncome(int year, int month, int day) {
+        double total = 0;
+
+        Calendar c = Calendar.getInstance();
+
+        c.set(Calendar.DAY_OF_YEAR, day);
+        c.set(Calendar.YEAR, year);
+
+//        c.set(year, month, day);
+
+        int currentDay = day;
+        int endDay = Calendar.MONDAY;
+
+        Date startDate, endDate;
+
+        if (currentDay == endDay) {
+            startDate = c.getTime();
+            c.add(Calendar.DAY_OF_YEAR, 6);
+            endDate = c.getTime();
+        } else {
+            while (currentDay != endDay) {
+                c.add(Calendar.DATE, 1);
+                currentDay = c.get(Calendar.DAY_OF_WEEK);
+            }
+            c.add(Calendar.DAY_OF_YEAR, -1);
+            endDate = c.getTime();
+
+            c.add(Calendar.DAY_OF_YEAR, -6);
+            startDate = c.getTime();
+
+        }
+
+        c.setTime(startDate);
+
+        String sDay = c.get(Calendar.DAY_OF_MONTH) + "";
+        String sMonth = (c.get(Calendar.MONTH) + 1) + "";
+
+        if (c.get(Calendar.DAY_OF_MONTH) < 10) {
+            sDay = "0" + c.get(Calendar.DAY_OF_MONTH);
+        }
+        if (c.get(Calendar.MONTH) + 1 < 10) {
+            sMonth = "0" + (c.get(Calendar.MONTH) + 1);
+        }
+
+        String firstOfWeek = sDay + "-" + sMonth + "-" + c.get(Calendar.YEAR);
+        c.setTime(endDate);
+
+        sDay = c.get(Calendar.DAY_OF_MONTH) + "";
+        sMonth = (c.get(Calendar.MONTH) + 1) + "";
+        if (c.get(Calendar.DAY_OF_MONTH) < 10) {
+            sDay = "0" + c.get(Calendar.DAY_OF_MONTH);
+        }
+        if (c.get(Calendar.MONTH) + 1 < 10) {
+            sMonth = "0" + (c.get(Calendar.MONTH) + 1);
+        }
+
+        String lastOfWeek = sDay + "-" + sMonth + "-" + c.get(Calendar.YEAR);
+
+        Cursor cursor = this.getIncomeByDateToDate(firstOfWeek, lastOfWeek);
+
+        if (cursor.getCount() != 0) {
+            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                total += Double.parseDouble(cursor.getString(1));
+            }
+        }
+
+
+        Log.i("nikos", "Income for : " + startDate + " to " + endDate + " is " + total);
+        return total;
+    }
+
+    public double getTotalMoneyTillDate(String date) {
+
+        String DateTo[] = date.split("-");
+        String reformedDateTo = DateTo[2] + "-" + DateTo[1] + "-" + DateTo[0];
+
+        Cursor income = getReadableDatabase().rawQuery("SELECT * FROM " + Table_Income +
+                " WHERE " + Key_IDate + "<=" + "'" + reformedDateTo + "'", null);
+
+        Cursor expense = getReadableDatabase().rawQuery("SELECT * FROM " + Table_Expense +
+                " WHERE " + Key_EDate + "<=" + "'" + reformedDateTo + "'", null);
+
+
+        double amountIncome = 0;
+        double amountExpense = 0;
+
+        if (income.getCount() != 0) {
+            for (income.moveToFirst(); !income.isAfterLast(); income.moveToNext()) {
+                amountIncome += Double.parseDouble(income.getString(1));
+            }
+        }
+
+        if (expense.getCount() != 0) {
+            for (expense.moveToFirst(); !expense.isAfterLast(); expense.moveToNext()) {
+                amountExpense += Double.parseDouble(expense.getString(3));
+            }
+        }
+
+        return amountIncome - amountExpense;
+
+
+    }
+
 
 }

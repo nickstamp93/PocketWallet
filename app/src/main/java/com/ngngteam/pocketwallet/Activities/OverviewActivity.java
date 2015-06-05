@@ -608,9 +608,12 @@ public class OverviewActivity extends AppCompatActivity {
                     startActivity(new Intent(OverviewActivity.this, BarsDistributionActivity.class));
                     break;
                 case 5:
-                    startActivity(new Intent(OverviewActivity.this, SettingsActivity.class));
+                    startActivity(new Intent(OverviewActivity.this, CategoriesManagerActivity.class));
                     break;
                 case 6:
+                    startActivity(new Intent(OverviewActivity.this, SettingsActivity.class));
+                    break;
+                case 7:
                     finish();
                     break;
             }

@@ -33,10 +33,6 @@
         </PreferenceScreen>
 
         <Preference
-            android:key="@string/pref_key_categories"
-            android:title="@string/pref_title_categories" />
-
-        <Preference
             android:key="@string/pref_key_theme"
             android:title="@string/pref_title_theme" />
 

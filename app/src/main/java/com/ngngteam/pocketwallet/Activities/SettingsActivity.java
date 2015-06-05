@@ -56,16 +56,10 @@ public class SettingsActivity extends PreferenceActivity
             disablePassword();
         }
 
-        //when user clicks on "categories" preference item
-        //launch intent with target the CategoriesManagerActivity class
-        Preference screen = findPreference(getResources().getString(R.string.pref_key_categories));
-        Intent i = new Intent(this, CategoriesManagerActivity.class);
-        screen.setIntent(i);
-
         //when user clicks on "profile" preference item
         //launch intent with target the UserDetailsActivity class
-        screen = findPreference(getResources().getString(R.string.pref_key_profile));
-        i = new Intent(this, UserDetailsActivity.class);
+        Preference screen = findPreference(getResources().getString(R.string.pref_key_profile));
+        Intent i = new Intent(this, UserDetailsActivity.class);
         screen.setIntent(i);
 
         //when user clicks on "reminder time" preference item

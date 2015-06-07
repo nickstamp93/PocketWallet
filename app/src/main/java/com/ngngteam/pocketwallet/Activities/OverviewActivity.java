@@ -276,7 +276,7 @@ public class OverviewActivity extends AppCompatActivity {
 
     }
 
-    String getMonthForInt(int num) {
+    static String getMonthForInt(int num) {
         String month = "January";
         DateFormatSymbols dfs = new DateFormatSymbols();
         String[] months = dfs.getMonths();

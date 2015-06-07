@@ -12,4 +12,10 @@
         <item>Exit</item>
     </string-array>
 
+    <string-array name="pie_period_values">
+        <item>Monthly</item>
+        <item>Weekly</item>
+        <item>Custom Period</item>
+    </string-array>
+
 </resources>

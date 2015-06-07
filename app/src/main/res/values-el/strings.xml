@@ -143,6 +143,7 @@
     <!-- AddExpenseActivity -->
     <string name="textview_hint_notes">Σημειώσεις...</string>
     <string name="action_add_expense">Νέο Έξοδο</string>
+    <string name="action_add_income">Νέο Έσοδο</string>
     <string name="textview_headline_category">Κατηγορία</string>
     <string name="textview_headline_date">Ημερομηνία</string>
     <string name="textview_headline_notes">Σημειώσεις</string>
@@ -208,7 +209,5 @@
     <string name="toast_pattern_changed">Το μοτίβο καταγράφηκε</string>
     <string name="toast_pattern_not_chaged">Τα μοτίβα δεν είναι ίδια!</string>
 
-    <string name="title_activity_pie_distribution">Κατανομή</string>
     <string name="title_activity_bars_distribution">Έσοδα - Έξοδα</string>
-
 </resources>

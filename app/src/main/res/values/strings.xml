@@ -142,6 +142,7 @@
     <!-- AddExpenseActivity -->
     <string name="textview_hint_notes">Enter some notes…</string>
     <string name="action_add_expense">Add Expense</string>
+    <string name="action_add_income">Add Income</string>
     <string name="textview_headline_category">Category</string>
     <string name="textview_headline_date">Date</string>
     <string name="textview_headline_notes">Notes</string>
@@ -207,7 +208,6 @@
     <string name="toast_pattern_changed">Pattern lock set</string>
     <string name="toast_pattern_not_chaged">Patterns don\'t match!</string>
 
-    <string name="title_activity_pie_distribution">Pie Distribution</string>
     <string name="title_activity_bars_distribution">Income vs Expense</string>
 
 

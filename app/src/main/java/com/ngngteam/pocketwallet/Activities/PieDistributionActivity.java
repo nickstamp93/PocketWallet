@@ -114,9 +114,9 @@ public class PieDistributionActivity extends AppCompatActivity implements Action
         //center text color set to primary
         pieChart.setCenterTextColor(primaryTextColor);
 
+        pieChart.setDescription("");
+
         pieChart.getLegend().setEnabled(false);
-        pieChart.setDescriptionColor(primaryTextColor);
-        pieChart.setDescriptionTextSize(25);
     }
 
     private void initPieCurrentMonth() {
@@ -265,7 +265,6 @@ public class PieDistributionActivity extends AppCompatActivity implements Action
         // undo all highlights
         pieChart.highlightValues(null);
 
-        pieChart.setDescription(isExpense ? "Expense" : "Income");
         //animate pie createion
         pieChart.animateXY(1000, 1000);
         //invalidate

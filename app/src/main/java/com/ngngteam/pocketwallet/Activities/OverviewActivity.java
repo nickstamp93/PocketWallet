@@ -654,6 +654,9 @@ public class OverviewActivity extends AppCompatActivity {
         if (id == R.id.action_addExpense) {
             startActivity(new Intent(getApplicationContext(), AddExpenseActivity.class));
         }
+        if (id == R.id.action_addIncome) {
+            startActivity(new Intent(getApplicationContext(), AddIncomeActivity.class));
+        }
         if (drawerToggle.onOptionsItemSelected(item)) {
             return true;
         }

@@ -105,7 +105,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activities.PieDistributionActivity"
-            android:label="@string/title_activity_pie_distribution"
             android:parentActivityName=".Activities.OverviewActivity"
             android:screenOrientation="portrait">
 

@@ -1,11 +1,15 @@
 package com.ngngteam.pocketwallet.Activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.SpinnerAdapter;
@@ -38,10 +42,14 @@ public class PieDistributionActivity extends AppCompatActivity implements Action
     double totalAmount;
     String centerText;
 
+    ArrayList<String> selectedCategories;
+
     PieChart pieChart;
     Switch switchIsExpense;
 
     private boolean isExpense;
+
+    private String startDate, endDate;
 
     int primaryTextColor;
     int selectedDropDownPos;
@@ -85,6 +93,9 @@ public class PieDistributionActivity extends AppCompatActivity implements Action
 
         isExpense = true;
 
+        allCategories = categoryDatabase.getCategories(isExpense);
+        selectedCategories = allCategories;
+
     }
 
     private void initUI() {
@@ -98,6 +109,72 @@ public class PieDistributionActivity extends AppCompatActivity implements Action
 
         switchIsExpense.setOnCheckedChangeListener(switchListener);
 
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.pie_distribution, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_filters_pie) {
+            allCategories = categoryDatabase.getCategories(isExpense);
+            boolean[] checked = new boolean[allCategories.size()];
+            //check the items that are previously checked
+            for (int i = 0; i < checked.length; i++) {
+                if (selectedCategories.contains(allCategories.get(i))) {
+                    checked[i] = true;
+                }
+            }
+            final ArrayList<String> backup = selectedCategories;
+            CharSequence[] cs = allCategories.toArray(new CharSequence[allCategories.size()]);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            // Set the dialog title
+            builder.setTitle("Choose categories")
+                    // Specify the list array, the items to be selected by default (null for none),
+                    // and the listener through which to receive callbacks when items are selected
+                    .setMultiChoiceItems(cs, checked,
+                            new DialogInterface.OnMultiChoiceClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which,
+                                                    boolean isChecked) {
+                                    if (isChecked) {
+                                        // If the user checked the item, add it to the selected items
+                                        selectedCategories.add(allCategories.get(which));
+                                    } else if (selectedCategories.contains(allCategories.get(which))) {
+                                        // Else, if the item is already in the array, remove it
+                                        selectedCategories.remove(allCategories.get(which));
+                                    }
+                                }
+                            })
+                            // Set the action buttons
+                    .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            // User clicked OK, so save the mSelectedItems results somewhere
+                            // or return them to the component that opened the dialog
+                            onNavigationItemSelected(selectedDropDownPos, 0);
+                        }
+                    })
+                    .setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            selectedCategories = backup;
+                        }
+                    });
+
+            builder.create().show();
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void customizePieChart() {
@@ -122,17 +199,14 @@ public class PieDistributionActivity extends AppCompatActivity implements Action
     private void initPieCurrentMonth() {
         totalAmount = 0;
 
-        allCategories = categoryDatabase.getCategories(isExpense);
-        int count = allCategories.size();
-
         values = new ArrayList<>();
         finalCategories = new ArrayList<>();
         colors = new ArrayList<>();
 
-        for (int i = 0; i < count; i++) {
+        for (int i = 0; i < allCategories.size(); i++) {
             double amount = moneyDatabase.getMonthTotalForCategory(allCategories.get(i), isExpense);
             //if this category has positive amount
-            if (amount > 0) {
+            if (amount > 0 && selectedCategories.contains(allCategories.get(i))) {
                 totalAmount += amount;
                 //add it in the pie
                 Entry e = new Entry(
@@ -160,17 +234,15 @@ public class PieDistributionActivity extends AppCompatActivity implements Action
     private void initPieCurrentWeek() {
         totalAmount = 0;
 
-        allCategories = categoryDatabase.getCategories(isExpense);
-        int count = allCategories.size();
 
         values = new ArrayList<>();
         finalCategories = new ArrayList<>();
         colors = new ArrayList<>();
 
-        for (int i = 0; i < count; i++) {
+        for (int i = 0; i < allCategories.size(); i++) {
             double amount = moneyDatabase.getWeekTotalForCategory(allCategories.get(i), isExpense);
             //if this category has positive amount
-            if (amount > 0) {
+            if (amount > 0 && selectedCategories.contains(allCategories.get(i))) {
                 totalAmount += amount;
                 //add it in the pie
                 Entry e = new Entry(
@@ -218,6 +290,33 @@ public class PieDistributionActivity extends AppCompatActivity implements Action
         setDataToPie(values, finalCategories, colors, mode);
     }
 
+    private void initPieCustomPeriod() {
+        //TODO find a way to let user define start and end date of period
+        totalAmount = 0;
+
+        allCategories = categoryDatabase.getCategories(isExpense);
+        int count = allCategories.size();
+
+        values = new ArrayList<>();
+        finalCategories = new ArrayList<>();
+        colors = new ArrayList<>();
+
+        for (int i = 0; i < count; i++) {
+            double amount = moneyDatabase.getTotalForCategoryCustomDate(startDate, endDate, allCategories.get(i), isExpense);
+            //if this category has positive amount
+            if (amount > 0) {
+                totalAmount += amount;
+                //add it in the pie
+                Entry e = new Entry(
+                        (float) amount, i);
+                values.add(e);
+                finalCategories.add(allCategories.get(i));
+                colors.add(categoryDatabase.getColorFromCategory(allCategories.get(i), isExpense));
+            }
+        }
+        totalAmount = Math.round(totalAmount * 100) / 100.0;
+    }
+
     private void setDataToPie(ArrayList values, ArrayList finalCategories, ArrayList colors, String mode) {
         PieDataSet dataSet = new PieDataSet(values, mode + " Distribution");
 
@@ -234,9 +333,9 @@ public class PieDistributionActivity extends AppCompatActivity implements Action
             @Override
             public String getFormattedValue(float value) {
 
-                return value + " " +
-                        PreferenceManager.getDefaultSharedPreferences(PieDistributionActivity.this)
-                                .getString(getString(R.string.pref_key_currency), "€");
+                return value +
+                        " " + PreferenceManager.getDefaultSharedPreferences(PieDistributionActivity.this)
+                        .getString(getString(R.string.pref_key_currency), "€");
             }
         });
 
@@ -276,6 +375,8 @@ public class PieDistributionActivity extends AppCompatActivity implements Action
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             isExpense = !isChecked;
+            allCategories = categoryDatabase.getCategories(isExpense);
+            selectedCategories = allCategories;
             onNavigationItemSelected(selectedDropDownPos, 0);
         }
     };

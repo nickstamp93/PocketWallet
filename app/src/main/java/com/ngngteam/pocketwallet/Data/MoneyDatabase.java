@@ -579,7 +579,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         return total;
     }
 
-    public double getWeekTotalForCategory(String category , boolean isExpense) {
+    public double getWeekTotalForCategory(String category, boolean isExpense) {
 
         double total = 0;
         Cursor cursor;
@@ -633,7 +633,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
 
         String lastOfWeek = day + "-" + month + "-" + c.get(Calendar.YEAR);
 
-        if(isExpense){
+        if (isExpense) {
             cursor = this.getExpensesByDateToDate(firstOfWeek, lastOfWeek, category);
 
             if (cursor.getCount() != 0) {
@@ -641,7 +641,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
                     total += Double.parseDouble(cursor.getString(3));
                 }
             }
-        }else{
+        } else {
             cursor = this.getIncomeByDateToDate(firstOfWeek, lastOfWeek, category);
 
             if (cursor.getCount() != 0) {
@@ -654,31 +654,30 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         return total;
     }
 
-    public double getCustomTotalExpenseCategory(String startDate, String endDate, String category) {
+    public double getTotalForCategoryCustomDate(String startDate, String endDate, String category, boolean isExpense) {
 
-        Cursor cursor = this.getExpensesByDateToDate(startDate, endDate, category);
+        Cursor cursor;
+        double total;
 
-        double total = 0;
+        if (isExpense) {
+            cursor = this.getExpensesByDateToDate(startDate, endDate, category);
 
-        if (cursor.getCount() != 0) {
-            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-                total += Double.parseDouble(cursor.getString(3));
+            total = 0;
+
+            if (cursor.getCount() != 0) {
+                for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                    total += Double.parseDouble(cursor.getString(3));
+                }
             }
-        }
+        } else {
+            cursor = this.getIncomeByDateToDate(startDate, endDate, category);
 
+            total = 0;
 
-        return total;
-    }
-
-    public double getCustomTotalIncomeCategory(String startDate, String endDate, String category) {
-
-        Cursor cursor = this.getIncomeByDateToDate(startDate, endDate, category);
-
-        double total = 0;
-
-        if (cursor.getCount() != 0) {
-            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-                total += Double.parseDouble(cursor.getString(1));
+            if (cursor.getCount() != 0) {
+                for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                    total += Double.parseDouble(cursor.getString(1));
+                }
             }
         }
 

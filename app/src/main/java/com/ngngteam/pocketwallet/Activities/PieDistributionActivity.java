@@ -7,14 +7,19 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.SpinnerAdapter;
 import android.widget.Switch;
 
+import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
@@ -25,6 +30,7 @@ import com.ngngteam.pocketwallet.Data.MoneyDatabase;
 import com.ngngteam.pocketwallet.R;
 import com.ngngteam.pocketwallet.Utils.Themer;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -46,6 +52,9 @@ public class PieDistributionActivity extends AppCompatActivity implements Action
 
     PieChart pieChart;
     Switch switchIsExpense;
+    EditText etStart, etEnd;
+    ImageButton bGo;
+    CardView cardCustomDate;
 
     private boolean isExpense;
 
@@ -96,6 +105,10 @@ public class PieDistributionActivity extends AppCompatActivity implements Action
         allCategories = categoryDatabase.getCategories(isExpense);
         selectedCategories = allCategories;
 
+
+        startDate = endDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date(Calendar.getInstance().getTimeInMillis()));
+
+
     }
 
     private void initUI() {
@@ -103,11 +116,30 @@ public class PieDistributionActivity extends AppCompatActivity implements Action
         customizePieChart();
 
         switchIsExpense = (Switch) findViewById(R.id.switchIsExpense);
+
+        cardCustomDate = (CardView) findViewById(R.id.cardview_pie_custom_date);
+        etStart = (EditText) findViewById(R.id.etDateFrom);
+        etEnd = (EditText) findViewById(R.id.etDateTo);
+
+        bGo = (ImageButton) findViewById(R.id.bPieGo);
     }
 
     private void setUpUI() {
 
         switchIsExpense.setOnCheckedChangeListener(switchListener);
+
+        etStart.setText(startDate);
+        etEnd.setText(endDate);
+
+        etStart.setOnClickListener(etDatesListener);
+        etEnd.setOnClickListener(etDatesListener);
+
+        bGo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initPieCustomPeriod();
+            }
+        });
 
     }
 
@@ -294,7 +326,6 @@ public class PieDistributionActivity extends AppCompatActivity implements Action
         //TODO find a way to let user define start and end date of period
         totalAmount = 0;
 
-        allCategories = categoryDatabase.getCategories(isExpense);
         int count = allCategories.size();
 
         values = new ArrayList<>();
@@ -304,7 +335,7 @@ public class PieDistributionActivity extends AppCompatActivity implements Action
         for (int i = 0; i < count; i++) {
             double amount = moneyDatabase.getTotalForCategoryCustomDate(startDate, endDate, allCategories.get(i), isExpense);
             //if this category has positive amount
-            if (amount > 0) {
+            if (amount > 0 && selectedCategories.contains(allCategories.get(i))) {
                 totalAmount += amount;
                 //add it in the pie
                 Entry e = new Entry(
@@ -315,6 +346,29 @@ public class PieDistributionActivity extends AppCompatActivity implements Action
             }
         }
         totalAmount = Math.round(totalAmount * 100) / 100.0;
+
+        String mode = isExpense ? "Expense" : "Income";
+
+        try {
+            Date sDate = new SimpleDateFormat("dd-MM-yyyy").parse(startDate);
+            Date eDate = new SimpleDateFormat("dd-MM-yyyy").parse(endDate);
+            if (startDate.split("-")[1].equals(endDate.split("-")[1])) {
+
+                centerText = new SimpleDateFormat("dd").format(sDate) +
+                        "-" + new SimpleDateFormat("dd MMM").format(eDate);
+            } else {
+
+                centerText = new SimpleDateFormat("dd").format(sDate) +
+                        "-" + new SimpleDateFormat("dd MMM").format(eDate);
+            }
+
+            pieChart.setCenterTextSize(20f);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+        setDataToPie(values, finalCategories, colors, mode);
     }
 
     private void setDataToPie(ArrayList values, ArrayList finalCategories, ArrayList colors, String mode) {
@@ -381,19 +435,57 @@ public class PieDistributionActivity extends AppCompatActivity implements Action
         }
     };
 
+    private View.OnClickListener etDatesListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Bundle bundle = new Bundle();
+            if (v.getId() == R.id.etDateFrom) {
+                bundle.putBoolean("isStartDate", true);
+            } else {
+                bundle.putBoolean("isStartDate", false);
+            }
+            CalendarDatePickerDialog dialog = new CalendarDatePickerDialog();
+            dialog.setOnDateSetListener(dateSetListener);
+            dialog.setArguments(bundle);
+            dialog.show(getSupportFragmentManager(), "Date");
+        }
+    };
+
+    private CalendarDatePickerDialog.OnDateSetListener dateSetListener = new CalendarDatePickerDialog.OnDateSetListener() {
+
+        @Override
+        public void onDateSet(CalendarDatePickerDialog calendarDatePickerDialog, int year, int month, int day) {
+            Calendar c = Calendar.getInstance();
+            c.set(year, month, day);
+            Date d = new Date(c.getTimeInMillis());
+            String date = new SimpleDateFormat("dd-MM-yyyy").format(d);
+            if (calendarDatePickerDialog.getArguments().getBoolean("isStartDate")) {
+                startDate = date;
+                etStart.setText(startDate);
+            } else {
+                endDate = date;
+                etEnd.setText(endDate);
+            }
+        }
+    };
+
     @Override
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
         selectedDropDownPos = itemPosition;
-        if (itemPosition == 0) {
-            initPieCurrentMonth();
+        if (itemPosition == 2) {
+            cardCustomDate.setVisibility(View.VISIBLE);
+        } else {
+            cardCustomDate.setVisibility(View.INVISIBLE);
 
-        } else if (itemPosition == 1) {
+            if (itemPosition == 0) {
+                initPieCurrentMonth();
 
-            initPieCurrentWeek();
+            } else if (itemPosition == 1) {
 
-        } else if (itemPosition == 2) {
+                initPieCurrentWeek();
 
+            }
         }
-        return false;
+        return true;
     }
 }

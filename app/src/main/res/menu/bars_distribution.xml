@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/Filters"
+        android:icon="@drawable/ic_action_filter"
+        android:orderInCategory="10"
+        android:title="@string/text_filter"
+        app:showAsAction="always">
+
+        <menu>
+
+            <item
+                android:id="@+id/action_expense_categories"
+                android:title="Expense categories" />
+
+            <item
+                android:id="@+id/action_income_categories"
+                android:title="Income categories" />
+        </menu>
+
+
+    </item>
+</menu>

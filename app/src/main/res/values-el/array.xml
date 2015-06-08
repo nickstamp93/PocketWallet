@@ -12,4 +12,17 @@
         <item>Έξοδος</item>
     </string-array>
 
+
+    <string-array name="pie_period_values">
+        <item>Μήνας</item>
+        <item>Εβδομάδα</item>
+        <item>Επιλεγόμενη Περίοδος</item>
+    </string-array>
+
+    <string-array name="bars_period_values">
+        <item>Τελευταίοι 3 μήνες</item>
+        <item>Τελευταίες 4 εβδομάδες</item>
+        <item>Τελευταίοι 6 μήνες</item>
+        <item>Τελευταίες 12 εβδομάδες</item>
+    </string-array>
 </resources>

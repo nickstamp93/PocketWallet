@@ -84,7 +84,13 @@
             android:name=".Activities.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:parentActivityName=".Activities.OverviewActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.OverviewActivity" />
+        </activity>
         <activity
             android:name=".Activities.TransparentActivity"
             android:screenOrientation="portrait"
@@ -92,13 +98,25 @@
         <activity
             android:name=".Activities.CreateCategoryActivity"
             android:label="@string/title_activity_create_category"
-            android:parentActivityName=".Activities.CreateCategoryActivity"
-            android:screenOrientation="portrait" />
+            android:parentActivityName=".Activities.CategoriesManagerActivity"
+            android:screenOrientation="portrait">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.CategoriesManagerActivity" />
+        </activity>
         <activity
             android:name=".Activities.FiltersDateToDateActivity"
             android:label="FiltersDateToDate"
             android:parentActivityName=".Activities.HistoryActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.HistoryActivity" />
+        </activity>
         <activity
             android:name=".Activities.PatternLockActivity"
             android:label="@string/title_activity_pattern_lock"

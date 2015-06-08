@@ -113,7 +113,6 @@ public class PieDistributionActivity extends AppCompatActivity implements Action
 
     private void initUI() {
         pieChart = (PieChart) findViewById(R.id.pieDistChart);
-        customizePieChart();
 
         switchIsExpense = (Switch) findViewById(R.id.switchIsExpense);
 
@@ -125,6 +124,8 @@ public class PieDistributionActivity extends AppCompatActivity implements Action
     }
 
     private void setUpUI() {
+
+        customizePieChart();
 
         switchIsExpense.setOnCheckedChangeListener(switchListener);
 

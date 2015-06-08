@@ -18,4 +18,11 @@
         <item>Custom Period</item>
     </string-array>
 
+    <string-array name="bars_period_values">
+        <item>Last 3 months</item>
+        <item>Last 6 Weeks</item>
+        <item>Last 6 Months</item>
+        <item>Last 12 weeks</item>
+    </string-array>
+
 </resources>

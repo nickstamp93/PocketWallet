@@ -11,6 +11,7 @@ import com.ngngteam.pocketwallet.Model.ExpenseItem;
 import com.ngngteam.pocketwallet.Model.IncomeItem;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -684,7 +685,11 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         return total;
     }
 
-    public double getMonthTotalExpense(int year, int month) {
+    public double getMonthTotal(int year, int month, boolean isExpense, ArrayList<String> categoryFilter) {
+
+        Cursor cursor;
+
+        double total = 0;
 
         month++;
         String m = month + "";
@@ -695,45 +700,35 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         String firstOfMonth = "01" + "-" + m + "-" + year;
         String lastOfMonth = "31" + "-" + m + "-" + year;
 
-        Cursor cursor = this.getExpensesByDateToDate(firstOfMonth, lastOfMonth);
+        if (isExpense) {
+            cursor = this.getExpensesByDateToDate(firstOfMonth, lastOfMonth);
 
-        double total = 0;
+            if (cursor.getCount() != 0) {
+                for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                    if (categoryFilter.contains(cursor.getString(1))) {
+                        total += Double.parseDouble(cursor.getString(3));
+                    }
+                }
+            }
+        } else {
+            cursor = this.getIncomeByDateToDate(firstOfMonth, lastOfMonth);
 
-        if (cursor.getCount() != 0) {
-            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-                total += Double.parseDouble(cursor.getString(3));
+            if (cursor.getCount() != 0) {
+                for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                    if (categoryFilter.contains(cursor.getString(2))) {
+                        total += Double.parseDouble(cursor.getString(1));
+                    }
+                }
             }
         }
+
 
         return total;
     }
 
-    public double getMonthTotalIncome(int year, int month) {
-
-        month++;
-        String m = month + "";
-        if (month < 10) {
-            m = "0" + month;
-        }
-
-        String firstOfMonth = "01" + "-" + m + "-" + year;
-        String lastOfMonth = "31" + "-" + m + "-" + year;
-
-        Cursor cursor = this.getIncomeByDateToDate(firstOfMonth, lastOfMonth);
-
+    public double getWeekTotal(int year, int day, boolean isExpense, ArrayList<String> categoryFilter) {
         double total = 0;
-
-        if (cursor.getCount() != 0) {
-            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-                total += Double.parseDouble(cursor.getString(1));
-            }
-        }
-
-        return total;
-    }
-
-    public double getWeekTotalExpense(int year, int month, int day) {
-        double total = 0;
+        Cursor cursor;
 
         Calendar c = Calendar.getInstance();
         c.set(Calendar.DAY_OF_YEAR, day);
@@ -789,88 +784,34 @@ public class MoneyDatabase extends SQLiteOpenHelper {
 
         String lastOfWeek = sDay + "-" + sMonth + "-" + c.get(Calendar.YEAR);
 
-        Cursor cursor = this.getExpensesByDateToDate(firstOfWeek, lastOfWeek);
+        if (isExpense) {
+            cursor = this.getExpensesByDateToDate(firstOfWeek, lastOfWeek);
 
-        if (cursor.getCount() != 0) {
-            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-                total += Double.parseDouble(cursor.getString(3));
+            if (cursor.getCount() != 0) {
+                for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                    if (categoryFilter.contains(cursor.getString(1))) {
+                        total += Double.parseDouble(cursor.getString(3));
+                    }
+                }
             }
-        }
-
-        Log.i("nikos", "Expense for : " + startDate + " to " + endDate + " is " + total);
-        return total;
-    }
-
-    public double getWeekTotalIncome(int year, int month, int day) {
-        double total = 0;
-
-        Calendar c = Calendar.getInstance();
-
-        c.set(Calendar.DAY_OF_YEAR, day);
-        c.set(Calendar.YEAR, year);
-
-//        c.set(year, month, day);
-
-        int currentDay = day;
-        int endDay = Calendar.MONDAY;
-
-        Date startDate, endDate;
-
-        if (currentDay == endDay) {
-            startDate = c.getTime();
-            c.add(Calendar.DAY_OF_YEAR, 6);
-            endDate = c.getTime();
+//            Log.i("nikos", "Expense for : " + startDate + " to " + endDate + " is " + total);
         } else {
-            while (currentDay != endDay) {
-                c.add(Calendar.DATE, 1);
-                currentDay = c.get(Calendar.DAY_OF_WEEK);
+            cursor = this.getIncomeByDateToDate(firstOfWeek, lastOfWeek);
+
+            if (cursor.getCount() != 0) {
+                for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                    if (categoryFilter.contains(cursor.getString(2))) {
+                        total += Double.parseDouble(cursor.getString(1));
+                    }
+                }
             }
-            c.add(Calendar.DAY_OF_YEAR, -1);
-            endDate = c.getTime();
 
-            c.add(Calendar.DAY_OF_YEAR, -6);
-            startDate = c.getTime();
-
+//            Log.i("nikos", "Income for : " + startDate + " to " + endDate + " is " + total);
         }
 
-        c.setTime(startDate);
-
-        String sDay = c.get(Calendar.DAY_OF_MONTH) + "";
-        String sMonth = (c.get(Calendar.MONTH) + 1) + "";
-
-        if (c.get(Calendar.DAY_OF_MONTH) < 10) {
-            sDay = "0" + c.get(Calendar.DAY_OF_MONTH);
-        }
-        if (c.get(Calendar.MONTH) + 1 < 10) {
-            sMonth = "0" + (c.get(Calendar.MONTH) + 1);
-        }
-
-        String firstOfWeek = sDay + "-" + sMonth + "-" + c.get(Calendar.YEAR);
-        c.setTime(endDate);
-
-        sDay = c.get(Calendar.DAY_OF_MONTH) + "";
-        sMonth = (c.get(Calendar.MONTH) + 1) + "";
-        if (c.get(Calendar.DAY_OF_MONTH) < 10) {
-            sDay = "0" + c.get(Calendar.DAY_OF_MONTH);
-        }
-        if (c.get(Calendar.MONTH) + 1 < 10) {
-            sMonth = "0" + (c.get(Calendar.MONTH) + 1);
-        }
-
-        String lastOfWeek = sDay + "-" + sMonth + "-" + c.get(Calendar.YEAR);
-
-        Cursor cursor = this.getIncomeByDateToDate(firstOfWeek, lastOfWeek);
-
-        if (cursor.getCount() != 0) {
-            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-                total += Double.parseDouble(cursor.getString(1));
-            }
-        }
-
-
-        Log.i("nikos", "Income for : " + startDate + " to " + endDate + " is " + total);
         return total;
     }
+
 
     public double getTotalMoneyTillDate(String date) {
 

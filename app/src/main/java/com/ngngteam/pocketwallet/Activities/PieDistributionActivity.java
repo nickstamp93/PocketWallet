@@ -48,7 +48,7 @@ public class PieDistributionActivity extends AppCompatActivity implements Action
     double totalAmount;
     String centerText;
 
-    ArrayList<String> selectedCategories;
+    ArrayList<String> selectedCategories, backup;
 
     PieChart pieChart;
     Switch switchIsExpense;
@@ -167,7 +167,7 @@ public class PieDistributionActivity extends AppCompatActivity implements Action
                     checked[i] = true;
                 }
             }
-            final ArrayList<String> backup = selectedCategories;
+            backup = new ArrayList<>(selectedCategories);
             CharSequence[] cs = allCategories.toArray(new CharSequence[allCategories.size()]);
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             // Set the dialog title

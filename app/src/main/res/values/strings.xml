@@ -209,6 +209,8 @@
     <string name="toast_pattern_not_chaged">Patterns don\'t match!</string>
 
     <string name="title_activity_bars_distribution">Income vs Expense</string>
+    <string name="textview_headline_week_start">Week starts on:</string>
+    <string name="textview_headline_month_start">Month starts on:</string>
 
 
 </resources>

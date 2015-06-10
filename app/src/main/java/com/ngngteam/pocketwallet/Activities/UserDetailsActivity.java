@@ -5,9 +5,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ngngteam.pocketwallet.Data.MoneyDatabase;
@@ -20,9 +24,15 @@ public class UserDetailsActivity extends AppCompatActivity {
     //SharedPrefsManager object
     SharedPrefsManager manager;
 
+    Cursor cursorExpense, cursorIncome;
+    MoneyDatabase db;
+
     EditText etSavings, etUsername;
+    TextView tvDayStart;
     Button bOk, bCancel;
     RadioGroup radioGroup;
+    Spinner sDayStart;
+    SpinnerAdapter spinnerAdapter;
 
     //variables set by user
     float savings;
@@ -38,6 +48,8 @@ public class UserDetailsActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_user_details);
 
+        init();
+
         //init the UI
         initUI();
 
@@ -50,24 +62,32 @@ public class UserDetailsActivity extends AppCompatActivity {
 
     }
 
+    private void init() {
+
+        db = new MoneyDatabase(this);
+        cursorExpense = db.getCursorExpense();
+        cursorIncome = db.getCursorIncomes();
+
+    }
+
     //init the UI Views
     private void initUI() {
 
         etUsername = (EditText) findViewById(R.id.etUsername);
 
         etSavings = (EditText) findViewById(R.id.etSavings);
-        Cursor cursorExpense, cursorIncome;
-        MoneyDatabase db = new MoneyDatabase(this);
-        cursorExpense = db.getCursorExpense();
-        cursorIncome = db.getCursorIncomes();
-        if(cursorExpense.moveToFirst() || cursorIncome.moveToFirst()){
-                Toast.makeText(this , getString(R.string.toast_savings) , Toast.LENGTH_LONG).show();
-                etSavings.setEnabled(false);
-                etSavings.setTextColor(Color.GRAY);
+        if (cursorExpense.moveToFirst() || cursorIncome.moveToFirst()) {
+            Toast.makeText(this, getString(R.string.toast_savings), Toast.LENGTH_LONG).show();
+            etSavings.setEnabled(false);
+            etSavings.setTextColor(Color.GRAY);
 
         }
 
         radioGroup = (RadioGroup) findViewById(R.id.rgGrouping);
+
+        sDayStart = (Spinner) findViewById(R.id.spinnerDayStart);
+
+        tvDayStart = (TextView) findViewById(R.id.tvDayStart);
 
         bOk = (Button) findViewById(R.id.bOK);
         bCancel = (Button) findViewById(R.id.bCancel);
@@ -84,18 +104,45 @@ public class UserDetailsActivity extends AppCompatActivity {
 
         if (manager.getPrefsGrouping().equalsIgnoreCase(getResources().getString(R.string.pref_grouping_monthly))) {
             radioGroup.check(R.id.rbMonthly);
+            spinnerAdapter = ArrayAdapter.createFromResource(this,
+                    R.array.days_month, R.layout.spinner_item_simple);
+            tvDayStart.setText(getString(R.string.textview_headline_month_start));
         } else {
             radioGroup.check(R.id.rbWeekly);
+            spinnerAdapter = ArrayAdapter.createFromResource(this,
+                    R.array.days_week, R.layout.spinner_item_simple);
+            tvDayStart.setText(getString(R.string.textview_headline_week_start));
         }
+
+        sDayStart.setAdapter(spinnerAdapter);
     }
 
     //init the Listeners
     private void setUpUI() {
+        radioGroup.setOnCheckedChangeListener(radioListener);
+
         bOk.setOnClickListener(buttonListener);
         bCancel.setOnClickListener(buttonListener);
 
+
     }
 
+    private RadioGroup.OnCheckedChangeListener radioListener = new RadioGroup.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(RadioGroup group, int checkedId) {
+            if (checkedId == R.id.rbWeekly) {
+                tvDayStart.setText(getString(R.string.textview_headline_week_start));
+                spinnerAdapter = ArrayAdapter.createFromResource(UserDetailsActivity.this,
+                        R.array.days_week, R.layout.action_dropdown_spinner_item);
+                sDayStart.setAdapter(spinnerAdapter);
+            } else {
+                tvDayStart.setText(getString(R.string.textview_headline_month_start));
+                spinnerAdapter = ArrayAdapter.createFromResource(UserDetailsActivity.this,
+                        R.array.days_month, R.layout.action_dropdown_spinner_item);
+                sDayStart.setAdapter(spinnerAdapter);
+            }
+        }
+    };
 
     //the buttons listener
     private View.OnClickListener buttonListener = new View.OnClickListener() {

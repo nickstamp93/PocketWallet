@@ -25,4 +25,23 @@
         <item>Last 12 weeks</item>
     </string-array>
 
+    <string-array name="days_week">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Sarurday</item>
+        <item>Sunday</item>
+    </string-array>
+
+    <string-array name="days_month">
+        <item>1st</item>
+        <item>5th</item>
+        <item>10th</item>
+        <item>15th</item>
+        <item>20th</item>
+        <item>25th</item>
+    </string-array>
+
 </resources>

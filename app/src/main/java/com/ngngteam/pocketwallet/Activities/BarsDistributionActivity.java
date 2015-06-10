@@ -63,7 +63,7 @@ public class BarsDistributionActivity extends AppCompatActivity implements Actio
         setUpUI();
 
         SpinnerAdapter adapter = ArrayAdapter.createFromResource(this,
-                R.array.bars_period_values, R.layout.support_simple_spinner_dropdown_item);
+                R.array.bars_period_values, R.layout.action_dropdown_spinner_item);
 
         getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         getSupportActionBar().setTitle("");

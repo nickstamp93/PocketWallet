@@ -210,4 +210,6 @@
     <string name="toast_pattern_not_chaged">Τα μοτίβα δεν είναι ίδια!</string>
 
     <string name="title_activity_bars_distribution">Έσοδα - Έξοδα</string>
+    <string name="textview_headline_week_start">Πρώτη μέρα εβδομάδας</string>
+    <string name="textview_headline_month_start">Πρώτη μέρα μήνα</string>
 </resources>

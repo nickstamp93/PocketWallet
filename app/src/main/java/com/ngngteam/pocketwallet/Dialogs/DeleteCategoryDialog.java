@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import com.ngngteam.pocketwallet.Adapters.SpinnerAdapter;
+import com.ngngteam.pocketwallet.Adapters.CategorySpinnerAdapter;
 import com.ngngteam.pocketwallet.Data.CategoryDatabase;
 import com.ngngteam.pocketwallet.Data.MoneyDatabase;
 import com.ngngteam.pocketwallet.Model.SpinnerItem;
@@ -36,7 +36,7 @@ public class DeleteCategoryDialog extends DialogFragment {
     private boolean expense;
 
     private ArrayList<String> categories;
-    private SpinnerAdapter adapter;
+    private CategorySpinnerAdapter adapter;
 
     public DeleteCategoryDialog() {
 
@@ -105,7 +105,7 @@ public class DeleteCategoryDialog extends DialogFragment {
 
         }
 
-        adapter = new SpinnerAdapter(getActivity(), R.layout.spinner_item, spinnerItems);
+        adapter = new CategorySpinnerAdapter(getActivity(), R.layout.spinner_item_categories, spinnerItems);
 
         sCategories.setAdapter(adapter);
         sCategories.setEnabled(false);

@@ -17,7 +17,7 @@ import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDi
 import com.doomonafireball.betterpickers.numberpicker.NumberPicker;
 import com.doomonafireball.betterpickers.numberpicker.NumberPickerBuilder;
 import com.doomonafireball.betterpickers.numberpicker.NumberPickerDialogFragment;
-import com.ngngteam.pocketwallet.Adapters.SpinnerAdapter;
+import com.ngngteam.pocketwallet.Adapters.CategorySpinnerAdapter;
 import com.ngngteam.pocketwallet.Data.CategoryDatabase;
 import com.ngngteam.pocketwallet.Data.MoneyDatabase;
 import com.ngngteam.pocketwallet.Model.IncomeItem;
@@ -207,8 +207,8 @@ public class AddIncomeActivity extends AppCompatActivity implements NumberPicker
         }
 
 
-        //Initialize the SpinnerAdapter
-        SpinnerAdapter adapter = new SpinnerAdapter(AddIncomeActivity.this, R.layout.spinner_item, spinnerItems);
+        //Initialize the CategorySpinnerAdapter
+        CategorySpinnerAdapter adapter = new CategorySpinnerAdapter(AddIncomeActivity.this, R.layout.spinner_item_categories, spinnerItems);
         //Set the adapter of spinner item to be all the categories from CategoryDatabase
         sCategories.setAdapter(adapter);
         cdb.close();

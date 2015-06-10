@@ -13,92 +13,180 @@
         android:paddingTop="@dimen/layout_padding"
         android:scrollbars="none">
 
-        <LinearLayout
+        <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:shrinkColumns="1">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2">
+            <TableRow>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <me.grantland.widget.AutofitTextView
+                    android:id="@+id/textView"
+                    style="@style/Headline"
+                    android:text="@string/textview_headline_username" />
+
+                <EditText
+                    android:id="@+id/etUsername"
+                    style="@style/UserDetailsEditText"
+                    android:layout_marginBottom="@dimen/bottom_margin_headlines_small"
+                    android:inputType="textPersonName" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <me.grantland.widget.AutofitTextView
+
+                    android:id="@+id/textView2"
+                    style="@style/Headline"
+                    android:text="@string/textview_headline_savings" />
+
+                <EditText
+                    android:id="@+id/etSavings"
+                    style="@style/UserDetailsEditText"
+                    android:layout_marginBottom="@dimen/bottom_margin_headlines_small"
+                    android:inputType="numberDecimal" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <me.grantland.widget.AutofitTextView
+                    android:id="@+id/textView3"
+                    style="@style/Headline"
+                    android:text="@string/textview_headline_grouping" />
+
+                <RadioGroup
+                    android:id="@+id/rgGrouping"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:layout_marginBottom="@dimen/bottom_margin_headlines_small">
 
-                    <me.grantland.widget.AutofitTextView
-                        android:id="@+id/textView"
-                        style="@style/Headline"
-                        android:text="@string/textview_headline_username" />
-
-                    <me.grantland.widget.AutofitTextView
-
-                        android:id="@+id/textView2"
-                        style="@style/Headline"
-                        android:text="@string/textview_headline_savings" />
-
-                    <me.grantland.widget.AutofitTextView
-                        android:id="@+id/textView3"
-                        style="@style/Headline"
-                        android:text="@string/textview_headline_grouping" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <EditText
-                        android:id="@+id/etUsername"
-                        style="@style/UserDetailsEditText"
-                        android:layout_marginBottom="@dimen/bottom_margin_headlines_small"
-                        android:inputType="textPersonName" />
-
-                    <EditText
-                        android:id="@+id/etSavings"
-                        style="@style/UserDetailsEditText"
-                        android:layout_marginBottom="@dimen/bottom_margin_headlines_small"
-                        android:inputType="numberDecimal" />
-
-                    <RadioGroup
-                        android:id="@+id/rgGrouping"
+                    <RadioButton
+                        android:id="@+id/rbWeekly"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/bottom_margin_headlines_small"
-                        android:layout_weight="1">
+                        android:checked="false"
+                        android:text="@string/pref_grouping_weekly"
+                        android:textColor="?textCustomColor"
+                        android:textSize="20sp" />
 
-                        <RadioButton
-                            android:id="@+id/rbWeekly"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:checked="false"
-                            android:text="@string/pref_grouping_weekly"
-                            android:textColor="?textCustomColor"
-                            android:textSize="20sp" />
+                    <RadioButton
+                        android:id="@+id/rbMonthly"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="@string/pref_grouping_monthly"
+                        android:textColor="?textCustomColor"
+                        android:textSize="20sp" />
+                </RadioGroup>
 
-                        <RadioButton
-                            android:id="@+id/rbMonthly"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:checked="true"
-                            android:text="@string/pref_grouping_monthly"
-                            android:textColor="?textCustomColor"
-                            android:textSize="20sp" />
-                    </RadioGroup>
+            </TableRow>
 
-                </LinearLayout>
+            <TableRow>
+
+                <me.grantland.widget.AutofitTextView
+                    android:id="@+id/tvDayStart"
+                    style="@style/Headline"
+                    android:text="@string/textview_headline_week_start" />
+
+                <Spinner
+                    android:id="@+id/spinnerDayStart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center_vertical" />
+
+            </TableRow>
+
+        </TableLayout>
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:orientation="vertical">-->
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:weightSum="2">-->
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="1"-->
+        <!--android:orientation="vertical">-->
+
+        <!--<me.grantland.widget.AutofitTextView-->
+        <!--android:id="@+id/textView"-->
+        <!--style="@style/Headline"-->
+        <!--android:text="@string/textview_headline_username" />-->
+
+        <!--<me.grantland.widget.AutofitTextView-->
+
+        <!--android:id="@+id/textView2"-->
+        <!--style="@style/Headline"-->
+        <!--android:text="@string/textview_headline_savings" />-->
+
+        <!--<me.grantland.widget.AutofitTextView-->
+        <!--android:id="@+id/textView3"-->
+        <!--style="@style/Headline"-->
+        <!--android:text="@string/textview_headline_grouping" />-->
 
 
-            </LinearLayout>
+        <!--</LinearLayout>-->
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="1"-->
+        <!--android:orientation="vertical">-->
+
+        <!--<EditText-->
+        <!--android:id="@+id/etUsername"-->
+        <!--style="@style/UserDetailsEditText"-->
+        <!--android:layout_marginBottom="@dimen/bottom_margin_headlines_small"-->
+        <!--android:inputType="textPersonName" />-->
+
+        <!--<EditText-->
+        <!--android:id="@+id/etSavings"-->
+        <!--style="@style/UserDetailsEditText"-->
+        <!--android:layout_marginBottom="@dimen/bottom_margin_headlines_small"-->
+        <!--android:inputType="numberDecimal" />-->
+
+        <!--<RadioGroup-->
+        <!--android:id="@+id/rgGrouping"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginBottom="@dimen/bottom_margin_headlines_small"-->
+        <!--android:layout_weight="1">-->
+
+        <!--<RadioButton-->
+        <!--android:id="@+id/rbWeekly"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:checked="false"-->
+        <!--android:text="@string/pref_grouping_weekly"-->
+        <!--android:textColor="?textCustomColor"-->
+        <!--android:textSize="20sp" />-->
+
+        <!--<RadioButton-->
+        <!--android:id="@+id/rbMonthly"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:checked="true"-->
+        <!--android:text="@string/pref_grouping_monthly"-->
+        <!--android:textColor="?textCustomColor"-->
+        <!--android:textSize="20sp" />-->
+        <!--</RadioGroup>-->
+
+        <!--</LinearLayout>-->
 
 
-        </LinearLayout>
+        <!--</LinearLayout>-->
+
+
+        <!--</LinearLayout>-->
 
     </ScrollView>
 

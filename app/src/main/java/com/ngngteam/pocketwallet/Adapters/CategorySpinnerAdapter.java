@@ -8,11 +8,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import com.ngngteam.pocketwallet.Extra.LetterImageView;
 import com.ngngteam.pocketwallet.Model.SpinnerItem;
 import com.ngngteam.pocketwallet.R;
+
+import java.util.ArrayList;
 
 /**
  * Created by Vromia on 14/9/2014.
@@ -24,12 +24,12 @@ import com.ngngteam.pocketwallet.R;
  * The magic behind this is the setTag() method which lets us attach an arbitrary object onto a View object, which is how we save
  * the already inflated View for future reuse.
  */
-public class SpinnerAdapter extends ArrayAdapter<SpinnerItem> {
+public class CategorySpinnerAdapter extends ArrayAdapter<SpinnerItem> {
 
 
-    public SpinnerAdapter(Context context, int resourseID, ArrayList<SpinnerItem> spinnerItems) {
+    public CategorySpinnerAdapter(Context context, int resourseID, ArrayList<SpinnerItem> spinnerItems) {
 
-        super(context, resourseID, R.layout.spinner_item, spinnerItems);
+        super(context, resourseID, R.layout.spinner_item_categories, spinnerItems);
     }
 
     private class ViewHolder {
@@ -46,7 +46,7 @@ public class SpinnerAdapter extends ArrayAdapter<SpinnerItem> {
         LayoutInflater mInflater = (LayoutInflater) getContext()
                 .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.spinner_item, null);
+            convertView = mInflater.inflate(R.layout.spinner_item_categories, null);
             holder = new ViewHolder();
             holder.tvName = (TextView) convertView.findViewById(R.id.tvSpinnerCategories);
             holder.liv = (LetterImageView) convertView.findViewById(R.id.livSpinner);
@@ -74,7 +74,7 @@ public class SpinnerAdapter extends ArrayAdapter<SpinnerItem> {
         LayoutInflater mInflater = (LayoutInflater) getContext()
                 .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.spinner_item, null);
+            convertView = mInflater.inflate(R.layout.spinner_item_categories, null);
             holder = new ViewHolder();
             holder.tvName = (TextView) convertView.findViewById(R.id.tvSpinnerCategories);
             holder.liv = (LetterImageView) convertView.findViewById(R.id.livSpinner);

@@ -25,6 +25,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="0.00 €"
+                android:textColor="?textCustomColor"
                 android:textSize="@dimen/text_size_main_price" />
 
             <View
@@ -80,7 +81,8 @@
                     android:layout_weight="2.5"
                     android:editable="false"
                     android:focusable="false"
-                    android:gravity="center" />
+                    android:gravity="center"
+                    android:textColor="?textCustomColor" />
 
                 <ImageButton
                     android:id="@+id/ibIncomeCalendar"

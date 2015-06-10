@@ -133,12 +133,12 @@ public class UserDetailsActivity extends AppCompatActivity {
             if (checkedId == R.id.rbWeekly) {
                 tvDayStart.setText(getString(R.string.textview_headline_week_start));
                 spinnerAdapter = ArrayAdapter.createFromResource(UserDetailsActivity.this,
-                        R.array.days_week, R.layout.action_dropdown_spinner_item);
+                        R.array.days_week, R.layout.spinner_item_simple);
                 sDayStart.setAdapter(spinnerAdapter);
             } else {
                 tvDayStart.setText(getString(R.string.textview_headline_month_start));
                 spinnerAdapter = ArrayAdapter.createFromResource(UserDetailsActivity.this,
-                        R.array.days_month, R.layout.action_dropdown_spinner_item);
+                        R.array.days_month, R.layout.spinner_item_simple);
                 sDayStart.setAdapter(spinnerAdapter);
             }
         }

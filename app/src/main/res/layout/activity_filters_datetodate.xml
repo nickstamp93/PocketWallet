@@ -23,7 +23,8 @@
             android:layout_weight="2"
             android:editable="false"
             android:focusable="false"
-            android:gravity="center" />
+            android:gravity="center"
+            android:textColor="?textCustomColor" />
 
         <ImageButton
             android:id="@+id/ibFrom"
@@ -55,7 +56,8 @@
             android:layout_weight="2"
             android:editable="false"
             android:focusable="false"
-            android:gravity="center" />
+            android:gravity="center"
+            android:textColor="?textCustomColor" />
 
         <ImageButton
             android:id="@+id/ibTo"

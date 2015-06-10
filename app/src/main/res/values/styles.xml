@@ -108,6 +108,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:ems">10</item>
+        <item name="android:textColor">?textCustomColor</item>
         <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
         <item name="android:selectAllOnFocus">true</item>
     </style>
@@ -117,6 +118,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
+        <item name="android:textColor">?textCustomColor</item>
         <item name="android:layout_margin">5dp</item>
 
     </style>

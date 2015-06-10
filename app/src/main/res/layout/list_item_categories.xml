@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
+    android:orientation="horizontal"
     android:padding="@dimen/layout_padding_small">
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <com.ngngteam.pocketwallet.Extra.LetterImageView
             android:id="@+id/livcat"
@@ -20,14 +20,15 @@
             android:layout_marginLeft="15dp" />
 
         <TextView
+            android:id="@+id/tvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Category Name"
-            android:id="@+id/tvName"
-            android:padding="@dimen/layout_padding"
+            android:layout_weight="0.8"
             android:gravity="center"
-            android:layout_weight="0.8" />
+            android:padding="@dimen/layout_padding"
+            android:text="Category Name"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="?textCustomColor" />
     </LinearLayout>
 
 </LinearLayout>

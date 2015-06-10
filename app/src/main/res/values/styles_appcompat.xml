@@ -8,12 +8,12 @@
         <item name="textCustomColor">@color/primary_text_default_material_light</item>
         <item name="colorAccent">@color/primary_text_default_material_light</item>
         <item name="android:windowBackground">@color/background_material_light</item>
-        <item name="android:textColorPrimary">@color/primary_text_default_material_light</item>
+        <item name="android:textColorPrimary">@color/primary_text_default_material_dark</item>
         <item name="android:textColorSecondary">@color/secondary_text_default_material_light</item>
         <item name="android:textColorHint">@color/secondary_text_default_material_light</item>
 
         <!--Action bar dialog menu item (history filters)-->
-        <item name="android:itemTextAppearance">@style/MenuItemTextAppearanceDark</item>
+        <item name="android:itemTextAppearance">@style/MenuItemTextAppearanceTeal</item>
         <item name="android:itemBackground">@color/background_material_light</item>
 
         <!--for spinner items-->

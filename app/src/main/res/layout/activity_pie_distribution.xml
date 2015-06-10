@@ -24,7 +24,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Expense" />
+                android:text="Expense"
+                android:textColor="?textCustomColor" />
 
             <Switch
                 android:id="@+id/switchIsExpense"
@@ -35,7 +36,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Income" />
+                android:text="Income"
+                android:textColor="?textCustomColor" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
@@ -63,7 +65,8 @@
                 android:layout_weight="1.8"
                 android:editable="false"
                 android:focusable="false"
-                android:gravity="center" />
+                android:gravity="center"
+                android:textColor="?textCustomColor" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -71,7 +74,8 @@
                 android:layout_weight="0.2"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="-" />
+                android:text="-"
+                android:textColor="?textCustomColor" />
 
             <EditText
                 android:id="@+id/etDateTo"
@@ -80,7 +84,8 @@
                 android:layout_weight="1.8"
                 android:editable="false"
                 android:focusable="false"
-                android:gravity="center" />
+                android:gravity="center"
+                android:textColor="?textCustomColor" />
 
             <ImageButton
                 android:id="@+id/bPieGo"

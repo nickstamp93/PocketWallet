@@ -29,7 +29,8 @@
                 android:layout_marginBottom="@dimen/bottom_margin_headlines_small"
                 android:hint="@string/textview_hint_headline_category_name"
                 android:inputType="text"
-                android:selectAllOnFocus="true" />
+                android:selectAllOnFocus="true"
+                android:textColor="?textCustomColor" />
 
             <TextView
                 style="@style/Headline"

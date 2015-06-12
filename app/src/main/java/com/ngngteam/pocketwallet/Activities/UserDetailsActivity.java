@@ -4,6 +4,7 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -36,7 +37,7 @@ public class UserDetailsActivity extends AppCompatActivity {
 
     //variables set by user
     float savings;
-    String username, grouping;
+    String username, grouping, dayStart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +66,8 @@ public class UserDetailsActivity extends AppCompatActivity {
     private void init() {
 
         db = new MoneyDatabase(this);
-        cursorExpense = db.getCursorExpense();
-        cursorIncome = db.getCursorIncomes();
+        cursorExpense = db.getAllExpenses();
+        cursorIncome = db.getAllIncomes();
 
     }
 
@@ -106,6 +107,7 @@ public class UserDetailsActivity extends AppCompatActivity {
             radioGroup.check(R.id.rbMonthly);
             spinnerAdapter = ArrayAdapter.createFromResource(this,
                     R.array.days_month, R.layout.spinner_item_simple);
+
             tvDayStart.setText(getString(R.string.textview_headline_month_start));
         } else {
             radioGroup.check(R.id.rbWeekly);
@@ -115,6 +117,8 @@ public class UserDetailsActivity extends AppCompatActivity {
         }
 
         sDayStart.setAdapter(spinnerAdapter);
+
+        setDaySpinnerValue(manager.getPrefsDayStart());
     }
 
     //init the Listeners
@@ -165,6 +169,7 @@ public class UserDetailsActivity extends AppCompatActivity {
                     manager.setPrefsUsername(username);
                     manager.setPrefsSavings(savings);
                     manager.setPrefsGrouping(grouping);
+                    manager.setPrefsDayStart(dayStart);
 
                     manager.commit();
 
@@ -193,6 +198,17 @@ public class UserDetailsActivity extends AppCompatActivity {
         return true;
     }
 
+    private void setDaySpinnerValue(String dayStart) {
+        int pos = 0;
+        for (int i = 0; i < spinnerAdapter.getCount(); i++) {
+            if (spinnerAdapter.getItem(i).equals(dayStart)) {
+                pos = i;
+            }
+        }
+        Log.i("nikos", pos + "");
+        sDayStart.setSelection(pos);
+    }
+
     //get user data from the XML and store them in the variables
     private void getDataFromXml() {
         username = etUsername.getText().toString();
@@ -205,6 +221,8 @@ public class UserDetailsActivity extends AppCompatActivity {
                 grouping = getResources().getString(R.string.pref_grouping_monthly);
                 break;
         }
+
+        dayStart = (String) spinnerAdapter.getItem(sDayStart.getSelectedItemPosition());
     }
 
 }

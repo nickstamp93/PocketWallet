@@ -24,6 +24,7 @@ public class SharedPrefsManager {
     private static final String PREFS_SAVINGS = "savings";
     private static final String PREFS_REMINDER_TIME = "reminderTime";
     private static final String PREFS_GROUPING = "grouping";
+    private static final String PREFS_DAY_START = "dayStart";
     private static final String PREFS_THEME_CHANGED = "themeChanged";
 
     //the SharedPreferences and Editor objects
@@ -97,6 +98,10 @@ public class SharedPrefsManager {
         return prefs.getString(PREFS_GROUPING, "monthly");
     }
 
+    public String getPrefsDayStart() {
+        return prefs.getString(PREFS_DAY_START, "Monday");
+    }
+
     public boolean getPrefsThemeChanged() {
         return prefs.getBoolean(PREFS_THEME_CHANGED, false);
     }
@@ -125,6 +130,11 @@ public class SharedPrefsManager {
     public void setPrefsGrouping(String grouping) {
         editor.putString(PREFS_GROUPING, grouping);
     }
+
+    public void setPrefsDayStart(String dayStart) {
+        editor.putString(PREFS_DAY_START, dayStart);
+    }
+
 
     public void setPrefsThemeChanged(boolean value) {
         editor.putBoolean(PREFS_THEME_CHANGED, value);

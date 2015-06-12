@@ -239,11 +239,11 @@ public class AddIncomeActivity extends AppCompatActivity implements NumberPicker
                     //then we add the income to our database we close it and we finish the activity
                     income = new IncomeItem(amount, date, source);
                     if (!update) {
-                        db.InsertIncome(income);
+                        db.insertIncome(income);
 
                     } else {
                         income.setId(id);
-                        db.UpdateIncome(income);
+                        db.updateIncome(income);
                     }
                     db.close();
 

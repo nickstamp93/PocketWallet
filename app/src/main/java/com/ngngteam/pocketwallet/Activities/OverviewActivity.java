@@ -430,7 +430,7 @@ public class OverviewActivity extends AppCompatActivity {
 
         //  Cursor cursorLastExpense, cursorLastIncome;
         cursorLastExpense = mdb.getExpensesFromNewestToOldest();
-        cursorLastIncome = mdb.getIncomeByNewestToOldest();
+        cursorLastIncome = mdb.getIncomesByNewestToOldest();
 
         //if there isn't currently an expense
         if (cursorLastExpense.moveToFirst()) {

@@ -251,13 +251,13 @@ public class AddExpenseActivity extends AppCompatActivity implements NumberPicke
                     //it to database or if this expense already exists so we need to update it
                     if (!update) {
                         // we add the expense to our database
-                        mydb.InsertExpense(item);
+                        mydb.insertExpense(item);
 
 
                     } else {
                         //update the expense
                         item.setId(id);
-                        mydb.UpdateExpense(item);
+                        mydb.updateExpense(item);
                     }
                     //Close the database and finish the activity
                     mydb.close();

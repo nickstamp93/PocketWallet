@@ -221,7 +221,7 @@ public class CreateCategoryActivity extends AppCompatActivity implements ColorPi
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem) {
                     MoneyDatabase mdb = new MoneyDatabase(CreateCategoryActivity.this);
-                    if (mdb.CategoryHasItems(name, expense)) {
+                    if (mdb.categoryHasItems(name, expense)) {
 
                         deleteDialog = DeleteCategoryDialog.newInstance(name, expense);
                         deleteDialog.show(getFragmentManager(), "Delete");

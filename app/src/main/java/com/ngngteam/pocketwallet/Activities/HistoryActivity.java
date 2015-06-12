@@ -124,7 +124,7 @@ public class HistoryActivity extends AppCompatActivity {
     //This method is called by DatePickerDialog when the dialog is about to close and set the cursor of HistoryActivity to be all
     //the incomes in specific date(parameter)
     public void saveIncomeFiltersDate(String date) {
-        c = db.getIncomeByDate(date);
+        c = db.getIncomesByDate(date);
         refreshList(c);
     }
 
@@ -138,7 +138,7 @@ public class HistoryActivity extends AppCompatActivity {
     //This method is called by FiltersDateToDateDialog when the dialog is about to close and set the cursor of HistoryActivity to be all
     //the incomes with date between parameters from and to
     public void saveIncomeFiltersDateToDate(String from, String to) {
-        c = db.getIncomeByDateToDate(from, to);
+        c = db.getIncomesByDateToDate(from, to);
         refreshList(c);
     }
 
@@ -276,7 +276,7 @@ public class HistoryActivity extends AppCompatActivity {
                 break;
 
             case R.id.IncomeNTO:
-                c = db.getIncomeByNewestToOldest();
+                c = db.getIncomesByNewestToOldest();
                 refreshList(c);
                 break;
 
@@ -290,7 +290,7 @@ public class HistoryActivity extends AppCompatActivity {
                         if (pos == 0) {
                             asc = true;
                         }
-                        c = db.getIncomeByAmountOrder(asc);
+                        c = db.getIncomesByAmountOrder(asc);
                         refreshList(c);
                         dialogInterface.dismiss();
 
@@ -312,7 +312,7 @@ public class HistoryActivity extends AppCompatActivity {
                 if (!switcher) {
                     menu.clear();
                     getMenuInflater().inflate(R.menu.history_income, menu);
-                    c = db.getIncomeByNewestToOldest();
+                    c = db.getIncomesByNewestToOldest();
                     adapter.closeCDB();
                     adapter = new HistoryListViewAdapter(HistoryActivity.this, c);
                     adapter.setTheView(switcher);

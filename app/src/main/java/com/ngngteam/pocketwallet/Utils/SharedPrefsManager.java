@@ -98,8 +98,9 @@ public class SharedPrefsManager {
         return prefs.getString(PREFS_GROUPING, "monthly");
     }
 
-    public String getPrefsDayStart() {
-        return prefs.getString(PREFS_DAY_START, "Monday");
+    //returns the position of the selected value in the string array
+    public int getPrefsDayStart() {
+        return prefs.getInt(PREFS_DAY_START, 0);
     }
 
     public boolean getPrefsThemeChanged() {
@@ -131,8 +132,8 @@ public class SharedPrefsManager {
         editor.putString(PREFS_GROUPING, grouping);
     }
 
-    public void setPrefsDayStart(String dayStart) {
-        editor.putString(PREFS_DAY_START, dayStart);
+    public void setPrefsDayStart(int dayStart) {
+        editor.putInt(PREFS_DAY_START, dayStart);
     }
 
 

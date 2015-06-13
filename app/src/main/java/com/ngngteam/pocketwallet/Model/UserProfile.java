@@ -16,14 +16,16 @@ public class UserProfile {
     private String currency;
 
     private String grouping;
+    private int dayStart;
 
     //constructor
-    public UserProfile(String username, float savings, float balance, String currency, String grouping) {
+    public UserProfile(String username, float savings, float balance, String currency, String grouping, int dayStart) {
         this.username = username;
         this.savings = savings;
         this.balance = balance;
         this.currency = currency;
         this.grouping = grouping;
+        this.dayStart = dayStart;
     }
 
     /**
@@ -57,4 +59,14 @@ public class UserProfile {
     public String getGrouping() {
         return grouping;
     }
+
+    //get the position of the string array with the selected value
+    public int getDayStart() {
+        return dayStart;
+    }
+
+    public void setDayStart(int dayStart) {
+        this.dayStart = dayStart;
+    }
+
 }

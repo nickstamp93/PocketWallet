@@ -142,7 +142,6 @@ public class OverviewActivity extends AppCompatActivity {
             manager.startEditing();
             manager.setPrefsThemeChanged(false);
             manager.commit();
-
         }
 
     }
@@ -184,8 +183,9 @@ public class OverviewActivity extends AppCompatActivity {
         float balance = manager.getPrefsBalance();
         String currency = PreferenceManager.getDefaultSharedPreferences(this).getString(getResources().getString(R.string.pref_key_currency), getResources().getString(R.string.pref_currency_default_value));
         String grouping = manager.getPrefsGrouping();
+        int dayStart = manager.getPrefsDayStart();
 
-        profile = new UserProfile(username, savings, balance, currency, grouping);
+        profile = new UserProfile(username, savings, balance, currency, grouping, dayStart);
     }
 
     //is called when a sub-Activity with the result code returns
@@ -295,6 +295,7 @@ public class OverviewActivity extends AppCompatActivity {
         double totalIncomes;
 
         if (profile.getGrouping().equalsIgnoreCase(getResources().getString(R.string.pref_grouping_monthly))) {
+
             totalExpenses = mdb.getTotalExpensePriceForCurrentMonth();
             totalIncomes = mdb.getTotalIncomePriceForCurrentMonth();
         } else {

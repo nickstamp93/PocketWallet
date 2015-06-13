@@ -4,7 +4,6 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -32,12 +31,13 @@ public class UserDetailsActivity extends AppCompatActivity {
     TextView tvDayStart;
     Button bOk, bCancel;
     RadioGroup radioGroup;
-    Spinner sDayStart;
+    Spinner spinnerDayStart;
     SpinnerAdapter spinnerAdapter;
 
     //variables set by user
     float savings;
     String username, grouping, dayStart;
+    int day;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +86,7 @@ public class UserDetailsActivity extends AppCompatActivity {
 
         radioGroup = (RadioGroup) findViewById(R.id.rgGrouping);
 
-        sDayStart = (Spinner) findViewById(R.id.spinnerDayStart);
+        spinnerDayStart = (Spinner) findViewById(R.id.spinnerDayStart);
 
         tvDayStart = (TextView) findViewById(R.id.tvDayStart);
 
@@ -116,9 +116,9 @@ public class UserDetailsActivity extends AppCompatActivity {
             tvDayStart.setText(getString(R.string.textview_headline_week_start));
         }
 
-        sDayStart.setAdapter(spinnerAdapter);
+        spinnerDayStart.setAdapter(spinnerAdapter);
+        spinnerDayStart.setSelection(manager.getPrefsDayStart());
 
-        setDaySpinnerValue(manager.getPrefsDayStart());
     }
 
     //init the Listeners
@@ -138,12 +138,12 @@ public class UserDetailsActivity extends AppCompatActivity {
                 tvDayStart.setText(getString(R.string.textview_headline_week_start));
                 spinnerAdapter = ArrayAdapter.createFromResource(UserDetailsActivity.this,
                         R.array.days_week, R.layout.spinner_item_simple);
-                sDayStart.setAdapter(spinnerAdapter);
+                spinnerDayStart.setAdapter(spinnerAdapter);
             } else {
                 tvDayStart.setText(getString(R.string.textview_headline_month_start));
                 spinnerAdapter = ArrayAdapter.createFromResource(UserDetailsActivity.this,
                         R.array.days_month, R.layout.spinner_item_simple);
-                sDayStart.setAdapter(spinnerAdapter);
+                spinnerDayStart.setAdapter(spinnerAdapter);
             }
         }
     };
@@ -169,7 +169,7 @@ public class UserDetailsActivity extends AppCompatActivity {
                     manager.setPrefsUsername(username);
                     manager.setPrefsSavings(savings);
                     manager.setPrefsGrouping(grouping);
-                    manager.setPrefsDayStart(dayStart);
+                    manager.setPrefsDayStart(spinnerDayStart.getSelectedItemPosition());
 
                     manager.commit();
 
@@ -198,16 +198,16 @@ public class UserDetailsActivity extends AppCompatActivity {
         return true;
     }
 
-    private void setDaySpinnerValue(String dayStart) {
-        int pos = 0;
-        for (int i = 0; i < spinnerAdapter.getCount(); i++) {
-            if (spinnerAdapter.getItem(i).equals(dayStart)) {
-                pos = i;
-            }
-        }
-        Log.i("nikos", pos + "");
-        sDayStart.setSelection(pos);
-    }
+//    private void setDaySpinnerValue(String dayStart) {
+//        int pos = 0;
+//        for (int i = 0; i < spinnerAdapter.getCount(); i++) {
+//            if (spinnerAdapter.getItem(i).equals(dayStart)) {
+//                pos = i;
+//            }
+//        }
+//        Log.i("nikos", pos + "");
+//        spinnerDayStart.setSelection(pos);
+//    }
 
     //get user data from the XML and store them in the variables
     private void getDataFromXml() {
@@ -222,7 +222,6 @@ public class UserDetailsActivity extends AppCompatActivity {
                 break;
         }
 
-        dayStart = (String) spinnerAdapter.getItem(sDayStart.getSelectedItemPosition());
     }
 
 }

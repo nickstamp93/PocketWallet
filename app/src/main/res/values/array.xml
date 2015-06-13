@@ -31,17 +31,17 @@
         <item>Wednesday</item>
         <item>Thursday</item>
         <item>Friday</item>
-        <item>Sarurday</item>
+        <item>Saturday</item>
         <item>Sunday</item>
     </string-array>
 
     <string-array name="days_month">
-        <item>1st</item>
-        <item>5th</item>
-        <item>10th</item>
-        <item>15th</item>
-        <item>20th</item>
-        <item>25th</item>
+        <item>1</item>
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+        <item>25</item>
     </string-array>
 
 </resources>

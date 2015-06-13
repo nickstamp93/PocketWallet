@@ -87,7 +87,7 @@ public class HistoryActivity extends AppCompatActivity {
                     startActivity(processExpense);
                 } else {
                     Intent processIncome = new Intent(HistoryActivity.this, AddIncomeActivity.class);
-                    IncomeItem income = new IncomeItem(Double.parseDouble(c.getString(1)), c.getString(3), c.getString(2),c.getString(4));
+                    IncomeItem income = new IncomeItem(Double.parseDouble(c.getString(1)), c.getString(3), c.getString(2));
                     income.setId(Integer.parseInt(c.getString(0)));
                     processIncome.putExtra("Income", income);
                     startActivity(processIncome);

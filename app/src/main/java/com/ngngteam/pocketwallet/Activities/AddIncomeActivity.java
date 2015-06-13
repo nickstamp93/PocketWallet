@@ -34,7 +34,7 @@ import java.util.Calendar;
 
 public class AddIncomeActivity extends AppCompatActivity implements NumberPickerDialogFragment.NumberPickerDialogHandler {
 
-    private EditText etDate,etNotes;
+    private EditText etDate;
     private TextView tvAmount;
     private Spinner sCategories;
     private ImageButton ibCalendar;
@@ -58,7 +58,7 @@ public class AddIncomeActivity extends AppCompatActivity implements NumberPicker
 
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_add_transaction);
+        setContentView(R.layout.activity_add_income);
 
         init();
         initUI();
@@ -101,7 +101,6 @@ public class AddIncomeActivity extends AppCompatActivity implements NumberPicker
     private void initUiValues() {
         cdb = new CategoryDatabase(AddIncomeActivity.this);
         tvAmount.setText(income.getAmount() + " " + PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString(getResources().getString(R.string.pref_key_currency), getResources().getString(R.string.pref_currency_default_value)));
-        etNotes.setText(income.getNotes());
         sCategories.setSelection(cdb.getPositionFromValue(income.getSource(), false));
         cdb.close();
 
@@ -176,16 +175,14 @@ public class AddIncomeActivity extends AppCompatActivity implements NumberPicker
 
     private void initUI() {
 
-        tvAmount = (TextView) findViewById(R.id.tvPrice);
+        tvAmount = (TextView) findViewById(R.id.tvAmount);
         tvAmount.setText("0.00 " + PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString(getResources().getString(R.string.pref_key_currency), getResources().getString(R.string.pref_currency_default_value)));
 
-        sCategories = (Spinner) findViewById(R.id.sCategories);
+        sCategories = (Spinner) findViewById(R.id.sIncomeCategories);
 
-        etDate = (EditText) findViewById(R.id.etDate);
-        etNotes=(EditText) findViewById(R.id.etNotes);
-
+        etDate = (EditText) findViewById(R.id.etIncomeDate);
         etDate.setText(getString(R.string.text_today));
-        ibCalendar = (ImageButton) findViewById(R.id.ibCalendar);
+        ibCalendar = (ImageButton) findViewById(R.id.ibIncomeCalendar);
 
         bOk = (Button) findViewById(R.id.bOK);
         bCancel = (Button) findViewById(R.id.bCancel);
@@ -223,7 +220,6 @@ public class AddIncomeActivity extends AppCompatActivity implements NumberPicker
                 boolean ok = true;
                 double amount = 0;
                 String source;
-                String notes;
                 //get the price of the income if it has problem a Toast appear and say to correct it
                 try {
                     int currencyLength = PreferenceManager.getDefaultSharedPreferences(AddIncomeActivity.this).getString(getResources().getString(R.string.pref_key_currency), getResources().getString(R.string.pref_currency_default_value)).length();
@@ -239,10 +235,9 @@ public class AddIncomeActivity extends AppCompatActivity implements NumberPicker
                     //source=sCategories.getSelectedItem().toString();
                     int position = sCategories.getSelectedItemPosition();
                     source = allCategories.get(position);
-                    notes=etNotes.getText().toString();
 
                     //then we add the income to our database we close it and we finish the activity
-                    income = new IncomeItem(amount, date, source,notes);
+                    income = new IncomeItem(amount, date, source);
                     if (!update) {
                         db.insertIncome(income);
 

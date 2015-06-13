@@ -60,7 +60,7 @@ public class AddExpenseActivity extends AppCompatActivity implements NumberPicke
 
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_add_transaction);
+        setContentView(R.layout.activity_add_expense);
 
 
         init();

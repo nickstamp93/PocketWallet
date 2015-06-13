@@ -103,10 +103,14 @@
         <item name="android:layout_margin">10dp</item>
     </style>
 
+    <style name="userDetails_headline" parent="Headline">
+        <item name="android:layout_width">0dp</item>
+    </style>
+
     <!--style for edittext in userDetails activity-->
     <style name="UserDetailsEditText">
+        <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">match_parent</item>
         <item name="android:ems">10</item>
         <item name="android:textColor">?textCustomColor</item>
         <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>

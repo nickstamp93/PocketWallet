@@ -15,20 +15,21 @@
 
         <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:shrinkColumns="1">
+            android:layout_height="wrap_content">
 
             <TableRow>
 
                 <me.grantland.widget.AutofitTextView
                     android:id="@+id/textView"
-                    style="@style/Headline"
+                    style="@style/userDetails_headline"
+                    android:layout_weight="1"
                     android:text="@string/textview_headline_username" />
 
                 <EditText
                     android:id="@+id/etUsername"
                     style="@style/UserDetailsEditText"
                     android:layout_marginBottom="@dimen/bottom_margin_headlines_small"
+                    android:layout_weight="1"
                     android:inputType="textPersonName" />
 
             </TableRow>
@@ -38,13 +39,15 @@
                 <me.grantland.widget.AutofitTextView
 
                     android:id="@+id/textView2"
-                    style="@style/Headline"
+                    style="@style/userDetails_headline"
+                    android:layout_weight="1"
                     android:text="@string/textview_headline_savings" />
 
                 <EditText
                     android:id="@+id/etSavings"
                     style="@style/UserDetailsEditText"
                     android:layout_marginBottom="@dimen/bottom_margin_headlines_small"
+                    android:layout_weight="1"
                     android:inputType="numberDecimal" />
 
             </TableRow>
@@ -53,20 +56,23 @@
 
                 <me.grantland.widget.AutofitTextView
                     android:id="@+id/textView3"
-                    style="@style/Headline"
+                    style="@style/userDetails_headline"
+                    android:layout_weight="1"
                     android:text="@string/textview_headline_grouping" />
 
                 <RadioGroup
                     android:id="@+id/rgGrouping"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/bottom_margin_headlines_small">
+                    android:layout_marginBottom="@dimen/bottom_margin_headlines_small"
+                    android:layout_weight="1">
 
                     <RadioButton
                         android:id="@+id/rbWeekly"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="false"
+                        android:gravity="left|center_vertical"
                         android:text="@string/pref_grouping_weekly"
                         android:textColor="?textCustomColor"
                         android:textSize="20sp" />
@@ -76,6 +82,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="true"
+                        android:gravity="left|center_vertical"
                         android:text="@string/pref_grouping_monthly"
                         android:textColor="?textCustomColor"
                         android:textSize="20sp" />
@@ -87,14 +94,18 @@
 
                 <me.grantland.widget.AutofitTextView
                     android:id="@+id/tvDayStart"
-                    style="@style/Headline"
+                    style="@style/userDetails_headline"
+                    android:layout_weight="1"
                     android:text="@string/textview_headline_week_start" />
 
                 <Spinner
                     android:id="@+id/spinnerDayStart"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="left|center_vertical" />
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:dropDownWidth="match_parent"
+                    android:spinnerMode="dropdown" />
 
             </TableRow>
 

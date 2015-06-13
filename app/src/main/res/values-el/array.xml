@@ -12,7 +12,6 @@
         <item>Έξοδος</item>
     </string-array>
 
-
     <string-array name="pie_period_values">
         <item>Μήνας</item>
         <item>Εβδομάδα</item>
@@ -25,4 +24,15 @@
         <item>Τελευταίοι 6 μήνες</item>
         <item>Τελευταίες 12 εβδομάδες</item>
     </string-array>
+
+    <string-array name="days_week">
+        <item>Δευτέρα</item>
+        <item>Τρίτη</item>
+        <item>Τετάρτη</item>
+        <item>Πέμπτη</item>
+        <item>Παρασκευή</item>
+        <item>Σάββατο</item>
+        <item>Κυριακή</item>
+    </string-array>
+
 </resources>

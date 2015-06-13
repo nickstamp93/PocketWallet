@@ -38,6 +38,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
     private static final String Key_IAmount = "amount";
     private static final String Key_ISource = "source";
     private static final String Key_IDate = "date";
+    private static final String Key_INotes="notes";
 
     private SQLiteDatabase mydb;
 
@@ -45,7 +46,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
             Key_ECategory + " TEXT NOT NULL," + Key_EDate + " TEXT NOT NULL," + Key_EPrice + " DOUBLE," + Key_ENotes + " TEXT)";
 
     private static final String Create_Income_Table = "CREATE TABLE " + Table_Income + "(" + Key_Iid + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-            Key_IAmount + " DOUBLE," + Key_ISource + " TEXT NOT NULL," + Key_IDate + " TEXT NOT NULL" + ")";
+            Key_IAmount + " DOUBLE," + Key_ISource + " TEXT NOT NULL," + Key_IDate + " TEXT NOT NULL,"  + Key_ENotes + " TEXT" + ")";
 
     public MoneyDatabase(Context context) {
         super(context, Database_Name, null, Database_Version);
@@ -89,6 +90,8 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         values.put(Key_IAmount, income.getAmount());
         values.put(Key_ISource, income.getSource());
         values.put(Key_IDate, income.getDate());
+        values.put(Key_INotes,income.getNotes());
+
         mydb.insert(Table_Income, null, values);
 
     }
@@ -110,6 +113,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         values.put(Key_ISource, income.getSource());
         values.put(Key_IAmount, income.getAmount());
         values.put(Key_IDate, income.getDate());
+        values.put(Key_INotes,income.getNotes());
 
         getReadableDatabase().update(Table_Income, values, Key_Iid + " = " + income.getId(), null);
     }

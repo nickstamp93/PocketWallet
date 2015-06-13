@@ -9,13 +9,18 @@ public class IncomeItem implements Serializable {
 
     private double amount;
     private int id;
-    private String date, source;
+    private String date, source,notes;
 
 
-    public IncomeItem(double amount, String date, String source) {
+    public IncomeItem(double amount, String date, String source,String notes) {
         this.amount = amount;
         this.date = date;
         this.source = source;
+        this.notes=notes;
+    }
+
+    public void setNotes(String notes){
+        this.notes=notes;
     }
 
     public void setId(int id) {
@@ -46,4 +51,7 @@ public class IncomeItem implements Serializable {
         return id;
     }
 
+    public String getNotes() {
+        return notes;
+    }
 }

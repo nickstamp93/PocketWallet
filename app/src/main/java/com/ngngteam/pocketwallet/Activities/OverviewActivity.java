@@ -577,7 +577,7 @@ public class OverviewActivity extends AppCompatActivity {
             public void onClick(View view) {
                 cursorLastIncome.moveToFirst();
                 Intent processIncome = new Intent(OverviewActivity.this, AddIncomeActivity.class);
-                IncomeItem income = new IncomeItem(Double.parseDouble(cursorLastIncome.getString(1)), cursorLastIncome.getString(3), cursorLastIncome.getString(2));
+                IncomeItem income = new IncomeItem(Double.parseDouble(cursorLastIncome.getString(1)), cursorLastIncome.getString(3), cursorLastIncome.getString(2),cursorLastIncome.getString(4));
                 income.setId(Integer.parseInt(cursorLastIncome.getString(0)));
                 processIncome.putExtra("Income", income);
                 startActivity(processIncome);

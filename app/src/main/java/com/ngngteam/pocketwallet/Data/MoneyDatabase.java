@@ -38,6 +38,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
     private static final String Key_IAmount = "amount";
     private static final String Key_ISource = "source";
     private static final String Key_IDate = "date";
+    private static final String Key_INotes="notes";
 
     private SQLiteDatabase mydb;
 
@@ -45,7 +46,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
             Key_ECategory + " TEXT NOT NULL," + Key_EDate + " TEXT NOT NULL," + Key_EPrice + " DOUBLE," + Key_ENotes + " TEXT)";
 
     private static final String Create_Income_Table = "CREATE TABLE " + Table_Income + "(" + Key_Iid + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-            Key_IAmount + " DOUBLE," + Key_ISource + " TEXT NOT NULL," + Key_IDate + " TEXT NOT NULL" + ")";
+            Key_IAmount + " DOUBLE," + Key_ISource + " TEXT NOT NULL," + Key_IDate + " TEXT NOT NULL," + Key_ENotes + " TEXT"+ ")";
 
     public MoneyDatabase(Context context) {
         super(context, Database_Name, null, Database_Version);
@@ -89,7 +90,9 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         values.put(Key_IAmount, income.getAmount());
         values.put(Key_ISource, income.getSource());
         values.put(Key_IDate, income.getDate());
+        values.put(Key_INotes,income.getNotes());
         mydb.insert(Table_Income, null, values);
+        Log.i("Income notes",income.getNotes());
 
     }
 
@@ -110,6 +113,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         values.put(Key_ISource, income.getSource());
         values.put(Key_IAmount, income.getAmount());
         values.put(Key_IDate, income.getDate());
+        values.put(Key_INotes,income.getNotes());
 
         getReadableDatabase().update(Table_Income, values, Key_Iid + " = " + income.getId(), null);
     }
@@ -200,6 +204,17 @@ public class MoneyDatabase extends SQLiteOpenHelper {
                 null);
     }
 
+    public Cursor getExpensesByDate(String date,String category) {
+
+        String dateTokens[] = date.split("-");
+        String reformedDate = dateTokens[2] + "-" + dateTokens[1] + "-" + dateTokens[0];
+
+        return getReadableDatabase().rawQuery("SELECT * FROM " + Table_Expense +
+                " WHERE " + Key_EDate + " LIKE " + "'" + reformedDate + "'" +
+                " AND " + Key_ECategory + "='" + category +
+                "' ORDER BY " + Key_EDate + " DESC, " + Key_EId + " DESC", null);
+    }
+
     //return a cursor which contains the tuples of table expense with date between of parameter date1 and parameter date2
     public Cursor getExpensesByDateToDate(String date1, String date2) {
 
@@ -247,15 +262,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
                 " WHERE " + Key_ISource + "=" + "'" + source + "' ORDER BY " + Key_IDate + " DESC, " + Key_Iid + " DESC", null);
     }
 
-    //return a cursor which contains the tuples of table income with Date equal to parameter date
-    public Cursor getIncomesByDate(String date) {
 
-        String dateTokens[] = date.split("-");
-        String reformedDate = dateTokens[2] + "-" + dateTokens[1] + "-" + dateTokens[0];
-
-        return getReadableDatabase().rawQuery("SELECT * FROM " + Table_Income + " WHERE " + Key_IDate + " LIKE " + "'" + reformedDate + "' ORDER BY " + Key_Iid + " DESC",
-                null);
-    }
 
     //return a cursor which contains the tuples of table income order by the date
     public Cursor getIncomesByNewestToOldest() {
@@ -270,6 +277,27 @@ public class MoneyDatabase extends SQLiteOpenHelper {
             order = " DESC";
         }
         return getReadableDatabase().rawQuery("SELECT * FROM " + Table_Income + " ORDER BY " + Key_IAmount + order + " , " + Key_IDate + " DESC", null);
+    }
+    //return a cursor which contains the tuples of table income with Date equal to parameter date
+    public Cursor getIncomesByDate(String date) {
+
+        String dateTokens[] = date.split("-");
+        String reformedDate = dateTokens[2] + "-" + dateTokens[1] + "-" + dateTokens[0];
+
+        return getReadableDatabase().rawQuery("SELECT * FROM " + Table_Income + " WHERE " + Key_IDate + " LIKE " + "'" + reformedDate + "' ORDER BY " + Key_Iid + " DESC",
+                null);
+    }
+
+    //return a cursor which contains the tuples of table income with Date equal to parameter date
+    public Cursor getIncomesByDate(String date,String category) {
+
+        String dateTokens[] = date.split("-");
+        String reformedDate = dateTokens[2] + "-" + dateTokens[1] + "-" + dateTokens[0];
+
+        return getReadableDatabase().rawQuery("SELECT * FROM " + Table_Income +
+                " WHERE " + Key_IDate + " LIKE " + "'" + reformedDate + "'" +
+                " AND " + Key_ISource + "='" + category +
+                "' ORDER BY " + Key_IDate + " DESC , " + Key_Iid + " DESC", null);
     }
 
     //return a cursor which contains the tuples of table income with date between of parameter date1 and parameter date2
@@ -540,6 +568,89 @@ public class MoneyDatabase extends SQLiteOpenHelper {
 
         return total;
     }
+
+    public double getDailyTotal(boolean isExpense){
+        Cursor cursor;
+        double total=0;
+        Calendar c=Calendar.getInstance();
+
+        String day = c.get(Calendar.DAY_OF_MONTH) + "";
+        String month = (c.get(Calendar.MONTH) + 1) + "";
+        if (c.get(Calendar.DAY_OF_MONTH) < 10) {
+            day = "0" + c.get(Calendar.DAY_OF_MONTH);
+        }
+        if (c.get(Calendar.MONTH) + 1 < 10) {
+            month = "0" + (c.get(Calendar.MONTH) + 1);
+        }
+
+        String currentDay=day +"-" + month+"-"+c.get(Calendar.YEAR);
+
+        if(isExpense){
+            cursor=this.getExpensesByDate(currentDay);
+
+            if(cursor!=null){
+                for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
+                    total += Double.parseDouble(cursor.getString(3));
+                }
+                Log.i("zisis", "Total expense for today "  + " : " + total);
+            }
+
+        }else{
+            cursor=this.getIncomesByDate(currentDay);
+
+            if(cursor!=null){
+                for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
+                    total += Double.parseDouble(cursor.getString(1));
+                }
+                Log.i("zisis", "Total income for today "  + " : " + total);
+            }
+
+        }
+
+
+        return total;
+    }
+
+
+    public double getDailyTotalForCategory(String category,boolean isExpense){
+        Cursor cursor;
+        double total =0;
+        Calendar c = Calendar.getInstance();
+
+        String day = c.get(Calendar.DAY_OF_MONTH) + "";
+        String month = (c.get(Calendar.MONTH) + 1) + "";
+        if (c.get(Calendar.DAY_OF_MONTH) < 10) {
+            day = "0" + c.get(Calendar.DAY_OF_MONTH);
+        }
+        if (c.get(Calendar.MONTH) + 1 < 10) {
+            month = "0" + (c.get(Calendar.MONTH) + 1);
+        }
+
+        String currentDay=day +"-" + month+"-"+c.get(Calendar.YEAR);
+
+        if (isExpense) {
+            cursor = this.getExpensesByDate(currentDay,category);
+
+            if (cursor.getCount() != 0) {
+                for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                    total += Double.parseDouble(cursor.getString(3));
+                }
+            }
+            Log.i("zisis", "Total expense for " + category + " : " + total);
+        } else {
+            cursor = this.getIncomesByDate(currentDay,category);
+
+            if (cursor.getCount() != 0) {
+                for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                    total += Double.parseDouble(cursor.getString(1));
+                }
+            }
+
+            Log.i("zisis", "Total income for " + category + " : " + total);
+        }
+        return total;
+    }
+
 
     public double getMonthTotalForCategory(String category, boolean isExpense) {
 

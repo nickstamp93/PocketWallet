@@ -44,11 +44,14 @@ public class MoneyDatabase extends SQLiteOpenHelper {
 
     private SQLiteDatabase mydb;
 
-    private static final String Create_Expense_Table = "CREATE TABLE " + Table_Expense + "(" + Key_EId + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+    private static final String Create_Expense_Table = "CREATE TABLE IF NOT EXISTS " + Table_Expense + "(" + Key_EId + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             Key_ECategory + " TEXT NOT NULL," + Key_EDate + " TEXT NOT NULL," + Key_EPrice + " DOUBLE," + Key_ENotes + " TEXT)";
 
-    private static final String Create_Income_Table = "CREATE TABLE " + Table_Income + "(" + Key_Iid + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+    private static final String Create_Income_Table = "CREATE TABLE IF NOT EXISTS " + Table_Income + "(" + Key_Iid + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             Key_IAmount + " DOUBLE," + Key_ISource + " TEXT NOT NULL," + Key_IDate + " TEXT NOT NULL," + Key_ENotes + " TEXT" + ")";
+
+    private static final String Create_Income_Table_OLD = "CREATE TABLE " + Table_Income + "(" + Key_Iid + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+            Key_IAmount + " DOUBLE," + Key_ISource + " TEXT NOT NULL," + Key_IDate + " TEXT NOT NULL" + ")";
 
     private Context context;
 
@@ -64,10 +67,15 @@ public class MoneyDatabase extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i2) {
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
         //TODO upgrade in such a way that the old data are not deleted
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + Table_Expense);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + Table_Income);
+//        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + Table_Expense);
+//        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + Table_Income);
+
+        switch (oldVersion) {
+            case 1:
+                sqLiteDatabase.execSQL("ALTER TABLE " + Table_Income + " ADD COLUMN " + Key_INotes + " TEXT");
+        }
 
         onCreate(sqLiteDatabase);
     }

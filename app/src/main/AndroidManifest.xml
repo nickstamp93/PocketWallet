@@ -30,24 +30,24 @@
         <activity
             android:name=".Activities.AddExpenseActivity"
             android:label="@string/title_activity_add_expense"
-            android:parentActivityName=".Activities.OverviewActivity"
+            android:parentActivityName=".Activities.HistoryActivity"
             android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Activities.OverviewActivity" />
+                android:value=".Activities.HistoryActivity" />
         </activity>
         <activity
             android:name=".Activities.AddIncomeActivity"
             android:label="@string/title_activity_add_income"
-            android:parentActivityName=".Activities.OverviewActivity"
+            android:parentActivityName=".Activities.HistoryActivity"
             android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Activities.OverviewActivity" />
+                android:value=".Activities.HistoryActivity" />
         </activity>
         <activity
             android:name=".Activities.HistoryActivity"

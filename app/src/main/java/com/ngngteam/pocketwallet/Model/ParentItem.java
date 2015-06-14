@@ -8,10 +8,12 @@ import java.util.ArrayList;
 public class ParentItem {
 
     private String month;
+    private int year;
     private ArrayList<ChildItem> childItems;
 
-    public ParentItem(String month){
+    public ParentItem(String month,int year){
         this.month=month;
+        this.year=year;
         childItems=new ArrayList<>();
     }
 
@@ -36,6 +38,9 @@ public class ParentItem {
         return total;
     }
 
+    public int getYear(){
+        return year;
+    }
 
 
 }

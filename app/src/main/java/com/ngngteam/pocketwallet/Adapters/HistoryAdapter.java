@@ -93,9 +93,12 @@ public class HistoryAdapter extends BaseExpandableListAdapter {
 
         AutofitTextView tvGroupName=(AutofitTextView) view.findViewById(R.id.tvGroupName);
         AutofitTextView tvGroupAmount=(AutofitTextView) view.findViewById(R.id.tvGroupAmount);
+        AutofitTextView tvGroupYear=(AutofitTextView) view.findViewById(R.id.tvGroupYear);
 
         tvGroupName.setText(parent.getMonth());
+        tvGroupYear.setText(parent.getYear()+"");
         tvGroupAmount.setText(parent.getTotalAmount()+" "+currency);
+
         if(expense){
             tvGroupAmount.setTextColor(context.getResources().getColor(R.color.red));
         }else{
@@ -171,6 +174,9 @@ public class HistoryAdapter extends BaseExpandableListAdapter {
 
 
         tvNotes.setText(childItem.getNotes());
+
+        if(expense) tvPrice.setTextColor(context.getResources().getColor(R.color.red));
+        else tvPrice.setTextColor(context.getResources().getColor(R.color.green));
 
 
         return view;

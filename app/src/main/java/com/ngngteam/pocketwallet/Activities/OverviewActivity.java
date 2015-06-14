@@ -297,13 +297,14 @@ public class OverviewActivity extends AppCompatActivity {
         double totalIncomes;
 
         if (profile.getGrouping().equalsIgnoreCase(getResources().getString(R.string.pref_grouping_monthly))) {
-            totalExpenses = mdb.getTotalExpensePriceForCurrentMonth();
-            totalIncomes = mdb.getTotalIncomePriceForCurrentMonth();
+            firstDayTable = new int[]{1, 5, 10, 15, 20, 25};
+            totalExpenses = mdb.getTotalForCurrentMonth(true);
+            totalIncomes = mdb.getTotalForCurrentMonth(false);
         } else {
             firstDayTable = new int[]{Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.THURSDAY,
                     Calendar.FRIDAY, Calendar.SATURDAY, Calendar.SUNDAY};
-            totalExpenses = mdb.getTotalExpensePriceForCurrentWeek(firstDayTable[profile.getDayStart()]);
-            totalIncomes = mdb.getTotalIncomePriceForCurrentWeek(firstDayTable[profile.getDayStart()]);
+            totalExpenses = mdb.getTotalForCurrentWeek(firstDayTable[profile.getDayStart()], true);
+            totalIncomes = mdb.getTotalForCurrentWeek(firstDayTable[profile.getDayStart()], false);
         }
 
         totalExpenses = Math.round(totalExpenses * 100) / 100.0;
@@ -338,7 +339,7 @@ public class OverviewActivity extends AppCompatActivity {
         tvBalance.setTextColor(getResources().getColor(paint));
 
         //savings are : total income - total expense - balance + savings user defined at the creation of the profile
-        double savings = mdb.getTotalIncome() - mdb.getTotalExpenses() - balance + profile.getSavings();
+        double savings = mdb.getTotal(false) - mdb.getTotal(true) - balance + profile.getSavings();
         profile.setSavings((float) savings);
         savings = Math.round(savings * 100) / 100.0;
         sign = (savings >= 0) ? "+" : "";
@@ -423,12 +424,34 @@ public class OverviewActivity extends AppCompatActivity {
             tvPieHeading.setMaxTextSize(getResources().getInteger(R.integer.text_size_pie_heading_small));
         } else {
             Calendar c = Calendar.getInstance();
-            int month = c.get(Calendar.MONTH);
+            //if first day of Month is 1 , then show month name
+            if (profile.getDayStart() == 0) {
 
-            //get month name
-            String sMonth = getMonthForInt(month);
+                int month = c.get(Calendar.MONTH);
 
-            tvPieHeading.setText(sMonth);
+                //get month name
+                String sMonth = getMonthForInt(month);
+
+                tvPieHeading.setText(sMonth);
+                //else show the period
+            } else {
+
+                int monthStart = firstDayTable[profile.getDayStart()];
+
+                Date startDate, endDate;
+
+                c.set(Calendar.DAY_OF_MONTH, monthStart);
+                startDate = c.getTime();
+
+                c.add(Calendar.MONTH, 1);
+                c.add(Calendar.DAY_OF_MONTH, -1);
+                endDate = c.getTime();
+
+                tvPieHeading.setText(getString(R.string.text_period) + "\n("
+                        + new SimpleDateFormat("dd MMM").format(startDate) + "-" +
+                        new SimpleDateFormat("dd MMM").format(endDate) + ")");
+
+            }
             tvPieHeading.setMaxTextSize(getResources().getInteger(R.integer.text_size_pie_heading));
         }
 

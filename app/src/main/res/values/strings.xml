@@ -212,5 +212,7 @@
     <string name="textview_headline_week_start">Week starts on:</string>
     <string name="textview_headline_month_start">Month starts on:</string>
 
+    <string name="text_period">Period</string>
+
 
 </resources>

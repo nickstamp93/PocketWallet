@@ -233,6 +233,9 @@ public class PieDistributionActivity extends AppCompatActivity implements Action
     private void initPieCurrentMonth() {
         totalAmount = 0;
 
+        int days[] = {1, 5, 10, 15, 20, 25};
+        int firstDay = days[new SharedPrefsManager(this).getPrefsDayStart()];
+
         values = new ArrayList<>();
         finalCategories = new ArrayList<>();
         colors = new ArrayList<>();
@@ -255,11 +258,36 @@ public class PieDistributionActivity extends AppCompatActivity implements Action
         //get the current month's name
         Calendar c = Calendar.getInstance();
         int month = c.get(Calendar.MONTH);
-        String sMonth = OverviewActivity.getMonthForInt(month);
+
+        //if first day of Month is 1 , then show month name
+        if (firstDay == 1) {
+
+            //get month name
+            String sMonth = OverviewActivity.getMonthForInt(month);
+
+            centerText = sMonth;
+            //else show the period
+        } else {
+
+
+            Date startDate, endDate;
+
+            c.set(Calendar.DAY_OF_MONTH, firstDay);
+            startDate = c.getTime();
+
+            c.add(Calendar.MONTH, 1);
+            c.add(Calendar.DAY_OF_MONTH, -1);
+            endDate = c.getTime();
+
+            centerText = getString(R.string.text_period) + "\n("
+                    + new SimpleDateFormat("dd MMM").format(startDate) + "-" +
+                    new SimpleDateFormat("dd MMM").format(endDate) + ")";
+
+        }
 
         //and set it to the center text
-        pieChart.setCenterTextSize(40f);
-        centerText = sMonth;
+        pieChart.setCenterTextSize(20f);
+//        centerText = sMonth;
         String mode = isExpense ? "Expense" : "Income";
 
         setDataToPie(values, finalCategories, colors, mode);

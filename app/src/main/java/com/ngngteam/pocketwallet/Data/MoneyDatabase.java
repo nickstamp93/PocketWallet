@@ -12,6 +12,7 @@ import com.ngngteam.pocketwallet.Model.IncomeItem;
 import com.ngngteam.pocketwallet.Utils.SharedPrefsManager;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -354,92 +355,89 @@ public class MoneyDatabase extends SQLiteOpenHelper {
     }
 
 
-    public double getTotalExpensePriceForCurrentMonth() {
+    //used to determine savings value in OverviewActivity
+    //total expense amount of all time
+    public double getTotal(boolean isExpense) {
 
+        Cursor cursor;
+        double total = 0;
+
+        if (isExpense) {
+            cursor = this.getAllExpenses();
+
+            if (cursor.getCount() != 0) {
+                for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                    total = Double.parseDouble(cursor.getString(3)) + total;
+                }
+
+            }
+        } else {
+            cursor = this.getAllIncomes();
+
+            if (cursor.getCount() != 0) {
+                for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                    total = Double.parseDouble(cursor.getString(1)) + total;
+                }
+
+            }
+        }
+
+
+        return total;
+    }
+
+
+    //used for current month in OverviewActivity
+    public double getTotalForCurrentMonth(boolean isExpense) {
+
+        Cursor cursor;
         double total = 0;
         Calendar c = Calendar.getInstance();
-        int currentMonth = c.get(Calendar.MONTH) + 1;
 
-        String month = currentMonth + "";
-        if (currentMonth < 10) {
-            month = "0" + currentMonth;
-        }
+        int days[] = {1, 5, 10, 15, 20, 25};
+        int firstDay = days[new SharedPrefsManager(context).getPrefsDayStart()];
 
-        String firstOfMonth = "01" + "-" + month + "-" + c.get(Calendar.YEAR);
-        String lastOfMonth = "31" + "-" + month + "-" + c.get(Calendar.YEAR);
+        c.set(Calendar.DAY_OF_MONTH, firstDay);
 
-        Cursor cursor = this.getExpensesByDateToDate(firstOfMonth, lastOfMonth);
+        String firstOfMonth = new SimpleDateFormat("dd-MM-yyyy").format(new Date(c.getTimeInMillis()));
 
-        if (cursor.getCount() != 0) {
-            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-                total = Double.parseDouble(cursor.getString(3)) + total;
+        c.add(Calendar.MONTH, 1);
+        c.add(Calendar.DAY_OF_YEAR, -1);
+
+        String lastOfMonth = new SimpleDateFormat("dd-MM-yyyy").format(new Date(c.getTimeInMillis()));
+
+        Log.i("nikos", "Current month period:" + firstOfMonth + " to " + lastOfMonth);
+
+        if (isExpense) {
+            cursor = this.getExpensesByDateToDate(firstOfMonth, lastOfMonth);
+
+            if (cursor.getCount() != 0) {
+                for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                    total = Double.parseDouble(cursor.getString(3)) + total;
+                }
+
             }
+        } else {
+            cursor = this.getIncomesByDateToDate(firstOfMonth, lastOfMonth);
 
+            if (cursor.getCount() > 0) {
+
+                for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                    total = Double.parseDouble(cursor.getString(1)) + total;
+                }
+
+            }
         }
+
 
         return total;
     }
 
-    public double getTotalIncomePriceForCurrentMonth() {
-
-        double total = 0;
-        Calendar c = Calendar.getInstance();
-        int currentMonth = c.get(Calendar.MONTH) + 1;
-        String month = currentMonth + "";
-        if (currentMonth < 10) {
-            month = "0" + currentMonth;
-        }
-        String firstOfMonth = "01" + "-" + month + "-" + c.get(Calendar.YEAR);
-        String lastOfMonth = "31" + "-" + month + "-" + c.get(Calendar.YEAR);
-
-        Cursor cursor = this.getIncomesByDateToDate(firstOfMonth, lastOfMonth);
-
-        if (cursor.getCount() > 0) {
-
-            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-                total = Double.parseDouble(cursor.getString(1)) + total;
-            }
-
-        }
-
-        return total;
-    }
-
-    public double getTotalExpenses() {
-
-        double total = 0;
-
-        Cursor cursor = this.getAllExpenses();
-
-        if (cursor.getCount() != 0) {
-            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-                total = Double.parseDouble(cursor.getString(3)) + total;
-            }
-
-        }
-
-        return total;
-    }
-
-    public double getTotalIncome() {
-
-        double total = 0;
-
-        Cursor cursor = this.getAllIncomes();
-
-        if (cursor.getCount() != 0) {
-            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-                total = Double.parseDouble(cursor.getString(1)) + total;
-            }
-
-        }
-
-        return total;
-    }
-
+    //used for current week in OverviewActivity
     //parameter is a calendar constant
-    public double getTotalExpensePriceForCurrentWeek(int firstDayOfWeek) {
+    public double getTotalForCurrentWeek(int firstDayOfWeek, boolean isExpense) {
 
+        Cursor cursor;
         double total = 0;
 
         Calendar c = Calendar.getInstance();
@@ -491,102 +489,53 @@ public class MoneyDatabase extends SQLiteOpenHelper {
 
         String lastOfWeek = day + "-" + month + "-" + c.get(Calendar.YEAR);
 
-        Cursor cursor = this.getExpensesByDateToDate(firstOfWeek, lastOfWeek);
+        if (isExpense) {
+            cursor = this.getExpensesByDateToDate(firstOfWeek, lastOfWeek);
 
-        if (cursor.getCount() > 0) {
+            if (cursor.getCount() > 0) {
 
-            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-                total = Double.parseDouble(cursor.getString(3)) + total;
+                for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                    total = Double.parseDouble(cursor.getString(3)) + total;
+                }
+
             }
-
-        }
-
-        return total;
-
-    }
-
-    //parameter is calendar constant
-    public double getTotalIncomePriceForCurrentWeek(int firstDayOfWeek) {
-
-        double total = 0;
-
-        Calendar c = Calendar.getInstance();
-
-        int currentDay = c.get(Calendar.DAY_OF_WEEK);
-        int endDay = firstDayOfWeek;
-
-        Date startDate, endDate;
-        if (currentDay == endDay) {
-            startDate = c.getTime();
-            c.add(Calendar.DAY_OF_YEAR, 6);
-            endDate = c.getTime();
         } else {
+            cursor = this.getIncomesByDateToDate(firstOfWeek, lastOfWeek);
 
-            while (currentDay != endDay) {
-                c.add(Calendar.DATE, 1);
-                currentDay = c.get(Calendar.DAY_OF_WEEK);
+            if (cursor.getCount() > 0) {
+
+                for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                    total = Double.parseDouble(cursor.getString(1)) + total;
+                }
+
             }
-            c.add(Calendar.DAY_OF_YEAR, -1);
-            endDate = c.getTime();
-
-            c.add(Calendar.DAY_OF_YEAR, -6);
-            startDate = c.getTime();
-
         }
 
-        c.setTime(startDate);
-
-        String day = c.get(Calendar.DAY_OF_MONTH) + "";
-        String month = (c.get(Calendar.MONTH) + 1) + "";
-        if (c.get(Calendar.DAY_OF_MONTH) < 10) {
-            day = "0" + c.get(Calendar.DAY_OF_MONTH);
-        }
-        if (c.get(Calendar.MONTH) + 1 < 10) {
-            month = "0" + (c.get(Calendar.MONTH) + 1);
-        }
-
-        String firstOfWeek = day + "-" + month + "-" + c.get(Calendar.YEAR);
-        c.setTime(endDate);
-
-        day = c.get(Calendar.DAY_OF_MONTH) + "";
-        month = (c.get(Calendar.MONTH) + 1) + "";
-        if (c.get(Calendar.DAY_OF_MONTH) < 10) {
-            day = "0" + c.get(Calendar.DAY_OF_MONTH);
-        }
-        if (c.get(Calendar.MONTH) + 1 < 10) {
-            month = "0" + (c.get(Calendar.MONTH) + 1);
-        }
-
-        String lastOfWeek = day + "-" + month + "-" + c.get(Calendar.YEAR);
-
-        Cursor cursor = this.getIncomesByDateToDate(firstOfWeek, lastOfWeek);
-
-        if (cursor.getCount() > 0) {
-
-            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-                total = Double.parseDouble(cursor.getString(1)) + total;
-            }
-
-        }
 
         return total;
+
     }
 
-
+    //used for every category in a month in PieDistributionActivity
     public double getMonthTotalForCategory(String category, boolean isExpense) {
 
         Cursor cursor;
         double total;
         Calendar c = Calendar.getInstance();
-        int currentMonth = c.get(Calendar.MONTH) + 1;
 
-        String month = currentMonth + "";
-        if (currentMonth < 10) {
-            month = "0" + currentMonth;
-        }
+        int days[] = {1, 5, 10, 15, 20, 25};
+        int firstDay = days[new SharedPrefsManager(context).getPrefsDayStart()];
 
-        String firstOfMonth = "01" + "-" + month + "-" + c.get(Calendar.YEAR);
-        String lastOfMonth = "31" + "-" + month + "-" + c.get(Calendar.YEAR);
+        c.set(Calendar.DAY_OF_MONTH, firstDay);
+
+        String firstOfMonth = new SimpleDateFormat("dd-MM-yyyy").format(new Date(c.getTimeInMillis()));
+
+        c.add(Calendar.MONTH, 1);
+        c.add(Calendar.DAY_OF_YEAR, -1);
+
+        String lastOfMonth = new SimpleDateFormat("dd-MM-yyyy").format(new Date(c.getTimeInMillis()));
+
+        Log.i("nikos", "Current month period:" + firstOfMonth + " to " + lastOfMonth);
 
         if (isExpense) {
             cursor = this.getExpensesByDateToDate(firstOfMonth, lastOfMonth, category);
@@ -617,6 +566,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         return total;
     }
 
+    //used for every category in a week in PieDistributionActivity
     public double getWeekTotalForCategory(int firstDayOfWeek, String category, boolean isExpense) {
 
         double total = 0;
@@ -692,6 +642,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         return total;
     }
 
+    //used for custom date in PieDistributionActivity
     public double getTotalForCategoryCustomDate(String startDate, String endDate, String category, boolean isExpense) {
 
         Cursor cursor;
@@ -722,6 +673,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         return total;
     }
 
+    //used for every month in BarDistributionActivity
     public double getMonthTotal(int year, int month, boolean isExpense, ArrayList<String> categoryFilter) {
 
         Cursor cursor;
@@ -763,6 +715,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         return total;
     }
 
+    //used for every week in BarDistributionActivity
     public double getWeekTotal(int year, int day, boolean isExpense, ArrayList<String> categoryFilter) {
         double total = 0;
         Cursor cursor;

@@ -8,30 +8,41 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 
 import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
+import com.ngngteam.pocketwallet.Adapters.HistoryAdapter;
 import com.ngngteam.pocketwallet.Adapters.HistoryListViewAdapter;
 import com.ngngteam.pocketwallet.Data.CategoryDatabase;
 import com.ngngteam.pocketwallet.Data.MoneyDatabase;
+import com.ngngteam.pocketwallet.Model.ChildItem;
 import com.ngngteam.pocketwallet.Model.ExpenseItem;
 import com.ngngteam.pocketwallet.Model.IncomeItem;
+import com.ngngteam.pocketwallet.Model.ParentItem;
 import com.ngngteam.pocketwallet.R;
 import com.ngngteam.pocketwallet.Utils.Themer;
 
+import java.text.DateFormatSymbols;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Iterator;
 
 
 public class HistoryActivity extends AppCompatActivity {
 
     private HistoryListViewAdapter adapter;
+    private HistoryAdapter historyAdapter;
     private Cursor c;
     private MoneyDatabase db;
-    private ListView lv;
+   // private ListView lv;
+    private ExpandableListView lv;
     private AlertDialog dialog = null;
     private boolean switcher = true, update = false;
     private Menu menu;
@@ -39,6 +50,12 @@ public class HistoryActivity extends AppCompatActivity {
 
     private static int result = 1;
     private Calendar calendar;
+
+
+    private ArrayList<ParentItem> groupItems;
+    private HashSet<String> months;
+
+    private int groupPosition=-1,childPosition=-1;
 
 
     @Override
@@ -70,47 +87,91 @@ public class HistoryActivity extends AppCompatActivity {
     private void setUpUI() {
         adapter.setTheView(true);
 
-        lv.setAdapter(adapter);
 
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        //lv.setAdapter(adapter);
+        lv.setAdapter(historyAdapter);
+
+        lv.expandGroup(0);
+
+        lv.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+            public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long l) {
 
-                c.moveToPosition(position);
-                update = true;
+                ChildItem childItem=groupItems.get(groupPosition).getChildItems().get(childPosition);
+                update=true;
+                HistoryActivity.this.groupPosition=groupPosition;
+                HistoryActivity.this.childPosition=childPosition;
 
-                if (switcher) {
+
+
+                if(switcher){
                     Intent processExpense = new Intent(HistoryActivity.this, AddExpenseActivity.class);
-                    ExpenseItem expense = new ExpenseItem(c.getString(1), c.getString(4), Double.parseDouble(c.getString(3)), c.getString(2));
-                    expense.setId(Integer.parseInt(c.getString(0)));
+                    ExpenseItem expense = new ExpenseItem(childItem.getCategory(), childItem.getNotes(), childItem.getPrice(), childItem.getDate());
+                    expense.setId(childItem.getUniqueID());
                     processExpense.putExtra("Expense", expense);
                     startActivity(processExpense);
-                } else {
+                }else {
                     Intent processIncome = new Intent(HistoryActivity.this, AddIncomeActivity.class);
-                    IncomeItem income = new IncomeItem(Double.parseDouble(c.getString(1)), c.getString(3), c.getString(2),c.getString(4));
-                    income.setId(Integer.parseInt(c.getString(0)));
-                    processIncome.putExtra("Income", income);
+                    IncomeItem incomeItem = new IncomeItem(childItem.getPrice(), childItem.getDate(), childItem.getCategory(), childItem.getNotes());
+                    incomeItem.setId(childItem.getUniqueID());
+                    processIncome.putExtra("Income", incomeItem);
                     startActivity(processIncome);
                 }
+
+
+                return true;
             }
         });
+
+
+//        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+//
+//                c.moveToPosition(position);
+//                update = true;
+//
+//                if (switcher) {
+//                    Intent processExpense = new Intent(HistoryActivity.this, AddExpenseActivity.class);
+//                    ExpenseItem expense = new ExpenseItem(c.getString(1), c.getString(4), Double.parseDouble(c.getString(3)), c.getString(2));
+//                    expense.setId(Integer.parseInt(c.getString(0)));
+//                    processExpense.putExtra("Expense", expense);
+//                    startActivity(processExpense);
+//                } else {
+//                    Intent processIncome = new Intent(HistoryActivity.this, AddIncomeActivity.class);
+//                    IncomeItem income = new IncomeItem(Double.parseDouble(c.getString(1)), c.getString(3), c.getString(2),c.getString(4));
+//                    income.setId(Integer.parseInt(c.getString(0)));
+//                    processIncome.putExtra("Income", income);
+//                    startActivity(processIncome);
+//                }
+//            }
+//        });
     }
 
     private void initUI() {
-        lv = (ListView) findViewById(R.id.lvHistory);
+        //lv = (ListView) findViewById(R.id.lvHistory);
+        lv=(ExpandableListView) findViewById(R.id.lvHistory);
     }
 
     private void init() {
         db = new MoneyDatabase(HistoryActivity.this);
         c = db.getExpensesFromNewestToOldest();
+        setExpandableListViewComponents(c, true);
 
+        historyAdapter=new HistoryAdapter(HistoryActivity.this,groupItems,true);
         adapter = new HistoryListViewAdapter(HistoryActivity.this, c);
     }
 
     // Refresh the view of HistoryActivity using different cursor
-    public void refreshList(Cursor cursor) {
-        adapter.changeCursor(cursor);
-        adapter.notifyDataSetChanged();
+    public void refreshList(Cursor c) {
+
+        setExpandableListViewComponents(c, switcher);
+        historyAdapter.setUpdateGroupItems(groupItems);
+        historyAdapter.notifyDataSetChanged();
+
+        //adapter.changeCursor(cursor);
+        //adapter.notifyDataSetChanged();
     }
 
     //This method is called by DatePickerDialog when the dialog is about to close and set the cursor of HistoryActivity to be all
@@ -313,18 +374,24 @@ public class HistoryActivity extends AppCompatActivity {
                     menu.clear();
                     getMenuInflater().inflate(R.menu.history_income, menu);
                     c = db.getIncomesByNewestToOldest();
-                    adapter.closeCDB();
-                    adapter = new HistoryListViewAdapter(HistoryActivity.this, c);
-                    adapter.setTheView(switcher);
-                    lv.setAdapter(adapter);
+                    historyAdapter.closeCDB();
+                    setExpandableListViewComponents(c,switcher);
+                    //adapter = new HistoryListViewAdapter(HistoryActivity.this, c);
+                    //adapter.setTheView(switcher);
+                    historyAdapter=new HistoryAdapter(HistoryActivity.this,groupItems,switcher);
+                    lv.setAdapter(historyAdapter);
+                    lv.expandGroup(0);
                 } else {
                     menu.clear();
                     getMenuInflater().inflate(R.menu.history_expense, menu);
                     c = db.getExpensesFromNewestToOldest();
-                    adapter.closeCDB();
-                    adapter = new HistoryListViewAdapter(HistoryActivity.this, c);
-                    adapter.setTheView(switcher);
-                    lv.setAdapter(adapter);
+                    historyAdapter.closeCDB();
+                    setExpandableListViewComponents(c, switcher);
+                    //adapter = new HistoryListViewAdapter(HistoryActivity.this, c);
+                    //adapter.setTheView(switcher);
+                    historyAdapter=new HistoryAdapter(HistoryActivity.this,groupItems,switcher);
+                    lv.setAdapter(historyAdapter);
+                    lv.expandGroup(0);
                 }
         }
 
@@ -381,6 +448,80 @@ public class HistoryActivity extends AppCompatActivity {
         if (update) {
             update = false;
             c.requery();
+            refreshList(c);
+
+        }
+    }
+
+    static String getMonthForInt(int num) {
+        String month = "January";
+        DateFormatSymbols dfs = new DateFormatSymbols();
+        String[] months = dfs.getMonths();
+        if (num >= 0 && num <= 11) {
+            month = months[num];
+        }
+        return month;
+    }
+
+    public void setExpandableListViewComponents(Cursor c,boolean expense){
+        groupItems=new ArrayList<>();
+        months=new HashSet<>();
+        if(c!=null) {
+            if (expense) {
+                for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+                    int id=c.getInt(0);
+                    String date = c.getString(2);
+                    String tokens[] = date.split("-");
+                    String category = c.getString(1);
+                    double price = Double.parseDouble(c.getString(3));
+                    String notes = c.getString(4);
+                    String month = getMonthForInt(Integer.parseInt(tokens[1]) - 1);
+                    if (!months.contains(month)) {
+                        ParentItem group = new ParentItem(month);
+                        groupItems.add(group);
+                        months.add(month);
+                    }
+                    for (int i = 0; i < groupItems.size(); i++) {
+                        ParentItem item = groupItems.get(i);
+                        if (item.getMonth() == month) {
+                            ChildItem child = new ChildItem(category, price, date, notes);
+                            child.setMonth(month);
+                            child.setUniqueID(id);
+                            groupItems.get(i).addChild(child);
+                            break;
+                        }
+
+                    }
+                }
+
+            }else {
+                for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+                    int id=c.getInt(0);
+                    String date = c.getString(3);
+                    String tokens[] = date.split("-");
+                    String category = c.getString(2);
+                    double price = Double.parseDouble(c.getString(1));
+                    String notes = c.getString(4);
+                    String month = getMonthForInt(Integer.parseInt(tokens[1]) - 1);
+                    if (!months.contains(month)) {
+                        ParentItem group = new ParentItem(month);
+                        groupItems.add(group);
+                        months.add(month);
+                    }
+                    for (int i = 0; i < groupItems.size(); i++) {
+                        ParentItem item = groupItems.get(i);
+                        if (item.getMonth() == month) {
+                            ChildItem child = new ChildItem(category, price, date, notes);
+                            child.setMonth(month);
+                            child.setUniqueID(id);
+                            groupItems.get(i).addChild(child);
+                            break;
+                        }
+
+                    }
+                }
+            }
+
         }
     }
 

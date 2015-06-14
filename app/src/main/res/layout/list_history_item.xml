@@ -38,7 +38,7 @@
         android:textSize="@dimen/text_size_date_history_item"
         android:textStyle="bold" />
 
-    <TextView
+    <me.grantland.widget.AutofitTextView
         android:id="@+id/tvCategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

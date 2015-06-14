@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <me.grantland.widget.AutofitTextView
+        android:id="@+id/tvGroupName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:text="June"
+        android:layout_marginLeft="40dp"
+        />
+
+    <me.grantland.widget.AutofitTextView
+        android:id="@+id/tvGroupAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="100"
+        android:textSize="25sp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        />
+
+
+</RelativeLayout>

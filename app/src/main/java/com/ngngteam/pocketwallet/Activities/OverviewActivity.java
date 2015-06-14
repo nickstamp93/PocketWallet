@@ -65,6 +65,8 @@ public class OverviewActivity extends AppCompatActivity {
 
     private MagnificentChart mcPie;
 
+    int firstDayTable[];
+
     private MoneyDatabase mdb;
 
     private Cursor cursorLastExpense, cursorLastIncome;
@@ -295,12 +297,13 @@ public class OverviewActivity extends AppCompatActivity {
         double totalIncomes;
 
         if (profile.getGrouping().equalsIgnoreCase(getResources().getString(R.string.pref_grouping_monthly))) {
-
             totalExpenses = mdb.getTotalExpensePriceForCurrentMonth();
             totalIncomes = mdb.getTotalIncomePriceForCurrentMonth();
         } else {
-            totalExpenses = mdb.getTotalExpensePriceForCurrentWeek();
-            totalIncomes = mdb.getTotalIncomePriceForCurrentWeek();
+            firstDayTable = new int[]{Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.THURSDAY,
+                    Calendar.FRIDAY, Calendar.SATURDAY, Calendar.SUNDAY};
+            totalExpenses = mdb.getTotalExpensePriceForCurrentWeek(firstDayTable[profile.getDayStart()]);
+            totalIncomes = mdb.getTotalIncomePriceForCurrentWeek(firstDayTable[profile.getDayStart()]);
         }
 
         totalExpenses = Math.round(totalExpenses * 100) / 100.0;
@@ -387,7 +390,7 @@ public class OverviewActivity extends AppCompatActivity {
             Calendar c = Calendar.getInstance();
 
             int currentDay = c.get(Calendar.DAY_OF_WEEK);
-            int endDay = Calendar.MONDAY;
+            int endDay = firstDayTable[profile.getDayStart()];
 
             Date startDate, endDate;
 
@@ -577,7 +580,7 @@ public class OverviewActivity extends AppCompatActivity {
             public void onClick(View view) {
                 cursorLastIncome.moveToFirst();
                 Intent processIncome = new Intent(OverviewActivity.this, AddIncomeActivity.class);
-                IncomeItem income = new IncomeItem(Double.parseDouble(cursorLastIncome.getString(1)), cursorLastIncome.getString(3), cursorLastIncome.getString(2),cursorLastIncome.getString(4));
+                IncomeItem income = new IncomeItem(Double.parseDouble(cursorLastIncome.getString(1)), cursorLastIncome.getString(3), cursorLastIncome.getString(2), cursorLastIncome.getString(4));
                 income.setId(Integer.parseInt(cursorLastIncome.getString(0)));
                 processIncome.putExtra("Income", income);
                 startActivity(processIncome);

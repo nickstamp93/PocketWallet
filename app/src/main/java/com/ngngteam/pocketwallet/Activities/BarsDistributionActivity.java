@@ -201,7 +201,7 @@ public class BarsDistributionActivity extends AppCompatActivity implements Actio
 
         Calendar c = Calendar.getInstance();
         for (int i = 0; i < weeksCount; i++) {
-            weeks.add(i + "W");
+            weeks.add("Week " + i);
             double expenseAmount = moneyDatabase.getWeekTotal(c.get(Calendar.YEAR), c.get(Calendar.DAY_OF_YEAR), true, selectedCategoriesExpense);
             double incomeAmount = moneyDatabase.getWeekTotal(c.get(Calendar.YEAR), c.get(Calendar.DAY_OF_YEAR), false, selectedCategoriesIncome);
             expenseValues.add(new BarEntry((float) expenseAmount, i));

@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.ngngteam.pocketwallet.Model.ExpenseItem;
 import com.ngngteam.pocketwallet.Model.IncomeItem;
+import com.ngngteam.pocketwallet.Utils.SharedPrefsManager;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ import java.util.Date;
  */
 public class MoneyDatabase extends SQLiteOpenHelper {
 
-    private static final int Database_Version = 1;
+    private static final int Database_Version = 2;
     private static final String Database_Name = "MoneyDatabase";
 
     private static final String Table_Expense = "Expense";
@@ -38,7 +39,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
     private static final String Key_IAmount = "amount";
     private static final String Key_ISource = "source";
     private static final String Key_IDate = "date";
-    private static final String Key_INotes="notes";
+    private static final String Key_INotes = "notes";
 
     private SQLiteDatabase mydb;
 
@@ -46,10 +47,13 @@ public class MoneyDatabase extends SQLiteOpenHelper {
             Key_ECategory + " TEXT NOT NULL," + Key_EDate + " TEXT NOT NULL," + Key_EPrice + " DOUBLE," + Key_ENotes + " TEXT)";
 
     private static final String Create_Income_Table = "CREATE TABLE " + Table_Income + "(" + Key_Iid + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-            Key_IAmount + " DOUBLE," + Key_ISource + " TEXT NOT NULL," + Key_IDate + " TEXT NOT NULL,"  + Key_ENotes + " TEXT" + ")";
+            Key_IAmount + " DOUBLE," + Key_ISource + " TEXT NOT NULL," + Key_IDate + " TEXT NOT NULL," + Key_ENotes + " TEXT" + ")";
+
+    private Context context;
 
     public MoneyDatabase(Context context) {
         super(context, Database_Name, null, Database_Version);
+        this.context = context;
     }
 
     @Override
@@ -60,6 +64,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i2) {
+        //TODO upgrade in such a way that the old data are not deleted
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + Table_Expense);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + Table_Income);
 
@@ -90,7 +95,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         values.put(Key_IAmount, income.getAmount());
         values.put(Key_ISource, income.getSource());
         values.put(Key_IDate, income.getDate());
-        values.put(Key_INotes,income.getNotes());
+        values.put(Key_INotes, income.getNotes());
 
         mydb.insert(Table_Income, null, values);
 
@@ -113,7 +118,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         values.put(Key_ISource, income.getSource());
         values.put(Key_IAmount, income.getAmount());
         values.put(Key_IDate, income.getDate());
-        values.put(Key_INotes,income.getNotes());
+        values.put(Key_INotes, income.getNotes());
 
         getReadableDatabase().update(Table_Income, values, Key_Iid + " = " + income.getId(), null);
     }
@@ -205,7 +210,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
     }
 
     //return a cursor which contains the tuples of table expense with Date equal to parameter date
-    public Cursor getExpensesByDate(String date,String category) {
+    public Cursor getExpensesByDate(String date, String category) {
 
         String dateTokens[] = date.split("-");
         String reformedDate = dateTokens[2] + "-" + dateTokens[1] + "-" + dateTokens[0];
@@ -279,6 +284,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         }
         return getReadableDatabase().rawQuery("SELECT * FROM " + Table_Income + " ORDER BY " + Key_IAmount + order + " , " + Key_IDate + " DESC", null);
     }
+
     //return a cursor which contains the tuples of table income with Date equal to parameter date
     public Cursor getIncomesByDate(String date) {
 
@@ -290,7 +296,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
     }
 
     //return a cursor which contains the tuples of table income with Date equal to parameter date
-    public Cursor getIncomesByDate(String date,String category) {
+    public Cursor getIncomesByDate(String date, String category) {
 
         String dateTokens[] = date.split("-");
         String reformedDate = dateTokens[2] + "-" + dateTokens[1] + "-" + dateTokens[0];
@@ -346,12 +352,6 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         return true;
 
     }
-
-
-
-
-
-
 
 
     public double getTotalExpensePriceForCurrentMonth() {
@@ -437,14 +437,15 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         return total;
     }
 
-    public double getTotalExpensePriceForCurrentWeek() {
+    //parameter is a calendar constant
+    public double getTotalExpensePriceForCurrentWeek(int firstDayOfWeek) {
 
         double total = 0;
 
         Calendar c = Calendar.getInstance();
 
         int currentDay = c.get(Calendar.DAY_OF_WEEK);
-        int endDay = Calendar.MONDAY;
+        int endDay = firstDayOfWeek;
 
         Date startDate, endDate;
 
@@ -504,14 +505,15 @@ public class MoneyDatabase extends SQLiteOpenHelper {
 
     }
 
-    public double getTotalIncomePriceForCurrentWeek() {
+    //parameter is calendar constant
+    public double getTotalIncomePriceForCurrentWeek(int firstDayOfWeek) {
 
         double total = 0;
 
         Calendar c = Calendar.getInstance();
 
         int currentDay = c.get(Calendar.DAY_OF_WEEK);
-        int endDay = Calendar.MONDAY;
+        int endDay = firstDayOfWeek;
 
         Date startDate, endDate;
         if (currentDay == endDay) {
@@ -571,7 +573,6 @@ public class MoneyDatabase extends SQLiteOpenHelper {
     }
 
 
-
     public double getMonthTotalForCategory(String category, boolean isExpense) {
 
         Cursor cursor;
@@ -616,7 +617,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         return total;
     }
 
-    public double getWeekTotalForCategory(String category, boolean isExpense) {
+    public double getWeekTotalForCategory(int firstDayOfWeek, String category, boolean isExpense) {
 
         double total = 0;
         Cursor cursor;
@@ -624,7 +625,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         Calendar c = Calendar.getInstance();
 
         int currentDay = c.get(Calendar.DAY_OF_WEEK);
-        int endDay = Calendar.MONDAY;
+        int endDay = firstDayOfWeek;
 
         Date startDate, endDate;
 
@@ -770,10 +771,10 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         c.set(Calendar.DAY_OF_YEAR, day);
         c.set(Calendar.YEAR, year);
 
-//        c.set(year, month, day);
-
         int currentDay = day;
-        int endDay = Calendar.MONDAY;
+        int days[] = {Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.THURSDAY,
+                Calendar.FRIDAY, Calendar.SATURDAY, Calendar.SUNDAY};
+        int endDay = days[new SharedPrefsManager(context).getPrefsDayStart()];
 
         Date startDate, endDate;
 
@@ -888,7 +889,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
 
     }
 
-    public double getDailyTotalForCategory(String category, boolean isExpense){
+    public double getDailyTotalForCategory(String category, boolean isExpense) {
         double total = 0;
         Cursor cursor;
 

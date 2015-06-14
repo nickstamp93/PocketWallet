@@ -28,6 +28,7 @@ import com.github.mikephil.charting.utils.ValueFormatter;
 import com.ngngteam.pocketwallet.Data.CategoryDatabase;
 import com.ngngteam.pocketwallet.Data.MoneyDatabase;
 import com.ngngteam.pocketwallet.R;
+import com.ngngteam.pocketwallet.Utils.SharedPrefsManager;
 import com.ngngteam.pocketwallet.Utils.Themer;
 
 import java.text.ParseException;
@@ -267,13 +268,16 @@ public class PieDistributionActivity extends AppCompatActivity implements Action
     private void initPieCurrentWeek() {
         totalAmount = 0;
 
+        int days[] = {Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.THURSDAY,
+                Calendar.FRIDAY, Calendar.SATURDAY, Calendar.SUNDAY};
+        int firstDay = days[new SharedPrefsManager(this).getPrefsDayStart()];
 
         values = new ArrayList<>();
         finalCategories = new ArrayList<>();
         colors = new ArrayList<>();
 
         for (int i = 0; i < allCategories.size(); i++) {
-            double amount = moneyDatabase.getWeekTotalForCategory(allCategories.get(i), isExpense);
+            double amount = moneyDatabase.getWeekTotalForCategory(firstDay, allCategories.get(i), isExpense);
             //if this category has positive amount
             if (amount > 0 && selectedCategories.contains(allCategories.get(i))) {
                 totalAmount += amount;
@@ -290,7 +294,7 @@ public class PieDistributionActivity extends AppCompatActivity implements Action
         Calendar c = Calendar.getInstance();
 
         int currentDay = c.get(Calendar.DAY_OF_WEEK);
-        int endDay = Calendar.MONDAY;
+        int endDay = firstDay;
 
         Date startDate, endDate;
 

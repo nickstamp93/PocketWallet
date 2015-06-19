@@ -182,7 +182,7 @@
     <!--Filters-->
     <string name="filter_category">Ανά Κατηγορία</string>
     <string name="filter_price">Ανά Τιμή</string>
-    <string name="filter_date">Μία Συγκεκριμενη Μέρα Ημερομηνία</string>
+    <string name="filter_date">Συγκεκριμενη Μέρα</string>
     <string name="filter_date_to_date">Ανά Χρονική Περίοδο</string>
     <string name="filter_recent">Ανά Ημερομηνία</string>
     <string name="filter_amount">Ανά Ποσό</string>

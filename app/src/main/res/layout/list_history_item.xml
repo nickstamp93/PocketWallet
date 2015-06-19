@@ -46,6 +46,7 @@
         android:layout_toLeftOf="@+id/tvPrice"
         android:layout_toRightOf="@+id/livhistory"
         android:padding="@dimen/layout_padding_small"
+        android:singleLine="true"
         android:text="Category"
         android:textAppearance="?android:textAppearanceLarge"
         android:textSize="@dimen/text_size_category_history_item"

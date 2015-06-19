@@ -15,7 +15,6 @@ import android.widget.ExpandableListView;
 
 import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
 import com.ngngteam.pocketwallet.Adapters.HistoryAdapter;
-import com.ngngteam.pocketwallet.Adapters.HistoryListViewAdapter;
 import com.ngngteam.pocketwallet.Data.CategoryDatabase;
 import com.ngngteam.pocketwallet.Data.MoneyDatabase;
 import com.ngngteam.pocketwallet.Model.ChildItem;

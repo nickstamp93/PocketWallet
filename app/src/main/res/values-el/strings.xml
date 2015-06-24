@@ -92,7 +92,9 @@
 
     <string name="pref_currency_default_value">€</string>
     <string name="pref_grouping_weekly">Ανά Εβδομάδα</string>
-    <string name="pref_grouping_monthly">Ανα μήνα</string>
+    <string name="pref_grouping_monthly">Ανά μήνα</string>
+    <string name="pref_grouping_daily">Ανά μέρα</string>
+    <string name="pref_grouping_none">Συνολικά</string>
 
     <string name="text_about">Η εφαρμογή Pocket Wallet αναπτύχθηκε από την προγραμματιστική ομάδα NG^2
         , από τους Νίκο Σταμπουλή και Νίκο Ζήση.
@@ -169,7 +171,7 @@
     <!-- UserDetailsActivity -->
     <string name="textview_headline_username">Όνομα χρήστη</string>
     <string name="textview_headline_savings">Αρχικά χρήματα</string>
-    <string name="textview_headline_grouping">Κατανομή συναλλαγών</string>
+    <string name="textview_headline_grouping">Οργάνωση συναλλαγών</string>
 
     <!-- DeleteCategoryDialog -->
     <string name="dialog_delete_category_text">Υπάρχουν συναλλαγές αυτής της κατηγορίας στο ιστορικό . Διαγραφή ή Μετακίνηση αυτών των συναλλαγών σε άλλη κατηγορία.</string>
@@ -215,5 +217,7 @@
 
 
     <string name="text_period">Περίοδος</string>
+    <string name="text_total">Συνολικά</string>
+    <string name="text_no_grouping_toast">Οι συναλλαγές εσόδων - εξόδων θα εμφανίζονται συνολικά χωρίς ομαδοποίηση</string>
 
 </resources>

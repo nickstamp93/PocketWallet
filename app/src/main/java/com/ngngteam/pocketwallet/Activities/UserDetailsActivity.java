@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,8 @@ public class UserDetailsActivity extends AppCompatActivity {
     RadioGroup radioGroup;
     Spinner spinnerDayStart;
     SpinnerAdapter spinnerAdapter;
+
+    TableRow rowDayStart;
 
     //variables set by user
     float savings;
@@ -90,6 +93,8 @@ public class UserDetailsActivity extends AppCompatActivity {
 
         tvDayStart = (TextView) findViewById(R.id.tvDayStart);
 
+        rowDayStart = (TableRow) findViewById(R.id.rowDayStart);
+
         bOk = (Button) findViewById(R.id.bOK);
         bCancel = (Button) findViewById(R.id.bCancel);
 
@@ -109,11 +114,19 @@ public class UserDetailsActivity extends AppCompatActivity {
                     R.array.days_month, R.layout.spinner_item_simple);
 
             tvDayStart.setText(getString(R.string.textview_headline_month_start));
-        } else {
+            rowDayStart.setVisibility(View.VISIBLE);
+        } else if (manager.getPrefsGrouping().equalsIgnoreCase(getResources().getString(R.string.pref_grouping_weekly))) {
             radioGroup.check(R.id.rbWeekly);
             spinnerAdapter = ArrayAdapter.createFromResource(this,
                     R.array.days_week, R.layout.spinner_item_simple);
             tvDayStart.setText(getString(R.string.textview_headline_week_start));
+            rowDayStart.setVisibility(View.VISIBLE);
+        } else if (manager.getPrefsGrouping().equalsIgnoreCase(getResources().getString(R.string.pref_grouping_daily))) {
+            radioGroup.check(R.id.rbDaily);
+            rowDayStart.setVisibility(View.GONE);
+        } else {
+            radioGroup.check(R.id.rbNoGrouping);
+            rowDayStart.setVisibility(View.GONE);
         }
 
         spinnerDayStart.setAdapter(spinnerAdapter);
@@ -139,11 +152,18 @@ public class UserDetailsActivity extends AppCompatActivity {
                 spinnerAdapter = ArrayAdapter.createFromResource(UserDetailsActivity.this,
                         R.array.days_week, R.layout.spinner_item_simple);
                 spinnerDayStart.setAdapter(spinnerAdapter);
-            } else {
+                rowDayStart.setVisibility(View.VISIBLE);
+            } else if (checkedId == R.id.rbMonthly) {
                 tvDayStart.setText(getString(R.string.textview_headline_month_start));
                 spinnerAdapter = ArrayAdapter.createFromResource(UserDetailsActivity.this,
                         R.array.days_month, R.layout.spinner_item_simple);
                 spinnerDayStart.setAdapter(spinnerAdapter);
+                rowDayStart.setVisibility(View.VISIBLE);
+            } else if (checkedId == R.id.rbDaily) {
+                rowDayStart.setVisibility(View.GONE);
+            } else {
+                Toast.makeText(UserDetailsActivity.this, getString(R.string.text_no_grouping_toast), Toast.LENGTH_LONG).show();
+                rowDayStart.setVisibility(View.GONE);
             }
         }
     };
@@ -198,17 +218,6 @@ public class UserDetailsActivity extends AppCompatActivity {
         return true;
     }
 
-//    private void setDaySpinnerValue(String dayStart) {
-//        int pos = 0;
-//        for (int i = 0; i < spinnerAdapter.getCount(); i++) {
-//            if (spinnerAdapter.getItem(i).equals(dayStart)) {
-//                pos = i;
-//            }
-//        }
-//        Log.i("nikos", pos + "");
-//        spinnerDayStart.setSelection(pos);
-//    }
-
     //get user data from the XML and store them in the variables
     private void getDataFromXml() {
         username = etUsername.getText().toString();
@@ -219,6 +228,12 @@ public class UserDetailsActivity extends AppCompatActivity {
                 break;
             case R.id.rbMonthly:
                 grouping = getResources().getString(R.string.pref_grouping_monthly);
+                break;
+            case R.id.rbDaily:
+                grouping = getResources().getString(R.string.pref_grouping_daily);
+                break;
+            case R.id.rbNoGrouping:
+                grouping = getResources().getString(R.string.pref_grouping_none);
                 break;
         }
 

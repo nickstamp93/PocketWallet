@@ -93,6 +93,8 @@
     <string name="pref_currency_default_value">€</string>
     <string name="pref_grouping_weekly">weekly</string>
     <string name="pref_grouping_monthly">monthly</string>
+    <string name="pref_grouping_daily">daily</string>
+    <string name="pref_grouping_none">total</string>
 
     <string name="text_about">The application Pocket Wallet was developed by the development team NG^2
         , by Nick Stampoulis and Nick Zissis.
@@ -213,6 +215,8 @@
     <string name="textview_headline_month_start">Month starts on:</string>
 
     <string name="text_period">Period</string>
+    <string name="text_total">Total</string>
+    <string name="text_no_grouping_toast">Transactions will be displayed without grouping</string>
 
 
 </resources>

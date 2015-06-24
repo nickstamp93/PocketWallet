@@ -31,8 +31,7 @@
 
     <dimen name="pie_view_width">140dp</dimen>
     <dimen name="pie_view_height">140dp</dimen>
-    <integer name="text_size_pie_heading_small">14</integer>
-    <integer name="text_size_pie_heading">20</integer>
+    <dimen name="text_size_bar_heading">20sp</dimen>
 
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="color_swatch_large">64dip</dimen>
@@ -47,5 +46,5 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="pattern_view_size" >200dp</dimen>
+    <dimen name="pattern_view_size">200dp</dimen>
 </resources>

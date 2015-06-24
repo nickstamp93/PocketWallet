@@ -32,8 +32,7 @@
 
     <dimen name="pie_view_width">180dp</dimen>
     <dimen name="pie_view_height">180dp</dimen>
-    <integer name="text_size_pie_heading_small">18</integer>
-    <integer name="text_size_pie_heading">26</integer>
+    <dimen name="text_size_bar_heading">26sp</dimen>
 
     <dimen name="bottom_margin_headlines_small">20dp</dimen>
 

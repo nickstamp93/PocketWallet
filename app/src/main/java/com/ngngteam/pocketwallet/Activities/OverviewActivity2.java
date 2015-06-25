@@ -287,19 +287,19 @@ public class OverviewActivity2 extends AppCompatActivity {
             firstDayTable = new int[]{1, 5, 10, 15, 20, 25};
             totalExpenses = mdb.getTotalForCurrentMonth(true);
             totalIncomes = mdb.getTotalForCurrentMonth(false);
-            llSavings.setVisibility(View.VISIBLE);
+//            llSavings.setVisibility(View.VISIBLE);
         } else if (profile.getGrouping().equalsIgnoreCase(getResources().getString(R.string.pref_grouping_weekly))) {
             firstDayTable = new int[]{Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.THURSDAY,
                     Calendar.FRIDAY, Calendar.SATURDAY, Calendar.SUNDAY};
             totalExpenses = mdb.getTotalForCurrentWeek(firstDayTable[profile.getDayStart()], true);
             totalIncomes = mdb.getTotalForCurrentWeek(firstDayTable[profile.getDayStart()], false);
-            llSavings.setVisibility(View.VISIBLE);
+//            llSavings.setVisibility(View.VISIBLE);
         } else if (profile.getGrouping().equalsIgnoreCase(getResources().getString(R.string.pref_grouping_daily))) {
             totalExpenses = mdb.getDailyTotal(true);
             totalIncomes = mdb.getDailyTotal(false);
-            llSavings.setVisibility(View.VISIBLE);
+//            llSavings.setVisibility(View.VISIBLE);
         } else {
-            llSavings.setVisibility(View.GONE);
+//            llSavings.setVisibility(View.GONE);
             totalExpenses = mdb.getTotal(true);
             totalIncomes = mdb.getTotal(false);
         }
@@ -310,6 +310,9 @@ public class OverviewActivity2 extends AppCompatActivity {
 
         //calculate balance/savings and set it to profile object
         double balance = totalIncomes - totalExpenses;
+//        if(manager.getPrefsGrouping().equalsIgnoreCase(getResources().getString(R.string.pref_grouping_none))){
+//            balance += profile.getSavings();
+//        }
         double savings = mdb.getTotal(false) - mdb.getTotal(true) - balance + profile.getSavings();
 
         //round to 2 decimal digits

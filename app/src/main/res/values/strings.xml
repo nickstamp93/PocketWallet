@@ -169,7 +169,7 @@
 
     <!-- UserDetailsActivity -->
     <string name="textview_headline_username">Username</string>
-    <string name="textview_headline_savings">Savings</string>
+    <string name="textview_headline_savings">Initial Money</string>
     <string name="textview_headline_grouping">Grouping</string>
 
     <!-- DeleteCategoryDialog -->
@@ -217,6 +217,8 @@
     <string name="text_period">Period</string>
     <string name="text_total">Total</string>
     <string name="text_no_grouping_toast">Transactions will be displayed without grouping</string>
+    <string name="text_change_savings_toast" >The new savings is </string>
+    <string name="text_change_savings_warning" >If you change your initial money , savings value will be affected</string>
 
 
 </resources>

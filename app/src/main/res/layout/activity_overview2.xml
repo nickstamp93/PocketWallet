@@ -140,8 +140,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:padding="@dimen/layout_padding_small"
-                        android:text="date"
                         android:singleLine="true"
+                        android:text="date"
                         android:textColor="?textCustomColor"
                         android:textSize="@dimen/text_size_bar_heading" />
 
@@ -149,8 +149,7 @@
                         android:id="@+id/overview_bar"
                         android:layout_width="match_parent"
                         android:layout_height="160dp"
-                        android:layout_margin="20dp"
-                        android:background="#ffffff" />
+                        android:layout_margin="20dp" />
 
 
                 </LinearLayout>

@@ -1,8 +1,7 @@
 package com.ngngteam.pocketwallet.Activities;
 
-import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -20,27 +19,27 @@ import com.ngngteam.pocketwallet.R;
 import com.ngngteam.pocketwallet.Utils.SharedPrefsManager;
 import com.ngngteam.pocketwallet.Utils.Themer;
 
+import java.util.Calendar;
+
 public class UserDetailsActivity extends AppCompatActivity {
 
     //SharedPrefsManager object
-    SharedPrefsManager manager;
+    private SharedPrefsManager manager;
 
-    Cursor cursorExpense, cursorIncome;
-    MoneyDatabase db;
+    private MoneyDatabase db;
 
-    EditText etSavings, etUsername;
-    TextView tvDayStart;
-    Button bOk, bCancel;
-    RadioGroup radioGroup;
-    Spinner spinnerDayStart;
-    SpinnerAdapter spinnerAdapter;
+    private EditText etSavings, etUsername;
+    private TextView tvDayStart;
+    private Button bOk, bCancel;
+    private RadioGroup radioGroup;
+    private Spinner spinnerDayStart;
+    private SpinnerAdapter spinnerAdapter;
 
-    TableRow rowDayStart;
+    private TableRow rowDayStart;
 
     //variables set by user
-    float savings;
-    String username, grouping, dayStart;
-    int day;
+    private float savings;
+    private String username, grouping;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +47,6 @@ public class UserDetailsActivity extends AppCompatActivity {
         Themer.setThemeToActivity(this);
 
         super.onCreate(savedInstanceState);
-
 
         setContentView(R.layout.activity_user_details);
 
@@ -63,14 +61,11 @@ public class UserDetailsActivity extends AppCompatActivity {
         //init values
         fillUIValues();
 
-
     }
 
     private void init() {
 
         db = new MoneyDatabase(this);
-        cursorExpense = db.getAllExpenses();
-        cursorIncome = db.getAllIncomes();
 
     }
 
@@ -80,12 +75,7 @@ public class UserDetailsActivity extends AppCompatActivity {
         etUsername = (EditText) findViewById(R.id.etUsername);
 
         etSavings = (EditText) findViewById(R.id.etSavings);
-        if (cursorExpense.moveToFirst() || cursorIncome.moveToFirst()) {
-            Toast.makeText(this, getString(R.string.toast_savings), Toast.LENGTH_LONG).show();
-            etSavings.setEnabled(false);
-            etSavings.setTextColor(Color.GRAY);
-
-        }
+        etSavings.setOnFocusChangeListener(editTextListener);
 
         radioGroup = (RadioGroup) findViewById(R.id.rgGrouping);
 
@@ -141,8 +131,19 @@ public class UserDetailsActivity extends AppCompatActivity {
         bOk.setOnClickListener(buttonListener);
         bCancel.setOnClickListener(buttonListener);
 
-
     }
+
+    private View.OnFocusChangeListener editTextListener = new View.OnFocusChangeListener() {
+
+        @Override
+        public void onFocusChange(View v, boolean hasFocus) {
+            if (hasFocus) {
+                Toast.makeText(UserDetailsActivity.this, getString(R.string.text_change_savings_warning), Toast.LENGTH_SHORT)
+                        .show();
+            }
+        }
+    };
+
 
     private RadioGroup.OnCheckedChangeListener radioListener = new RadioGroup.OnCheckedChangeListener() {
         @Override
@@ -162,7 +163,6 @@ public class UserDetailsActivity extends AppCompatActivity {
             } else if (checkedId == R.id.rbDaily) {
                 rowDayStart.setVisibility(View.GONE);
             } else {
-                Toast.makeText(UserDetailsActivity.this, getString(R.string.text_no_grouping_toast), Toast.LENGTH_LONG).show();
                 rowDayStart.setVisibility(View.GONE);
             }
         }
@@ -185,6 +185,42 @@ public class UserDetailsActivity extends AppCompatActivity {
 
                     getDataFromXml();
 
+                    if (savings != manager.getPrefsSavings()) {
+                        double totalExpenses;
+                        double totalIncomes;
+
+                        //get the prefs grouping and initialize total expense-income
+                        if (manager.getPrefsGrouping().equalsIgnoreCase(getResources().getString(R.string.pref_grouping_monthly))) {
+                            totalExpenses = db.getTotalForCurrentMonth(true);
+                            totalIncomes = db.getTotalForCurrentMonth(false);
+                        } else if (manager.getPrefsGrouping().equalsIgnoreCase(getResources().getString(R.string.pref_grouping_weekly))) {
+                            int[] firstDayTable = new int[]{Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.THURSDAY,
+                                    Calendar.FRIDAY, Calendar.SATURDAY, Calendar.SUNDAY};
+                            totalExpenses = db.getTotalForCurrentWeek(firstDayTable[manager.getPrefsDayStart()], true);
+                            totalIncomes = db.getTotalForCurrentWeek(firstDayTable[manager.getPrefsDayStart()], false);
+                        } else if (manager.getPrefsGrouping().equalsIgnoreCase(getResources().getString(R.string.pref_grouping_daily))) {
+                            totalExpenses = db.getDailyTotal(true);
+                            totalIncomes = db.getDailyTotal(false);
+                        } else {
+                            totalExpenses = db.getTotal(true);
+                            totalIncomes = db.getTotal(false);
+                        }
+
+                        //round values to 2 decimal digits
+                        totalExpenses = Math.round(totalExpenses * 100) / 100.0;
+                        totalIncomes = Math.round(totalIncomes * 100) / 100.0;
+
+                        //calculate balance/savings and set it to profile object
+                        double balance = totalIncomes - totalExpenses;
+                        double totalSavings = db.getTotal(false) - db.getTotal(true) - balance + savings;
+                        Toast.makeText(UserDetailsActivity.this,
+                                getString(R.string.text_change_savings_toast)
+                                        + " " + totalSavings + " " +
+                                        PreferenceManager.getDefaultSharedPreferences(UserDetailsActivity.this).getString(getString(R.string.pref_key_currency), "€"),
+                                Toast.LENGTH_LONG).show();
+                    }
+
+
                     manager.setPrefsIsProfile(true);
                     manager.setPrefsUsername(username);
                     manager.setPrefsSavings(savings);
@@ -192,6 +228,7 @@ public class UserDetailsActivity extends AppCompatActivity {
                     manager.setPrefsDayStart(spinnerDayStart.getSelectedItemPosition());
 
                     manager.commit();
+
 
                     //set the activity result to an OK state
                     setResult(RESULT_OK);

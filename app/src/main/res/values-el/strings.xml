@@ -219,5 +219,7 @@
     <string name="text_period">Περίοδος</string>
     <string name="text_total">Συνολικά</string>
     <string name="text_no_grouping_toast">Οι συναλλαγές εσόδων - εξόδων θα εμφανίζονται συνολικά χωρίς ομαδοποίηση</string>
+    <string name="text_change_savings_toast">Το νεο ποσό αποταμίευσης είναι </string>
+    <string name="text_change_savings_warning" >Αν αλλάξετε τα αρχικά χρήματα , θα επηρεαστεί το ποσό αποταμίευσης</string>
 
 </resources>

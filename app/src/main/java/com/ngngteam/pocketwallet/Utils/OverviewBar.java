@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.preference.PreferenceManager;
+import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -17,9 +18,9 @@ public class OverviewBar extends View {
 
     private Paint textPaint;
     private Paint boxPaintExpense;
-    private Paint boxPaingIncome;
+    private Paint boxPaintIncome;
     private Paint textPaintExpense;
-    private Paint textPaingIncome;
+    private Paint textPaintIncome;
     private double expense;
     private double income;
     private float scaleFactor;
@@ -49,19 +50,19 @@ public class OverviewBar extends View {
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         scaleFactor = metrics.density;
 
-        textPaint = new Paint();
+        textPaint = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
         boxPaintExpense = new Paint();
-        boxPaingIncome = new Paint();
-        textPaintExpense = new Paint();
-        textPaingIncome = new Paint();
+        boxPaintIncome = new Paint();
+        textPaintExpense = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
+        textPaintIncome = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
         textPaint.setColor(getResources().getColor(R.color.bpRed));
         textPaint.setTextSize(14 * scaleFactor);
         boxPaintExpense.setColor(getResources().getColor(R.color.bpRed));
-        boxPaingIncome.setColor(getResources().getColor(R.color.YellowGreen));
+        boxPaintIncome.setColor(getResources().getColor(R.color.YellowGreen));
         textPaintExpense.setColor(getResources().getColor(R.color.bpRed));
-        textPaingIncome.setColor(getResources().getColor(R.color.YellowGreen));
+        textPaintIncome.setColor(getResources().getColor(R.color.YellowGreen));
         textPaintExpense.setTextSize(14 * scaleFactor);
-        textPaingIncome.setTextSize(14 * scaleFactor);
+        textPaintIncome.setTextSize(14 * scaleFactor);
 
     }
 
@@ -81,9 +82,9 @@ public class OverviewBar extends View {
 
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        int padding = (int) (15 * scaleFactor);
         int fullWidth = getWidth();
         int fullHeight = getHeight();
-        int padding = (int) (10 * scaleFactor);
         int maxBarHeight = fullHeight - 5 * padding;
         float incomeBarHeight;
         float expenseBarHeight;
@@ -103,11 +104,11 @@ public class OverviewBar extends View {
         int incomeBarBottom = fullHeight - padding * 3;
         float incomeBarTop = incomeBarBottom - incomeBarHeight;
         float incomeValuePos = incomeBarTop - padding;
-        canvas.drawRect(padding * 2, incomeBarTop, middle - padding, incomeBarBottom, boxPaingIncome);
-        canvas.drawText(context.getString(R.string.action_income), quarter - padding, fullHeight - padding, textPaingIncome);
+        canvas.drawRect(padding * 2, incomeBarTop, middle - padding, incomeBarBottom, boxPaintIncome);
+        canvas.drawText(context.getString(R.string.action_income), quarter - padding, fullHeight - padding, textPaintIncome);
         canvas.drawText(income + " " +
                 PreferenceManager.getDefaultSharedPreferences(context).getString(context.getString(R.string.pref_key_currency), "€")
-                , quarter - padding, incomeValuePos, textPaingIncome);
+                , quarter - padding, incomeValuePos, textPaintIncome);
 
         int expenseBarBottom = fullHeight - padding * 3;
         float expenseBarTop = expenseBarBottom - expenseBarHeight;

@@ -1,6 +1,7 @@
 package com.ngngteam.pocketwallet.Activities;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import com.ngngteam.pocketwallet.Adapters.DrawerAdapter;
 import com.ngngteam.pocketwallet.Data.CategoryDatabase;
 import com.ngngteam.pocketwallet.Data.MoneyDatabase;
+import com.ngngteam.pocketwallet.Dialogs.ChangelogDialog;
 import com.ngngteam.pocketwallet.Extra.LetterImageView;
 import com.ngngteam.pocketwallet.Model.ExpenseItem;
 import com.ngngteam.pocketwallet.Model.IncomeItem;
@@ -93,6 +95,18 @@ public class OverviewActivity2 extends AppCompatActivity {
 
         initListeners();
 
+        try {
+            int oldVersion = manager.getPrefsVersion();
+            int versionCode = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
+            if (oldVersion != versionCode) {
+                manager.startEditing();
+                manager.setPrefsVersion(versionCode);
+                manager.commit();
+                new ChangelogDialog().show(getFragmentManager(), "tag");
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
 
     }
 

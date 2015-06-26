@@ -26,6 +26,7 @@ public class SharedPrefsManager {
     private static final String PREFS_GROUPING = "grouping";
     private static final String PREFS_DAY_START = "dayStart";
     private static final String PREFS_THEME_CHANGED = "themeChanged";
+    private static final String PREFS_VERSION = "version";
 
     //the SharedPreferences and Editor objects
     SharedPreferences prefs;
@@ -107,6 +108,10 @@ public class SharedPrefsManager {
         return prefs.getBoolean(PREFS_THEME_CHANGED, false);
     }
 
+    public int getPrefsVersion() {
+        return prefs.getInt(PREFS_VERSION, 1);
+    }
+
     public void setPrefsIsProfile(boolean isProfile) {
         editor.putBoolean(PREFS_IS_PROFILE, isProfile);
     }
@@ -139,6 +144,10 @@ public class SharedPrefsManager {
 
     public void setPrefsThemeChanged(boolean value) {
         editor.putBoolean(PREFS_THEME_CHANGED, value);
+    }
+
+    public void setPrefsVersion(int newVersion) {
+        editor.putInt(PREFS_VERSION, newVersion);
     }
 
 }

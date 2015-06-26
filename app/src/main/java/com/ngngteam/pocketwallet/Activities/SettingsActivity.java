@@ -203,7 +203,7 @@ public class SettingsActivity extends PreferenceActivity
                         getResources().getColor(R.color.background_material_light)
                 };
                 ColorPickerDialog dialog = ColorPickerDialog.newInstance(R.string.color_picker_default_title, mColor, 0, 2, ColorPickerDialog.SIZE_LARGE);
-                dialog.setSelectedColor(prefs.getInt(getResources().getString(R.string.pref_key_theme), getResources().getColor(R.color.background_material_dark)));
+                dialog.setSelectedColor(prefs.getInt(getResources().getString(R.string.pref_key_theme), getResources().getColor(R.color.background_material_light)));
                 dialog.setOnColorSelectedListener(colorSetListener);
                 dialog.show(getFragmentManager(), "color");
                 return false;

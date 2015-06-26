@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Dialog">
+        <item name="colorAccent">?textCustomColor</item>
+        <item name="android:textColorPrimary">?textCustomColor</item>
+        <item name="android:windowTitleStyle">@style/TitleDialogTextStyle</item>
+        <item name="android:background">?windowCustomBackground</item>
+    </style>
+    <style name="TitleDialogTextStyle" parent="Base.DialogWindowTitle.AppCompat">
+        <item name="android:textColor">?textCustomColor</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
+    </style>
+
     <!--Light Theme-->
     <style name="Theme.Appcompat_custom_light" parent="Theme.MyAppcompat">
 

@@ -3,10 +3,10 @@
 
     <string-array name="drawer_menu">
         <item>Ιστορικό</item>
-        <item>Νέο Εισόδημα</item>
+        <item>Νέο Έσοδο</item>
         <item>Νέο Έξοδο</item>
         <item>Κατανομές</item>
-        <item>Έσοδα - Έξοδα</item>
+        <item>Στατιστικά</item>
         <item>Κατηγορίες</item>
         <item>Ρυθμίσεις</item>
         <item>Έξοδος</item>

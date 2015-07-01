@@ -19,7 +19,7 @@
     <!-- activity titles -->
     <string name="title_activity_add_expense">Νέο Έξοδο</string>
     <string name="title_activity_add_income">Νέο Έσοδο</string>
-    <string name="title_activity_history">Ιστορικό Συναλλαγών</string>
+    <string name="title_activity_history">Ιστορικό</string>
     <string name="title_activity_settings">Ρυθμίσεις</string>
     <string name="title_activity_user_details">Προφίλ</string>
     <string name="title_activity_categories_manager">Κατηγορίες</string>
@@ -123,7 +123,7 @@
     <string name="legend_text_income">Έσοδα</string>
     <string name="text_no_records">Δεν υπάρχουν συναλλαγές για την τρέχουσα περίοδο</string>
     <string name="text_last_expense">Τελευταίο έξοδο</string>
-    <string name="text_last_income">Τελευταίο εισόδημα</string>
+    <string name="text_last_income">Τελευταίο έσοδο</string>
 
     <string name="close_drawer">Άνοιγμα Μενού</string>
     <string name="open_drawer">Κλείσιμο Μενού</string>
@@ -220,6 +220,6 @@
     <string name="text_total">Συνολικά</string>
     <string name="text_no_grouping_toast">Οι συναλλαγές εσόδων - εξόδων θα εμφανίζονται συνολικά χωρίς ομαδοποίηση</string>
     <string name="text_change_savings_toast">Το νεο ποσό αποταμίευσης είναι </string>
-    <string name="text_change_savings_warning" >Αν αλλάξετε τα αρχικά χρήματα , θα επηρεαστεί το ποσό αποταμίευσης</string>
+    <string name="text_change_savings_warning">Αν αλλάξετε τα αρχικά χρήματα , θα επηρεαστεί το ποσό αποταμίευσης</string>
 
 </resources>

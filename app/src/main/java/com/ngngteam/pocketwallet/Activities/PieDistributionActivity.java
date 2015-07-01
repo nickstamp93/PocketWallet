@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.SpinnerAdapter;
 import android.widget.Switch;
 
@@ -54,7 +53,6 @@ public class PieDistributionActivity extends AppCompatActivity implements Action
     PieChart pieChart;
     Switch switchIsExpense;
     EditText etStart, etEnd;
-    ImageButton bGo;
     CardView cardCustomDate;
 
     private boolean isExpense;
@@ -106,8 +104,10 @@ public class PieDistributionActivity extends AppCompatActivity implements Action
         allCategories = categoryDatabase.getCategories(isExpense);
         selectedCategories = allCategories;
 
-
-        startDate = endDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date(Calendar.getInstance().getTimeInMillis()));
+        endDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date(Calendar.getInstance().getTimeInMillis()));
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DAY_OF_YEAR, -10);
+        startDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date(c.getTimeInMillis()));
 
 
     }
@@ -121,7 +121,6 @@ public class PieDistributionActivity extends AppCompatActivity implements Action
         etStart = (EditText) findViewById(R.id.etDateFrom);
         etEnd = (EditText) findViewById(R.id.etDateTo);
 
-        bGo = (ImageButton) findViewById(R.id.bPieGo);
     }
 
     private void setUpUI() {
@@ -135,13 +134,6 @@ public class PieDistributionActivity extends AppCompatActivity implements Action
 
         etStart.setOnClickListener(etDatesListener);
         etEnd.setOnClickListener(etDatesListener);
-
-        bGo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                initPieCustomPeriod();
-            }
-        });
 
     }
 
@@ -385,13 +377,11 @@ public class PieDistributionActivity extends AppCompatActivity implements Action
         try {
             Date sDate = new SimpleDateFormat("dd-MM-yyyy").parse(startDate);
             Date eDate = new SimpleDateFormat("dd-MM-yyyy").parse(endDate);
-            if (startDate.split("-")[1].equals(endDate.split("-")[1])) {
-
+            if (sDate.getMonth() == eDate.getMonth()) {
                 centerText = new SimpleDateFormat("dd").format(sDate) +
                         "-" + new SimpleDateFormat("dd MMM").format(eDate);
             } else {
-
-                centerText = new SimpleDateFormat("dd").format(sDate) +
+                centerText = new SimpleDateFormat("dd MMM").format(sDate) +
                         "-" + new SimpleDateFormat("dd MMM").format(eDate);
             }
 
@@ -400,6 +390,68 @@ public class PieDistributionActivity extends AppCompatActivity implements Action
             e.printStackTrace();
         }
 
+
+        setDataToPie(values, finalCategories, colors, mode);
+    }
+
+    private void initPieDay() {
+        totalAmount = 0;
+
+        values = new ArrayList<>();
+        finalCategories = new ArrayList<>();
+        colors = new ArrayList<>();
+
+        for (int i = 0; i < allCategories.size(); i++) {
+            double amount = moneyDatabase.getDailyTotalForCategory(allCategories.get(i), isExpense);
+            //if this category has positive amount
+            if (amount > 0 && selectedCategories.contains(allCategories.get(i))) {
+                totalAmount += amount;
+                //add it in the pie
+                Entry e = new Entry(
+                        (float) amount, i);
+                values.add(e);
+                finalCategories.add(allCategories.get(i));
+                colors.add(categoryDatabase.getColorFromCategory(allCategories.get(i), isExpense));
+            }
+        }
+        totalAmount = Math.round(totalAmount * 100) / 100.0;
+
+        centerText = "Today";
+
+        pieChart.setCenterTextSize(20f);
+
+        String mode = isExpense ? "Expense" : "Income";
+
+        setDataToPie(values, finalCategories, colors, mode);
+    }
+
+    private void initPieTotal() {
+        totalAmount = 0;
+
+        values = new ArrayList<>();
+        finalCategories = new ArrayList<>();
+        colors = new ArrayList<>();
+
+        for (int i = 0; i < allCategories.size(); i++) {
+            double amount = moneyDatabase.getTotalForCategory(allCategories.get(i), isExpense);
+            //if this category has positive amount
+            if (amount > 0 && selectedCategories.contains(allCategories.get(i))) {
+                totalAmount += amount;
+                //add it in the pie
+                Entry e = new Entry(
+                        (float) amount, i);
+                values.add(e);
+                finalCategories.add(allCategories.get(i));
+                colors.add(categoryDatabase.getColorFromCategory(allCategories.get(i), isExpense));
+            }
+        }
+        totalAmount = Math.round(totalAmount * 100) / 100.0;
+        centerText = "Total";
+
+        //and set it to the center text
+        pieChart.setCenterTextSize(20f);
+//        centerText = sMonth;
+        String mode = isExpense ? "Expense" : "Income";
 
         setDataToPie(values, finalCategories, colors, mode);
     }
@@ -499,17 +551,32 @@ public class PieDistributionActivity extends AppCompatActivity implements Action
                 endDate = date;
                 etEnd.setText(endDate);
             }
+            initPieCustomPeriod();
         }
     };
 
     @Override
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
         selectedDropDownPos = itemPosition;
-        if (itemPosition == 2) {
+        if (itemPosition == 4) {
             cardCustomDate.setVisibility(View.VISIBLE);
+            initPieCustomPeriod();
         } else {
             cardCustomDate.setVisibility(View.INVISIBLE);
 
+            switch (itemPosition) {
+                case 0:
+                    initPieCurrentMonth();
+                    break;
+                case 1:
+                    initPieCurrentWeek();
+                    break;
+                case 2:
+                    initPieDay();
+                    break;
+                case 3:
+                    initPieTotal();
+            }
             if (itemPosition == 0) {
                 initPieCurrentMonth();
 

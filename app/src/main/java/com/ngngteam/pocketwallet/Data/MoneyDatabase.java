@@ -394,6 +394,41 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         return total;
     }
 
+    public double getTotalForCategory(String category, boolean isExpense) {
+
+        Cursor cursor;
+        double total;
+
+        if (isExpense) {
+            cursor = getReadableDatabase().rawQuery("SELECT * FROM " + Table_Expense + " WHERE " + Key_ECategory + " LIKE " + "'" + category +
+                    "'", null);
+
+            total = 0;
+
+            if (cursor.getCount() != 0) {
+                for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                    total += Double.parseDouble(cursor.getString(3));
+                }
+            }
+            Log.i("nikos", "Total expense for " + category + " : " + total);
+        } else {
+            cursor = getReadableDatabase().rawQuery("SELECT * FROM " + Table_Income +
+                    " WHERE " + Key_ISource + "=" + "'" + category + "'", null);
+
+            total = 0;
+
+            if (cursor.getCount() != 0) {
+                for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                    total += Double.parseDouble(cursor.getString(1));
+                }
+            }
+
+            Log.i("nikos", "Total income for " + category + " : " + total);
+        }
+
+
+        return total;
+    }
 
     //used for current month in OverviewActivity
     public double getTotalForCurrentMonth(boolean isExpense) {

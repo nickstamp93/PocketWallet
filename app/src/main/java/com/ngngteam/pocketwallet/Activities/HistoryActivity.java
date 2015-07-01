@@ -340,7 +340,6 @@ public class HistoryActivity extends AppCompatActivity {
 
                     historyAdapter=new HistoryAdapter(HistoryActivity.this,groupItems,switcher);
                     lv.setAdapter(historyAdapter);
-                    if(expand) lv.expandGroup(0);
                 } else {
                     menu.clear();
                     getMenuInflater().inflate(R.menu.history_expense, menu);
@@ -350,7 +349,6 @@ public class HistoryActivity extends AppCompatActivity {
 
                     historyAdapter=new HistoryAdapter(HistoryActivity.this,groupItems,switcher);
                     lv.setAdapter(historyAdapter);
-                    if(expand) lv.expandGroup(0);
 
                 }
         }

@@ -308,19 +308,15 @@ public class OverviewActivity extends AppCompatActivity {
             firstDayTable = new int[]{1, 5, 10, 15, 20, 25};
             totalExpenses = mdb.getTotalForCurrentMonth(true);
             totalIncomes = mdb.getTotalForCurrentMonth(false);
-//            llSavings.setVisibility(View.VISIBLE);
         } else if (profile.getGrouping().equalsIgnoreCase(getResources().getString(R.string.pref_grouping_weekly))) {
             firstDayTable = new int[]{Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.THURSDAY,
                     Calendar.FRIDAY, Calendar.SATURDAY, Calendar.SUNDAY};
             totalExpenses = mdb.getTotalForCurrentWeek(firstDayTable[profile.getDayStart()], true);
             totalIncomes = mdb.getTotalForCurrentWeek(firstDayTable[profile.getDayStart()], false);
-//            llSavings.setVisibility(View.VISIBLE);
         } else if (profile.getGrouping().equalsIgnoreCase(getResources().getString(R.string.pref_grouping_daily))) {
             totalExpenses = mdb.getDailyTotal(true);
             totalIncomes = mdb.getDailyTotal(false);
-//            llSavings.setVisibility(View.VISIBLE);
         } else {
-//            llSavings.setVisibility(View.GONE);
             totalExpenses = mdb.getTotal(true);
             totalIncomes = mdb.getTotal(false);
         }

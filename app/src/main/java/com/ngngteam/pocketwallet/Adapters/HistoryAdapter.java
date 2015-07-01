@@ -1,12 +1,11 @@
 package com.ngngteam.pocketwallet.Adapters;
 
 import android.content.Context;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.ExpandableListAdapter;
-import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.ngngteam.pocketwallet.Data.CategoryDatabase;
@@ -20,8 +19,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
-import android.preference.PreferenceManager;
 
 import me.grantland.widget.AutofitTextView;
 
@@ -38,12 +35,12 @@ public class HistoryAdapter extends BaseExpandableListAdapter {
     private CategoryDatabase cdb;
     private boolean expense;
 
-    public HistoryAdapter(Context context,ArrayList<ParentItem> groupItems,boolean expense){
-        this.context=context;
+    public HistoryAdapter(Context context, ArrayList<ParentItem> groupItems, boolean expense) {
+        this.context = context;
         currency = PreferenceManager.getDefaultSharedPreferences(context).getString(context.getResources().getString(R.string.pref_key_currency), context.getResources().getString(R.string.pref_currency_default_value));
-        this.groupItems=groupItems;
+        this.groupItems = groupItems;
         cdb = new CategoryDatabase(this.context);
-        this.expense=expense;
+        this.expense = expense;
     }
 
     @Override
@@ -84,24 +81,25 @@ public class HistoryAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isLastChild, View view, ViewGroup viewGroup) {
 
-        ParentItem parent=(ParentItem) getGroup(groupPosition);
-        if(view==null){
+        ParentItem parent = (ParentItem) getGroup(groupPosition);
+        if (view == null) {
             inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-             view=inflater.inflate(R.layout.group_item,viewGroup,false);
+            view = inflater.inflate(R.layout.group_item, viewGroup, false);
 
         }
 
-        AutofitTextView tvGroupName=(AutofitTextView) view.findViewById(R.id.tvGroupName);
-        AutofitTextView tvGroupAmount=(AutofitTextView) view.findViewById(R.id.tvGroupAmount);
-        AutofitTextView tvGroupYear=(AutofitTextView) view.findViewById(R.id.tvGroupYear);
+        AutofitTextView tvGroupName = (AutofitTextView) view.findViewById(R.id.tvGroupName);
+        AutofitTextView tvGroupAmount = (AutofitTextView) view.findViewById(R.id.tvGroupAmount);
+        AutofitTextView tvGroupYear = (AutofitTextView) view.findViewById(R.id.tvGroupYear);
 
         tvGroupName.setText(parent.getMonth());
-        tvGroupYear.setText(parent.getYear()+"");
-        tvGroupAmount.setText(parent.getTotalAmount()+" "+currency);
+        tvGroupYear.setText(parent.getYear() + "");
+        double total = Math.round(parent.getTotalAmount() * 100) / 100.0;
+        tvGroupAmount.setText(total + " " + currency);
 
-        if(expense){
+        if (expense) {
             tvGroupAmount.setTextColor(context.getResources().getColor(R.color.red));
-        }else{
+        } else {
             tvGroupAmount.setTextColor(context.getResources().getColor(R.color.green));
         }
 
@@ -111,10 +109,10 @@ public class HistoryAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View view, ViewGroup viewGroup) {
-        ChildItem childItem=(ChildItem) getChild(groupPosition,childPosition);
-        if(view==null){
+        ChildItem childItem = (ChildItem) getChild(groupPosition, childPosition);
+        if (view == null) {
             inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view=inflater.inflate(R.layout.list_history_item,viewGroup,false);
+            view = inflater.inflate(R.layout.list_history_item, viewGroup, false);
         }
         TextView tvPrice = (TextView) view.findViewById(R.id.tvPrice);
         TextView tvDate = (TextView) view.findViewById(R.id.tvDate);
@@ -141,11 +139,11 @@ public class HistoryAdapter extends BaseExpandableListAdapter {
                     today.get(Calendar.DAY_OF_YEAR) == item_date.get(Calendar.DAY_OF_YEAR);
             boolean isYesterday = yesterday.get(Calendar.YEAR) == item_date.get(Calendar.YEAR) &&
                     yesterday.get(Calendar.DAY_OF_YEAR) == item_date.get(Calendar.DAY_OF_YEAR);
-            if(isToday){
+            if (isToday) {
                 tvDate.setText(context.getString(R.string.text_today));
-            }else if (isYesterday){
+            } else if (isYesterday) {
                 tvDate.setText(context.getString(R.string.text_yesterday));
-            }else{
+            } else {
                 String dateTokens[] = date.split("-");
                 String reformedDate = dateTokens[2] + "-" + dateTokens[1] + "-" + dateTokens[0];
 
@@ -175,7 +173,7 @@ public class HistoryAdapter extends BaseExpandableListAdapter {
 
         tvNotes.setText(childItem.getNotes());
 
-        if(expense) tvPrice.setTextColor(context.getResources().getColor(R.color.red));
+        if (expense) tvPrice.setTextColor(context.getResources().getColor(R.color.red));
         else tvPrice.setTextColor(context.getResources().getColor(R.color.green));
 
 
@@ -192,8 +190,8 @@ public class HistoryAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
-    public void setUpdateGroupItems(ArrayList<ParentItem> newGroups){
-        this.groupItems=newGroups;
+    public void setUpdateGroupItems(ArrayList<ParentItem> newGroups) {
+        this.groupItems = newGroups;
     }
 
 }

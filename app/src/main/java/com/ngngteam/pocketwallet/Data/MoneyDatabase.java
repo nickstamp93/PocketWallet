@@ -394,6 +394,37 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         return total;
     }
 
+    public double getTotal(boolean isExpense, ArrayList<String> categoryFilter) {
+
+        Cursor cursor;
+        double total = 0;
+
+        if (isExpense) {
+            cursor = this.getAllExpenses();
+
+            if (cursor.getCount() != 0) {
+                for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                    if (categoryFilter.contains(cursor.getString(1)))
+                        total = Double.parseDouble(cursor.getString(3)) + total;
+                }
+
+            }
+        } else {
+            cursor = this.getAllIncomes();
+
+            if (cursor.getCount() != 0) {
+                for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                    if (categoryFilter.contains(cursor.getString(2)))
+                        total = Double.parseDouble(cursor.getString(1)) + total;
+                }
+
+            }
+        }
+
+
+        return total;
+    }
+
     public double getTotalForCategory(String category, boolean isExpense) {
 
         Cursor cursor;
@@ -715,6 +746,40 @@ public class MoneyDatabase extends SQLiteOpenHelper {
 
         return total;
     }
+
+    //used for custom date in BarsAcitivity
+    public double getTotalCustomDate(String startDate, String endDate, boolean isExpense, ArrayList<String> categoryFilters) {
+
+        Cursor cursor;
+        double total;
+
+        if (isExpense) {
+            cursor = this.getExpensesByDateToDate(startDate, endDate);
+
+            total = 0;
+
+            if (cursor.getCount() != 0) {
+                for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                    if (categoryFilters.contains(cursor.getString(1)))
+                        total += Double.parseDouble(cursor.getString(3));
+                }
+            }
+        } else {
+            cursor = this.getIncomesByDateToDate(startDate, endDate);
+
+            total = 0;
+
+            if (cursor.getCount() != 0) {
+                for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                    if (categoryFilters.contains(cursor.getString(2)))
+                        total += Double.parseDouble(cursor.getString(1));
+                }
+            }
+        }
+
+        return total;
+    }
+
 
     //used for every month in BarDistributionActivity
     public double getMonthTotal(int year, int month, boolean isExpense, ArrayList<String> categoryFilter) {

@@ -6,12 +6,16 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.SpinnerAdapter;
 
+import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -25,8 +29,11 @@ import com.ngngteam.pocketwallet.Data.MoneyDatabase;
 import com.ngngteam.pocketwallet.R;
 import com.ngngteam.pocketwallet.Utils.Themer;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class BarsDistributionActivity extends AppCompatActivity implements ActionBar.OnNavigationListener {
 
@@ -44,8 +51,13 @@ public class BarsDistributionActivity extends AppCompatActivity implements Actio
 
     BarChart barChart;
 
+    CardView cardCustomDate;
+
     int primaryTextColor;
     int selectedDropDownPos;
+
+    String startDate, endDate;
+    EditText etStart, etEnd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,10 +97,20 @@ public class BarsDistributionActivity extends AppCompatActivity implements Actio
         selectedCategoriesIncome = categoryDatabase.getCategories(false);
         selectedCategoriesExpense = categoryDatabase.getCategories(true);
 
+        endDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date(Calendar.getInstance().getTimeInMillis()));
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DAY_OF_YEAR, -10);
+        startDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date(c.getTimeInMillis()));
+
     }
 
     private void initUI() {
         barChart = (BarChart) findViewById(R.id.barDistChart);
+
+        cardCustomDate = (CardView) findViewById(R.id.cardview_bars_custom_date);
+
+        etStart = (EditText) findViewById(R.id.etDateFrom);
+        etEnd = (EditText) findViewById(R.id.etDateTo);
 
     }
 
@@ -96,6 +118,12 @@ public class BarsDistributionActivity extends AppCompatActivity implements Actio
 
         customizeBarChart();
 
+
+        etStart.setText(startDate);
+        etEnd.setText(endDate);
+
+        etStart.setOnClickListener(etDatesListener);
+        etEnd.setOnClickListener(etDatesListener);
     }
 
     private void customizeBarChart() {
@@ -162,12 +190,13 @@ public class BarsDistributionActivity extends AppCompatActivity implements Actio
         Legend l = barChart.getLegend();
         l.setPosition(Legend.LegendPosition.BELOW_CHART_LEFT);
         l.setForm(Legend.LegendForm.SQUARE);
+        l.setTextColor(primaryTextColor);
         l.setFormSize(9f);
         l.setTextSize(11f);
         l.setXEntrySpace(4f);
     }
 
-    private void initPieMonths(int monthCount) {
+    private void initBarsMonths(int monthCount) {
         ArrayList<String> months = new ArrayList<>();
         expenseValues = new ArrayList<>();
         incomeValues = new ArrayList<>();
@@ -194,7 +223,7 @@ public class BarsDistributionActivity extends AppCompatActivity implements Actio
 
     }
 
-    private void initPieWeeks(int weeksCount) {
+    private void initBarsWeeks(int weeksCount) {
         ArrayList<String> weeks = new ArrayList<>();
         expenseValues = new ArrayList<>();
         incomeValues = new ArrayList<>();
@@ -210,6 +239,43 @@ public class BarsDistributionActivity extends AppCompatActivity implements Actio
         }
 
         setDataToBarChart(weeks, expenseValues, incomeValues);
+    }
+
+    private void initBarsTotal() {
+        ArrayList<String> months = new ArrayList<>();
+        expenseValues = new ArrayList<>();
+        incomeValues = new ArrayList<>();
+
+        double expenseAmount = moneyDatabase.getTotal(true, selectedCategoriesExpense);
+        double incomeAmount = moneyDatabase.getTotal(false, selectedCategoriesIncome);
+
+        months.add("Total");
+        expenseValues.add(new BarEntry((float) expenseAmount, 0));
+        incomeValues.add(new BarEntry((float) incomeAmount, 0));
+
+        setDataToBarChart(months, expenseValues, incomeValues);
+    }
+
+    private void initBarsCustomPeriod() {
+        ArrayList<String> months = new ArrayList<>();
+        expenseValues = new ArrayList<>();
+        incomeValues = new ArrayList<>();
+
+        try {
+            String sDate = new SimpleDateFormat("d MMMM yy").format(new SimpleDateFormat("dd-MM-yyyy").parse(startDate));
+            String eDate = new SimpleDateFormat("d MMMM yy").format(new SimpleDateFormat("dd-MM-yyyy").parse(endDate));
+            months.add(sDate + " - " + eDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        double expenseAmount = moneyDatabase.getTotalCustomDate(startDate, endDate, true, selectedCategoriesExpense);
+        double incomeAmount = moneyDatabase.getTotalCustomDate(startDate, endDate, false, selectedCategoriesIncome);
+        expenseValues.add(new BarEntry((float) expenseAmount, 0));
+        incomeValues.add(new BarEntry((float) incomeAmount, 0));
+
+
+        setDataToBarChart(months, expenseValues, incomeValues);
     }
 
     private void setDataToBarChart(ArrayList<String> tags, ArrayList<BarEntry> expenseValues, ArrayList<BarEntry> incomeValues) {
@@ -231,6 +297,7 @@ public class BarsDistributionActivity extends AppCompatActivity implements Actio
                 return value + "€";
             }
         });
+        data.setValueTextColor(primaryTextColor);
         data.setValueTextSize(10f);
 
         barChart.setData(data);
@@ -238,6 +305,43 @@ public class BarsDistributionActivity extends AppCompatActivity implements Actio
         barChart.animateXY(3000, 3000);
         barChart.invalidate();
     }
+
+
+    private View.OnClickListener etDatesListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Bundle bundle = new Bundle();
+            if (v.getId() == R.id.etDateFrom) {
+                bundle.putBoolean("isStartDate", true);
+            } else {
+                bundle.putBoolean("isStartDate", false);
+            }
+            CalendarDatePickerDialog dialog = new CalendarDatePickerDialog();
+            dialog.setOnDateSetListener(dateSetListener);
+            dialog.setArguments(bundle);
+            dialog.show(getSupportFragmentManager(), "Date");
+        }
+    };
+
+    private CalendarDatePickerDialog.OnDateSetListener dateSetListener = new CalendarDatePickerDialog.OnDateSetListener() {
+
+        @Override
+        public void onDateSet(CalendarDatePickerDialog calendarDatePickerDialog, int year, int month, int day) {
+            Calendar c = Calendar.getInstance();
+            c.set(year, month, day);
+            Date d = new Date(c.getTimeInMillis());
+            String date = new SimpleDateFormat("dd-MM-yyyy").format(d);
+            if (calendarDatePickerDialog.getArguments().getBoolean("isStartDate")) {
+                startDate = date;
+                etStart.setText(startDate);
+            } else {
+                endDate = date;
+                etEnd.setText(endDate);
+            }
+            initBarsCustomPeriod();
+        }
+    };
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -316,15 +420,26 @@ public class BarsDistributionActivity extends AppCompatActivity implements Actio
     @Override
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
         selectedDropDownPos = itemPosition;
-        if (itemPosition == 0) {
-            initPieMonths(3);
-        } else if (itemPosition == 1) {
-            initPieWeeks(6);
-        } else if (itemPosition == 2) {
-            initPieMonths(6);
-        } else if (itemPosition == 3) {
-            initPieWeeks(12);
+        if (itemPosition == 5) {
+
+            cardCustomDate.setVisibility(View.VISIBLE);
+            initBarsCustomPeriod();
+        } else {
+
+            cardCustomDate.setVisibility(View.GONE);
+            if (itemPosition == 0) {
+                initBarsMonths(3);
+            } else if (itemPosition == 1) {
+                initBarsWeeks(6);
+            } else if (itemPosition == 2) {
+                initBarsMonths(6);
+            } else if (itemPosition == 3) {
+                initBarsWeeks(12);
+            } else if (itemPosition == 4) {
+                initBarsTotal();
+            }
         }
+
 
         return true;
     }

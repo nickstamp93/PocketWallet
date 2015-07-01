@@ -25,6 +25,8 @@
         <item>Τελευταίες 4 εβδομάδες</item>
         <item>Τελευταίοι 6 μήνες</item>
         <item>Τελευταίες 12 εβδομάδες</item>
+        <item>Συνολικά</item>
+        <item>Επιλεγόμενη Περίοδος</item>
     </string-array>
 
     <string-array name="days_week">

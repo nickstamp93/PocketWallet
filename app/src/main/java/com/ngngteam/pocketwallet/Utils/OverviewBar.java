@@ -82,7 +82,7 @@ public class OverviewBar extends View {
 
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        int padding = (int) (15 * scaleFactor);
+        int padding = (int) (10 * scaleFactor);
         int fullWidth = getWidth();
         int fullHeight = getHeight();
         int maxBarHeight = fullHeight - 5 * padding;

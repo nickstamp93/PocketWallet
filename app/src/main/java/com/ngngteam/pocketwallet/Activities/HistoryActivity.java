@@ -83,8 +83,6 @@ public class HistoryActivity extends AppCompatActivity {
 
         lv.setAdapter(historyAdapter);
 
-        if(expand) lv.expandGroup(0);
-
         lv.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long l) {

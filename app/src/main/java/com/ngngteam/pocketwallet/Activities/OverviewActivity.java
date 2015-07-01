@@ -1,6 +1,7 @@
 package com.ngngteam.pocketwallet.Activities;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -22,23 +23,21 @@ import android.widget.TextView;
 import com.ngngteam.pocketwallet.Adapters.DrawerAdapter;
 import com.ngngteam.pocketwallet.Data.CategoryDatabase;
 import com.ngngteam.pocketwallet.Data.MoneyDatabase;
+import com.ngngteam.pocketwallet.Dialogs.ChangelogDialog;
 import com.ngngteam.pocketwallet.Extra.LetterImageView;
-import com.ngngteam.pocketwallet.Extra.MagnificentChart;
-import com.ngngteam.pocketwallet.Extra.MagnificentChartItem;
 import com.ngngteam.pocketwallet.Model.ExpenseItem;
 import com.ngngteam.pocketwallet.Model.IncomeItem;
 import com.ngngteam.pocketwallet.Model.UserProfile;
 import com.ngngteam.pocketwallet.R;
+import com.ngngteam.pocketwallet.Utils.OverviewBar;
 import com.ngngteam.pocketwallet.Utils.SharedPrefsManager;
 import com.ngngteam.pocketwallet.Utils.Themer;
 
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import me.grantland.widget.AutofitTextView;
 
@@ -55,15 +54,15 @@ public class OverviewActivity extends AppCompatActivity {
     //View objects for the XML management
     private TextView tvUsername;
     private AutofitTextView tvBalance, tvSavings, tvLastIncomeValue, tvLastExpenseValue, tvLastExpenseDate,
-            tvLastIncomeDate, tvPieHeading, tvLegendTotalExpense, tvLegendTotalIncome;
-    private LinearLayout llLastExpense, llLastIncome;
-    private CardView card_message, card_pie, card_last_transactions;
-    private LetterImageView livLastExpense, livLastIncome, livLegendIncome, livLegendExpense;
+            tvLastIncomeDate, tvBarDate;
+    private LinearLayout llLastExpense, llLastIncome, llSavings;
+    private CardView card_message, card_bars, card_last_transactions;
+    private LetterImageView livLastExpense, livLastIncome;
     private DrawerLayout drawerLayout;
     private ListView drawer;
     private ActionBarDrawerToggle drawerToggle;
 
-    private MagnificentChart mcPie;
+    private OverviewBar bar;
 
     int firstDayTable[];
 
@@ -96,9 +95,29 @@ public class OverviewActivity extends AppCompatActivity {
 
         initListeners();
 
+        try {
+            int oldVersion = manager.getPrefsVersion();
+            int versionCode = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
+            if (oldVersion != versionCode) {
+                manager.startEditing();
+                manager.setPrefsVersion(versionCode);
+                manager.commit();
+                new ChangelogDialog().show(getFragmentManager(), "tag");
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void setUpUI() {
+
+        tvUsername.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(OverviewActivity.this, UserDetailsActivity.class));
+            }
+        });
 
         //==================================Navigation Drawer=======================================
         //get the string array with the Navigation drawer items
@@ -233,26 +252,15 @@ public class OverviewActivity extends AppCompatActivity {
         tvBalance = (AutofitTextView) findViewById(R.id.tvOverviewBalance);
         tvSavings = (AutofitTextView) findViewById(R.id.tvOverviewSavings);
 
+        llSavings = (LinearLayout) findViewById(R.id.llSavings);
+
         //=================Message section====================================================
         card_message = (CardView) findViewById(R.id.cardview_message);
 
-        //=================Second section , Pie - Pie Heading - Pie Legends===================
-        card_pie = (CardView) findViewById(R.id.cardview_pie);
-        card_pie.setVisibility(View.GONE);
-
-        mcPie = (MagnificentChart) findViewById(R.id.mcPie);
-
-        tvPieHeading = (AutofitTextView) findViewById(R.id.tvPieHeading);
-
-        livLegendExpense = (LetterImageView) findViewById(R.id.livLegendExpense);
-        livLegendIncome = (LetterImageView) findViewById(R.id.livLegendIncome);
-        livLegendExpense.setmBackgroundPaint(getResources().getColor(R.color.bpRed));
-        livLegendIncome.setmBackgroundPaint(getResources().getColor(R.color.bg_green));
-        livLegendExpense.setOval(true);
-        livLegendIncome.setOval(true);
-
-        tvLegendTotalExpense = (AutofitTextView) findViewById(R.id.tvLegendExpenseText);
-        tvLegendTotalIncome = (AutofitTextView) findViewById(R.id.tvLegendIncomeText);
+        //=================Second section , Bars - Bar heading===================
+        card_bars = (CardView) findViewById(R.id.cardview_bars);
+        bar = (OverviewBar) findViewById(R.id.overview_bar);
+        tvBarDate = (AutofitTextView) findViewById(R.id.tvBarHeading);
 
         //==================Third Section , Last Transactions=================================
         card_last_transactions = (CardView) findViewById(R.id.cardview_last_transactions);
@@ -290,43 +298,52 @@ public class OverviewActivity extends AppCompatActivity {
 
     //refresh UI according to profile object
     private void refreshUI() {
-
         tvUsername.setText(profile.getUsername());
 
         double totalExpenses;
         double totalIncomes;
 
+        //get the prefs grouping and initialize total expense-income
         if (profile.getGrouping().equalsIgnoreCase(getResources().getString(R.string.pref_grouping_monthly))) {
             firstDayTable = new int[]{1, 5, 10, 15, 20, 25};
             totalExpenses = mdb.getTotalForCurrentMonth(true);
             totalIncomes = mdb.getTotalForCurrentMonth(false);
-        } else {
+//            llSavings.setVisibility(View.VISIBLE);
+        } else if (profile.getGrouping().equalsIgnoreCase(getResources().getString(R.string.pref_grouping_weekly))) {
             firstDayTable = new int[]{Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.THURSDAY,
                     Calendar.FRIDAY, Calendar.SATURDAY, Calendar.SUNDAY};
             totalExpenses = mdb.getTotalForCurrentWeek(firstDayTable[profile.getDayStart()], true);
             totalIncomes = mdb.getTotalForCurrentWeek(firstDayTable[profile.getDayStart()], false);
+//            llSavings.setVisibility(View.VISIBLE);
+        } else if (profile.getGrouping().equalsIgnoreCase(getResources().getString(R.string.pref_grouping_daily))) {
+            totalExpenses = mdb.getDailyTotal(true);
+            totalIncomes = mdb.getDailyTotal(false);
+//            llSavings.setVisibility(View.VISIBLE);
+        } else {
+//            llSavings.setVisibility(View.GONE);
+            totalExpenses = mdb.getTotal(true);
+            totalIncomes = mdb.getTotal(false);
         }
 
+        //round values to 2 decimal digits
         totalExpenses = Math.round(totalExpenses * 100) / 100.0;
-        if (totalExpenses == (int) totalExpenses) {
-            tvLegendTotalExpense.setText(getResources().getString(R.string.action_expense) + "  (" + ((int) totalExpenses + profile.getCurrency()) + ")");
-        } else {
-            tvLegendTotalExpense.setText(getResources().getString(R.string.action_expense) + "  (" + (totalExpenses + profile.getCurrency()) + ")");
-        }
-
         totalIncomes = Math.round(totalIncomes * 100) / 100.0;
-        if (totalIncomes == (int) totalIncomes) {
-            tvLegendTotalIncome.setText(getResources().getString(R.string.action_income) + "  (" + ((int) totalIncomes + profile.getCurrency()) + ")");
-        } else {
-            tvLegendTotalIncome.setText(getResources().getString(R.string.action_income) + "  (" + (totalIncomes + profile.getCurrency()) + ")");
-        }
 
+        //calculate balance/savings and set it to profile object
         double balance = totalIncomes - totalExpenses;
-        balance = Math.round(balance * 100) / 100.0;
-        //set the balance to the user profile object
-        profile.setBalance((float) balance);
+//        if(manager.getPrefsGrouping().equalsIgnoreCase(getResources().getString(R.string.pref_grouping_none))){
+//            balance += profile.getSavings();
+//        }
+        double savings = mdb.getTotal(false) - mdb.getTotal(true) - balance + profile.getSavings();
 
-        //set balance to UI
+        //round to 2 decimal digits
+        balance = Math.round(balance * 100) / 100.0;
+        savings = Math.round(savings * 100) / 100.0;
+
+        profile.setBalance((float) balance);
+        profile.setSavings((float) savings);
+
+        //check the sign of the balance and set the appropriate color
         String sign = (balance >= 0) ? "+" : "";
         int drawable = (balance >= 0) ? R.drawable.rounded_bounds_green_empty : R.drawable.rounded_bounds_red_empty;
         int paint = (balance >= 0) ? R.color.YellowGreen : R.color.bpRed;
@@ -338,10 +355,7 @@ public class OverviewActivity extends AppCompatActivity {
         tvBalance.setBackgroundResource(drawable);
         tvBalance.setTextColor(getResources().getColor(paint));
 
-        //savings are : total income - total expense - balance + savings user defined at the creation of the profile
-        double savings = mdb.getTotal(false) - mdb.getTotal(true) - balance + profile.getSavings();
-        profile.setSavings((float) savings);
-        savings = Math.round(savings * 100) / 100.0;
+        //check the sign of the savings and set the appropriate color
         sign = (savings >= 0) ? "+" : "";
         drawable = (savings >= 0) ? R.drawable.rounded_bounds_green_empty : R.drawable.rounded_bounds_red_empty;
         paint = (savings >= 0) ? R.color.YellowGreen : R.color.bpRed;
@@ -353,106 +367,96 @@ public class OverviewActivity extends AppCompatActivity {
         tvSavings.setBackgroundResource(drawable);
         tvSavings.setTextColor(getResources().getColor(paint));
 
-        //set up the PieChart
-        List<MagnificentChartItem> chartItemsList = new ArrayList<MagnificentChartItem>();
-
         double total = totalExpenses + totalIncomes;
-        //if there is income or expense for the current period (week or month)
+        //if there is income or expense for the current period
         if (total != 0) {
 
-            mcPie.setMaxValue(total);
+            //set bar values
+            bar.setExpense(totalExpenses);
+            bar.setIncome(totalIncomes);
 
-            //expense part of the pie chart
-            MagnificentChartItem item = new MagnificentChartItem("Expense", totalExpenses, getResources().getColor(R.color.bpRed));
-            chartItemsList.add(item);
+            //set the period of the bars according to the preferred grouping
+            if (manager.getPrefsGrouping().equalsIgnoreCase(getResources().getString(R.string.pref_grouping_weekly))) {
 
-            //income part of the pie chart
-            item = new MagnificentChartItem("Income", totalIncomes, getResources().getColor(R.color.bg_green));
-            chartItemsList.add(item);
+                Calendar c = Calendar.getInstance();
 
-            //set the parts to the pie chart
-            mcPie.setChartItemsList(chartItemsList);
-
-            mcPie.setAnimationSpeed(MagnificentChart.ANIMATION_SPEED_FAST);
-
-            //show the pie after set up
-            card_pie.setVisibility(View.VISIBLE);
-            card_message.setVisibility(View.GONE);
-
-        } else {
-            //else the pie section should be invisible
-            card_pie.setVisibility(View.GONE);
-            card_message.setVisibility(View.VISIBLE);
-        }
-
-        //set the heading of the PieChart according to the preferred grouping
-        if (manager.getPrefsGrouping().equalsIgnoreCase(getResources().getString(R.string.pref_grouping_weekly))) {
-
-            Calendar c = Calendar.getInstance();
-
-            int currentDay = c.get(Calendar.DAY_OF_WEEK);
-            int endDay = firstDayTable[profile.getDayStart()];
-
-            Date startDate, endDate;
-
-            if (endDay == currentDay) {
-                startDate = c.getTime();
-                c.add(Calendar.DAY_OF_YEAR, 6);
-                endDate = c.getTime();
-            } else {
-                while (currentDay != endDay) {
-                    c.add(Calendar.DATE, 1);
-                    currentDay = c.get(Calendar.DAY_OF_WEEK);
-                }
-                c.add(Calendar.DAY_OF_YEAR, -1);
-                endDate = c.getTime();
-                c.add(Calendar.DAY_OF_YEAR, -6);
-                startDate = c.getTime();
-            }
-
-            if (startDate.getMonth() == endDate.getMonth()) {
-                tvPieHeading.setText(getString(R.string.text_pie_heading) + "\n("
-                        + new SimpleDateFormat("dd").format(startDate) + "-" +
-                        new SimpleDateFormat("dd MMM").format(endDate) + ")");
-            } else {
-                tvPieHeading.setText(getString(R.string.text_pie_heading) + "\n("
-                        + new SimpleDateFormat("dd MMM").format(startDate) + "-" +
-                        new SimpleDateFormat("dd MMM").format(endDate) + ")");
-            }
-
-            //tvPieHeading.setText(getResources().getString(R.string.text_pie_heading));
-//            tvPieHeading.setMaxTextSize(getResources().getInteger(R.integer.text_size_pie_heading_small));
-        } else {
-            Calendar c = Calendar.getInstance();
-            //if first day of Month is 1 , then show month name
-            if (profile.getDayStart() == 0) {
-
-                int month = c.get(Calendar.MONTH);
-
-                //get month name
-                String sMonth = getMonthForInt(month);
-
-                tvPieHeading.setText(sMonth);
-                //else show the period
-            } else {
-
-                int monthStart = firstDayTable[profile.getDayStart()];
+                int currentDay = c.get(Calendar.DAY_OF_WEEK);
+                int endDay = firstDayTable[profile.getDayStart()];
 
                 Date startDate, endDate;
 
-                c.set(Calendar.DAY_OF_MONTH, monthStart);
-                startDate = c.getTime();
+                if (endDay == currentDay) {
+                    startDate = c.getTime();
+                    c.add(Calendar.DAY_OF_YEAR, 6);
+                    endDate = c.getTime();
+                } else {
+                    while (currentDay != endDay) {
+                        c.add(Calendar.DATE, 1);
+                        currentDay = c.get(Calendar.DAY_OF_WEEK);
+                    }
+                    c.add(Calendar.DAY_OF_YEAR, -1);
+                    endDate = c.getTime();
+                    c.add(Calendar.DAY_OF_YEAR, -6);
+                    startDate = c.getTime();
+                }
 
-                c.add(Calendar.MONTH, 1);
-                c.add(Calendar.DAY_OF_MONTH, -1);
-                endDate = c.getTime();
+                //if it's the same month , show the month name only once
+                if (startDate.getMonth() == endDate.getMonth()) {
+                    tvBarDate.setText(getString(R.string.text_pie_heading) + "\n("
+                            + new SimpleDateFormat("dd").format(startDate) + "-" +
+                            new SimpleDateFormat("dd MMMM").format(endDate) + ")");
+                } else {
+                    tvBarDate.setText(getString(R.string.text_pie_heading) + "\n("
+                            + new SimpleDateFormat("dd MMMM").format(startDate) + "-" +
+                            new SimpleDateFormat("dd MMMM").format(endDate) + ")");
+                }
+                //else if it's monthly
+            } else if (manager.getPrefsGrouping().equalsIgnoreCase(getResources().getString(R.string.pref_grouping_monthly))) {
 
-                tvPieHeading.setText(getString(R.string.text_period) + "\n("
-                        + new SimpleDateFormat("dd MMM").format(startDate) + "-" +
-                        new SimpleDateFormat("dd MMM").format(endDate) + ")");
+                Calendar c = Calendar.getInstance();
+                //if first day of Month is 1 , then show month name
+                if (profile.getDayStart() == 0) {
 
+                    int month = c.get(Calendar.MONTH);
+
+                    //get month name
+                    String sMonth = getMonthForInt(month);
+
+                    tvBarDate.setText(sMonth);
+                    //else show the period
+                } else {
+
+                    int monthStart = firstDayTable[profile.getDayStart()];
+
+                    Date startDate, endDate;
+
+                    c.set(Calendar.DAY_OF_MONTH, monthStart);
+                    startDate = c.getTime();
+
+                    c.add(Calendar.MONTH, 1);
+                    c.add(Calendar.DAY_OF_MONTH, -1);
+                    endDate = c.getTime();
+
+                    tvBarDate.setText(getString(R.string.text_period) + "\n("
+                            + new SimpleDateFormat("dd MMMM").format(startDate) + "-" +
+                            new SimpleDateFormat("dd MMMM").format(endDate) + ")");
+
+                }
+            } else if (manager.getPrefsGrouping().equalsIgnoreCase(getResources().getString(R.string.pref_grouping_daily))) {
+                tvBarDate.setText(getString(R.string.text_today));
+            } else {
+                tvBarDate.setText(getString(R.string.text_total));
             }
-//            tvPieHeading.setMaxTextSize(getResources().getInteger(R.integer.text_size_bar_heading));
+
+            //show the bars after set up
+            card_bars.setVisibility(View.VISIBLE);
+            card_message.setVisibility(View.GONE);
+
+        } else {
+
+            //else the bars section should be invisible
+            card_bars.setVisibility(View.GONE);
+            card_message.setVisibility(View.VISIBLE);
         }
 
         //  Cursor cursorLastExpense, cursorLastIncome;

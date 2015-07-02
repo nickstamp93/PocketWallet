@@ -128,6 +128,8 @@ public class BarsDistributionActivity extends AppCompatActivity implements Actio
 
     private void customizeBarChart() {
 
+        barChart.setNoDataText(getString(R.string.no_data_text));
+
         barChart.setDrawBarShadow(false);
         barChart.setDrawValueAboveBar(true);
 

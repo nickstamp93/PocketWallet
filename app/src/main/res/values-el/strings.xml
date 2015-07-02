@@ -221,5 +221,6 @@
     <string name="text_no_grouping_toast">Οι συναλλαγές εσόδων - εξόδων θα εμφανίζονται συνολικά χωρίς ομαδοποίηση</string>
     <string name="text_change_savings_toast">Το νεο ποσό αποταμίευσης είναι </string>
     <string name="text_change_savings_warning">Αν αλλάξετε τα αρχικά χρήματα , θα επηρεαστεί το ποσό αποταμίευσης</string>
+    <string name="no_data_text" >Δεν υπάρχουν δεδομένα</string>
 
 </resources>

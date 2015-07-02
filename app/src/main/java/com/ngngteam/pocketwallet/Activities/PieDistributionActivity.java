@@ -220,6 +220,8 @@ public class PieDistributionActivity extends AppCompatActivity implements Action
         pieChart.setDescription("");
 
         pieChart.getLegend().setEnabled(false);
+
+        pieChart.setNoDataText(getString(R.string.no_data_text));
     }
 
     private void initPieCurrentMonth() {

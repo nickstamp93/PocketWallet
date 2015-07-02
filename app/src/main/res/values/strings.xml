@@ -217,8 +217,9 @@
     <string name="text_period">Period</string>
     <string name="text_total">Total</string>
     <string name="text_no_grouping_toast">Transactions will be displayed without grouping</string>
-    <string name="text_change_savings_toast" >The new savings is </string>
-    <string name="text_change_savings_warning" >If you change your initial money , savings value will be affected</string>
+    <string name="text_change_savings_toast">The new savings is </string>
+    <string name="text_change_savings_warning">If you change your initial money , savings value will be affected</string>
+    <string name="no_data_text">No data for this period</string>
 
 
 </resources>

@@ -213,6 +213,7 @@ public class UserDetailsActivity extends AppCompatActivity {
                         //calculate balance/savings and set it to profile object
                         double balance = totalIncomes - totalExpenses;
                         double totalSavings = db.getTotal(false) - db.getTotal(true) - balance + savings;
+                        totalSavings = Math.round(totalSavings * 100) / 100.0;
                         Toast.makeText(UserDetailsActivity.this,
                                 getString(R.string.text_change_savings_toast)
                                         + " " + totalSavings + " " +

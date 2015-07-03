@@ -105,6 +105,12 @@ public class SettingsActivity extends PreferenceActivity
             }
         });
 
+        //when user clicks on "version" preference item
+        //launch intent with target the VersionActivity class
+        screen = findPreference(getResources().getString(R.string.pref_key_version));
+        i = new Intent(this, VersionActivity.class);
+        screen.setIntent(i);
+
         //when user clicks on "rate app" preference item
         //launch the market with the app's page
         screen = findPreference(getResources().getString(R.string.pref_key_rate_app));

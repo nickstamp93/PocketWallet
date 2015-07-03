@@ -25,9 +25,9 @@
                 android:title="@string/pref_title_password" />
 
             <Preference
+                android:dependency="@string/pref_key_password"
                 android:key="@string/pref_key_pattern"
-                android:title="@string/pref_title_pattern"
-                android:dependency="@string/pref_key_password"/>
+                android:title="@string/pref_title_pattern" />
 
 
         </PreferenceScreen>
@@ -84,6 +84,11 @@
         <Preference
             android:key="@string/pref_key_rate_app"
             android:title="@string/pref_title_rate_app" />
+
+        <Preference
+            android:key="@string/pref_key_version"
+            android:title="@string/pref_title_version" />
+
         <Preference
             android:key="@string/pref_key_about"
             android:title="@string/pref_title_about" />

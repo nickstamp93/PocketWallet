@@ -24,7 +24,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Expense"
+                android:text="@string/action_expense"
                 android:textColor="?textCustomColor" />
 
             <Switch
@@ -36,7 +36,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Income"
+                android:text="@string/action_income"
                 android:textColor="?textCustomColor" />
         </LinearLayout>
     </android.support.v7.widget.CardView>

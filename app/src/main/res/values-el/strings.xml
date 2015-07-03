@@ -24,6 +24,7 @@
     <string name="title_activity_user_details">Προφίλ</string>
     <string name="title_activity_categories_manager">Κατηγορίες</string>
     <string name="title_activity_create_category">Νέα Κατηγορία</string>
+    <string name="title_activity_version">Έκδοση</string>
 
     <!--dialog titles-->
     <string name="dialog_title_categories">Κατηγορίες</string>
@@ -51,6 +52,7 @@
     <string name="pref_key_reminder_time">pref_key_reminder_time</string>
     <string name="pref_key_about_settings">pref_key_about_settings</string>
     <string name="pref_key_rate_app">pref_key_rate_app</string>
+    <string name="pref_key_version">pref_key_version</string>
     <string name="pref_key_about">pref_key_about</string>
 
     <string name="pref_category_general">Γενικά</string>
@@ -63,6 +65,7 @@
     <string name="pref_title_reminder_time">Ώρα Υπενθύμισης</string>
     <string name="pref_category_about">Σχετικά</string>
     <string name="pref_title_rate_app">Αξιολόγηση Εφαρμογής</string>
+    <string name="pref_title_version">Έκδοση</string>
     <string name="pref_title_about">Σχετικά με εμάς</string>
     <string name="pref_title_data_settings">Δεδομένα</string>
     <string name="pref_title_profile">Προφίλ</string>
@@ -221,6 +224,6 @@
     <string name="text_no_grouping_toast">Οι συναλλαγές εσόδων - εξόδων θα εμφανίζονται συνολικά χωρίς ομαδοποίηση</string>
     <string name="text_change_savings_toast">Το νεο ποσό αποταμίευσης είναι </string>
     <string name="text_change_savings_warning">Αν αλλάξετε τα αρχικά χρήματα , θα επηρεαστεί το ποσό αποταμίευσης</string>
-    <string name="no_data_text" >Δεν υπάρχουν δεδομένα</string>
+    <string name="no_data_text">Δεν υπάρχουν δεδομένα</string>
 
 </resources>

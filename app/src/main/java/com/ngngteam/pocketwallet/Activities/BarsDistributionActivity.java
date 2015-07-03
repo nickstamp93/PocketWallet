@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -171,7 +172,9 @@ public class BarsDistributionActivity extends AppCompatActivity implements Actio
         ValueFormatter custom = new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                return value + "€";
+                return value +
+                        " " + PreferenceManager.getDefaultSharedPreferences(BarsDistributionActivity.this)
+                        .getString(getString(R.string.pref_key_currency), "€");
             }
         };
 
@@ -251,7 +254,7 @@ public class BarsDistributionActivity extends AppCompatActivity implements Actio
         double expenseAmount = moneyDatabase.getTotal(true, selectedCategoriesExpense);
         double incomeAmount = moneyDatabase.getTotal(false, selectedCategoriesIncome);
 
-        months.add("Total");
+        months.add(getString(R.string.text_total));
         expenseValues.add(new BarEntry((float) expenseAmount, 0));
         incomeValues.add(new BarEntry((float) incomeAmount, 0));
 
@@ -281,8 +284,8 @@ public class BarsDistributionActivity extends AppCompatActivity implements Actio
     }
 
     private void setDataToBarChart(ArrayList<String> tags, ArrayList<BarEntry> expenseValues, ArrayList<BarEntry> incomeValues) {
-        set1 = new BarDataSet(expenseValues, "Expenses");
-        set2 = new BarDataSet(incomeValues, "Income");
+        set1 = new BarDataSet(expenseValues, getString(R.string.action_expense));
+        set2 = new BarDataSet(incomeValues, getString(R.string.action_income));
         set1.setBarSpacePercent(20f);
         set1.setColor(getResources().getColor(R.color.bpRed));
         set2.setBarSpacePercent(20f);
@@ -296,7 +299,9 @@ public class BarsDistributionActivity extends AppCompatActivity implements Actio
         data.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                return value + "€";
+                return value +
+                        " " + PreferenceManager.getDefaultSharedPreferences(BarsDistributionActivity.this)
+                        .getString(getString(R.string.pref_key_currency), "€");
             }
         });
         data.setValueTextColor(primaryTextColor);

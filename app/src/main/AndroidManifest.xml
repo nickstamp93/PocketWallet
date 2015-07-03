@@ -142,6 +142,17 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activities.OverviewActivity" />
         </activity>
+        <activity
+            android:name=".Activities.VersionActivity"
+            android:label="@string/title_activity_version"
+            android:parentActivityName=".Activities.SettingsActivity"
+            android:screenOrientation="portrait">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.SettingsActivity" />
+        </activity>
     </application>
 
 </manifest>

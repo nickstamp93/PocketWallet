@@ -229,6 +229,9 @@
     <string name="text_change_savings_toast">The new savings is </string>
     <string name="text_change_savings_warning">If you change your initial money , savings value will be affected</string>
     <string name="no_data_text">No data for this period</string>
+    <string name="title_activity_recurrent_transactions">RecurrentTransactionsActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 
 
 </resources>

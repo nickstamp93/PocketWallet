@@ -79,6 +79,8 @@ public class OverviewActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_overview);
 
+        startActivity(new Intent(OverviewActivity.this, RecurrentTransactionsActivity.class));
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 

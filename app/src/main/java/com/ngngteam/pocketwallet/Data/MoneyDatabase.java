@@ -68,9 +68,6 @@ public class MoneyDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-        //TODO upgrade in such a way that the old data are not deleted
-//        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + Table_Expense);
-//        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + Table_Income);
 
         switch (oldVersion) {
             case 1:

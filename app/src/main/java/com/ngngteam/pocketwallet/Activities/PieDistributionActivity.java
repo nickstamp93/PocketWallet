@@ -350,7 +350,6 @@ public class PieDistributionActivity extends AppCompatActivity implements Action
     }
 
     private void initPieCustomPeriod() {
-        //TODO find a way to let user define start and end date of period
         totalAmount = 0;
 
         int count = allCategories.size();

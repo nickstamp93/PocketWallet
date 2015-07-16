@@ -60,6 +60,20 @@
 
         </PreferenceScreen>
 
+        <PreferenceScreen
+            android:key="@string/pref_key_backup_restore_settings"
+            android:title="@string/pref_title_backup_restore">
+
+            <Preference
+                android:key="@string/pref_key_backup"
+                android:title="@string/pref_title_backup" />
+
+            <Preference
+                android:key="@string/pref_key_restore"
+                android:title="@string/pref_title_restore" />
+
+        </PreferenceScreen>
+
     </PreferenceCategory>
     <PreferenceCategory
         android:key="@string/pref_key_notification_settings"

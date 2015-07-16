@@ -45,6 +45,9 @@
     <string name="pref_key_data_settings">pref_key_data_settings</string>
     <string name="pref_key_profile">pref_key_profile</string>
     <string name="pref_key_database_settings">pref_key_database_settings</string>
+    <string name="pref_key_backup_restore_settings" >pref_key_backup_restore</string>
+    <string name="pref_key_backup" >pref_key_backup</string>
+    <string name="pref_key_restore" >pref_key_restore</string>
     <string name="pref_key_delete_income">pref_key_delete_income</string>
     <string name="pref_key_delete_expense">pref_key_delete_expense</string>
     <string name="pref_key_notification_settings">pref_key_notification_settins</string>
@@ -68,6 +71,9 @@
     <string name="pref_title_version">Έκδοση</string>
     <string name="pref_title_about">Σχετικά με εμάς</string>
     <string name="pref_title_data_settings">Δεδομένα</string>
+    <string name="pref_title_backup_restore" >Αντίγραφα Ασφαλείας / Επαναφορά</string>
+    <string name="pref_title_backup" >Δημιουργία Αντιγράφου Ασφαλείας</string>
+    <string name="pref_title_restore" >Επαναφορά δεδομένων από αρχείο ασφαλείας</string>
     <string name="pref_title_profile">Προφίλ</string>
     <string name="pref_title_data">Βάσεις Δεδομένων</string>
     <string name="pref_title_delete_income">Διαγραφή Ιστορικού Εισοδήματος</string>

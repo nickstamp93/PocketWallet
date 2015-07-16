@@ -197,6 +197,34 @@ public class SettingsActivity extends PreferenceActivity
             }
         });
 
+        //when user clicks on "backup" preference item
+        //call an async task that performs the backup
+        screen = findPreference(getResources().getString(R.string.pref_key_backup));
+        screen.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+
+                //TODO call the async task with the backup procedure
+
+                return false;
+            }
+        });
+
+
+        //when user clicks on "backup" preference item
+        //call an async task that performs the backup
+        screen = findPreference(getResources().getString(R.string.pref_key_restore));
+        screen.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+
+                //TODO call the async task with the restore procedure
+
+                return false;
+            }
+        });
+
+
         //when the user clicks on the "theme" preference item
         screen = findPreference(getResources().getString(R.string.pref_key_theme));
         screen.setDefaultValue(getResources().getColor(R.color.background_material_dark));

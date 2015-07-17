@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.ngngteam.pocketwallet.Model.ExpenseItem;
 import com.ngngteam.pocketwallet.Model.IncomeItem;
+import com.ngngteam.pocketwallet.Model.RecurrentTransaction;
 import com.ngngteam.pocketwallet.Utils.SharedPrefsManager;
 
 import java.sql.SQLException;
@@ -27,6 +28,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
 
     private static final String Table_Expense = "Expense";
     private static final String Table_Income = "Income";
+    private static final String TABLE_RECURRENT = "recurrent_transactions";
 
     //Table Expense Columns
     private static final String Key_EId = "_id";
@@ -42,6 +44,18 @@ public class MoneyDatabase extends SQLiteOpenHelper {
     private static final String Key_IDate = "date";
     private static final String Key_INotes = "notes";
 
+    //Table Recurrent Columns
+    private static final String KEY_ID = "_id";
+    private static final String KEY_NAME = "name";
+    private static final String KEY_AMOUNT = "amount";
+    private static final String KEY_CATEGORY = "category";
+    private static final String KEY_DATE = "date";
+    private static final String KEY_FREQ = "frequency";
+    private static final String KEY_INTERVAL = "interval";
+    private static final String KEY_DAY = "day";
+    private static final String KEY_EXPIRATION = "expiration";
+    private static final String KEY_ISEXPENSE = "isExpense";
+
     private SQLiteDatabase mydb;
 
     private static final String Create_Expense_Table = "CREATE TABLE IF NOT EXISTS " + Table_Expense + "(" + Key_EId + " INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -50,8 +64,11 @@ public class MoneyDatabase extends SQLiteOpenHelper {
     private static final String Create_Income_Table = "CREATE TABLE IF NOT EXISTS " + Table_Income + "(" + Key_Iid + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             Key_IAmount + " DOUBLE," + Key_ISource + " TEXT NOT NULL," + Key_IDate + " TEXT NOT NULL," + Key_ENotes + " TEXT" + ")";
 
-    private static final String Create_Income_Table_OLD = "CREATE TABLE " + Table_Income + "(" + Key_Iid + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-            Key_IAmount + " DOUBLE," + Key_ISource + " TEXT NOT NULL," + Key_IDate + " TEXT NOT NULL" + ")";
+    private static final String Create_Expense_Recurrent = "CREATE TABLE IF NOT EXISTS " + TABLE_RECURRENT
+            + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+            KEY_NAME + " TEXT NOT NULL," + KEY_AMOUNT + " DOUBLE NOT NULL," + KEY_CATEGORY + " TEXT NOT NULL,"
+            + KEY_DATE + " TEXT NOT NULL," + KEY_FREQ + " INTEGER NOT NULL," + KEY_INTERVAL + " TEXT NOT NULL,"
+            + KEY_DAY + " TEXT," + KEY_EXPIRATION + " TEXT," + KEY_ISEXPENSE + " INTEGER);";
 
     private Context context;
 
@@ -64,6 +81,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(Create_Expense_Table);
         sqLiteDatabase.execSQL(Create_Income_Table);
+        sqLiteDatabase.execSQL(Create_Expense_Recurrent);
     }
 
     @Override
@@ -107,6 +125,23 @@ public class MoneyDatabase extends SQLiteOpenHelper {
 
     }
 
+    public void insertRecurrent(RecurrentTransaction item) {
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_NAME, item.getName());
+        values.put(KEY_AMOUNT, item.getAmount());
+        values.put(KEY_CATEGORY, item.getCategory());
+        values.put(KEY_DATE, item.getDate());
+        values.put(KEY_FREQ, item.getFreq());
+        values.put(KEY_INTERVAL, item.getInterval());
+        values.put(KEY_DAY, item.getDay());
+        values.put(KEY_EXPIRATION, item.getExpiration());
+        values.put(KEY_ISEXPENSE, item.getIsExpense());
+
+        getWritableDatabase().insert(TABLE_RECURRENT, null, values);
+    }
+
+
     public void updateExpense(ExpenseItem expense) {
 
         ContentValues values = new ContentValues();
@@ -127,6 +162,23 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         values.put(Key_INotes, income.getNotes());
 
         getReadableDatabase().update(Table_Income, values, Key_Iid + " = " + income.getId(), null);
+    }
+
+    public void updateRecurrent(RecurrentTransaction item) {
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_NAME, item.getName());
+        values.put(KEY_AMOUNT, item.getAmount());
+        values.put(KEY_CATEGORY, item.getCategory());
+        values.put(KEY_DATE, item.getDate());
+        values.put(KEY_FREQ, item.getFreq());
+        values.put(KEY_INTERVAL, item.getInterval());
+        values.put(KEY_DAY, item.getDay());
+        values.put(KEY_EXPIRATION, item.getExpiration());
+        values.put(KEY_ISEXPENSE, item.getIsExpense());
+
+        getReadableDatabase().update(TABLE_RECURRENT, values, KEY_ID + " = " + item.getId(), null);
+
     }
 
     public void updateCategory(String oldCategoryName, String newCategoryName) {
@@ -171,6 +223,10 @@ public class MoneyDatabase extends SQLiteOpenHelper {
 
     public void deleteIncome(int id) {
         getReadableDatabase().delete(Table_Income, Key_Iid + "=" + id, null);
+    }
+
+    public void deleteRecurrent(int id) {
+        getReadableDatabase().delete(TABLE_RECURRENT, KEY_ID + "=" + id, null);
     }
 
     public void deleteAllIncome() {

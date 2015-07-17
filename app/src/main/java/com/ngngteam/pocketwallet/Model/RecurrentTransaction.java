@@ -1,5 +1,7 @@
 package com.ngngteam.pocketwallet.Model;
 
+import android.database.Cursor;
+
 import java.util.ArrayList;
 
 /**
@@ -11,8 +13,28 @@ public class RecurrentTransaction {
     private String name, category, date, day, expiration;
     private double amount;
 
+    public RecurrentTransaction(Cursor cursor) {
+        this.id = cursor.getInt(0);
+        this.name = cursor.getString(1);
+        this.amount = cursor.getDouble(2);
+        this.category = cursor.getString(3);
+        this.date = cursor.getString(4);
+        if (cursor.getString(5).equalsIgnoreCase("daily"))
+            this.freq = 0;
+        else if (cursor.getString(5).equals("weekly"))
+            this.freq = 1;
+        else if (cursor.getString(5).equals("monthly"))
+            this.freq = 2;
+        else if (cursor.getString(5).equals("yearly"))
+            this.freq = 3;
+        this.interval = cursor.getInt(6);
+        this.day = cursor.getString(7);
+        this.expiration = cursor.getString(8);
+        this.isExpense = cursor.getInt(9);
+    }
 
-    public RecurrentTransaction(String name, double amount, String category, String date, int freq, int interval,
+    public RecurrentTransaction(String name, double amount, String category, String
+            date, int freq, int interval,
                                 String day, String expiration, int isExpense) {
         this.name = name;
         this.amount = amount;
@@ -25,7 +47,8 @@ public class RecurrentTransaction {
         this.isExpense = isExpense;
     }
 
-    public RecurrentTransaction(String name, double amount, String category, String date, String repeatString, int isExpense) {
+    public RecurrentTransaction(String name, double amount, String category, String
+            date, String repeatString, int isExpense) {
         this.name = name;
         this.amount = amount;
         this.category = category;

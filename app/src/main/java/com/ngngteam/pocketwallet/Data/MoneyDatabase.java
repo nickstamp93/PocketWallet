@@ -243,6 +243,12 @@ public class MoneyDatabase extends SQLiteOpenHelper {
                 null);
     }
 
+    //return a cursor which contains the whole table recurrents (select *)
+    public Cursor getAllRecurrents() {
+        return getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_RECURRENT,
+                null);
+    }
+
     //return a cursor which contains the tuples with Category equal to the parameter category of table Expenses
     public Cursor getExpensesByCategory(String category) {
 

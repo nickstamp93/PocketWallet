@@ -3,6 +3,7 @@ package com.ngngteam.pocketwallet.Activities;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.preference.PreferenceManager;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -17,8 +18,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
+import com.ngngteam.pocketwallet.Data.CategoryDatabase;
 import com.ngngteam.pocketwallet.Data.MoneyDatabase;
 import com.ngngteam.pocketwallet.Extra.LetterImageView;
+import com.ngngteam.pocketwallet.Model.RecurrentTransaction;
 import com.ngngteam.pocketwallet.R;
 import com.ngngteam.pocketwallet.Utils.Themer;
 
@@ -28,6 +31,7 @@ public class RecurrentTransactionsActivity extends ActionBarActivity {
     FloatingActionButton fab;
 
     MoneyDatabase db;
+    CategoryDatabase cdb;
     CustomCursorAdapter adapter;
     Cursor cursor;
 
@@ -55,7 +59,8 @@ public class RecurrentTransactionsActivity extends ActionBarActivity {
 
     private void init() {
         db = new MoneyDatabase(this);
-        cursor = db.getAllIncomes();
+        cdb = new CategoryDatabase(this);
+        cursor = db.getAllRecurrents();
 
         adapter = new CustomCursorAdapter(this, cursor);
 
@@ -78,6 +83,13 @@ public class RecurrentTransactionsActivity extends ActionBarActivity {
                 startActivity(new Intent(RecurrentTransactionsActivity.this, AddRecurrentActivity.class));
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        cursor.requery();
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -114,17 +126,20 @@ public class RecurrentTransactionsActivity extends ActionBarActivity {
         //this method is called mainly when a row is changing position on the screen (e.g scrolling)
         //because when you're scrolling a view that wasn't on the screen and it is now , has to show its data
         @Override
-        public void bindView(View view, Context context, Cursor cursor) {
+        public void bindView(View view, Context context, Cursor c) {
 
             final Holder holder = (Holder) view.getTag();
 
+            RecurrentTransaction item = new RecurrentTransaction(c);
 
-            holder.tvName.setText("Bank debt");
-            holder.tvCategory.setText("Other");
-            holder.tvAmount.setText("200 $");
-            holder.tvDays.setText("Due in 4 days");
-            holder.tvNotes.setText("these are some notes");
-            holder.ivIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher));
+            holder.tvName.setText(item.getName());
+            holder.tvCategory.setText(item.getCategory());
+            holder.tvDays.setText(item.getInterval() + "");
+            holder.tvAmount.setText(item.getAmount() + " "
+                    + PreferenceManager.getDefaultSharedPreferences(context).getString(getString(R.string.pref_key_currency), "€"));
+
+            holder.ivIcon.setLetter(cdb.getLetterFromCategory(item.getCategory(), true));
+            holder.ivIcon.setmBackgroundPaint(cdb.getColorFromCategory(item.getCategory(), true));
 
         }
 
@@ -140,19 +155,21 @@ public class RecurrentTransactionsActivity extends ActionBarActivity {
 
             holder.tvName = (TextView) row.findViewById(R.id.tvName);
             holder.tvCategory = (TextView) row.findViewById(R.id.tvCategory);
-            holder.tvNotes = (TextView) row.findViewById(R.id.tvNotes);
             holder.tvAmount = (TextView) row.findViewById(R.id.tvPrice);
-            holder.tvDays = (TextView) row.findViewById(R.id.tvDate);
+            holder.tvDays = (TextView) row.findViewById(R.id.tvDaysLeft);
             holder.ivIcon = (LetterImageView) row.findViewById(R.id.livhistory);
 
 
-            holder.tvName.setText("Bank debt");
-            holder.tvCategory.setText("Other");
-            holder.tvAmount.setText("200 $");
-            holder.tvDays.setText("Due in 4 days");
-            holder.tvNotes.setText("these are some notes");
-            holder.ivIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher));
+            RecurrentTransaction item = new RecurrentTransaction(c);
 
+            holder.tvName.setText(item.getName());
+            holder.tvCategory.setText(item.getCategory());
+            holder.tvDays.setText(item.getInterval() + "");
+            holder.tvAmount.setText(item.getAmount() + " "
+                    + PreferenceManager.getDefaultSharedPreferences(context).getString(getString(R.string.pref_key_currency), "€"));
+
+            holder.ivIcon.setLetter(cdb.getLetterFromCategory(item.getCategory(), true));
+            holder.ivIcon.setmBackgroundPaint(cdb.getColorFromCategory(item.getCategory(), true));
 
             row.setTag(holder);
             return row;
@@ -160,8 +177,8 @@ public class RecurrentTransactionsActivity extends ActionBarActivity {
 
         class Holder {
             String id;
-            TextView tvName, tvCategory, tvDays, tvNotes, tvAmount;
-            ImageView ivIcon;
+            TextView tvName, tvCategory, tvDays, tvAmount;
+            LetterImageView ivIcon;
 
         }
     }

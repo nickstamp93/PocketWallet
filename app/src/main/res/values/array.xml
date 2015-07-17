@@ -3,6 +3,7 @@
 
     <string-array name="drawer_menu">
         <item>History</item>
+        <item>Recurrents</item>
         <item>Add Income</item>
         <item>Add Expense</item>
         <item>Pie Distribution</item>

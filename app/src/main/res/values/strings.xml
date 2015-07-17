@@ -232,6 +232,7 @@
     <string name="title_activity_recurrent_transactions">RecurrentTransactionsActivity</string>
 
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_add_recurrent">AddRecurrentActivity</string>
 
 
 </resources>

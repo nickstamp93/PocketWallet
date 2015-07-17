@@ -3,6 +3,7 @@
 
     <string-array name="drawer_menu">
         <item>Ιστορικό</item>
+        <item>Περιοδικές</item>
         <item>Νέο Έσοδο</item>
         <item>Νέο Έξοδο</item>
         <item>Κατανομές</item>

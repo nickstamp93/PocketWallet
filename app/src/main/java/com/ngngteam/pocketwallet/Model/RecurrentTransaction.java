@@ -11,10 +11,6 @@ public class RecurrentTransaction {
     private String name, category, date, day, expiration;
     private double amount;
 
-    public RecurrentTransaction(String s) {
-
-        populateFromDialog(s);
-    }
 
     public RecurrentTransaction(String name, double amount, String category, String date, int freq, int interval,
                                 String day, String expiration, int isExpense) {
@@ -29,14 +25,16 @@ public class RecurrentTransaction {
         this.isExpense = isExpense;
     }
 
+    public RecurrentTransaction(String name, double amount, String category, String date, String repeatString, int isExpense) {
+        this.name = name;
+        this.amount = amount;
+        this.category = category;
+        this.date = date;
+        populateFromDialog(repeatString);
+        this.isExpense = isExpense;
+    }
+
     public void populateFromDialog(String s) {
-        name = "Bank Debt";
-        amount = 300;
-        category = "Loans";
-        date = "10/5/2000";
-        isExpense = 1;
-
-
         interval = 1;
         expiration = null;
         String[] tokens = s.split(";");

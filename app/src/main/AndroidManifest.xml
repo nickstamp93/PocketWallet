@@ -163,6 +163,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activities.OverviewActivity" />
         </activity>
+        <activity
+            android:name=".Activities.AddRecurrentActivity"
+            android:label="@string/title_activity_add_recurrent"
+            android:screenOrientation="portrait">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.RecurrentTransactionsActivity" />
+        </activity>
     </application>
 
 </manifest>

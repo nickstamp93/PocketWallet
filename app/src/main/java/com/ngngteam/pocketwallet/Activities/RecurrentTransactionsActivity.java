@@ -1,6 +1,7 @@
 package com.ngngteam.pocketwallet.Activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v7.app.ActionBarActivity;
@@ -44,6 +45,12 @@ public class RecurrentTransactionsActivity extends ActionBarActivity {
 
         initUI();
 
+        setUpUI();
+
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
     }
 
     private void init() {
@@ -62,6 +69,15 @@ public class RecurrentTransactionsActivity extends ActionBarActivity {
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.attachToListView(listView);
+    }
+
+    private void setUpUI() {
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(RecurrentTransactionsActivity.this, AddRecurrentActivity.class));
+            }
+        });
     }
 
     @Override

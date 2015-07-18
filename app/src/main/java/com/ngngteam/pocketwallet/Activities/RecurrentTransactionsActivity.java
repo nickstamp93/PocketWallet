@@ -7,11 +7,13 @@ import android.preference.PreferenceManager;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,7 +27,7 @@ import com.ngngteam.pocketwallet.Model.RecurrentTransaction;
 import com.ngngteam.pocketwallet.R;
 import com.ngngteam.pocketwallet.Utils.Themer;
 
-public class RecurrentTransactionsActivity extends ActionBarActivity {
+public class RecurrentTransactionsActivity extends AppCompatActivity {
 
     ListView listView;
     FloatingActionButton fab;
@@ -81,6 +83,25 @@ public class RecurrentTransactionsActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(RecurrentTransactionsActivity.this, AddRecurrentActivity.class));
+            }
+        });
+
+        //and set a OnItemClickListener
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
+                cursor.moveToPosition(pos);
+
+                Intent updateIntent = new Intent(RecurrentTransactionsActivity.this, AddRecurrentActivity.class);
+                //put category attributes to the intent
+                RecurrentTransaction item = new RecurrentTransaction(cursor.getString(1), cursor.getDouble(2)
+                        , cursor.getString(3), cursor.getString(4), cursor.getInt(5), cursor.getInt(6)
+                        , cursor.getString(7), cursor.getString(8), cursor.getInt(9));
+
+                item.setId(cursor.getInt(0));
+                updateIntent.putExtra("item" , item);
+                startActivity(updateIntent);
+
             }
         });
     }

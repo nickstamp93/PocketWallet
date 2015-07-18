@@ -65,12 +65,11 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
         initUI();
 
         setUpUI();
-
-        //This activity contains 2 modules. Add a new expense in Database or update an exist one.
+//This activity contains 2 modules. Add a new expense in Database or update an exist one.
         //When the user wants to update a expense he just click the history item or click the last expense from overview. From History
         //we start an Intent to open this activity. So we use a ExpenseItem variable to get the
         //expense that the user wants to update.
-        item = (RecurrentTransaction) getIntent().getSerializableExtra("Expense");
+        item = (RecurrentTransaction) getIntent().getSerializableExtra("item");
         //If variable item is not null it means that AddExpenseActivity is called from HistoryActivity so
         //we need to update the values of the expense that pressed.
         if (item != null) {
@@ -78,51 +77,13 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
             id = item.getId();
             initUiValues();
         } else {
+            item = new RecurrentTransaction();
             update = false;
         }
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-    }
-
-    private void initUiValues() {
-
-        tvAmount.setText(item.getAmount() + " " + PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString(getResources().getString(R.string.pref_key_currency), getResources().getString(R.string.pref_currency_default_value)));
-
-        sCategories.setSelection(cdb.getPositionFromValue(item.getCategory(), true));
-        cdb.close();
-
-        String tokens[] = item.getDate().split("-");
-        String year = tokens[0];
-        String month = tokens[1];
-        String day = tokens[2];
-        dateDialog = CalendarDatePickerDialog.newInstance(this,
-                Integer.parseInt(year), Integer.parseInt(month) - 1, Integer.parseInt(day));
-        date = year + "-" + month + "-" + day;
-
-        try {
-            Calendar today = Calendar.getInstance();
-            Calendar yesterday = Calendar.getInstance();
-            yesterday.add(Calendar.DAY_OF_YEAR, -1);
-            Calendar item_date = Calendar.getInstance();
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            item_date.setTime(format.parse(date));
-
-            boolean isToday = today.get(Calendar.YEAR) == item_date.get(Calendar.YEAR) &&
-                    today.get(Calendar.DAY_OF_YEAR) == item_date.get(Calendar.DAY_OF_YEAR);
-            boolean isYesterday = yesterday.get(Calendar.YEAR) == item_date.get(Calendar.YEAR) &&
-                    yesterday.get(Calendar.DAY_OF_YEAR) == item_date.get(Calendar.DAY_OF_YEAR);
-            if (isToday) {
-                etDate.setText(getString(R.string.text_today));
-            } else if (isYesterday) {
-                etDate.setText(getString(R.string.text_yesterday));
-            } else {
-                etDate.setText(date);
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
     }
 
     private void init() {
@@ -137,8 +98,6 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
         Calendar c = Calendar.getInstance();
         dateDialog = CalendarDatePickerDialog.newInstance(AddRecurrentActivity.this,
                 c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
-        recurrenceDialog = new RecurrencePickerDialog();
-        recurrenceDialog.setOnRecurrenceSetListener(this);
     }
 
     private void initUI() {
@@ -191,6 +150,8 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
         etRepeat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                recurrenceDialog = new RecurrencePickerDialog();
+                recurrenceDialog.setOnRecurrenceSetListener(AddRecurrentActivity.this);
                 recurrenceDialog.show(getSupportFragmentManager(), "tag");
             }
         });
@@ -239,6 +200,98 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
                 }
             }
         });
+
+        bCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    private void initUiValues() {
+
+        tvAmount.setText(item.getAmount() + " " + PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString(getResources().getString(R.string.pref_key_currency), getResources().getString(R.string.pref_currency_default_value)));
+
+        etName.setText(item.getName());
+
+        sCategories.setSelection(cdb.getPositionFromValue(item.getCategory(), true));
+
+        String tokens[] = item.getDate().split("-");
+        String year = tokens[0];
+        String month = tokens[1];
+        String day = tokens[2];
+        dateDialog = CalendarDatePickerDialog.newInstance(this,
+                Integer.parseInt(year), Integer.parseInt(month) - 1, Integer.parseInt(day));
+        date = year + "-" + month + "-" + day;
+
+        try {
+            Calendar today = Calendar.getInstance();
+            Calendar yesterday = Calendar.getInstance();
+            yesterday.add(Calendar.DAY_OF_YEAR, -1);
+            Calendar item_date = Calendar.getInstance();
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            item_date.setTime(format.parse(date));
+
+            boolean isToday = today.get(Calendar.YEAR) == item_date.get(Calendar.YEAR) &&
+                    today.get(Calendar.DAY_OF_YEAR) == item_date.get(Calendar.DAY_OF_YEAR);
+            boolean isYesterday = yesterday.get(Calendar.YEAR) == item_date.get(Calendar.YEAR) &&
+                    yesterday.get(Calendar.DAY_OF_YEAR) == item_date.get(Calendar.DAY_OF_YEAR);
+            if (isToday) {
+                etDate.setText(getString(R.string.text_today));
+            } else if (isYesterday) {
+                etDate.setText(getString(R.string.text_yesterday));
+            } else {
+                etDate.setText(date);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        fillRepeatText();
+    }
+
+    private void fillRepeatText() {
+        String strFreq = "";
+        if (item.getFreq() == 0) {
+            strFreq = " day(s)";
+        } else if (item.getFreq() == 1) {
+            strFreq = " week(s)";
+        } else if (item.getFreq() == 2) {
+            strFreq = " month(s)";
+        } else if (item.getFreq() == 3) {
+            strFreq = " year(s)";
+        }
+        String strExpire = "";
+        if (item.getExpiration() == null) {
+            strExpire = " forever";
+        } else if (item.getExpiration().split(":")[0].equalsIgnoreCase("count")) {
+            strExpire = " for " + item.getExpiration().split(":")[1] + " times";
+        } else {
+            strExpire = " until " + item.getExpiration().split(":")[1];
+        }
+        String strDisplay = "Every " + item.getInterval() + strFreq + strExpire;
+        etRepeat.setText(strDisplay);
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_add_recurrent, menu);
+        if (update) {
+            return true;
+        }
+        return false;
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_menu_delete) {
+            db.deleteRecurrent(id);
+            finish();
+        }
+        return true;
     }
 
     @Override
@@ -293,5 +346,10 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
     public void onRecurrenceSet(String s) {
         //create
         recurrentString = s;
+        if (s != null) {
+            item.populateFromDialog(s);
+            fillRepeatText();
+        }
+
     }
 }

@@ -2,16 +2,21 @@ package com.ngngteam.pocketwallet.Model;
 
 import android.database.Cursor;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by nickstamp on 7/17/2015.
  */
-public class RecurrentTransaction {
+public class RecurrentTransaction  implements Serializable {
 
     private int id, interval, freq, isExpense;
     private String name, category, date, day, expiration;
     private double amount;
+
+    public RecurrentTransaction(){
+
+    }
 
     public RecurrentTransaction(Cursor cursor) {
         this.id = cursor.getInt(0);

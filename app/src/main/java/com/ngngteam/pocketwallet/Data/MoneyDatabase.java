@@ -237,6 +237,11 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         getWritableDatabase().delete(Table_Expense, null, null);
     }
 
+    public void deleteAllRecurrents() {
+        getWritableDatabase().delete(TABLE_RECURRENT, null, null);
+    }
+
+
     //return a cursor which contains the whole table expense (select *)
     public Cursor getAllExpenses() {
         return getReadableDatabase().rawQuery("SELECT * FROM " + Table_Expense,

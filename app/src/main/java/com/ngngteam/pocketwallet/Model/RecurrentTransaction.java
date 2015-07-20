@@ -1,20 +1,23 @@
 package com.ngngteam.pocketwallet.Model;
 
 import android.database.Cursor;
+import android.util.Log;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
  * Created by nickstamp on 7/17/2015.
  */
-public class RecurrentTransaction  implements Serializable {
+public class RecurrentTransaction implements Serializable {
 
     private int id, interval, freq, isExpense;
     private String name, category, date, day, expiration;
     private double amount;
 
-    public RecurrentTransaction(){
+    public RecurrentTransaction() {
 
     }
 
@@ -24,14 +27,7 @@ public class RecurrentTransaction  implements Serializable {
         this.amount = cursor.getDouble(2);
         this.category = cursor.getString(3);
         this.date = cursor.getString(4);
-        if (cursor.getString(5).equalsIgnoreCase("daily"))
-            this.freq = 0;
-        else if (cursor.getString(5).equals("weekly"))
-            this.freq = 1;
-        else if (cursor.getString(5).equals("monthly"))
-            this.freq = 2;
-        else if (cursor.getString(5).equals("yearly"))
-            this.freq = 3;
+        this.freq = cursor.getInt(5);
         this.interval = cursor.getInt(6);
         this.day = cursor.getString(7);
         this.expiration = cursor.getString(8);
@@ -65,29 +61,42 @@ public class RecurrentTransaction  implements Serializable {
     public void populateFromDialog(String s) {
         interval = 1;
         expiration = null;
-        String[] tokens = s.split(";");
-        for (String item : tokens) {
-            String name = item.split("=")[0];
-            String value = item.split("=")[1];
-            if (name.equalsIgnoreCase("freq")) {
-                if (value.equalsIgnoreCase("daily"))
-                    freq = 0;
-                else if (value.equalsIgnoreCase("daily"))
-                    freq = 1;
-                else if (value.equalsIgnoreCase("monthly"))
-                    freq = 2;
-                else if (value.equalsIgnoreCase("yearly"))
-                    freq = 3;
+        if(s != null){
+            String[] tokens = s.split(";");
+            for (String item : tokens) {
+                String name = item.split("=")[0];
+                String value = item.split("=")[1];
+                if (name.equalsIgnoreCase("freq")) {
+                    if (value.equalsIgnoreCase("daily"))
+                        freq = 0;
+                    else if (value.equalsIgnoreCase("weekly"))
+                        freq = 1;
+                    else if (value.equalsIgnoreCase("monthly"))
+                        freq = 2;
+                    else if (value.equalsIgnoreCase("yearly"))
+                        freq = 3;
+                }
+                if (name.equalsIgnoreCase("interval"))
+                    interval = Integer.parseInt(value);
+                if (name.equalsIgnoreCase("count"))
+                    expiration = "count:" + Integer.parseInt(value);
+                if (name.equalsIgnoreCase("until")) {
+                    value = value.substring(0, 8);
+                    Log.i("nikos" , value);
+                    try {
+                        value = new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("yyyyMMdd").parse(value));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    Log.i("nikos" , value);
+                    expiration = "date:" + value;
+                }
+                if (name.equalsIgnoreCase("byday"))
+                    day = value;
             }
-            if (name.equalsIgnoreCase("interval"))
-                interval = Integer.parseInt(value);
-            if (name.equalsIgnoreCase("count"))
-                expiration = "count:" + Integer.parseInt(value);
-            if (name.equalsIgnoreCase("until"))
-                expiration = "date:" + value;
-            if (name.equalsIgnoreCase("byday"))
-                day = value;
+
         }
+
     }
 
 

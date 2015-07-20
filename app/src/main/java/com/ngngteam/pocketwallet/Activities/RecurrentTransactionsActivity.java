@@ -8,6 +8,7 @@ import android.support.v4.widget.CursorAdapter;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,6 +27,11 @@ import com.ngngteam.pocketwallet.Extra.LetterImageView;
 import com.ngngteam.pocketwallet.Model.RecurrentTransaction;
 import com.ngngteam.pocketwallet.R;
 import com.ngngteam.pocketwallet.Utils.Themer;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class RecurrentTransactionsActivity extends AppCompatActivity {
 
@@ -99,7 +105,7 @@ public class RecurrentTransactionsActivity extends AppCompatActivity {
                         , cursor.getString(7), cursor.getString(8), cursor.getInt(9));
 
                 item.setId(cursor.getInt(0));
-                updateIntent.putExtra("item" , item);
+                updateIntent.putExtra("item", item);
                 startActivity(updateIntent);
 
             }
@@ -155,7 +161,7 @@ public class RecurrentTransactionsActivity extends AppCompatActivity {
 
             holder.tvName.setText(item.getName());
             holder.tvCategory.setText(item.getCategory());
-            holder.tvDays.setText(item.getDate());
+            holder.tvDays.setText(daysToEvent(item.getFreq(), item.getInterval(), item.getDate(), item.getExpiration(), item.getDay()));
             holder.tvAmount.setText(item.getAmount() + " "
                     + PreferenceManager.getDefaultSharedPreferences(context).getString(getString(R.string.pref_key_currency), "€"));
 
@@ -186,7 +192,8 @@ public class RecurrentTransactionsActivity extends AppCompatActivity {
 
             holder.tvName.setText(item.getName());
             holder.tvCategory.setText(item.getCategory());
-            holder.tvDays.setText(item.getDate());
+
+            holder.tvDays.setText(daysToEvent(item.getFreq(), item.getInterval(), item.getDate(), item.getExpiration(), item.getDay()));
             holder.tvAmount.setText(item.getAmount() + " "
                     + PreferenceManager.getDefaultSharedPreferences(context).getString(getString(R.string.pref_key_currency), "€"));
 
@@ -204,6 +211,66 @@ public class RecurrentTransactionsActivity extends AppCompatActivity {
             LetterImageView ivIcon;
 
         }
+    }
+
+
+    private String daysToEvent(int freq, int interval, String date, String expiration, String day) {
+        int freqVar = Calendar.MONTH;
+        switch (freq) {
+            //daily
+            case 0:
+                freqVar = Calendar.DAY_OF_YEAR;
+                break;
+            //weekly
+            case 1:
+                freqVar = Calendar.WEEK_OF_YEAR;
+                break;
+            //monthly
+            case 2:
+                freqVar = Calendar.MONTH;
+                break;
+            //yearly
+            case 3:
+                freqVar = Calendar.YEAR;
+                break;
+        }
+        try {
+            Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+            Date today = new Date(Calendar.getInstance().getTimeInMillis());
+
+            Calendar c = Calendar.getInstance();
+            c.setTime(startDate);
+
+            while (startDate.before(today)) {
+                c.add(freqVar, interval);
+                startDate = c.getTime();
+            }
+
+            //milliseconds
+            long different = startDate.getTime() - today.getTime();
+
+
+            long secondsInMilli = 1000;
+            long minutesInMilli = secondsInMilli * 60;
+            long hoursInMilli = minutesInMilli * 60;
+            long daysInMilli = hoursInMilli * 24;
+
+            long elapsedDays = different / daysInMilli;
+
+            if (elapsedDays == 0)
+                return "Today";
+            if (elapsedDays == 1)
+                return "Tomorrow";
+            return "due to " + elapsedDays + " days";
+
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Log.i("kwstas", "end with freq " + freq);
+        Log.i("kwstas", "end with freqvar " + freqVar);
+        return "0";
     }
 
 }

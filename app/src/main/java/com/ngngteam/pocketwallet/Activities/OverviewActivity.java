@@ -11,6 +11,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,6 +35,7 @@ import com.ngngteam.pocketwallet.Utils.OverviewBar;
 import com.ngngteam.pocketwallet.Utils.SharedPrefsManager;
 import com.ngngteam.pocketwallet.Utils.Themer;
 
+import java.sql.Time;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -107,6 +110,8 @@ public class OverviewActivity extends AppCompatActivity {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
+
+
 
 
     }

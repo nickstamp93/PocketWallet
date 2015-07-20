@@ -30,6 +30,7 @@ import com.ngngteam.pocketwallet.Model.RecurrentTransaction;
 import com.ngngteam.pocketwallet.Model.SpinnerItem;
 import com.ngngteam.pocketwallet.R;
 
+import java.lang.annotation.Target;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -95,6 +96,8 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
 
         isExpense = true;
 
+        date = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+
         amountDialog = new NumberPickerBuilder().setFragmentManager(getSupportFragmentManager())
                 .setPlusMinusVisibility(NumberPicker.INVISIBLE)
                 .setStyleResId(R.style.BetterPickersDialogFragment);
@@ -120,6 +123,8 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
     }
 
     private void setUpUI() {
+
+        fillDateText();
 
         populateSpinnerCategories();
 
@@ -163,6 +168,11 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
                 //if we took the price correctly we continue to retrieve the other information of the expense
                 if (ok) {
 
+                    if (!isFormComplete()) {
+                        Toast.makeText(AddRecurrentActivity.this, getString(R.string.error_form), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
                     //get the position of the chosen category from spinner
                     int position = sCategories.getSelectedItemPosition();
                     Log.i("nikos", position + "");
@@ -171,6 +181,7 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
                         position = 0;
 
                     category = allCategories.get(position);
+
 
 
                     item = new RecurrentTransaction(etName.getText().toString(), price, category,
@@ -205,6 +216,19 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
         });
     }
 
+    private boolean isFormComplete() {
+
+        if (etName.getText().toString().trim().length() == 0)
+            return false;
+        if (etRepeat.getText().toString().trim().length() == 0)
+            return false;
+        int currencyLength = PreferenceManager.getDefaultSharedPreferences(AddRecurrentActivity.this).getString(getResources().getString(R.string.pref_key_currency), getResources().getString(R.string.pref_currency_default_value)).length();
+        double amount = Double.parseDouble(tvAmount.getText().subSequence(0, tvAmount.getText().length() - currencyLength).toString());
+        if (amount <= 0)
+            return false;
+        return true;
+    }
+
     private void populateSpinnerCategories() {
         allCategories = cdb.getCategories(isExpense);
         //=========================set up the spinner with the categories===========================
@@ -230,6 +254,7 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
 
         etName.setText(item.getName());
 
+        recurrentString = null;
         isExpense = item.getIsExpense() == 1 ? true : false;
         sCategories.setSelection(cdb.getPositionFromValue(item.getCategory(), isExpense));
 
@@ -290,6 +315,31 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
         etRepeat.setText(strDisplay);
     }
 
+    private void fillDateText(){
+
+        try {
+            Calendar today = Calendar.getInstance();
+            Calendar yesterday = Calendar.getInstance();
+            yesterday.add(Calendar.DAY_OF_YEAR, -1);
+            Calendar item_date = Calendar.getInstance();
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            item_date.setTime(format.parse(date));
+
+            boolean isToday = today.get(Calendar.YEAR) == item_date.get(Calendar.YEAR) &&
+                    today.get(Calendar.DAY_OF_YEAR) == item_date.get(Calendar.DAY_OF_YEAR);
+            boolean isYesterday = yesterday.get(Calendar.YEAR) == item_date.get(Calendar.YEAR) &&
+                    yesterday.get(Calendar.DAY_OF_YEAR) == item_date.get(Calendar.DAY_OF_YEAR);
+            if (isToday) {
+                etDate.setText(getString(R.string.text_today));
+            } else if (isYesterday) {
+                etDate.setText(getString(R.string.text_yesterday));
+            } else {
+                etDate.setText(date);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -343,28 +393,8 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
 
         date = year + "-" + month + "-" + day;
 
-        try {
-            Calendar today = Calendar.getInstance();
-            Calendar yesterday = Calendar.getInstance();
-            yesterday.add(Calendar.DAY_OF_YEAR, -1);
-            Calendar item_date = Calendar.getInstance();
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            item_date.setTime(format.parse(date));
+        fillDateText();
 
-            boolean isToday = today.get(Calendar.YEAR) == item_date.get(Calendar.YEAR) &&
-                    today.get(Calendar.DAY_OF_YEAR) == item_date.get(Calendar.DAY_OF_YEAR);
-            boolean isYesterday = yesterday.get(Calendar.YEAR) == item_date.get(Calendar.YEAR) &&
-                    yesterday.get(Calendar.DAY_OF_YEAR) == item_date.get(Calendar.DAY_OF_YEAR);
-            if (isToday) {
-                etDate.setText(getString(R.string.text_today));
-            } else if (isYesterday) {
-                etDate.setText(getString(R.string.text_yesterday));
-            } else {
-                etDate.setText(date);
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override

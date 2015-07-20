@@ -155,12 +155,13 @@ public class RecurrentTransactionsActivity extends AppCompatActivity {
 
             holder.tvName.setText(item.getName());
             holder.tvCategory.setText(item.getCategory());
-            holder.tvDays.setText(item.getInterval() + "");
+            holder.tvDays.setText(item.getDate());
             holder.tvAmount.setText(item.getAmount() + " "
                     + PreferenceManager.getDefaultSharedPreferences(context).getString(getString(R.string.pref_key_currency), "€"));
 
-            holder.ivIcon.setLetter(cdb.getLetterFromCategory(item.getCategory(), true));
-            holder.ivIcon.setmBackgroundPaint(cdb.getColorFromCategory(item.getCategory(), true));
+            boolean isExpense = item.getIsExpense() == 1 ? true : false;
+            holder.ivIcon.setLetter(cdb.getLetterFromCategory(item.getCategory(), isExpense));
+            holder.ivIcon.setmBackgroundPaint(cdb.getColorFromCategory(item.getCategory(), isExpense));
 
         }
 
@@ -185,12 +186,13 @@ public class RecurrentTransactionsActivity extends AppCompatActivity {
 
             holder.tvName.setText(item.getName());
             holder.tvCategory.setText(item.getCategory());
-            holder.tvDays.setText(item.getInterval() + "");
+            holder.tvDays.setText(item.getDate());
             holder.tvAmount.setText(item.getAmount() + " "
                     + PreferenceManager.getDefaultSharedPreferences(context).getString(getString(R.string.pref_key_currency), "€"));
 
-            holder.ivIcon.setLetter(cdb.getLetterFromCategory(item.getCategory(), true));
-            holder.ivIcon.setmBackgroundPaint(cdb.getColorFromCategory(item.getCategory(), true));
+            boolean isExpense = item.getIsExpense() == 1 ? true : false;
+            holder.ivIcon.setLetter(cdb.getLetterFromCategory(item.getCategory(), isExpense));
+            holder.ivIcon.setmBackgroundPaint(cdb.getColorFromCategory(item.getCategory(), isExpense));
 
             row.setTag(holder);
             return row;

@@ -4,12 +4,15 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +46,7 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
     MoneyDatabase db;
     CategoryDatabase cdb;
     private String date, recurrentString;
+    private boolean isExpense;
 
     RecurrencePickerDialog recurrenceDialog;
     CalendarDatePickerDialog dateDialog;
@@ -81,7 +85,6 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
             update = false;
         }
 
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
     }
@@ -90,7 +93,7 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
         db = new MoneyDatabase(this);
         cdb = new CategoryDatabase(this);
 
-        allCategories = cdb.getCategories(true);
+        isExpense = true;
 
         amountDialog = new NumberPickerBuilder().setFragmentManager(getSupportFragmentManager())
                 .setPlusMinusVisibility(NumberPicker.INVISIBLE)
@@ -117,21 +120,9 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
     }
 
     private void setUpUI() {
-        //=========================set up the spinner with the categories===========================
-        //get from CategoryDatabase all the categories and save them in to an ArrayList
-        ArrayList<SpinnerItem> spinnerItems = new ArrayList<SpinnerItem>();
-        //Initialize the the categories in UI using LetterImageView for each category
-        for (int i = 0; i < allCategories.size(); i++) {
-            String name = allCategories.get(i);
-            int color = cdb.getColorFromCategory(name, true);
-            char letter = cdb.getLetterFromCategory(name, true);
-            spinnerItems.add(new SpinnerItem(name, color, letter));
-        }
-        //Initialize the CategorySpinnerAdapter
-        CategorySpinnerAdapter adapter = new CategorySpinnerAdapter(AddRecurrentActivity.this, R.layout.spinner_item_categories, spinnerItems);
-        //Set the adapter of spinner item to be all the categories from CategoryDatabase
-        sCategories.setAdapter(adapter);
-        cdb.close();
+
+        populateSpinnerCategories();
+
 
         tvAmount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,11 +165,16 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
 
                     //get the position of the chosen category from spinner
                     int position = sCategories.getSelectedItemPosition();
+                    Log.i("nikos", position + "");
+
+                    if (position < 0 || position >= sCategories.getCount())
+                        position = 0;
 
                     category = allCategories.get(position);
 
+
                     item = new RecurrentTransaction(etName.getText().toString(), price, category,
-                            etDate.getText().toString(), recurrentString, 1);
+                            date, recurrentString, isExpense ? 1 : 0);
 
 
                     //After retrieve all values from the UI we want to check if this Expense is new so we just add
@@ -209,13 +205,33 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
         });
     }
 
+    private void populateSpinnerCategories() {
+        allCategories = cdb.getCategories(isExpense);
+        //=========================set up the spinner with the categories===========================
+        //get from CategoryDatabase all the categories and save them in to an ArrayList
+        ArrayList<SpinnerItem> spinnerItems = new ArrayList<SpinnerItem>();
+        //Initialize the the categories in UI using LetterImageView for each category
+        for (int i = 0; i < allCategories.size(); i++) {
+            String name = allCategories.get(i);
+            int color = cdb.getColorFromCategory(name, isExpense);
+            char letter = cdb.getLetterFromCategory(name, isExpense);
+            spinnerItems.add(new SpinnerItem(name, color, letter));
+        }
+        //Initialize the CategorySpinnerAdapter
+        CategorySpinnerAdapter adapter = new CategorySpinnerAdapter(AddRecurrentActivity.this, R.layout.spinner_item_categories, spinnerItems);
+        //Set the adapter of spinner item to be all the categories from CategoryDatabase
+        sCategories.setAdapter(adapter);
+
+    }
+
     private void initUiValues() {
 
         tvAmount.setText(item.getAmount() + " " + PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString(getResources().getString(R.string.pref_key_currency), getResources().getString(R.string.pref_currency_default_value)));
 
         etName.setText(item.getName());
 
-        sCategories.setSelection(cdb.getPositionFromValue(item.getCategory(), true));
+        isExpense = item.getIsExpense() == 1 ? true : false;
+        sCategories.setSelection(cdb.getPositionFromValue(item.getCategory(), isExpense));
 
         String tokens[] = item.getDate().split("-");
         String year = tokens[0];
@@ -279,17 +295,26 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_add_recurrent, menu);
         if (update) {
-            return true;
+            MenuItem delete = menu.add(getString(R.string.action_delete)).setIcon(getResources().getDrawable(android.R.drawable.ic_menu_delete));
+            delete.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+            delete.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem menuItem) {
+                    db.deleteRecurrent(id);
+                    finish();
+                    return false;
+                }
+            });
         }
-        return false;
+        return true;
 
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_menu_delete) {
-            db.deleteRecurrent(id);
-            finish();
+        if (item.getItemId() == R.id.action_menu_toggle) {
+            isExpense = !isExpense;
+            populateSpinnerCategories();
         }
         return true;
     }
@@ -346,6 +371,7 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
     public void onRecurrenceSet(String s) {
         //create
         recurrentString = s;
+        Log.i("nikos", s);
         if (s != null) {
             item.populateFromDialog(s);
             fillRepeatText();

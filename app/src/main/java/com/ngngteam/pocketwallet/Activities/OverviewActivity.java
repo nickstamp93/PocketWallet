@@ -79,8 +79,6 @@ public class OverviewActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_overview);
 
-        startActivity(new Intent(OverviewActivity.this, RecurrentTransactionsActivity.class));
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
@@ -109,6 +107,7 @@ public class OverviewActivity extends AppCompatActivity {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
+
 
     }
 
@@ -625,24 +624,27 @@ public class OverviewActivity extends AppCompatActivity {
                     startActivity(new Intent(OverviewActivity.this, HistoryActivity.class));
                     break;
                 case 1:
-                    startActivity(new Intent(OverviewActivity.this, AddIncomeActivity.class));
+                    startActivity(new Intent(OverviewActivity.this, RecurrentTransactionsActivity.class));
                     break;
                 case 2:
-                    startActivity(new Intent(OverviewActivity.this, AddExpenseActivity.class));
+                    startActivity(new Intent(OverviewActivity.this, AddIncomeActivity.class));
                     break;
                 case 3:
-                    startActivity(new Intent(OverviewActivity.this, PieDistributionActivity.class));
+                    startActivity(new Intent(OverviewActivity.this, AddExpenseActivity.class));
                     break;
                 case 4:
-                    startActivity(new Intent(OverviewActivity.this, BarsDistributionActivity.class));
+                    startActivity(new Intent(OverviewActivity.this, PieDistributionActivity.class));
                     break;
                 case 5:
-                    startActivity(new Intent(OverviewActivity.this, CategoriesManagerActivity.class));
+                    startActivity(new Intent(OverviewActivity.this, BarsDistributionActivity.class));
                     break;
                 case 6:
-                    startActivity(new Intent(OverviewActivity.this, SettingsActivity.class));
+                    startActivity(new Intent(OverviewActivity.this, CategoriesManagerActivity.class));
                     break;
                 case 7:
+                    startActivity(new Intent(OverviewActivity.this, SettingsActivity.class));
+                    break;
+                case 8:
                     finish();
                     break;
             }

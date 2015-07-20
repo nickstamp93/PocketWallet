@@ -155,6 +155,7 @@
         </activity>
         <activity
             android:name=".Activities.RecurrentTransactionsActivity"
+            android:parentActivityName=".Activities.OverviewActivity"
             android:label="@string/title_activity_recurrent_transactions"
             android:screenOrientation="portrait">
 
@@ -165,6 +166,7 @@
         </activity>
         <activity
             android:name=".Activities.AddRecurrentActivity"
+            android:parentActivityName=".Activities.RecurrentTransactionsActivity"
             android:label="@string/title_activity_add_recurrent"
             android:screenOrientation="portrait">
 

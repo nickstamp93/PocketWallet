@@ -29,6 +29,7 @@ import com.ngngteam.pocketwallet.Model.ExpenseItem;
 import com.ngngteam.pocketwallet.Model.RecurrentTransaction;
 import com.ngngteam.pocketwallet.Model.SpinnerItem;
 import com.ngngteam.pocketwallet.R;
+import com.ngngteam.pocketwallet.Utils.Themer;
 
 import java.lang.annotation.Target;
 import java.text.ParseException;
@@ -61,6 +62,9 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Themer.setThemeToActivity(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_recurrent);
 

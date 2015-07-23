@@ -3,6 +3,7 @@
     package="com.ngngteam.pocketwallet">
 
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
@@ -155,8 +156,8 @@
         </activity>
         <activity
             android:name=".Activities.RecurrentTransactionsActivity"
-            android:parentActivityName=".Activities.OverviewActivity"
             android:label="@string/title_activity_recurrent_transactions"
+            android:parentActivityName=".Activities.OverviewActivity"
             android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
@@ -166,8 +167,8 @@
         </activity>
         <activity
             android:name=".Activities.AddRecurrentActivity"
-            android:parentActivityName=".Activities.RecurrentTransactionsActivity"
             android:label="@string/title_activity_add_recurrent"
+            android:parentActivityName=".Activities.RecurrentTransactionsActivity"
             android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
@@ -175,6 +176,19 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activities.RecurrentTransactionsActivity" />
         </activity>
+
+        <service
+            android:name=".Services.RecurrentTransactionsService"
+            android:exported="false" />
+
+        <receiver android:name=".BroadcastReceivers.RecurrentReceiver"></receiver>
+
+
+        <receiver android:name=".BroadcastReceivers.DeviceBootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

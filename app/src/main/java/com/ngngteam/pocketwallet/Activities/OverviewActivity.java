@@ -1,5 +1,8 @@
 package com.ngngteam.pocketwallet.Activities;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -23,6 +26,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ngngteam.pocketwallet.Adapters.DrawerAdapter;
+import com.ngngteam.pocketwallet.BroadcastReceivers.RecurrentReceiver;
+import com.ngngteam.pocketwallet.BroadcastReceivers.ReminderReceiver;
 import com.ngngteam.pocketwallet.Data.CategoryDatabase;
 import com.ngngteam.pocketwallet.Data.MoneyDatabase;
 import com.ngngteam.pocketwallet.Dialogs.ChangelogDialog;
@@ -31,7 +36,9 @@ import com.ngngteam.pocketwallet.Model.ExpenseItem;
 import com.ngngteam.pocketwallet.Model.IncomeItem;
 import com.ngngteam.pocketwallet.Model.UserProfile;
 import com.ngngteam.pocketwallet.R;
+import com.ngngteam.pocketwallet.Services.RecurrentTransactionsService;
 import com.ngngteam.pocketwallet.Utils.OverviewBar;
+import com.ngngteam.pocketwallet.Utils.RecurrentUtils;
 import com.ngngteam.pocketwallet.Utils.SharedPrefsManager;
 import com.ngngteam.pocketwallet.Utils.Themer;
 
@@ -111,10 +118,12 @@ public class OverviewActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
-
+        if (!RecurrentTransactionsService.isRunning)
+//            startRecurrentService();
+            RecurrentUtils.startRecurrentService(this);
 
     }
+
 
     private void setUpUI() {
 

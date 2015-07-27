@@ -31,14 +31,16 @@
             android:textSize="@dimen/text_size_price_history_item"
             android:textStyle="bold" />
 
-        <TextView
+        <me.grantland.widget.AutofitTextView
             android:id="@+id/tvDaysLeft"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/tvCategory"
             android:layout_below="@+id/tvPrice"
             android:padding="@dimen/layout_padding_small"
+            android:gravity="end|center_horizontal"
             android:text="In 3 days"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#ff7f00"
@@ -65,7 +67,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tvName"
             android:layout_marginLeft="10dp"
-            android:layout_toLeftOf="@+id/tvPrice"
             android:layout_toRightOf="@+id/livhistory"
             android:ellipsize="end"
             android:gravity="start"

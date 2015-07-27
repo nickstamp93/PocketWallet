@@ -33,6 +33,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import me.grantland.widget.AutofitTextView;
+
 public class RecurrentTransactionsActivity extends AppCompatActivity {
 
     ListView listView;
@@ -99,13 +101,12 @@ public class RecurrentTransactionsActivity extends AppCompatActivity {
                 cursor.moveToPosition(pos);
 
                 Intent updateIntent = new Intent(RecurrentTransactionsActivity.this, AddRecurrentActivity.class);
-                //put category attributes to the intent
-                RecurrentTransaction item = new RecurrentTransaction(cursor.getString(1), cursor.getDouble(2)
-                        , cursor.getString(3), cursor.getString(4), cursor.getInt(5), cursor.getInt(6)
-                        , cursor.getString(7), cursor.getString(8), cursor.getInt(9));
+
+                //create a copy of the selected transaction
+                RecurrentTransaction item = new RecurrentTransaction(cursor);
 
                 item.setId(cursor.getInt(0));
-                updateIntent.putExtra("item", item);
+                updateIntent.putExtra("itemToUpdate", item);
                 startActivity(updateIntent);
 
             }
@@ -161,7 +162,8 @@ public class RecurrentTransactionsActivity extends AppCompatActivity {
 
             holder.tvName.setText(item.getName());
             holder.tvCategory.setText(item.getCategory());
-            holder.tvDays.setText(daysToEvent(item.getFreq(), item.getInterval(), item.getDate(), item.getExpiration(), item.getDay()));
+            holder.tvDays.setText(daysToEvent(item.getNextDate(), item.getExpiration()));
+
             holder.tvAmount.setText(item.getAmount() + " "
                     + PreferenceManager.getDefaultSharedPreferences(context).getString(getString(R.string.pref_key_currency), "€"));
 
@@ -181,10 +183,10 @@ public class RecurrentTransactionsActivity extends AppCompatActivity {
 
             final Holder holder = new Holder();
 
-            holder.tvName = (TextView) row.findViewById(R.id.tvName);
-            holder.tvCategory = (TextView) row.findViewById(R.id.tvCategory);
+            holder.tvName = (AutofitTextView) row.findViewById(R.id.tvName);
+            holder.tvCategory = (AutofitTextView) row.findViewById(R.id.tvCategory);
             holder.tvAmount = (TextView) row.findViewById(R.id.tvPrice);
-            holder.tvDays = (TextView) row.findViewById(R.id.tvDaysLeft);
+            holder.tvDays = (AutofitTextView) row.findViewById(R.id.tvDaysLeft);
             holder.ivIcon = (LetterImageView) row.findViewById(R.id.livhistory);
 
 
@@ -193,7 +195,7 @@ public class RecurrentTransactionsActivity extends AppCompatActivity {
             holder.tvName.setText(item.getName());
             holder.tvCategory.setText(item.getCategory());
 
-            holder.tvDays.setText(daysToEvent(item.getFreq(), item.getInterval(), item.getDate(), item.getExpiration(), item.getDay()));
+            holder.tvDays.setText(daysToEvent(item.getNextDate(), item.getExpiration()));
             holder.tvAmount.setText(item.getAmount() + " "
                     + PreferenceManager.getDefaultSharedPreferences(context).getString(getString(R.string.pref_key_currency), "€"));
 
@@ -207,70 +209,60 @@ public class RecurrentTransactionsActivity extends AppCompatActivity {
 
         class Holder {
             String id;
-            TextView tvName, tvCategory, tvDays, tvAmount;
+            AutofitTextView tvName, tvCategory, tvDays;
+            TextView tvAmount;
             LetterImageView ivIcon;
 
         }
     }
 
 
-    private String daysToEvent(int freq, int interval, String date, String expiration, String day) {
-        int freqVar = Calendar.MONTH;
-        switch (freq) {
-            //daily
-            case 0:
-                freqVar = Calendar.DAY_OF_YEAR;
-                break;
-            //weekly
-            case 1:
-                freqVar = Calendar.WEEK_OF_YEAR;
-                break;
-            //monthly
-            case 2:
-                freqVar = Calendar.MONTH;
-                break;
-            //yearly
-            case 3:
-                freqVar = Calendar.YEAR;
-                break;
-        }
+    private String daysToEvent(String nextDate, String expiration) {
+
+
         try {
-            Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+            Date nDate = new SimpleDateFormat("yyyy-MM-dd").parse(nextDate);
             Date today = new Date(Calendar.getInstance().getTimeInMillis());
 
-            Calendar c = Calendar.getInstance();
-            c.setTime(startDate);
+            int elapsedDays;
 
-            while (startDate.before(today)) {
-                c.add(freqVar, interval);
-                startDate = c.getTime();
+
+            Calendar cToday = Calendar.getInstance();
+            Calendar cNextDate = Calendar.getInstance();
+            cToday.setTime(today);
+            cNextDate.setTime(nDate);
+
+            int adj = 0;
+            if (cNextDate.get(Calendar.YEAR) > cToday.get(Calendar.YEAR))
+                adj = 365;
+            elapsedDays = cNextDate.get(Calendar.DAY_OF_YEAR) - cToday.get(Calendar.DAY_OF_YEAR) + adj;
+
+            String returnString = "";
+            if (expiration != null) {
+                if (expiration.split(":")[0].equalsIgnoreCase("count")) {
+                    int event = Integer.valueOf(expiration.split(":")[1].split("/")[0]);
+                    int total = Integer.valueOf(expiration.split(":")[1].split("/")[1]);
+                    returnString = "Event " + (event + 1) + "/" + total + "\n";
+                }
             }
 
-            //milliseconds
-            long different = startDate.getTime() - today.getTime();
-
-
-            long secondsInMilli = 1000;
-            long minutesInMilli = secondsInMilli * 60;
-            long hoursInMilli = minutesInMilli * 60;
-            long daysInMilli = hoursInMilli * 24;
-
-            long elapsedDays = different / daysInMilli;
-
             if (elapsedDays == 0)
-                return "Today";
+                return returnString + "Today";
             if (elapsedDays == 1)
-                return "Tomorrow";
-            return "due to " + elapsedDays + " days";
+                return returnString + "Tomorrow";
+
+            if (nDate.before(today)) {
+                return -elapsedDays + " days ago";
+            }
+
+            return returnString + " in " + elapsedDays + " days";
 
 
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        Log.i("kwstas", "end with freq " + freq);
-        Log.i("kwstas", "end with freqvar " + freqVar);
-        return "0";
+        return "Not valid";
     }
 
 }

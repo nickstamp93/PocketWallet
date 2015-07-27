@@ -121,22 +121,30 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/bottom_margin_headlines"
                 android:orientation="horizontal"
-                android:weightSum="6">
+                android:weightSum="9">
 
                 <me.grantland.widget.AutofitTextView
                     style="@style/Headline"
-                    android:layout_weight="3.5"
+                    android:layout_weight="2.5"
                     android:text="Repeat" />
 
-                <EditText
-                    android:id="@+id/etRepeat"
+
+                <me.grantland.widget.AutofitTextView
+                    android:id="@+id/tvRepeat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2.5"
-                    android:editable="false"
-                    android:focusable="false"
+                    android:layout_weight="2.7"
                     android:gravity="center"
+                    android:lines="2"
+                    android:text="not set"
                     android:textColor="?textCustomColor" />
+
+                <ImageButton
+                    android:id="@+id/ibRepeat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3.8"
+                    android:src="@android:drawable/ic_menu_edit" />
 
 
             </LinearLayout>

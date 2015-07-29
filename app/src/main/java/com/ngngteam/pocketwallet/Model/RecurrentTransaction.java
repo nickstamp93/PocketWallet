@@ -54,6 +54,7 @@ public class RecurrentTransaction implements Serializable {
         this.isExpense = cursor.getInt(10);
         this.isPending = cursor.getInt(11);
         this.isValid = cursor.getInt(12);
+
     }
 
 
@@ -74,7 +75,7 @@ public class RecurrentTransaction implements Serializable {
         this.category = category;
         this.date = date;
         this.freq = freq;
-        if(interval == 0)
+        if (interval == 0)
             interval = 1;
         this.interval = interval;
         this.day = day;
@@ -321,6 +322,22 @@ public class RecurrentTransaction implements Serializable {
             isValid = 0;
 
         expiration = "count:" + (events + 1) + "/" + total;
+    }
+
+    public void show() {
+        Log.i("nikos", "id:" + id);
+        Log.i("nikos", "name:" + name);
+        Log.i("nikos", "amount:" + amount);
+        Log.i("nikos", "category:" + category);
+        Log.i("nikos", "date:" + date);
+        Log.i("nikos", "freq:" + freq);
+        Log.i("nikos", "interval:" + interval);
+        Log.i("nikos", "day:" + day);
+        Log.i("nikos", "expiration:" + expiration);
+        Log.i("nikos", "nextdate:" + nextDate);
+        Log.i("nikos", "isExpense:" + isExpense);
+        Log.i("nikos", "isPending:" + isPending);
+        Log.i("nikos", "isValid:" + isValid + "\n\n\n");
     }
 
     //GETTERS

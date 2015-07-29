@@ -264,6 +264,25 @@ public class MoneyDatabase extends SQLiteOpenHelper {
                 null);
     }
 
+    public ArrayList<RecurrentTransaction> getTodaysRecurrents() {
+        Date today = Calendar.getInstance().getTime();
+        String sToday = new SimpleDateFormat("yyyy-MM-dd").format(today);
+
+        Cursor c = getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_RECURRENT
+                        + " WHERE " + KEY_NEXT_DATE + " LIKE '" + sToday + "'"
+                        + " ORDER BY " + KEY_NEXT_DATE,
+                null);
+
+        ArrayList<RecurrentTransaction> list = new ArrayList();
+        for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+            RecurrentTransaction t = new RecurrentTransaction(c);
+
+            list.add(t);
+
+        }
+        return list;
+    }
+
     //return a cursor which contains the tuples with Category equal to the parameter category of table Expenses
     public Cursor getExpensesByCategory(String category) {
 
@@ -1063,38 +1082,12 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         return total;
     }
 
-
-    public double getTotalMoneyTillDate(String date) {
-
-        String DateTo[] = date.split("-");
-        String reformedDateTo = DateTo[2] + "-" + DateTo[1] + "-" + DateTo[0];
-
-        Cursor income = getReadableDatabase().rawQuery("SELECT * FROM " + Table_Income +
-                " WHERE " + Key_IDate + "<=" + "'" + reformedDateTo + "'", null);
-
-        Cursor expense = getReadableDatabase().rawQuery("SELECT * FROM " + Table_Expense +
-                " WHERE " + Key_EDate + "<=" + "'" + reformedDateTo + "'", null);
-
-
-        double amountIncome = 0;
-        double amountExpense = 0;
-
-        if (income.getCount() != 0) {
-            for (income.moveToFirst(); !income.isAfterLast(); income.moveToNext()) {
-                amountIncome += Double.parseDouble(income.getString(1));
-            }
-        }
-
-        if (expense.getCount() != 0) {
-            for (expense.moveToFirst(); !expense.isAfterLast(); expense.moveToNext()) {
-                amountExpense += Double.parseDouble(expense.getString(3));
-            }
-        }
-
-        return amountIncome - amountExpense;
-
-
+    public RecurrentTransaction getRecurrent(int id) {
+        Cursor c = getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_RECURRENT
+                        + " WHERE " + KEY_ID + "='" + id + "';",
+                null);
+        c.moveToFirst();
+        return new RecurrentTransaction(c);
     }
-
 
 }

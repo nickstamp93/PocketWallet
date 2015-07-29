@@ -182,6 +182,7 @@
             android:exported="false" />
 
         <receiver android:name=".BroadcastReceivers.RecurrentReceiver"></receiver>
+        <receiver android:name=".BroadcastReceivers.NotificationBroadcastReceiver"></receiver>
 
 
         <receiver android:name=".BroadcastReceivers.DeviceBootReceiver">

@@ -23,7 +23,7 @@ public class RecurrentUtils {
 
         // Setup periodic alarm every 5 seconds
         long firstMillis = System.currentTimeMillis(); // first run of alarm is immediate
-        int intervalMillis = 5 * 1000; // 5 seconds
+        int intervalMillis = 30 * 1000; // 5 seconds
         AlarmManager alarm = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, firstMillis, intervalMillis, pIntent);
 

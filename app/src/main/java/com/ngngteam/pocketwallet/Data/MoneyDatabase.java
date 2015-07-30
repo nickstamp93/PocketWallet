@@ -148,7 +148,6 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         getWritableDatabase().insert(TABLE_RECURRENT, null, values);
     }
 
-
     public void updateExpense(ExpenseItem expense) {
 
         ContentValues values = new ContentValues();
@@ -264,12 +263,13 @@ public class MoneyDatabase extends SQLiteOpenHelper {
                 null);
     }
 
-    public ArrayList<RecurrentTransaction> getTodaysRecurrents() {
+    public ArrayList<RecurrentTransaction> getRecurrentsNotification() {
+        //get all the transactions tha are either for today or pending (previous date that are not done)
         Date today = Calendar.getInstance().getTime();
         String sToday = new SimpleDateFormat("yyyy-MM-dd").format(today);
 
         Cursor c = getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_RECURRENT
-                        + " WHERE " + KEY_NEXT_DATE + " LIKE '" + sToday + "'"
+                        + " WHERE " + KEY_NEXT_DATE + " <= '" + sToday + "'"
                         + " ORDER BY " + KEY_NEXT_DATE,
                 null);
 

@@ -138,47 +138,43 @@ public class RecurrentTransaction implements Serializable {
 
     public void addOneTransaction(Context context) {
 
-        try {
-            Date startingDate = dateFormat.parse(date);
-            Calendar c = Calendar.getInstance();
-            c.setTime(startingDate);
+//            Date startingDate = dateFormat.parse(date);
+        Calendar c = Calendar.getInstance();
+//            c.setTime(startingDate);
 
-            if (isExpense == 1) {
-                ExpenseItem item = new ExpenseItem(getCategory(), getName(), getAmount(), dateFormat.format(c.getTime()));
-                MoneyDatabase db = new MoneyDatabase(context);
-                try {
-                    db.openDatabase();
-                    db.insertExpense(item);
-                    db.close();
-                    Toast.makeText(context, "Expense transaction added succesfully", Toast.LENGTH_SHORT).show();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-
-            } else {
-                IncomeItem item = new IncomeItem(getAmount(), dateFormat.format(c.getTime()), getCategory(), getName());
-                MoneyDatabase db = new MoneyDatabase(context);
-                try {
-                    db.openDatabase();
-                    db.insertIncome(item);
-                    db.close();
-                    Toast.makeText(context, "Expense transaction added succesfully", Toast.LENGTH_SHORT).show();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            //if expires by event count
-            if (expiration != null) {
-                if (expiration.split(":")[0].equalsIgnoreCase("count")) {
-                    increaseCountEvent();
-                }
+        if (isExpense == 1) {
+            ExpenseItem item = new ExpenseItem(getCategory(), getName(), getAmount(), dateFormat.format(c.getTime()));
+            MoneyDatabase db = new MoneyDatabase(context);
+            try {
+                db.openDatabase();
+                db.insertExpense(item);
+                db.close();
+                Toast.makeText(context, "Expense transaction added successfully", Toast.LENGTH_SHORT).show();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
 
-        } catch (ParseException e) {
-            e.printStackTrace();
+        } else {
+            IncomeItem item = new IncomeItem(getAmount(), dateFormat.format(c.getTime()), getCategory(), getName());
+            MoneyDatabase db = new MoneyDatabase(context);
+            try {
+                db.openDatabase();
+                db.insertIncome(item);
+                db.close();
+                Toast.makeText(context, "Expense transaction added succesfully", Toast.LENGTH_SHORT).show();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        //if expires by event count
+        if (expiration != null) {
+            if (expiration.split(":")[0].equalsIgnoreCase("count")) {
+                increaseCountEvent();
+            }
         }
 
-        calculateNextDate(date);
+
+        calculateNextDate(nextDate);
     }
 
     /**

@@ -22,17 +22,20 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
         int id = intent.getExtras().getInt("id");
         String action = intent.getAction();
 
+        MoneyDatabase db = new MoneyDatabase(context);
+        RecurrentTransaction item = db.getRecurrent(id);
+
         if (action != null) {
             //insert
-
             Log.i("nikos", "done " + id);
-            RecurrentTransaction item = new MoneyDatabase(context).getRecurrent(id);
-            item.show();
+            item.addOneTransaction(context);
+            db.updateRecurrent(item);
 
         } else {
             //cancel , make it pending
             Log.i("nikos", "cancel " + id);
         }
+        db.close();
 
         // if you want cancel notification
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);

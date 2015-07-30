@@ -52,8 +52,7 @@ public class RecurrentTransaction implements Serializable {
         this.expiration = cursor.getString(8);
         this.nextDate = cursor.getString(9);
         this.isExpense = cursor.getInt(10);
-        this.isPending = cursor.getInt(11);
-        this.isValid = cursor.getInt(12);
+        this.isValid = cursor.getInt(11);
 
     }
 
@@ -66,7 +65,7 @@ public class RecurrentTransaction implements Serializable {
      * @param isExpense
      */
     public RecurrentTransaction(String name, double amount, String category, String
-            date, int freq, int interval, int day, String expiration, int isExpense, int isPending, int isValid) {
+            date, int freq, int interval, int day, String expiration, int isExpense,  int isValid) {
 
         dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -82,7 +81,6 @@ public class RecurrentTransaction implements Serializable {
         this.expiration = expiration;
         this.nextDate = date;
         this.isExpense = isExpense;
-        this.isPending = isPending;
         this.isValid = isValid;
     }
 

@@ -55,7 +55,7 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
     CategoryDatabase categoryDatabase;
 
     private String date, currency;
-    private boolean isExpense, isPending, isValid;
+    private boolean isExpense,  isValid;
     SimpleDateFormat dateFormat;
     Calendar calendar;
 
@@ -121,7 +121,6 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
         currency = PreferenceManager.getDefaultSharedPreferences(AddRecurrentActivity.this).getString(getResources().getString(R.string.pref_key_currency), "€");
 
         isExpense = true;
-        isPending = false;
         isValid = true;
 
 
@@ -221,7 +220,6 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
                         day,
                         expiration,
                         isExpense ? 1 : 0,
-                        isPending ? 1 : 0,
                         isValid ? 1 : 0);
 
 
@@ -360,7 +358,6 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
         recurrenceRule = null;
 
         isExpense = itemToUpdate.getIsExpense() == 1 ? true : false;
-        isPending = itemToUpdate.getIsPending() == 1 ? true : false;
         isValid = itemToUpdate.getIsValid() == 1 ? true : false;
 
         populateSpinnerCategories();

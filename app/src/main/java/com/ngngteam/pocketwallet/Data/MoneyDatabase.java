@@ -56,7 +56,6 @@ public class MoneyDatabase extends SQLiteOpenHelper {
     private static final String KEY_EXPIRATION = "expiration";
     private static final String KEY_NEXT_DATE = "nextDate";
     private static final String KEY_ISEXPENSE = "isExpense";
-    private static final String KEY_ISPENDING = "isPending";
     private static final String KEY_ISVALID = "isValid";
 
     private SQLiteDatabase mydb;
@@ -72,7 +71,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
             KEY_NAME + " TEXT NOT NULL," + KEY_AMOUNT + " DOUBLE NOT NULL," + KEY_CATEGORY + " TEXT NOT NULL,"
             + KEY_DATE + " TEXT NOT NULL," + KEY_FREQ + " INTEGER NOT NULL," + KEY_INTERVAL + " TEXT NOT NULL,"
             + KEY_DAY + " INTEGER," + KEY_EXPIRATION + " TEXT," + KEY_NEXT_DATE + " TEXT NOT NULL,"
-            + KEY_ISEXPENSE + " INTEGER," + KEY_ISPENDING + " INTEGER," + KEY_ISVALID + " INTEGER);";
+            + KEY_ISEXPENSE + " INTEGER," + KEY_ISVALID + " INTEGER);";
 
     private Context context;
 
@@ -142,7 +141,6 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         values.put(KEY_EXPIRATION, item.getExpiration());
         values.put(KEY_NEXT_DATE, item.getNextDate());
         values.put(KEY_ISEXPENSE, item.getIsExpense());
-        values.put(KEY_ISPENDING, item.getIsPending());
         values.put(KEY_ISVALID, item.getIsValid());
 
         getWritableDatabase().insert(TABLE_RECURRENT, null, values);
@@ -183,7 +181,6 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         values.put(KEY_EXPIRATION, item.getExpiration());
         values.put(KEY_NEXT_DATE, item.getNextDate());
         values.put(KEY_ISEXPENSE, item.getIsExpense());
-        values.put(KEY_ISPENDING, item.getIsPending());
         values.put(KEY_ISVALID, item.getIsValid());
 
         getReadableDatabase().update(TABLE_RECURRENT, values, KEY_ID + " = " + item.getId(), null);

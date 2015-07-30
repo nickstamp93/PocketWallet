@@ -119,8 +119,8 @@ public class OverviewActivity extends AppCompatActivity {
         }
 
         //if the recurrent transactions service isn't already running , start it
-//        if (!RecurrentTransactionsService.isRunning)
-//            RecurrentUtils.startRecurrentService(this);
+        if (!RecurrentTransactionsService.isRunning)
+            RecurrentUtils.startRecurrentService(this);
 
     }
 

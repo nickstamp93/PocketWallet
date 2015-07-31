@@ -34,6 +34,7 @@ import com.ngngteam.pocketwallet.Data.MoneyDatabase;
 import com.ngngteam.pocketwallet.Model.RecurrentTransaction;
 import com.ngngteam.pocketwallet.Model.SpinnerItem;
 import com.ngngteam.pocketwallet.R;
+import com.ngngteam.pocketwallet.Utils.MyDateUtils;
 import com.ngngteam.pocketwallet.Utils.Themer;
 
 import java.text.ParseException;
@@ -55,7 +56,7 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
     CategoryDatabase categoryDatabase;
 
     private String date, currency;
-    private boolean isExpense,  isValid;
+    private boolean isExpense, isValid;
     SimpleDateFormat dateFormat;
     Calendar calendar;
 
@@ -226,7 +227,7 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
                 //if it is create mode
                 if (!updateMode) {
                     //if date is today , must add a transaction for today and calculate next date
-                    if (isToday()) {
+                    if (MyDateUtils.isToday(date)) {
                         item.addOneTransaction(AddRecurrentActivity.this);
                     }
                     moneyDatabase.insertRecurrent(item);
@@ -250,7 +251,7 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
 
                     //if the date is today , it is supposed that the transaction is done for today
                     //so must calculate the next date for the transaction to take place
-                    if (isToday())
+                    if (MyDateUtils.isToday(date))
                         item.calculateNextDate(item.getDate());
                     moneyDatabase.updateRecurrent(item);
                 }
@@ -269,21 +270,6 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
         });
     }
 
-    private boolean isToday() {
-        try {
-            Date dateSelected = dateFormat.parse(date);
-            Calendar cToday = Calendar.getInstance();
-            Calendar cDate = Calendar.getInstance();
-            cDate.setTime(dateSelected);
-            if (cToday.get(Calendar.YEAR) == cDate.get(Calendar.YEAR)
-                    && cToday.get(Calendar.DAY_OF_YEAR) == cDate.get(Calendar.DAY_OF_YEAR)) {
-                return true;
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
 
     private void showAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(AddRecurrentActivity.this);
@@ -405,7 +391,20 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
     //fill the date edittext with a user friendly text informing about the date selected
     private void fillDateText() {
 
-        try {
+        if (MyDateUtils.isToday(date)) {
+
+            etDate.setText(getString(R.string.text_today));
+        } else if (MyDateUtils.isYesterday(date)) {
+            etDate.setText(getString(R.string.text_yesterday));
+
+        } else if (MyDateUtils.isTomorrow(date)) {
+            etDate.setText(getString(R.string.text_tomorrow));
+
+        } else {
+
+        }
+
+        /*try {
             Calendar today = Calendar.getInstance();
 
             Calendar yesterday = Calendar.getInstance();
@@ -420,7 +419,6 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
             boolean isYesterday = yesterday.get(Calendar.YEAR) == itemDate.get(Calendar.YEAR) &&
                     yesterday.get(Calendar.DAY_OF_YEAR) == itemDate.get(Calendar.DAY_OF_YEAR);
             if (isToday) {
-                etDate.setText(getString(R.string.text_today));
             } else if (isYesterday) {
                 etDate.setText(getString(R.string.text_yesterday));
             } else {
@@ -428,7 +426,7 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
             }
         } catch (ParseException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     @Override
@@ -516,7 +514,13 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
                 if (recurrenceEvent.until == null)
                     expiration = null;
                 else
-                    expiration = "date:" + recurrenceEvent.until.substring(0, 8);
+                    try {
+                        //format the date until ,to our date format
+                        expiration = "date:" + dateFormat.format(new SimpleDateFormat("yyyyMMdd").parse(recurrenceEvent.until.substring(0, 8)));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
             } else {
                 //or set count:0/total
                 expiration = "count:0/" + recurrenceEvent.count;

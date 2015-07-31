@@ -19,28 +19,33 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
+        //get the id of the notification
         int id = intent.getExtras().getInt("id");
+        //get the action - which button was pushed
         String action = intent.getAction();
 
+        //get the notification's recurrent item
         MoneyDatabase db = new MoneyDatabase(context);
         RecurrentTransaction item = db.getRecurrent(id);
 
         if (action != null) {
-            //insert
+            //insert into db , one regular transaction
+            //and update the next date for the recurrent
             Log.i("nikos", "done " + id);
             item.addOneTransaction(context);
             db.updateRecurrent(item);
 
         } else {
-            //cancel , make it pending
+            //cancel
+            //do nothing , the nextDate remains the same , it will be
+            //displayed until it is done
             Log.i("nikos", "cancel " + id);
         }
         db.close();
 
-        // if you want cancel notification
+        //Dimsiss the notification after the user clicked on either button
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         manager.cancel(id);
-//        Log.i("nikos" , "canceling " + id);
 
     }
 }

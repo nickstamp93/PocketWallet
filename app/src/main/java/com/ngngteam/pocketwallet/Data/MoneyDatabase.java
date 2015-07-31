@@ -262,11 +262,12 @@ public class MoneyDatabase extends SQLiteOpenHelper {
 
     public ArrayList<RecurrentTransaction> getRecurrentsNotification() {
         //get all the transactions tha are either for today or pending (previous date that are not done)
+        //and are  valid , meaning they are not complete
         Date today = Calendar.getInstance().getTime();
         String sToday = new SimpleDateFormat("yyyy-MM-dd").format(today);
 
         Cursor c = getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_RECURRENT
-                        + " WHERE " + KEY_NEXT_DATE + " <= '" + sToday + "'"
+                        + " WHERE " + KEY_NEXT_DATE + " <= '" + sToday + "' AND " + KEY_ISVALID + "='1'"
                         + " ORDER BY " + KEY_NEXT_DATE,
                 null);
 

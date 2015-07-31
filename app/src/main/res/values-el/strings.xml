@@ -233,5 +233,6 @@
     <string name="text_change_savings_toast">Το νεο ποσό αποταμίευσης είναι </string>
     <string name="text_change_savings_warning">Αν αλλάξετε τα αρχικά χρήματα , θα επηρεαστεί το ποσό αποταμίευσης</string>
     <string name="no_data_text">Δεν υπάρχουν δεδομένα</string>
+    <string name="text_tomorrow">Άυριο</string>
 
 </resources>

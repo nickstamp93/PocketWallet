@@ -136,9 +136,7 @@ public class RecurrentTransaction implements Serializable {
 
     public void addOneTransaction(Context context) {
 
-//            Date startingDate = dateFormat.parse(date);
         Calendar c = Calendar.getInstance();
-//            c.setTime(startingDate);
 
         if (isExpense == 1) {
             ExpenseItem item = new ExpenseItem(getCategory(), getName(), getAmount(), dateFormat.format(c.getTime()));

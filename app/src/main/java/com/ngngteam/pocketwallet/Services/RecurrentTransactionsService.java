@@ -15,6 +15,7 @@ import com.ngngteam.pocketwallet.BroadcastReceivers.NotificationBroadcastReceive
 import com.ngngteam.pocketwallet.Data.MoneyDatabase;
 import com.ngngteam.pocketwallet.Model.RecurrentTransaction;
 import com.ngngteam.pocketwallet.R;
+import com.ngngteam.pocketwallet.Utils.MyDateUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -46,16 +47,18 @@ public class RecurrentTransactionsService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        // Do the task here
 
+        //open db
         MoneyDatabase db = new MoneyDatabase(this);
         Log.i("nikos", "Today:" + db.getRecurrentsNotification().size() + " transactions");
+        //for every transaction that is set for today or for a previous date and is not done
         for (RecurrentTransaction t : db.getRecurrentsNotification()) {
+            //create a notification
             createNotification(t);
         }
+        db.close();
 
     }
-
 
     private void createNotification(RecurrentTransaction item) {
 
@@ -66,37 +69,30 @@ public class RecurrentTransactionsService extends IntentService {
         //notification builder
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
 
-        //done action
+        //done action button
         Intent doneIntent = new Intent(this, NotificationBroadcastReceiver.class);
+        //pass the item's-notification's id , to cancel it
         doneIntent.putExtra("id", item.getId());
         doneIntent.setAction("action_done");
         PendingIntent donePendingIntent = PendingIntent.getBroadcast(this, item.getId(), doneIntent, 0);
 
-        //cancel action
+        //cancel action button
         Intent cancelIntent = new Intent(this, NotificationBroadcastReceiver.class);
         cancelIntent.putExtra("id", item.getId());
         intent.setAction("action_cancel");
         PendingIntent cancelPendingIntent = PendingIntent.getBroadcast(this, item.getId(), cancelIntent, 0);
 
+        //set notification's title
         String title = "";
-        try {
-            Date nextDate = new SimpleDateFormat("yyyy-MM-dd").parse(item.getNextDate());
-            Calendar cToday = Calendar.getInstance();
-            Calendar cDate = Calendar.getInstance();
-            cDate.setTime(nextDate);
-            if (cToday.get(Calendar.YEAR) == cDate.get(Calendar.YEAR)
-                    && cToday.get(Calendar.DAY_OF_YEAR) == cDate.get(Calendar.DAY_OF_YEAR)) {
-                //is today
-                Log.i("nikos", "it is today");
+        if (MyDateUtils.isToday(item.getNextDate())) {
+            //is today
+            title = item.getName() + " is for today";
+        } else {
 
-                title = item.getName() + " is for today";
-            } else {
-                Log.i("nikos", "it is pending");
-                title = item.getName() + " was for " + item.getNextDate();
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
+            //is a previous date
+            title = item.getName() + " was for " + item.getNextDate();
         }
+
 
         //create the notification
         Notification n = builder
@@ -117,10 +113,11 @@ public class RecurrentTransactionsService extends IntentService {
                 .build();
 
 
+        //notification manager
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
-        Log.i("nikos", item.getId() + "");
+        //create the notification
         notificationManager.notify(item.getId(), n);
 
     }

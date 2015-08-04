@@ -27,6 +27,9 @@ public class SharedPrefsManager {
     private static final String PREFS_DAY_START = "dayStart";
     private static final String PREFS_THEME_CHANGED = "themeChanged";
     private static final String PREFS_VERSION = "version";
+    private static final String PREFS_DRIVER_FOLDER_ID="folderID";
+    private static final String PREFS_DRIVER_FILE_ID="fileID";
+
 
     //the SharedPreferences and Editor objects
     SharedPreferences prefs;
@@ -50,6 +53,14 @@ public class SharedPrefsManager {
     /**
      * Below are the setters and getters for each attribute
      */
+
+    public String getPrefsDriverFileId(){
+        return prefs.getString(PREFS_DRIVER_FILE_ID,"-1");
+    }
+
+    public String getPrefsDriverFolderId(){
+        return prefs.getString(PREFS_DRIVER_FOLDER_ID,"-1");
+    }
 
     public boolean getPrefsIsProfile() {
         return prefs.getBoolean(PREFS_IS_PROFILE, false);
@@ -148,6 +159,16 @@ public class SharedPrefsManager {
 
     public void setPrefsVersion(int newVersion) {
         editor.putInt(PREFS_VERSION, newVersion);
+    }
+
+    public void setPrefsDriverFolderId(String folderId){
+
+        editor.putString(PREFS_DRIVER_FOLDER_ID, folderId);
+
+    }
+
+    public void setPrefsDriverFileId(String fileId){
+        editor.putString(PREFS_DRIVER_FILE_ID,fileId);
     }
 
 }

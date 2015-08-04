@@ -9,7 +9,21 @@ import java.util.Date;
  * Created by nickstamp on 7/31/2015.
  */
 public class MyDateUtils {
-    private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+    public static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+    public static boolean isBeforeToday(String date) {
+        return true;
+    }
+
+    public static boolean isAfterToday(String date) {
+        return true;
+    }
+
+    public static int daysToDate(String date) {
+
+        return 0;
+    }
 
     public static boolean isToday(String date) {
         try {
@@ -31,7 +45,7 @@ public class MyDateUtils {
         try {
             Date dateSelected = dateFormat.parse(date);
             Calendar cYesterday = Calendar.getInstance();
-            cYesterday.add(Calendar.DAY_OF_YEAR , -1);
+            cYesterday.add(Calendar.DAY_OF_YEAR, -1);
 
             Calendar cDate = Calendar.getInstance();
             cDate.setTime(dateSelected);
@@ -49,7 +63,7 @@ public class MyDateUtils {
         try {
             Date dateSelected = dateFormat.parse(date);
             Calendar cTomorrow = Calendar.getInstance();
-            cTomorrow.add(Calendar.DAY_OF_YEAR , 1);
+            cTomorrow.add(Calendar.DAY_OF_YEAR, 1);
 
             Calendar cDate = Calendar.getInstance();
             cDate.setTime(dateSelected);

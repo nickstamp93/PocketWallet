@@ -256,7 +256,8 @@ public class MoneyDatabase extends SQLiteOpenHelper {
 
     //return a cursor which contains the whole table recurrents (select *)
     public Cursor getAllRecurrents() {
-        return getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_RECURRENT,
+        return getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_RECURRENT
+                        + " ORDER BY " +KEY_ISVALID + " DESC," + KEY_NEXT_DATE + " ASC" ,
                 null);
     }
 

@@ -44,6 +44,7 @@ public class BackupRestoreDrive {
     private Context context;
     private SettingsActivity activity;
     private final int REQUEST_CODE_RESOLUTION = 1;
+    private final int TRANSACTIONS_CODE=2,CATEGORIES_CODE=3;
     private boolean backup;
 
     public BackupRestoreDrive(final Context context,SettingsActivity act, final boolean backup){
@@ -160,8 +161,8 @@ public class BackupRestoreDrive {
 
     public void FileAlreadyExists(){
 
-        CustomPropertyKey key=new CustomPropertyKey("pocket",CustomPropertyKey.PRIVATE);
-        Query query=new Query.Builder().addFilter(Filters.and(Filters.eq(key, "pocket"), Filters.eq(SearchableField.MIME_TYPE, "application/x-sqlite"), Filters.eq(SearchableField.TRASHED, false))).build();
+        CustomPropertyKey key=new CustomPropertyKey("pocket_money",CustomPropertyKey.PRIVATE);
+        Query query=new Query.Builder().addFilter(Filters.and(Filters.eq(key, "pocket_money"), Filters.eq(SearchableField.MIME_TYPE, "application/x-sqlite"), Filters.eq(SearchableField.TRASHED, false))).build();
         Drive.DriveApi.query(client, query).setResultCallback(new ResultCallback<DriveApi.MetadataBufferResult>() {
             @Override
             public void onResult(DriveApi.MetadataBufferResult metadataBufferResult) {
@@ -185,6 +186,33 @@ public class BackupRestoreDrive {
 
             }
         });
+
+         key=new CustomPropertyKey("pocket_categories",CustomPropertyKey.PRIVATE);
+         query=new Query.Builder().addFilter(Filters.and(Filters.eq(key, "pocket_categories"), Filters.eq(SearchableField.MIME_TYPE, "application/x-sqlite"), Filters.eq(SearchableField.TRASHED, false))).build();
+        Drive.DriveApi.query(client, query).setResultCallback(new ResultCallback<DriveApi.MetadataBufferResult>() {
+            @Override
+            public void onResult(DriveApi.MetadataBufferResult metadataBufferResult) {
+                if(!metadataBufferResult.getStatus().isSuccess()){
+                    Log.i("File","No contents with this query");
+                    return;
+                }
+
+                MetadataBuffer mbuffer=metadataBufferResult.getMetadataBuffer();
+                if(mbuffer.getCount() > 0){
+                    Log.i("Query","Success");
+                    Metadata metadata=mbuffer.get(0);
+                    String fileID=metadata.getDriveId().encodeToString();
+                    Drive.DriveApi.getFile(client,DriveId.decodeFromString(fileID)).delete(client);
+                    saveCategoriesDBToDrive();
+
+                }else{
+                    saveCategoriesDBToDrive();
+                    Log.i("Query", "fail");
+                }
+
+            }
+        });
+
 
 
     }
@@ -228,8 +256,8 @@ public class BackupRestoreDrive {
                 }
 
 
-                CustomPropertyKey key=new CustomPropertyKey("pocket",CustomPropertyKey.PRIVATE);
-                MetadataChangeSet metadataChangeSet = new MetadataChangeSet.Builder().setMimeType("application/x-sqlite").setTitle("Pocket-Wallet backup").setCustomProperty(key, "pocket").build();
+                CustomPropertyKey key=new CustomPropertyKey("pocket_money",CustomPropertyKey.PRIVATE);
+                MetadataChangeSet metadataChangeSet = new MetadataChangeSet.Builder().setMimeType("application/x-sqlite").setTitle("Pocket-Wallet Transactions backup").setCustomProperty(key, "pocket_money").build();
 
                 SharedPrefsManager manager = new SharedPrefsManager(context);
                 String folderID = manager.getPrefsDriverFolderId();
@@ -241,7 +269,7 @@ public class BackupRestoreDrive {
                 //intentSen
                 try {
                     //startIntentSender(intentSender, null, 0, 0, 0);
-                    activity.startIntentSenderForResult(intentSender, 2, null, 0, 0, 0);
+                    activity.startIntentSenderForResult(intentSender, TRANSACTIONS_CODE, null, 0, 0, 0);
                 } catch (IntentSender.SendIntentException e) {
                     e.printStackTrace();
                 }
@@ -253,10 +281,73 @@ public class BackupRestoreDrive {
     }
 
 
-    public void saveIDOfDriveFile(){
+    public void saveCategoriesDBToDrive(){
+        Drive.DriveApi.newDriveContents(client).setResultCallback(new ResultCallback<DriveApi.DriveContentsResult>() {
+            @Override
+            public void onResult(DriveApi.DriveContentsResult driveContentsResult) {
 
-        CustomPropertyKey key=new CustomPropertyKey("pocket",CustomPropertyKey.PRIVATE);
-        Query query=new Query.Builder().addFilter(Filters.and(Filters.eq(key,"pocket") , Filters.eq(SearchableField.MIME_TYPE,"application/x-sqlite"))).build();
+                if (!driveContentsResult.getStatus().isSuccess()) {
+                    Log.i("Fail", "Fail to create new contents");
+                }
+
+
+                String CategoryDBpath = "/data/" + context.getPackageName() + "/databases/categories";
+
+
+                try {
+                    InputStream input = new FileInputStream(Environment.getDataDirectory() + CategoryDBpath);
+                    OutputStream output = driveContentsResult.getDriveContents().getOutputStream();
+
+
+                    byte[] buffer = new byte[1024];
+                    int size;
+                    while ((size = input.read(buffer)) > 0) {
+                        output.write(buffer, 0, size);
+                    }
+
+                    output.flush();
+                    output.close();
+                    input.close();
+
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+                CustomPropertyKey key=new CustomPropertyKey("pocket_categories",CustomPropertyKey.PRIVATE);
+                MetadataChangeSet metadataChangeSet = new MetadataChangeSet.Builder().setMimeType("application/x-sqlite").setTitle("Pocket-Wallet Categories backup").setCustomProperty(key, "pocket_categories").build();
+
+                SharedPrefsManager manager = new SharedPrefsManager(context);
+                String folderID = manager.getPrefsDriverFolderId();
+
+                DriveId id = DriveId.decodeFromString(folderID);
+
+
+                IntentSender intentSender = Drive.DriveApi.newCreateFileActivityBuilder().setInitialMetadata(metadataChangeSet).setInitialDriveContents(driveContentsResult.getDriveContents()).setActivityStartFolder(id).build(client);
+                //intentSen
+                try {
+                    //startIntentSender(intentSender, null, 0, 0, 0);
+                    activity.startIntentSenderForResult(intentSender, CATEGORIES_CODE, null, 0, 0, 0);
+                } catch (IntentSender.SendIntentException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+
+    }
+
+
+
+
+    public void saveIDOfTransactionsDriveFile(){
+
+        CustomPropertyKey key=new CustomPropertyKey("pocket_money",CustomPropertyKey.PRIVATE);
+        Query query=new Query.Builder().addFilter(Filters.and(Filters.eq(key,"pocket_money") , Filters.eq(SearchableField.MIME_TYPE,"application/x-sqlite"))).build();
         Drive.DriveApi.query(client, query).setResultCallback(new ResultCallback<DriveApi.MetadataBufferResult>() {
             @Override
             public void onResult(DriveApi.MetadataBufferResult metadataBufferResult) {
@@ -274,17 +365,45 @@ public class BackupRestoreDrive {
 
                 SharedPrefsManager manager=new SharedPrefsManager(context);
                 manager.startEditing();
-                manager.setPrefsDriverFileId(fileID);
+                manager.setPrefsTransactionsDriverFileId(fileID);
                 manager.commit();
 
             }
         });
     }
 
-    public void restoreDBFileFromDrive(){
+    public void saveIDOfCategoriesDriveFile(){
+
+        CustomPropertyKey key=new CustomPropertyKey("pocket_categories",CustomPropertyKey.PRIVATE);
+        Query query=new Query.Builder().addFilter(Filters.and(Filters.eq(key,"pocket_categories") , Filters.eq(SearchableField.MIME_TYPE,"application/x-sqlite"))).build();
+        Drive.DriveApi.query(client, query).setResultCallback(new ResultCallback<DriveApi.MetadataBufferResult>() {
+            @Override
+            public void onResult(DriveApi.MetadataBufferResult metadataBufferResult) {
+                //metadataBufferResult.getMetadataBuffer().
+                if(!metadataBufferResult.getStatus().isSuccess()){
+                    Log.i("File","No contents with this query");
+                    return;
+                }
+
+
+                Metadata metadata=metadataBufferResult.getMetadataBuffer().get(0);
+                String fileID= metadata.getDriveId().encodeToString();
+
+                Log.i("FileID",fileID);
+
+                SharedPrefsManager manager=new SharedPrefsManager(context);
+                manager.startEditing();
+                manager.setPrefsCategoriesDriverFileId(fileID);
+                manager.commit();
+
+            }
+        });
+    }
+
+    public void restoreMoneyDBFileFromDrive(){
 
         SharedPrefsManager manager=new SharedPrefsManager(context);
-        String fileID=manager.getPrefsDriverFileId();
+        String fileID=manager.getPrefsTransactionsDriverFileId();
         DriveId id=DriveId.decodeFromString(fileID);
         DriveFile file=Drive.DriveApi.getFile(client, id);
 
@@ -322,6 +441,45 @@ public class BackupRestoreDrive {
     }
 
 
+    public void restoreCategoriesDBFileFromDrive(){
+
+        SharedPrefsManager manager=new SharedPrefsManager(context);
+        String fileID=manager.getPrefsCategoriesDriverFileId();
+        DriveId id=DriveId.decodeFromString(fileID);
+        DriveFile file=Drive.DriveApi.getFile(client, id);
+
+        String CategoriesDBpath = "/data/" + context.getPackageName() + "/databases/categories";
+
+        DriveApi.DriveContentsResult contentsResult=file.open(client,DriveFile.MODE_READ_ONLY,null).await();
+        if(!contentsResult.getStatus().isSuccess()){
+            Log.i("File","Did not open");
+        }
+
+        DriveContents driveContents= contentsResult.getDriveContents();
+        InputStream input=driveContents.getInputStream();
+        OutputStream output;
+        try {
+            output=new FileOutputStream(Environment.getDataDirectory()+CategoriesDBpath);
+
+            byte[] buffer = new byte[1024];
+            int size;
+            while ((size = input.read(buffer)) > 0) {
+                output.write(buffer, 0, size);
+            }
+
+            output.flush();
+            output.close();
+            input.close();
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+    }
+
 
 
     class Restore extends AsyncTask<Void,Void,Void> {
@@ -329,7 +487,8 @@ public class BackupRestoreDrive {
         @Override
         protected Void doInBackground(Void... params) {
 
-            restoreDBFileFromDrive();
+            restoreMoneyDBFileFromDrive();
+            restoreCategoriesDBFileFromDrive();
 
             return null;
         }

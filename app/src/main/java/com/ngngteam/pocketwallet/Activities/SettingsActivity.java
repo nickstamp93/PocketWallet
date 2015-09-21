@@ -26,6 +26,9 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.dropbox.client2.DropboxAPI;
+import com.dropbox.client2.android.AndroidAuthSession;
+import com.dropbox.client2.session.AppKeyPair;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.drive.Drive;
@@ -46,6 +49,7 @@ import com.google.android.gms.drive.query.SearchableField;
 import com.ngngteam.pocketwallet.Adapters.GridAdapter;
 import com.ngngteam.pocketwallet.BroadcastReceivers.ReminderReceiver;
 import com.ngngteam.pocketwallet.Model.GridItem;
+import com.ngngteam.pocketwallet.Utils.BackupDropbox;
 import com.ngngteam.pocketwallet.Utils.BackupRestoreDrive;
 import com.ngngteam.pocketwallet.Utils.BackupRestoreSD;
 import com.ngngteam.pocketwallet.Data.MoneyDatabase;
@@ -69,12 +73,19 @@ public class SettingsActivity extends PreferenceActivity
 
 
     private final int REQUEST_CODE_RESOLUTION = 1;
-    private final int TRANSACTIONS_CODE=2,CATEGORIES_CODE=3;
+    private final int TRANSACTIONS_CODE=2;
+    private final int CATEGORIES_CODE=3;
+    final static private String APP_KEY = "slba7p9039i59nw";
+    final static private String APP_SECRET = "srq6a16ada8u517";
 
 
     private GoogleApiClient client;
     private BackupRestoreDrive drive;
+    private DropboxAPI<AndroidAuthSession> api;
 
+    private boolean backup;
+
+    private BackupRestoreDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -334,8 +345,8 @@ public class SettingsActivity extends PreferenceActivity
                 client.connect();
 
 */
-
-                BackupRestoreDialog dialog = new BackupRestoreDialog().newInstance(true);
+                backup=true;
+                dialog = new BackupRestoreDialog().newInstance(backup);
                 dialog.show(getFragmentManager(), "dialog");
 
 
@@ -368,8 +379,8 @@ public class SettingsActivity extends PreferenceActivity
 //                            .show();
 //
 //                }
-
-                BackupRestoreDialog dialog = new BackupRestoreDialog().newInstance(false);
+                backup=false;
+                dialog = new BackupRestoreDialog().newInstance(false);
                 dialog.show(getFragmentManager(), "dialog");
 
 
@@ -668,6 +679,26 @@ public class SettingsActivity extends PreferenceActivity
         initSummaries(getPreferenceScreen());
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 
+        if(api!=null) {
+            if (api.getSession().authenticationSuccessful() && backup) {
+
+                Log.i("Dropbox","Authentication success");
+                try {
+                    // Required to complete auth, sets the access token on the session
+                    api.getSession().finishAuthentication();
+
+                    String accessToken = api.getSession().getOAuth2AccessToken();
+
+                    // new Upload().execute();
+                    new BackupDropbox(api, SettingsActivity.this,dialog).execute();
+
+                } catch (IllegalStateException e) {
+                    Log.i("DbAuthLog", "Error authenticating", e);
+                }
+
+            }
+        }
+
     }
 
     @Override
@@ -857,6 +888,14 @@ public class SettingsActivity extends PreferenceActivity
 
                         case 0:
                             //TODO dropbox
+                            AppKeyPair appKeyPair=new AppKeyPair(APP_KEY,APP_SECRET);
+                            AndroidAuthSession session=new AndroidAuthSession(appKeyPair);
+                            api=new DropboxAPI<>(session);
+
+                            api.getSession().startOAuth2Authentication(SettingsActivity.this);
+
+
+
                             break;
                         case 1:
                             drive = new BackupRestoreDrive(getBaseContext(), SettingsActivity.this, backup);

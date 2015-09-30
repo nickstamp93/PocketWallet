@@ -27,6 +27,7 @@ You can be always informed about all your latest transactions and be aware of wh
 2. Recurrent expenses-incomes(such as salary , bills etc)
 3. Advanced visual analysis of transactions in a particular period
 4. Data synchronization between devices
+5. Multiple Accounts
 
 ## Screenshots 
 

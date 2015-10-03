@@ -119,4 +119,9 @@ public class BackupRestoreSD {
     }
 
 
+    public String getSDPath(){
+        return SDPath;
+    }
+
+
 }

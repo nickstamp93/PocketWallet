@@ -57,6 +57,7 @@ import com.ngngteam.pocketwallet.Data.MoneyDatabase;
 import com.ngngteam.pocketwallet.Extra.ColorPicker.ColorPickerDialog;
 import com.ngngteam.pocketwallet.Extra.ColorPicker.ColorPickerSwatch;
 import com.ngngteam.pocketwallet.R;
+import com.ngngteam.pocketwallet.Utils.RestoreDropbox;
 import com.ngngteam.pocketwallet.Utils.SharedPrefsManager;
 import com.ngngteam.pocketwallet.Utils.Themer;
 
@@ -680,7 +681,7 @@ public class SettingsActivity extends PreferenceActivity
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 
         if(api!=null) {
-            if (api.getSession().authenticationSuccessful() && backup) {
+            if (api.getSession().authenticationSuccessful() ) {
 
                 Log.i("Dropbox","Authentication success");
                 try {
@@ -690,10 +691,16 @@ public class SettingsActivity extends PreferenceActivity
                     String accessToken = api.getSession().getOAuth2AccessToken();
 
                     // new Upload().execute();
-                    new BackupDropbox(api, SettingsActivity.this,dialog).execute();
+
 
                 } catch (IllegalStateException e) {
                     Log.i("DbAuthLog", "Error authenticating", e);
+                }
+
+                if(backup){
+                    new BackupDropbox(api, SettingsActivity.this,dialog).execute();
+                }else{
+                    new RestoreDropbox(api,SettingsActivity.this,dialog).execute();
                 }
 
             }
@@ -850,9 +857,12 @@ public class SettingsActivity extends PreferenceActivity
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             dialog = new Dialog(getActivity());
             dialog.setContentView(R.layout.backup_dialog);
-            dialog.setTitle("Backup Destination");
 
             backup = (boolean) getArguments().getBoolean("backup");
+
+            if(backup) dialog.setTitle("Backup Destination");
+            else dialog.setTitle("Restore");
+
 
             initUI();
             init();

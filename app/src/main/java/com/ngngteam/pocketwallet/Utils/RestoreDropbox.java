@@ -16,7 +16,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * Created by Vromia on 03-Oct-15.
+ * Created by Nick Zisis on 03-Oct-15.
+ * Class RestoreDropbox perform a restore on Money and Categories Database that is saved on Dropbox.
  */
 public class RestoreDropbox extends AsyncTask<String,String,String> {
 

@@ -21,7 +21,8 @@ import java.io.OutputStream;
 import java.util.List;
 
 /**
- * Created by Vromia on 21/09/2015.
+ * Created by Nick Zisis on 21/09/2015.
+ * Class BackupDropbox extends a thead of Android and it creates a backup of the databases on DropBox
  */
 public class BackupDropbox extends AsyncTask<String,String,String> {
 
@@ -36,48 +37,16 @@ public class BackupDropbox extends AsyncTask<String,String,String> {
         dialog.dismiss();
     }
 
+    /**
+     * First of all create a backup of Money and Categories Database on the SD card. After that, get those backups from the
+     * SD card and upload it to the DropBox after the app checks if it already exist. If the backup already exists then delete
+     * the old and create the new one.
+     * @param params
+     * @return
+     */
     @Override
     protected String doInBackground(String... params) {
-//        InputStream input;
-//        OutputStream output;
-//
-//        String SDPath = Environment.getExternalStorageDirectory().getPath();
-//        String DBPath="/data/"+context.getPackageName()+"/databases/MoneyDatabase";
-//
-//        try {
-//
-//            input = new FileInputStream(Environment.getDataDirectory() + DBPath);
-//            //Set the output folder on the SD card
-//
-//            File directory = new File(SDPath + "/Cash");
-//            //If this directory doesn't exist create it
-//            if (!directory.exists()) {
-//                directory.mkdir();
-//            }
-//
-//            output = new FileOutputStream(directory.getPath() + "/MoneyDatabase");
-//
-//
-//            byte[] buffer = new byte[1024];
-//            int size;
-//            while ((size = input.read(buffer)) > 0) {
-//                output.write(buffer, 0, size);
-//            }
-//
-//            output.flush();
-//            output.close();
-//            input.close();
-//
-//
-//
-//
-//        } catch (FileNotFoundException e) {
-//            Toast.makeText(context, "FILE ERROR " + e, Toast.LENGTH_LONG).show();
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            //Toast.makeText(context, "IO ERROR " + e, Toast.LENGTH_LONG).show();
-//            e.printStackTrace();
-//        }
+
         String MoneyDBpath = "/data/" +context.getPackageName() + "/databases/MoneyDatabase";
         String MoneyOutputName = "/MoneyDatabase";
         BackupRestoreSD backupRestoreSD = new BackupRestoreSD(MoneyDBpath, MoneyOutputName, context);
@@ -100,7 +69,7 @@ public class BackupDropbox extends AsyncTask<String,String,String> {
             InputStream Cis=new FileInputStream(CategoryBackup);
 
 
-            //List<DropboxAPI.Entry> search=api.search("https://api.dropbox.com/1/metadata/auto/Apps/Pocket-Wallet","Backup",1000,false);
+
             DropboxAPI.Entry metadata=api.metadata("/",1000,null,true,null);
 
 
@@ -138,17 +107,6 @@ public class BackupDropbox extends AsyncTask<String,String,String> {
 
             }
 
-
-
-
-//            if(metadata.bytes!=0 ){
-//                Log.i("List", "not empty");
-//                api.delete("/Backup");
-//                api.putFile("Backup", is, backup.length(), null, null);
-//            }else {
-//                Log.i("List","empty");
-//                api.putFile("Backup", is, backup.length(), null, null);
-//            }
 
 
         } catch (FileNotFoundException e) {

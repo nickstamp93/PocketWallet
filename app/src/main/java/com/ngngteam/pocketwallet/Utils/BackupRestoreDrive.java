@@ -37,7 +37,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
- * Created by Vromia on 04/08/2015.
+ * Created by Nick Zisis on 04/08/2015.
  */
 public class BackupRestoreDrive {
 
@@ -57,12 +57,11 @@ public class BackupRestoreDrive {
         client =new GoogleApiClient.Builder(context).addApi(Drive.API).addScope(Drive.SCOPE_FILE).addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
             @Override
             public void onConnected(Bundle bundle) {
-                Log.i("Connected", "Client has connected");
+                //Log.i("Connected", "Client has connected");
                 if (backup) {
                     DriveFileExists();
                     updateGoogleDriveContent();
                 } else {
-
                    new Restore().execute();
 
                 }
@@ -71,8 +70,9 @@ public class BackupRestoreDrive {
             }
 
             @Override
-            public void onConnectionSuspended(int i) {
-                Log.i("Suspended", "Client has suspended");
+            public void onConnectionSuspended(int i)
+            {
+                //Log.i("Suspended", "Client has suspended");
             }
         }).addOnConnectionFailedListener(new GoogleApiClient.OnConnectionFailedListener() {
             @Override
@@ -98,7 +98,10 @@ public class BackupRestoreDrive {
         client.connect();
     }
 
-
+    /**
+     * Method createFileToDrive creates a folder on the Google Drive with unique attribute a private custom property key
+     * and also save the id of this Drive Folder to the shared preferences of the app.
+     */
     public void createFileToDrive(){
 
 
@@ -123,39 +126,11 @@ public class BackupRestoreDrive {
 
     }
 
-
-    public void GoogleDriveFolderExists(){
-
-        SharedPrefsManager manager=new SharedPrefsManager(context);
-        String folderID=manager.getPrefsDriverFolderId();
-
-        DriveId id=DriveId.decodeFromString(folderID);
-        DriveFolder folder=Drive.DriveApi.getFolder(client, id);
-        folder.getMetadata(client).setResultCallback(new ResultCallback<DriveResource.MetadataResult>() {
-            @Override
-            public void onResult(DriveResource.MetadataResult metadataResult) {
-                if (!metadataResult.getStatus().isSuccess()) {
-                    Log.i("Folder", "Folder doesnt exist");
-                    return;
-                }
-
-                Log.i("Folder", "Exists");
-
-
-                Metadata metadata = metadataResult.getMetadata();
-                if (metadata.isTrashed() || metadata.isExplicitlyTrashed()) {
-                    createFileToDrive();
-                    Log.i("Folder", "Folder is trashed");
-                }
-
-
-            }
-        });
-
-
-    }
-
-
+    /**
+     * Method DriveFileExists runs a query on Google Drive to find if the folder Pocket Wallet exists. If it already exists then
+     * it takes the id of this Folder and save it to the Shared Preferences of the app. Otherwise if it doesn't exist then it calls the
+     * method createFileToDrive to create again the folder.
+     */
     public void DriveFileExists(){
 
 
@@ -191,7 +166,10 @@ public class BackupRestoreDrive {
 
     }
 
-
+    /**
+     * Method updateGoogleDriveContent checks if there is a backup on Google Drive. If it is then it deletes the old one and creates
+     * the new backup. Otherwise it just creates the backup by calling the methods saveDBToDrive and saveCategoriesDBToDrive.
+     */
     public void updateGoogleDriveContent(){
 
         CustomPropertyKey key=new CustomPropertyKey("pocket_money",CustomPropertyKey.PRIVATE);
@@ -250,7 +228,9 @@ public class BackupRestoreDrive {
 
     }
 
-
+    /**
+     * Method saveDBToDrive creates a backup of Money Database to Google Drive.
+     */
     public void saveDBToDrive(){
 
 
@@ -299,9 +279,9 @@ public class BackupRestoreDrive {
 
 
                 IntentSender intentSender = Drive.DriveApi.newCreateFileActivityBuilder().setInitialMetadata(metadataChangeSet).setInitialDriveContents(driveContentsResult.getDriveContents()).setActivityStartFolder(id).build(client);
-                //intentSen
+
                 try {
-                    //startIntentSender(intentSender, null, 0, 0, 0);
+
                     activity.startIntentSenderForResult(intentSender, TRANSACTIONS_CODE, null, 0, 0, 0);
                 } catch (IntentSender.SendIntentException e) {
                     e.printStackTrace();
@@ -313,7 +293,9 @@ public class BackupRestoreDrive {
 
     }
 
-
+    /**
+     * Method saveCategoriesDBToDrive creates a backup of Categories Database to Google Drive.
+     */
     public void saveCategoriesDBToDrive(){
         Drive.DriveApi.newDriveContents(client).setResultCallback(new ResultCallback<DriveApi.DriveContentsResult>() {
             @Override
@@ -384,7 +366,7 @@ public class BackupRestoreDrive {
         Drive.DriveApi.query(client, query).setResultCallback(new ResultCallback<DriveApi.MetadataBufferResult>() {
             @Override
             public void onResult(DriveApi.MetadataBufferResult metadataBufferResult) {
-                //metadataBufferResult.getMetadataBuffer().
+
                 if(!metadataBufferResult.getStatus().isSuccess()){
                     Log.i("File","No contents with this query");
                     return;
@@ -449,6 +431,9 @@ public class BackupRestoreDrive {
         });
     }
 
+    /**
+     * Method restoreMoneyDBFileFromDrive restores from Google Drive the backup of Money Database.
+     */
     public void restoreMoneyDBFileFromDrive(){
 
         SharedPrefsManager manager=new SharedPrefsManager(context);
@@ -486,12 +471,11 @@ public class BackupRestoreDrive {
             e.printStackTrace();
         }
 
-
-
-
     }
 
-
+    /**
+     * Method restoreCategoriesDBFileFromDrive restores from Google Drive the backup of Categories Database.
+     */
     public void restoreCategoriesDBFileFromDrive(){
 
 
@@ -533,7 +517,9 @@ public class BackupRestoreDrive {
     }
 
 
-
+    /**
+     * Inner class Restore which extends a thread on Android used to perform the restore from the Google Drive.
+     */
     class Restore extends AsyncTask<Void,Void,Void> {
 
         boolean restore;
@@ -546,13 +532,14 @@ public class BackupRestoreDrive {
 
             saveIDOfTransactionsDriveFile();
             saveIDOfCategoriesDriveFile();
-//            SharedPrefsManager manager=new SharedPrefsManager(context);
-//            Log.i("PreMoneyID",manager.getPrefsTransactionsDriverFileId());
+
         }
 
         @Override
         protected Void doInBackground(Void... params) {
 
+            //Because it takes some time to connect to Drive this thread waits 1 sec for the app to connect, to retrieve
+            //the right values.
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -568,7 +555,7 @@ public class BackupRestoreDrive {
                 restoreCategoriesDBFileFromDrive();
                 restore =true;
             }
-           // Log.i("Normal","normal");
+
             return null;
         }
 

@@ -77,7 +77,6 @@ public class SettingsActivity extends PreferenceActivity
     final static private String APP_SECRET = "srq6a16ada8u517";
 
 
-    private GoogleApiClient client;
     private BackupRestoreDrive drive;
     private DropboxAPI<AndroidAuthSession> api;
 
@@ -103,18 +102,6 @@ public class SettingsActivity extends PreferenceActivity
     }
 
 
-    class Restore extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... params) {
-
-            restoreDBFileFromDrive();
-
-            return null;
-        }
-    }
-
-
     //set all the preferences and their actions
     private void setPreferenceActions() {
 
@@ -129,6 +116,7 @@ public class SettingsActivity extends PreferenceActivity
         Intent i = new Intent(this, UserDetailsActivity.class);
         screen.setIntent(i);
 
+        //when user clicks on "export" preference item
         screen = findPreference(getResources().getString(R.string.pref_key_export));
         screen.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
@@ -158,7 +146,7 @@ public class SettingsActivity extends PreferenceActivity
         screen.setIntent(i);
 
         //when user clicks on "about" preference item
-        //launch an alert dialog with the aboout text
+        //launch an alert dialog with the about text
         screen = findPreference(getResources().getString(R.string.pref_key_about));
         screen.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
@@ -273,123 +261,32 @@ public class SettingsActivity extends PreferenceActivity
             }
         });
 
-        //when user clicks on "backup" preference item
-        //call an async task that performs the backup
+        //when user clicks on Backup preference item
+        //call a dialog with the options that user can perform the backup
         screen = findPreference(getResources().getString(R.string.pref_key_backup));
         screen.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
 
-                //TODO call the async task with the backup procedure
-
-/*                   SD Card code
-                String MoneyDBpath="/data/"+getPackageName()+"/databases/MoneyDatabase";
-                String MoneyOutputName="/MoneyDatabase";
-                BackupRestoreSD backupRestoreSD =new BackupRestoreSD(MoneyDBpath,MoneyOutputName,SettingsActivity.this);
-                boolean MoneySuccess= backupRestoreSD.backup();
-
-                String CategoriesDBpath="/data/"+getPackageName()+"/databases/categories";
-                String CategoriesOutputName="/CategoryDatabase";
-
-
-               backupRestoreSD =new BackupRestoreSD(CategoriesDBpath,CategoriesOutputName,SettingsActivity.this);
-                boolean CategorySuccess= backupRestoreSD.backup();
-
-
-                if(MoneySuccess && CategorySuccess){
-                    Toast.makeText(SettingsActivity.this, "Backup Done Succesfully!", Toast.LENGTH_LONG)
-                            .show();
-
-                }*/
-
-
-/*
-                   Google Drive code
-
-                  client =new GoogleApiClient.Builder(SettingsActivity.this).addApi(Drive.API).addScope(Drive.SCOPE_FILE).addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
-                    @Override
-                    public void onConnected(Bundle bundle) {
-                        Log.i("Connected","Client has connected");
-
-                        SharedPrefsManager manager=new SharedPrefsManager(SettingsActivity.this);
-                        String folderID=manager.getPrefsDriverFolderId();
-                        if(folderID.equals("-1")){
-                            createFileToDrive();
-                        }else{
-                            GoogleDriveFolderExists();
-                        }
-                        FileAlreadyExists();
-
-
-                        saveDBToDrive();
-                        saveIDOfDriveFile();
-                        restoreDBFileFromDrive();
-                        new Restore().execute();
-
-
-                    }
-
-                    @Override
-                    public void onConnectionSuspended(int i) {
-                        Log.i("Suspended","Client has suspended");
-                    }
-                }).addOnConnectionFailedListener(new GoogleApiClient.OnConnectionFailedListener() {
-                    @Override
-                    public void onConnectionFailed(ConnectionResult connectionResult) {
-                        if(connectionResult.hasResolution()){
-                            try {
-                                connectionResult.startResolutionForResult(SettingsActivity.this,REQUEST_CODE_RESOLUTION);
-                            }catch (IntentSender.SendIntentException e){
-                                e.printStackTrace();
-                            }
-                        }else{
-                            GooglePlayServicesUtil.getErrorDialog(connectionResult.getErrorCode(), SettingsActivity.this, 0).show();
-                                                   }
-                    }
-                }).build();
-
-
-                client.connect();
-
-*/
                 backup = true;
                 dialog = new BackupRestoreDialog().newInstance(backup);
                 dialog.show(getFragmentManager(), "dialog");
-
 
                 return false;
             }
         });
 
 
-        //when user clicks on "backup" preference item
-        //call an async task that performs the backup
+        //when user clicks on Restore preference item
+        //call a dialog with the options that user can perform the restore
         screen = findPreference(getResources().getString(R.string.pref_key_restore));
         screen.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
 
-                //TODO call the async task with the restore procedure
-
-//                String MoneyDBpath="/data/"+getPackageName()+"/databases/MoneyDatabase";
-//                String MoneyOutputName="/MoneyDatabase";
-//                BackupRestoreSD backupRestoreSD =new BackupRestoreSD(MoneyDBpath,MoneyOutputName,SettingsActivity.this);
-//                boolean MoneySuccess= backupRestoreSD.restore();
-//
-//                String CategoriesDBpath="/data/"+getPackageName()+"/databases/categories";
-//                String CategoriesOutputName="/CategoryDatabase";
-//                backupRestoreSD =new BackupRestoreSD(CategoriesDBpath,CategoriesOutputName,SettingsActivity.this);
-//                boolean CategorySuccess= backupRestoreSD.restore();
-//
-//                if(MoneySuccess && CategorySuccess){
-//                    Toast.makeText(SettingsActivity.this, "Restore Done Succesfully!", Toast.LENGTH_LONG)
-//                            .show();
-//
-//                }
                 backup = false;
                 dialog = new BackupRestoreDialog().newInstance(false);
                 dialog.show(getFragmentManager(), "dialog");
-
 
                 return false;
             }
@@ -460,225 +357,6 @@ public class SettingsActivity extends PreferenceActivity
     }
 
 
-//    public void FileAlreadyExists() {
-//
-//        CustomPropertyKey key = new CustomPropertyKey("pocket", CustomPropertyKey.PRIVATE);
-//        Query query = new Query.Builder().addFilter(Filters.and(Filters.eq(key, "pocket"), Filters.eq(SearchableField.MIME_TYPE, "application/x-sqlite"), Filters.eq(SearchableField.TRASHED, false))).build();
-//        Drive.DriveApi.query(client, query).setResultCallback(new ResultCallback<DriveApi.MetadataBufferResult>() {
-//            @Override
-//            public void onResult(DriveApi.MetadataBufferResult metadataBufferResult) {
-//                if (!metadataBufferResult.getStatus().isSuccess()) {
-//                    Log.i("File", "No contents with this query");
-//                    return;
-//                }
-//
-//                MetadataBuffer mbuffer = metadataBufferResult.getMetadataBuffer();
-//                if (mbuffer.getCount() > 0) {
-//                    Log.i("Query", "Success");
-//                    Metadata metadata = mbuffer.get(0);
-//                    String fileID = metadata.getDriveId().encodeToString();
-//                    Drive.DriveApi.getFile(client, DriveId.decodeFromString(fileID)).delete(client);
-//                    saveDBToDrive();
-//
-//                } else {
-//                    saveDBToDrive();
-//                    Log.i("Query", "fail");
-//                }
-//
-//            }
-//        });
-//
-//
-//    }
-
-
-    public void saveIDOfDriveFile() {
-
-        CustomPropertyKey key = new CustomPropertyKey("pocket", CustomPropertyKey.PRIVATE);
-        Query query = new Query.Builder().addFilter(Filters.and(Filters.eq(key, "pocket"), Filters.eq(SearchableField.MIME_TYPE, "application/x-sqlite"))).build();
-        Drive.DriveApi.query(client, query).setResultCallback(new ResultCallback<DriveApi.MetadataBufferResult>() {
-            @Override
-            public void onResult(DriveApi.MetadataBufferResult metadataBufferResult) {
-                //metadataBufferResult.getMetadataBuffer().
-                if (!metadataBufferResult.getStatus().isSuccess()) {
-                    Log.i("File", "No contents with this query");
-                    return;
-                }
-
-
-                Metadata metadata = metadataBufferResult.getMetadataBuffer().get(0);
-                String fileID = metadata.getDriveId().encodeToString();
-
-                Log.i("FileID", fileID);
-
-                SharedPrefsManager manager = new SharedPrefsManager(SettingsActivity.this);
-                manager.startEditing();
-                manager.setPrefsTransactionsDriverFileId(fileID);
-                manager.commit();
-
-            }
-        });
-    }
-
-    public void GoogleDriveFolderExists() {
-
-        SharedPrefsManager manager = new SharedPrefsManager(this);
-        String folderID = manager.getPrefsDriverFolderId();
-
-        DriveId id = DriveId.decodeFromString(folderID);
-        DriveFolder folder = Drive.DriveApi.getFolder(client, id);
-        folder.getMetadata(client).setResultCallback(new ResultCallback<DriveResource.MetadataResult>() {
-            @Override
-            public void onResult(DriveResource.MetadataResult metadataResult) {
-                if (!metadataResult.getStatus().isSuccess()) {
-                    Log.i("Folder", "Folder doesnt exist");
-                    return;
-                }
-
-                Log.i("Folder", "Exists");
-
-
-                Metadata metadata = metadataResult.getMetadata();
-                if (metadata.isTrashed() || metadata.isExplicitlyTrashed()) {
-                    createFileToDrive();
-                    Log.i("Folder", "Folder is trashed");
-                }
-
-
-            }
-        });
-
-
-    }
-
-    public void createFileToDrive() {
-
-
-        MetadataChangeSet changeSet = new MetadataChangeSet.Builder().setTitle("Pocket-Wallet").build();
-
-        Drive.DriveApi.getRootFolder(client).createFolder(client, changeSet).setResultCallback(new ResultCallback<DriveFolder.DriveFolderResult>() {
-            @Override
-            public void onResult(DriveFolder.DriveFolderResult driveFolderResult) {
-                if (!driveFolderResult.getStatus().isSuccess()) {
-                    Log.i("Folder", "Error while trying to create the folder");
-                    return;
-                }
-                Log.i("Folder", "Folder created " + driveFolderResult.getDriveFolder().getDriveId());
-                SharedPrefsManager manager = new SharedPrefsManager(SettingsActivity.this);
-                manager.startEditing();
-                manager.setPrefsDriverFolderId(driveFolderResult.getDriveFolder().getDriveId().encodeToString());
-                manager.commit();
-
-            }
-        });
-
-    }
-
-
-//    public void saveeDBToDrive() {
-//
-//
-//        Drive.DriveApi.newDriveContents(client).setResultCallback(new ResultCallback<DriveApi.DriveContentsResult>() {
-//            @Override
-//            public void onResult(DriveApi.DriveContentsResult driveContentsResult) {
-//
-//                if (!driveContentsResult.getStatus().isSuccess()) {
-//                    Log.i("Fail", "Fail to create new contents");
-//                }
-//
-//
-//                String MoneyDBpath = "/data/" + getPackageName() + "/databases/MoneyDatabase";
-//
-//
-//                try {
-//                    InputStream input = new FileInputStream(Environment.getDataDirectory() + MoneyDBpath);
-//                    OutputStream output = driveContentsResult.getDriveContents().getOutputStream();
-//
-//
-//                    byte[] buffer = new byte[1024];
-//                    int size;
-//                    while ((size = input.read(buffer)) > 0) {
-//                        output.write(buffer, 0, size);
-//                    }
-//
-//                    output.flush();
-//                    output.close();
-//                    input.close();
-//
-//
-//                } catch (FileNotFoundException e) {
-//                    e.printStackTrace();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//
-//
-//                CustomPropertyKey key = new CustomPropertyKey("pocket", CustomPropertyKey.PRIVATE);
-//                MetadataChangeSet metadataChangeSet = new MetadataChangeSet.Builder().setMimeType("application/x-sqlite").setTitle("Pocket-Wallet backup").setCustomProperty(key, "pocket").build();
-//
-//                SharedPrefsManager manager = new SharedPrefsManager(SettingsActivity.this);
-//                String folderID = manager.getPrefsDriverFolderId();
-//
-//                DriveId id = DriveId.decodeFromString(folderID);
-//
-//
-//                IntentSender intentSender = Drive.DriveApi.newCreateFileActivityBuilder().setInitialMetadata(metadataChangeSet).setInitialDriveContents(driveContentsResult.getDriveContents()).setActivityStartFolder(id).build(client);
-//                //intentSen
-//                try {
-//                    //startIntentSender(intentSender, null, 0, 0, 0);
-//                    startIntentSenderForResult(intentSender, 2, null, 0, 0, 0);
-//                } catch (IntentSender.SendIntentException e) {
-//                    e.printStackTrace();
-//                }
-//
-//            }
-//        });
-//
-//
-//    }
-
-    public void restoreDBFileFromDrive() {
-
-
-        SharedPrefsManager manager = new SharedPrefsManager(SettingsActivity.this);
-        String fileID = manager.getPrefsTransactionsDriverFileId();
-        DriveId id = DriveId.decodeFromString(fileID);
-        DriveFile file = Drive.DriveApi.getFile(client, id);
-
-        String MoneyDBpath = "/data/" + getPackageName() + "/databases/MoneyDatabase";
-
-        DriveApi.DriveContentsResult contentsResult = file.open(client, DriveFile.MODE_READ_ONLY, null).await();
-        if (!contentsResult.getStatus().isSuccess()) {
-            Log.i("File", "Did not open");
-        }
-
-        DriveContents driveContents = contentsResult.getDriveContents();
-        InputStream input = driveContents.getInputStream();
-        OutputStream output;
-        try {
-            output = new FileOutputStream(Environment.getDataDirectory() + MoneyDBpath);
-
-            byte[] buffer = new byte[1024];
-            int size;
-            while ((size = input.read(buffer)) > 0) {
-                output.write(buffer, 0, size);
-            }
-
-            output.flush();
-            output.close();
-            input.close();
-
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-    }
-
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -695,8 +373,6 @@ public class SettingsActivity extends PreferenceActivity
                     api.getSession().finishAuthentication();
 
                     String accessToken = api.getSession().getOAuth2AccessToken();
-
-                    // new Upload().execute();
 
 
                 } catch (IllegalStateException e) {
@@ -836,7 +512,9 @@ public class SettingsActivity extends PreferenceActivity
 
 
     /**
-     * Created by Vromia on 04/08/2015.
+     * Created by Nick Zisis on 04/08/2015.
+     * Inner class BackupRestoreDialog implements the basic dialog with backup and restore options for the user.
+     * More specific the user got 3 options for backup and restore which are using Drive, DropBox or SD card.
      */
     public class BackupRestoreDialog extends DialogFragment {
 
@@ -903,13 +581,11 @@ public class SettingsActivity extends PreferenceActivity
                     switch (position) {
 
                         case 0:
-                            //TODO dropbox
                             AppKeyPair appKeyPair = new AppKeyPair(APP_KEY, APP_SECRET);
                             AndroidAuthSession session = new AndroidAuthSession(appKeyPair);
                             api = new DropboxAPI<>(session);
 
                             api.getSession().startOAuth2Authentication(SettingsActivity.this);
-
 
                             break;
                         case 1:

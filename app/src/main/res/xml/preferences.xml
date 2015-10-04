@@ -60,6 +60,10 @@
 
         </PreferenceScreen>
 
+        <Preference
+            android:key="@string/pref_key_export"
+            android:title="@string/pref_title_export" />
+
         <PreferenceScreen
             android:key="@string/pref_key_backup_restore_settings"
             android:title="@string/pref_title_backup_restore">

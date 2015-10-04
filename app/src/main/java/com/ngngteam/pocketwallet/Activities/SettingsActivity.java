@@ -44,19 +44,16 @@ import com.google.android.gms.drive.metadata.CustomPropertyKey;
 import com.google.android.gms.drive.query.Filters;
 import com.google.android.gms.drive.query.Query;
 import com.google.android.gms.drive.query.SearchableField;
-
-
 import com.ngngteam.pocketwallet.Adapters.GridAdapter;
 import com.ngngteam.pocketwallet.BroadcastReceivers.ReminderReceiver;
+import com.ngngteam.pocketwallet.Data.MoneyDatabase;
+import com.ngngteam.pocketwallet.Extra.ColorPicker.ColorPickerDialog;
+import com.ngngteam.pocketwallet.Extra.ColorPicker.ColorPickerSwatch;
 import com.ngngteam.pocketwallet.Model.GridItem;
+import com.ngngteam.pocketwallet.R;
 import com.ngngteam.pocketwallet.Utils.BackupDropbox;
 import com.ngngteam.pocketwallet.Utils.BackupRestoreDrive;
 import com.ngngteam.pocketwallet.Utils.BackupRestoreSD;
-import com.ngngteam.pocketwallet.Data.MoneyDatabase;
-
-import com.ngngteam.pocketwallet.Extra.ColorPicker.ColorPickerDialog;
-import com.ngngteam.pocketwallet.Extra.ColorPicker.ColorPickerSwatch;
-import com.ngngteam.pocketwallet.R;
 import com.ngngteam.pocketwallet.Utils.RestoreDropbox;
 import com.ngngteam.pocketwallet.Utils.SharedPrefsManager;
 import com.ngngteam.pocketwallet.Utils.Themer;
@@ -74,8 +71,8 @@ public class SettingsActivity extends PreferenceActivity
 
 
     private final int REQUEST_CODE_RESOLUTION = 1;
-    private final int TRANSACTIONS_CODE=2;
-    private final int CATEGORIES_CODE=3;
+    private final int TRANSACTIONS_CODE = 2;
+    private final int CATEGORIES_CODE = 3;
     final static private String APP_KEY = "slba7p9039i59nw";
     final static private String APP_SECRET = "srq6a16ada8u517";
 
@@ -131,6 +128,15 @@ public class SettingsActivity extends PreferenceActivity
         Preference screen = findPreference(getResources().getString(R.string.pref_key_profile));
         Intent i = new Intent(this, UserDetailsActivity.class);
         screen.setIntent(i);
+
+        screen = findPreference(getResources().getString(R.string.pref_key_export));
+        screen.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                //export to excel
+                return false;
+            }
+        });
 
         //when user clicks on "reminder time" preference item
         //start TransparentActivity which contains the RadialTimeDialog
@@ -346,7 +352,7 @@ public class SettingsActivity extends PreferenceActivity
                 client.connect();
 
 */
-                backup=true;
+                backup = true;
                 dialog = new BackupRestoreDialog().newInstance(backup);
                 dialog.show(getFragmentManager(), "dialog");
 
@@ -380,7 +386,7 @@ public class SettingsActivity extends PreferenceActivity
 //                            .show();
 //
 //                }
-                backup=false;
+                backup = false;
                 dialog = new BackupRestoreDialog().newInstance(false);
                 dialog.show(getFragmentManager(), "dialog");
 
@@ -448,7 +454,7 @@ public class SettingsActivity extends PreferenceActivity
         } else if (requestCode == TRANSACTIONS_CODE && resultCode == RESULT_OK) {
             Log.i("DB", "db successfully uploaded");
             drive.saveIDOfTransactionsDriveFile();
-        }else if(requestCode == CATEGORIES_CODE && resultCode == RESULT_OK){
+        } else if (requestCode == CATEGORIES_CODE && resultCode == RESULT_OK) {
             drive.saveIDOfCategoriesDriveFile();
         }
     }
@@ -680,10 +686,10 @@ public class SettingsActivity extends PreferenceActivity
         initSummaries(getPreferenceScreen());
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 
-        if(api!=null) {
-            if (api.getSession().authenticationSuccessful() ) {
+        if (api != null) {
+            if (api.getSession().authenticationSuccessful()) {
 
-                Log.i("Dropbox","Authentication success");
+                Log.i("Dropbox", "Authentication success");
                 try {
                     // Required to complete auth, sets the access token on the session
                     api.getSession().finishAuthentication();
@@ -697,10 +703,10 @@ public class SettingsActivity extends PreferenceActivity
                     Log.i("DbAuthLog", "Error authenticating", e);
                 }
 
-                if(backup){
-                    new BackupDropbox(api, SettingsActivity.this,dialog).execute();
-                }else{
-                    new RestoreDropbox(api,SettingsActivity.this,dialog).execute();
+                if (backup) {
+                    new BackupDropbox(api, SettingsActivity.this, dialog).execute();
+                } else {
+                    new RestoreDropbox(api, SettingsActivity.this, dialog).execute();
                 }
 
             }
@@ -860,7 +866,7 @@ public class SettingsActivity extends PreferenceActivity
 
             backup = (boolean) getArguments().getBoolean("backup");
 
-            if(backup) dialog.setTitle("Backup Destination");
+            if (backup) dialog.setTitle("Backup Destination");
             else dialog.setTitle("Restore");
 
 
@@ -898,12 +904,11 @@ public class SettingsActivity extends PreferenceActivity
 
                         case 0:
                             //TODO dropbox
-                            AppKeyPair appKeyPair=new AppKeyPair(APP_KEY,APP_SECRET);
-                            AndroidAuthSession session=new AndroidAuthSession(appKeyPair);
-                            api=new DropboxAPI<>(session);
+                            AppKeyPair appKeyPair = new AppKeyPair(APP_KEY, APP_SECRET);
+                            AndroidAuthSession session = new AndroidAuthSession(appKeyPair);
+                            api = new DropboxAPI<>(session);
 
                             api.getSession().startOAuth2Authentication(SettingsActivity.this);
-
 
 
                             break;

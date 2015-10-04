@@ -46,6 +46,7 @@
     <string name="pref_key_profile">pref_key_profile</string>
     <string name="pref_key_database_settings">pref_key_database_settings</string>
     <string name="pref_key_backup_restore_settings">pref_key_backup_restore</string>
+    <string name="pref_key_export">pref_key_export</string>
     <string name="pref_key_backup">pref_key_backup</string>
     <string name="pref_key_restore">pref_key_restore</string>
     <string name="pref_key_delete_income">pref_key_delete_income</string>
@@ -78,6 +79,7 @@
     <string name="pref_title_restore">Επαναφορά δεδομένων από αρχείο ασφαλείας</string>
     <string name="pref_title_profile">Προφίλ</string>
     <string name="pref_title_data">Βάσεις Δεδομένων</string>
+    <string name="pref_title_export">Εξαγωγή σε μορφή Excel</string>
     <string name="pref_title_delete_income">Διαγραφή Ιστορικού Εισοδήματος</string>
     <string name="pref_title_delete_expense">Διαγραφή Ιστορικού Εξόδων</string>
     <string name="pref_title_theme">Θέμα</string>

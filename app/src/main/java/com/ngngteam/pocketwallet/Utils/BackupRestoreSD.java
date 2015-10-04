@@ -13,7 +13,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
- * Created by Vromia on 17/07/2015.
+ * Created by Nick Zisis on 17/07/2015.
  */
 public class BackupRestoreSD {
 
@@ -35,7 +35,7 @@ public class BackupRestoreSD {
 
     public boolean backup() {
 
-        boolean success=false;
+        boolean success = false;
 
         try {
 
@@ -61,7 +61,7 @@ public class BackupRestoreSD {
             output.close();
             input.close();
 
-            success=true;
+            success = true;
 
 
         } catch (FileNotFoundException e) {
@@ -72,14 +72,14 @@ public class BackupRestoreSD {
             e.printStackTrace();
         }
 
-     return success;
+        return success;
     }
 
-    public boolean restore(){
-        boolean success=false;
+    public boolean restore() {
+        boolean success = false;
         try {
 
-           output=new FileOutputStream(Environment.getDataDirectory()+DBPath);
+            output = new FileOutputStream(Environment.getDataDirectory() + DBPath);
 
 
             File directory = new File(SDPath + "/Cash");
@@ -98,7 +98,7 @@ public class BackupRestoreSD {
             output.close();
             input.close();
 
-            success=true;
+            success = true;
 
 
         } catch (FileNotFoundException e) {
@@ -110,16 +110,13 @@ public class BackupRestoreSD {
         }
 
 
-
-
-
         return success;
 
 
     }
 
 
-    public String getSDPath(){
+    public String getSDPath() {
         return SDPath;
     }
 

@@ -20,6 +20,8 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -45,6 +47,7 @@ import com.google.android.gms.drive.query.Filters;
 import com.google.android.gms.drive.query.Query;
 import com.google.android.gms.drive.query.SearchableField;
 import com.ngngteam.pocketwallet.Adapters.GridAdapter;
+import com.ngngteam.pocketwallet.Adapters.RecycleExportAdapter;
 import com.ngngteam.pocketwallet.BroadcastReceivers.ReminderReceiver;
 import com.ngngteam.pocketwallet.Data.MoneyDatabase;
 import com.ngngteam.pocketwallet.Extra.ColorPicker.ColorPickerDialog;
@@ -66,6 +69,8 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import jxl.WorkbookSettings;
+
 public class SettingsActivity extends PreferenceActivity
         implements SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -83,6 +88,7 @@ public class SettingsActivity extends PreferenceActivity
     private boolean backup;
 
     private BackupRestoreDialog dialog;
+    private ExportDialog exportDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,7 +127,11 @@ public class SettingsActivity extends PreferenceActivity
         screen.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                //export to excel
+                //TODO export to excel
+
+                exportDialog=new ExportDialog().newInstance();
+                exportDialog.show(getFragmentManager(),"ExportDialog");
+
                 return false;
             }
         });
@@ -642,5 +652,59 @@ public class SettingsActivity extends PreferenceActivity
 
     }
 
+
+    public static class ExportDialog extends DialogFragment {
+
+        private Dialog dialog;
+        private RecyclerView rv;
+        private ArrayList<GridItem> items;
+
+        public ExportDialog() {
+
+        }
+
+        public ExportDialog newInstance() {
+            ExportDialog d = new ExportDialog();
+
+            return d;
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            dialog = new Dialog(getActivity());
+            dialog.setContentView(R.layout.export_dialog);
+
+
+            dialog.setTitle("Spreadsheet export");
+
+            init();
+            initUI();
+            initListeners();
+
+            return dialog;
+
+        }
+
+        private void initListeners() {
+        }
+
+        private void init() {
+            items = new ArrayList<>();
+            items.add(new GridItem(BitmapFactory.decodeResource(getResources(), R.drawable.dropbox), "Add to Dropbox"));
+            items.add(new GridItem(BitmapFactory.decodeResource(getResources(), R.drawable.drive), "Google Drive"));
+            items.add(new GridItem(BitmapFactory.decodeResource(getResources(), R.drawable.sd), "SD card"));
+        }
+
+        private void initUI() {
+            rv=(RecyclerView) dialog.findViewById(R.id.recycler_view);
+            rv.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+            rv.setAdapter(new RecycleExportAdapter(getActivity(),items));
+
+
+        }
+
+
+    }
 
 }

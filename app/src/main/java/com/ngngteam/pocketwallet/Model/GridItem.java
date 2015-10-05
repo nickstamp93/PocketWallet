@@ -3,7 +3,7 @@ package com.ngngteam.pocketwallet.Model;
 import android.graphics.Bitmap;
 
 /**
- * Created by Vromia on 04/08/2015.
+ * Created by Nick Zisis on 04/08/2015.
  */
 public class GridItem {
 

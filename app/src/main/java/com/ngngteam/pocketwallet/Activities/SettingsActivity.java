@@ -11,9 +11,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -31,21 +29,6 @@ import android.widget.Toast;
 import com.dropbox.client2.DropboxAPI;
 import com.dropbox.client2.android.AndroidAuthSession;
 import com.dropbox.client2.session.AppKeyPair;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.drive.Drive;
-import com.google.android.gms.drive.DriveApi;
-import com.google.android.gms.drive.DriveContents;
-import com.google.android.gms.drive.DriveFile;
-import com.google.android.gms.drive.DriveFolder;
-import com.google.android.gms.drive.DriveId;
-import com.google.android.gms.drive.DriveResource;
-import com.google.android.gms.drive.Metadata;
-import com.google.android.gms.drive.MetadataChangeSet;
-import com.google.android.gms.drive.metadata.CustomPropertyKey;
-import com.google.android.gms.drive.query.Filters;
-import com.google.android.gms.drive.query.Query;
-import com.google.android.gms.drive.query.SearchableField;
 import com.ngngteam.pocketwallet.Adapters.GridAdapter;
 import com.ngngteam.pocketwallet.Adapters.RecycleExportAdapter;
 import com.ngngteam.pocketwallet.BroadcastReceivers.ReminderReceiver;
@@ -57,19 +40,13 @@ import com.ngngteam.pocketwallet.R;
 import com.ngngteam.pocketwallet.Utils.BackupDropbox;
 import com.ngngteam.pocketwallet.Utils.BackupRestoreDrive;
 import com.ngngteam.pocketwallet.Utils.BackupRestoreSD;
+import com.ngngteam.pocketwallet.Utils.ExportExcel;
 import com.ngngteam.pocketwallet.Utils.RestoreDropbox;
 import com.ngngteam.pocketwallet.Utils.SharedPrefsManager;
 import com.ngngteam.pocketwallet.Utils.Themer;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
-
-import jxl.WorkbookSettings;
 
 public class SettingsActivity extends PreferenceActivity
         implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -653,11 +630,12 @@ public class SettingsActivity extends PreferenceActivity
     }
 
 
-    public static class ExportDialog extends DialogFragment {
+    public static class ExportDialog extends DialogFragment implements RecycleExportAdapter.OnItemClickListener{
 
         private Dialog dialog;
         private RecyclerView rv;
         private ArrayList<GridItem> items;
+
 
         public ExportDialog() {
 
@@ -685,7 +663,11 @@ public class SettingsActivity extends PreferenceActivity
 
         }
 
-        private void initListeners() {
+             private void initListeners() {
+
+
+
+
         }
 
         private void init() {
@@ -699,12 +681,34 @@ public class SettingsActivity extends PreferenceActivity
             rv=(RecyclerView) dialog.findViewById(R.id.recycler_view);
             rv.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-            rv.setAdapter(new RecycleExportAdapter(getActivity(),items));
+            rv.setAdapter(new RecycleExportAdapter(getActivity(),items,this));
 
 
         }
 
 
+        @Override
+        public void onItemClick(int position) {
+
+            switch (position){
+                case 0:
+
+
+                    break;
+
+                case 1:
+
+                    break;
+
+                case 2:
+                    String filename ="PocketWalletExport.xls";
+                    ExportExcel exportExcel=new ExportExcel(filename,getActivity());
+                    exportExcel.exportExcelToSD();
+                    break;
+
+            }
+
+        }
     }
 
 }

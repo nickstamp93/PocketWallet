@@ -20,11 +20,13 @@ public class RecycleExportAdapter extends RecyclerView.Adapter<RecycleExportAdap
 
     private ArrayList<GridItem> items;
     private Context context;
+    private OnItemClickListener listener;
 
-    public RecycleExportAdapter(Context context, ArrayList<GridItem> items){
+    public RecycleExportAdapter(Context context, ArrayList<GridItem> items,OnItemClickListener listener){
 
         this.context=context;
         this.items=items;
+        this.listener=listener;
 
     }
 
@@ -33,14 +35,27 @@ public class RecycleExportAdapter extends RecyclerView.Adapter<RecycleExportAdap
 
         protected ImageView ivExport;
         protected TextView tvExport;
+        private OnItemClickListener listener;
 
 
-        public CustomViewHolder(View itemView) {
+        public CustomViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
             ivExport=(ImageView) itemView.findViewById(R.id.ivExport);
             tvExport=(TextView) itemView.findViewById(R.id.tvExport);
+            this.listener=listener;
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onItemClick(getAdapterPosition());
+                }
+            });
 
         }
+
+
+
+
     }
 
 
@@ -48,7 +63,7 @@ public class RecycleExportAdapter extends RecyclerView.Adapter<RecycleExportAdap
     public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.export_dialog_item,null);
 
-        CustomViewHolder holder=new CustomViewHolder(view);
+        CustomViewHolder holder=new CustomViewHolder(view,listener);
 
         return holder;
     }
@@ -69,4 +84,10 @@ public class RecycleExportAdapter extends RecyclerView.Adapter<RecycleExportAdap
     public int getItemCount() {
         return items.size();
     }
+
+    public interface OnItemClickListener{
+        void onItemClick(int position);
+    }
+
+
 }

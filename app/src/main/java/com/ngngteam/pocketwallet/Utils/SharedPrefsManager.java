@@ -25,12 +25,12 @@ public class SharedPrefsManager {
     private static final String PREFS_REMINDER_TIME = "reminderTime";
     private static final String PREFS_GROUPING = "grouping";
     private static final String PREFS_DAY_START = "dayStart";
+    private static final String PREFS_BUDGET = "budget";
     private static final String PREFS_THEME_CHANGED = "themeChanged";
     private static final String PREFS_VERSION = "version";
-    private static final String PREFS_DRIVER_FOLDER_ID="folderID";
-    private static final String PREFS_TRANSACTIONS_DRIVER_FILE_ID="transactionsFileID";
-    private static final String PREFS_CATEGORIES_DRIVER_FILE_ID="categoriesFileID";
-
+    private static final String PREFS_DRIVER_FOLDER_ID = "folderID";
+    private static final String PREFS_TRANSACTIONS_DRIVER_FILE_ID = "transactionsFileID";
+    private static final String PREFS_CATEGORIES_DRIVER_FILE_ID = "categoriesFileID";
 
 
     //the SharedPreferences and Editor objects
@@ -56,17 +56,17 @@ public class SharedPrefsManager {
      * Below are the setters and getters for each attribute
      */
 
-    public String getPrefsTransactionsDriverFileId(){
-        return prefs.getString(PREFS_TRANSACTIONS_DRIVER_FILE_ID,"-1");
+    public String getPrefsTransactionsDriverFileId() {
+        return prefs.getString(PREFS_TRANSACTIONS_DRIVER_FILE_ID, "-1");
     }
 
-    public String getPrefsCategoriesDriverFileId(){
-        return prefs.getString(PREFS_CATEGORIES_DRIVER_FILE_ID,"-1");
+    public String getPrefsCategoriesDriverFileId() {
+        return prefs.getString(PREFS_CATEGORIES_DRIVER_FILE_ID, "-1");
     }
 
 
-    public String getPrefsDriverFolderId(){
-        return prefs.getString(PREFS_DRIVER_FOLDER_ID,"-1");
+    public String getPrefsDriverFolderId() {
+        return prefs.getString(PREFS_DRIVER_FOLDER_ID, "-1");
     }
 
     public boolean getPrefsIsProfile() {
@@ -81,6 +81,9 @@ public class SharedPrefsManager {
         return prefs.getFloat(PREFS_SAVINGS, 0);
     }
 
+    public float getPrefsBudget() {
+        return prefs.getFloat(PREFS_BUDGET, 0);
+    }
 
     public float getPrefsBalance() {
         return prefs.getFloat(PREFS_BALANCE, 0);
@@ -142,6 +145,10 @@ public class SharedPrefsManager {
         editor.putFloat(PREFS_SAVINGS, savings);
     }
 
+    public void setPrefsBudget(float budget) {
+        editor.putFloat(PREFS_BUDGET, budget);
+    }
+
     public void setPrefsBalance(float balance) {
         editor.putFloat(PREFS_BALANCE, balance);
     }
@@ -168,18 +175,18 @@ public class SharedPrefsManager {
         editor.putInt(PREFS_VERSION, newVersion);
     }
 
-    public void setPrefsDriverFolderId(String folderId){
+    public void setPrefsDriverFolderId(String folderId) {
 
         editor.putString(PREFS_DRIVER_FOLDER_ID, folderId);
 
     }
 
-    public void setPrefsTransactionsDriverFileId(String fileId){
-        editor.putString(PREFS_TRANSACTIONS_DRIVER_FILE_ID,fileId);
+    public void setPrefsTransactionsDriverFileId(String fileId) {
+        editor.putString(PREFS_TRANSACTIONS_DRIVER_FILE_ID, fileId);
     }
 
-    public void setPrefsCategoriesDriverFileId(String fileId){
-        editor.putString(PREFS_CATEGORIES_DRIVER_FILE_ID,fileId);
+    public void setPrefsCategoriesDriverFileId(String fileId) {
+        editor.putString(PREFS_CATEGORIES_DRIVER_FILE_ID, fileId);
     }
 
 }

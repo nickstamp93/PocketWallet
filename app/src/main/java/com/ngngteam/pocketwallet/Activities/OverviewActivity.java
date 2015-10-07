@@ -1,8 +1,5 @@
 package com.ngngteam.pocketwallet.Activities;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -14,8 +11,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,8 +21,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ngngteam.pocketwallet.Adapters.DrawerAdapter;
-import com.ngngteam.pocketwallet.BroadcastReceivers.RecurrentReceiver;
-import com.ngngteam.pocketwallet.BroadcastReceivers.ReminderReceiver;
 import com.ngngteam.pocketwallet.Data.CategoryDatabase;
 import com.ngngteam.pocketwallet.Data.MoneyDatabase;
 import com.ngngteam.pocketwallet.Dialogs.ChangelogDialog;
@@ -42,7 +35,6 @@ import com.ngngteam.pocketwallet.Utils.RecurrentUtils;
 import com.ngngteam.pocketwallet.Utils.SharedPrefsManager;
 import com.ngngteam.pocketwallet.Utils.Themer;
 
-import java.sql.Time;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -64,7 +56,7 @@ public class OverviewActivity extends AppCompatActivity {
     //View objects for the XML management
     private TextView tvUsername;
     private AutofitTextView tvBalance, tvSavings, tvLastIncomeValue, tvLastExpenseValue, tvLastExpenseDate,
-            tvLastIncomeDate, tvBarDate;
+            tvLastIncomeDate, tvBarDate, tvBudgetMessage;
     private LinearLayout llLastExpense, llLastIncome, llSavings;
     private CardView card_message, card_bars, card_last_transactions;
     private LetterImageView livLastExpense, livLastIncome;
@@ -264,6 +256,8 @@ public class OverviewActivity extends AppCompatActivity {
         //name
         tvUsername = (TextView) findViewById(R.id.tvUsername);
 
+        tvBudgetMessage = (AutofitTextView) findViewById(R.id.tvBudgetMessage);
+
         tvBalance = (AutofitTextView) findViewById(R.id.tvOverviewBalance);
         tvSavings = (AutofitTextView) findViewById(R.id.tvOverviewSavings);
 
@@ -342,6 +336,20 @@ public class OverviewActivity extends AppCompatActivity {
 
         //calculate balance/savings and set it to profile object
         double balance = totalIncomes - totalExpenses;
+
+        double budget = manager.getPrefsBudget();
+        double dif;
+        if(budget == totalExpenses){
+            tvBudgetMessage.setVisibility(View.GONE);
+        }else if (budget < totalExpenses) {
+            dif = totalExpenses - budget;
+            tvBudgetMessage.setText(dif + " " + profile.getCurrency() + " below budget");
+            tvBudgetMessage.setTextColor(getResources().getColor(R.color.red));
+        } else {
+            dif = budget - totalExpenses;
+            tvBudgetMessage.setText(dif + " " + profile.getCurrency() + " until you reach your budget limit");
+        }
+
 //        if(manager.getPrefsGrouping().equalsIgnoreCase(getResources().getString(R.string.pref_grouping_none))){
 //            balance += profile.getSavings();
 //        }

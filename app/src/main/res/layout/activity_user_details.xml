@@ -107,6 +107,23 @@
 
             </TableRow>
 
+            <TableRow android:id="@+id/rowBudget">
+
+                <me.grantland.widget.AutofitTextView
+                    android:id="@+id/tvBudget"
+                    style="@style/userDetails_headline"
+                    android:layout_weight="1"
+                    android:text="@string/textview_headline_budget" />
+
+                <EditText
+                    android:id="@+id/etBudget"
+                    style="@style/UserDetailsEditText"
+                    android:layout_marginBottom="@dimen/bottom_margin_headlines_small"
+                    android:layout_weight="1"
+                    android:inputType="numberDecimal" />
+
+            </TableRow>
+
             <TableRow android:id="@+id/rowDayStart">
 
                 <me.grantland.widget.AutofitTextView

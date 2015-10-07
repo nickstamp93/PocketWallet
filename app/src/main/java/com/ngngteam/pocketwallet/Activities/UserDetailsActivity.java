@@ -28,17 +28,17 @@ public class UserDetailsActivity extends AppCompatActivity {
 
     private MoneyDatabase db;
 
-    private EditText etSavings, etUsername;
+    private EditText etSavings, etUsername, etBudget;
     private TextView tvDayStart;
     private Button bOk, bCancel;
     private RadioGroup radioGroup;
     private Spinner spinnerDayStart;
     private SpinnerAdapter spinnerAdapter;
 
-    private TableRow rowDayStart;
+    private TableRow rowDayStart, rowBudget;
 
     //variables set by user
-    private float savings;
+    private float savings, budget;
     private String username, grouping;
 
     @Override
@@ -77,6 +77,8 @@ public class UserDetailsActivity extends AppCompatActivity {
         etSavings = (EditText) findViewById(R.id.etSavings);
         etSavings.setOnFocusChangeListener(editTextListener);
 
+        etBudget = (EditText) findViewById(R.id.etBudget);
+
         radioGroup = (RadioGroup) findViewById(R.id.rgGrouping);
 
         spinnerDayStart = (Spinner) findViewById(R.id.spinnerDayStart);
@@ -84,6 +86,7 @@ public class UserDetailsActivity extends AppCompatActivity {
         tvDayStart = (TextView) findViewById(R.id.tvDayStart);
 
         rowDayStart = (TableRow) findViewById(R.id.rowDayStart);
+        rowBudget = (TableRow) findViewById(R.id.rowBudget);
 
         bOk = (Button) findViewById(R.id.bOK);
         bCancel = (Button) findViewById(R.id.bCancel);
@@ -97,6 +100,7 @@ public class UserDetailsActivity extends AppCompatActivity {
 
         etUsername.setText(manager.getPrefsUsername());
         etSavings.setText(manager.getPrefsSavings() + "");
+        etBudget.setText(manager.getPrefsBudget() + "");
 
         if (manager.getPrefsGrouping().equalsIgnoreCase(getResources().getString(R.string.pref_grouping_monthly))) {
             radioGroup.check(R.id.rbMonthly);
@@ -105,18 +109,22 @@ public class UserDetailsActivity extends AppCompatActivity {
 
             tvDayStart.setText(getString(R.string.textview_headline_month_start));
             rowDayStart.setVisibility(View.VISIBLE);
+            rowBudget.setVisibility(View.VISIBLE);
         } else if (manager.getPrefsGrouping().equalsIgnoreCase(getResources().getString(R.string.pref_grouping_weekly))) {
             radioGroup.check(R.id.rbWeekly);
             spinnerAdapter = ArrayAdapter.createFromResource(this,
                     R.array.days_week, R.layout.spinner_item_simple);
             tvDayStart.setText(getString(R.string.textview_headline_week_start));
             rowDayStart.setVisibility(View.VISIBLE);
+            rowBudget.setVisibility(View.VISIBLE);
         } else if (manager.getPrefsGrouping().equalsIgnoreCase(getResources().getString(R.string.pref_grouping_daily))) {
             radioGroup.check(R.id.rbDaily);
             rowDayStart.setVisibility(View.GONE);
+            rowBudget.setVisibility(View.GONE);
         } else {
             radioGroup.check(R.id.rbNoGrouping);
             rowDayStart.setVisibility(View.GONE);
+            rowBudget.setVisibility(View.GONE);
         }
 
         spinnerDayStart.setAdapter(spinnerAdapter);
@@ -154,16 +162,20 @@ public class UserDetailsActivity extends AppCompatActivity {
                         R.array.days_week, R.layout.spinner_item_simple);
                 spinnerDayStart.setAdapter(spinnerAdapter);
                 rowDayStart.setVisibility(View.VISIBLE);
+                rowBudget.setVisibility(View.VISIBLE);
             } else if (checkedId == R.id.rbMonthly) {
                 tvDayStart.setText(getString(R.string.textview_headline_month_start));
                 spinnerAdapter = ArrayAdapter.createFromResource(UserDetailsActivity.this,
                         R.array.days_month, R.layout.spinner_item_simple);
                 spinnerDayStart.setAdapter(spinnerAdapter);
                 rowDayStart.setVisibility(View.VISIBLE);
+                rowBudget.setVisibility(View.VISIBLE);
             } else if (checkedId == R.id.rbDaily) {
                 rowDayStart.setVisibility(View.GONE);
+                rowBudget.setVisibility(View.VISIBLE);
             } else {
                 rowDayStart.setVisibility(View.GONE);
+                rowBudget.setVisibility(View.GONE);
             }
         }
     };
@@ -225,6 +237,7 @@ public class UserDetailsActivity extends AppCompatActivity {
                     manager.setPrefsIsProfile(true);
                     manager.setPrefsUsername(username);
                     manager.setPrefsSavings(savings);
+                    manager.setPrefsBudget(budget);
                     manager.setPrefsGrouping(grouping);
                     manager.setPrefsDayStart(spinnerDayStart.getSelectedItemPosition());
 
@@ -260,6 +273,7 @@ public class UserDetailsActivity extends AppCompatActivity {
     private void getDataFromXml() {
         username = etUsername.getText().toString();
         savings = Float.parseFloat(etSavings.getText().toString());
+        budget = Float.parseFloat(etBudget.getText().toString());
         switch (radioGroup.getCheckedRadioButtonId()) {
             case R.id.rbWeekly:
                 grouping = getResources().getString(R.string.pref_grouping_weekly);

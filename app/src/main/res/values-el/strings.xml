@@ -236,5 +236,6 @@
     <string name="text_change_savings_warning">Αν αλλάξετε τα αρχικά χρήματα , θα επηρεαστεί το ποσό αποταμίευσης</string>
     <string name="no_data_text">Δεν υπάρχουν δεδομένα</string>
     <string name="text_tomorrow">Άυριο</string>
+    <string name="textview_headline_budget">Οριο Εξόδων</string>
 
 </resources>

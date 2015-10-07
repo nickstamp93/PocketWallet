@@ -60,9 +60,10 @@ public class SettingsActivity extends PreferenceActivity
 
 
     private BackupRestoreDrive drive;
-    private DropboxAPI<AndroidAuthSession> api;
+    private static DropboxAPI<AndroidAuthSession> api;
 
     private boolean backup;
+    private boolean export=false;
 
     private BackupRestoreDialog dialog;
     private ExportDialog exportDialog;
@@ -108,6 +109,7 @@ public class SettingsActivity extends PreferenceActivity
 
                 exportDialog=new ExportDialog().newInstance();
                 exportDialog.show(getFragmentManager(),"ExportDialog");
+                export=true;
 
                 return false;
             }
@@ -366,10 +368,13 @@ public class SettingsActivity extends PreferenceActivity
                     Log.i("DbAuthLog", "Error authenticating", e);
                 }
 
-                if (backup) {
+                if (backup && !export) {
                     new BackupDropbox(api, SettingsActivity.this, dialog).execute();
-                } else {
+                } else if(!backup && !export) {
                     new RestoreDropbox(api, SettingsActivity.this, dialog).execute();
+                }else if(export){
+                    String filename ="PocketWalletExport.xls";
+                    ExportExcel exportExcel=new ExportExcel(filename,SettingsActivity.this,api,exportDialog);
                 }
 
             }
@@ -692,7 +697,11 @@ public class SettingsActivity extends PreferenceActivity
 
             switch (position){
                 case 0:
+                    AppKeyPair appKeyPair = new AppKeyPair(APP_KEY, APP_SECRET);
+                    AndroidAuthSession session = new AndroidAuthSession(appKeyPair);
+                    api = new DropboxAPI<>(session);
 
+                    api.getSession().startOAuth2Authentication(getActivity());
 
                     break;
 

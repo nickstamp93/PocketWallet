@@ -2,25 +2,35 @@ package com.ngngteam.pocketwallet.Utils;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.preference.PreferenceManager;
-import android.util.Log;
+import android.widget.Toast;
 
+
+import com.dropbox.client2.DropboxAPI;
+import com.dropbox.client2.android.AndroidAuthSession;
+import com.dropbox.client2.exception.DropboxException;
+import com.ngngteam.pocketwallet.Activities.SettingsActivity;
 import com.ngngteam.pocketwallet.Data.MoneyDatabase;
 import com.ngngteam.pocketwallet.R;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
 import java.util.Locale;
 
-import jxl.Cell;
+
 import jxl.CellView;
 import jxl.Workbook;
 import jxl.WorkbookSettings;
-import jxl.format.*;
+
 import jxl.format.Alignment;
 import jxl.write.*;
-import jxl.write.Number;
+
 
 /**
  * Created by Nick Zisis on 07-Oct-15.
@@ -36,9 +46,32 @@ public class ExportExcel {
     private String filename;
     private String currency;
 
+    private Context context;
+    private DropboxAPI<AndroidAuthSession> api;
+
+
     public ExportExcel(String filename, Context context) {
         this.filename = filename;
+        this.context = context;
 
+        init();
+    }
+
+    public ExportExcel(String filename, Context context, DropboxAPI<AndroidAuthSession> api, SettingsActivity.ExportDialog dialog) {
+        this.filename = filename;
+        this.context = context;
+        this.api = api;
+
+        init();
+
+        dialog.dismiss();
+
+        exportToDropBox();
+
+    }
+
+
+    private void init() {
         db = new MoneyDatabase(context);
         expenseCursor = db.getAllExpenses();
         incomeCursor = db.getAllIncomes();
@@ -46,7 +79,6 @@ public class ExportExcel {
         currency = PreferenceManager.getDefaultSharedPreferences(context).getString(context.getResources().getString(R.string.pref_key_currency), context.getResources().getString(R.string.pref_currency_default_value));
 
     }
-
 
     public void exportExcelToSD() {
 
@@ -63,7 +95,11 @@ public class ExportExcel {
     }
 
 
-    private void writeExcel(File dir){
+    public void exportToDropBox() {
+        new UploadExcelToDropBox().execute();
+    }
+
+    private void writeExcel(File dir) {
 
         wbSettings = new WorkbookSettings();
         if (Locale.getDefault().getDisplayLanguage().equals("Ελληνικά")) {
@@ -108,13 +144,13 @@ public class ExportExcel {
 
                     String category = expenseCursor.getString(1);
                     String date = expenseCursor.getString(2);
-                    String tokens[]=date.split("-");
-                    String reformedDate=tokens[2]+"-"+tokens[1]+"-"+tokens[0];
+                    String tokens[] = date.split("-");
+                    String reformedDate = tokens[2] + "-" + tokens[1] + "-" + tokens[0];
 
                     double amount = Double.parseDouble(expenseCursor.getString(3));
                     String notes = expenseCursor.getString(4);
 
-                    expenseSheet.addCell(new Label(0, counter, amount +currency, times13format));
+                    expenseSheet.addCell(new Label(0, counter, amount + currency, times13format));
                     expenseSheet.addCell(new Label(1, counter, category, times13format));
                     expenseSheet.addCell(new Label(2, counter, reformedDate, times13format));
                     expenseSheet.addCell(new Label(3, counter, notes, times13format));
@@ -143,13 +179,13 @@ public class ExportExcel {
 
                     String category = incomeCursor.getString(2);
                     String date = incomeCursor.getString(3);
-                    String tokens[]=date.split("-");
-                    String reformedDate=tokens[2]+"-"+tokens[1]+"-"+tokens[0];
+                    String tokens[] = date.split("-");
+                    String reformedDate = tokens[2] + "-" + tokens[1] + "-" + tokens[0];
 
                     double amount = Double.parseDouble(incomeCursor.getString(1));
                     String notes = incomeCursor.getString(4);
 
-                    incomeSheet.addCell(new Label(0, counter, amount +currency, times13format));
+                    incomeSheet.addCell(new Label(0, counter, amount + currency, times13format));
                     incomeSheet.addCell(new Label(1, counter, category, times13format));
                     incomeSheet.addCell(new Label(2, counter, reformedDate, times13format));
                     incomeSheet.addCell(new Label(3, counter, notes, times13format));
@@ -157,8 +193,6 @@ public class ExportExcel {
                     counter++;
 
                 }
-
-
 
 
             } catch (WriteException e) {
@@ -178,5 +212,63 @@ public class ExportExcel {
         }
 
     }
+
+
+    public class UploadExcelToDropBox extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            exportExcelToSD();
+            File sdCard = Environment.getExternalStorageDirectory();
+            File file=new File(sdCard.getAbsolutePath()+"/"+filename);
+
+            try {
+                InputStream inputStream = new FileInputStream(file);
+
+                DropboxAPI.Entry metadata = api.metadata("/", 1000, null, true, null);
+
+
+                boolean flag = false;
+                List<DropboxAPI.Entry> CFolder = metadata.contents;
+
+                for (DropboxAPI.Entry entry : CFolder) {
+                    if (entry.fileName().equals("PocketWalletExport.xls")) {
+                        flag = true;
+                        break;
+                    }
+
+
+                }
+
+                if (!flag) {
+                    api.putFile("PocketWalletExport.xls", inputStream, file.length(), null, null);
+
+                } else {
+                    api.delete("/PocketWalletExport.xls");
+                    api.putFile("PocketWalletExport.xls", inputStream, file.length(), null, null);
+
+                }
+
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (DropboxException e) {
+                e.printStackTrace();
+            }
+
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            api.getSession().unlink();
+            Toast.makeText(context, "Export to DropBox was done successfully ", Toast.LENGTH_LONG).show();
+        }
+    }
+
 
 }

@@ -22,7 +22,7 @@ import java.util.List;
 
 /**
  * Created by Nick Zisis on 21/09/2015.
- * Class BackupDropbox extends a thead of Android and it creates a backup of the databases on DropBox
+ * Class BackupDropbox extends a thread of Android and it creates a backup of the databases on DropBox
  */
 public class BackupDropbox extends AsyncTask<String,String,String> {
 

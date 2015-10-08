@@ -55,15 +55,16 @@ public class SettingsActivity extends PreferenceActivity
     private final int REQUEST_CODE_RESOLUTION = 1;
     private final int TRANSACTIONS_CODE = 2;
     private final int CATEGORIES_CODE = 3;
+    private final int EXPORT_CODE = 4;
     final static private String APP_KEY = "slba7p9039i59nw";
     final static private String APP_SECRET = "srq6a16ada8u517";
 
 
-    private BackupRestoreDrive drive;
+    private static BackupRestoreDrive drive;
     private static DropboxAPI<AndroidAuthSession> api;
 
     private boolean backup;
-    private boolean export=false;
+    private boolean export = false;
 
     private BackupRestoreDialog dialog;
     private ExportDialog exportDialog;
@@ -107,9 +108,9 @@ public class SettingsActivity extends PreferenceActivity
             public boolean onPreferenceClick(Preference preference) {
                 //TODO export to excel
 
-                exportDialog=new ExportDialog().newInstance();
-                exportDialog.show(getFragmentManager(),"ExportDialog");
-                export=true;
+                exportDialog = new ExportDialog().newInstance();
+                exportDialog.show(getFragmentManager(), "ExportDialog");
+                export = true;
 
                 return false;
             }
@@ -342,6 +343,10 @@ public class SettingsActivity extends PreferenceActivity
             drive.saveIDOfTransactionsDriveFile();
         } else if (requestCode == CATEGORIES_CODE && resultCode == RESULT_OK) {
             drive.saveIDOfCategoriesDriveFile();
+        } else if (requestCode == EXPORT_CODE && resultCode == RESULT_OK) {
+            Toast.makeText(SettingsActivity.this, "Excel exported successfully to your Google Drive", Toast.LENGTH_LONG).show();
+        }else if(requestCode == EXPORT_CODE){
+            Log.i("ResultCode" ,resultCode +"");
         }
     }
 
@@ -370,11 +375,11 @@ public class SettingsActivity extends PreferenceActivity
 
                 if (backup && !export) {
                     new BackupDropbox(api, SettingsActivity.this, dialog).execute();
-                } else if(!backup && !export) {
+                } else if (!backup && !export) {
                     new RestoreDropbox(api, SettingsActivity.this, dialog).execute();
-                }else if(export){
-                    String filename ="PocketWalletExport.xls";
-                    ExportExcel exportExcel=new ExportExcel(filename,SettingsActivity.this,api,exportDialog);
+                } else if (export) {
+                    String filename = "PocketWalletExport.xls";
+                    ExportExcel exportExcel = new ExportExcel(filename, SettingsActivity.this, api, exportDialog);
                 }
 
             }
@@ -508,7 +513,7 @@ public class SettingsActivity extends PreferenceActivity
      * Inner class BackupRestoreDialog implements the basic dialog with backup and restore options for the user.
      * More specific the user got 3 options for backup and restore which are using Drive, DropBox or SD card.
      */
-    public class BackupRestoreDialog extends DialogFragment {
+    public static class BackupRestoreDialog extends DialogFragment {
 
         private ArrayList<GridItem> items;
         private GridView gridView;
@@ -577,46 +582,46 @@ public class SettingsActivity extends PreferenceActivity
                             AndroidAuthSession session = new AndroidAuthSession(appKeyPair);
                             api = new DropboxAPI<>(session);
 
-                            api.getSession().startOAuth2Authentication(SettingsActivity.this);
+                            api.getSession().startOAuth2Authentication(getActivity());
 
                             break;
                         case 1:
-                            drive = new BackupRestoreDrive(getBaseContext(), SettingsActivity.this, backup);
+                            drive = new BackupRestoreDrive(getActivity().getBaseContext(), (SettingsActivity) getActivity(), backup);
                             dialog.dismiss();
                             break;
                         case 2:
                             if (backup) {
-                                String MoneyDBpath = "/data/" + getPackageName() + "/databases/MoneyDatabase";
+                                String MoneyDBpath = "/data/" + getActivity().getPackageName() + "/databases/MoneyDatabase";
                                 String MoneyOutputName = "/MoneyDatabase";
-                                BackupRestoreSD backupRestoreSD = new BackupRestoreSD(MoneyDBpath, MoneyOutputName, SettingsActivity.this);
+                                BackupRestoreSD backupRestoreSD = new BackupRestoreSD(MoneyDBpath, MoneyOutputName, getActivity());
                                 boolean MoneySuccess = backupRestoreSD.backup();
 
-                                String CategoriesDBpath = "/data/" + getPackageName() + "/databases/categories";
+                                String CategoriesDBpath = "/data/" + getActivity().getPackageName() + "/databases/categories";
                                 String CategoriesOutputName = "/CategoryDatabase";
 
 
-                                backupRestoreSD = new BackupRestoreSD(CategoriesDBpath, CategoriesOutputName, SettingsActivity.this);
+                                backupRestoreSD = new BackupRestoreSD(CategoriesDBpath, CategoriesOutputName, getActivity());
                                 boolean CategorySuccess = backupRestoreSD.backup();
 
 
                                 if (MoneySuccess && CategorySuccess) {
-                                    Toast.makeText(SettingsActivity.this, "Backup Done Succesfully!", Toast.LENGTH_LONG)
+                                    Toast.makeText(getActivity(), "Backup Done Succesfully!", Toast.LENGTH_LONG)
                                             .show();
 
                                 }
                             } else {
-                                String MoneyDBpath = "/data/" + getPackageName() + "/databases/MoneyDatabase";
+                                String MoneyDBpath = "/data/" + getActivity().getPackageName() + "/databases/MoneyDatabase";
                                 String MoneyOutputName = "/MoneyDatabase";
-                                BackupRestoreSD backupRestoreSD = new BackupRestoreSD(MoneyDBpath, MoneyOutputName, SettingsActivity.this);
+                                BackupRestoreSD backupRestoreSD = new BackupRestoreSD(MoneyDBpath, MoneyOutputName, getActivity());
                                 boolean MoneySuccess = backupRestoreSD.restore();
 
-                                String CategoriesDBpath = "/data/" + getPackageName() + "/databases/categories";
+                                String CategoriesDBpath = "/data/" + getActivity().getPackageName() + "/databases/categories";
                                 String CategoriesOutputName = "/CategoryDatabase";
-                                backupRestoreSD = new BackupRestoreSD(CategoriesDBpath, CategoriesOutputName, SettingsActivity.this);
+                                backupRestoreSD = new BackupRestoreSD(CategoriesDBpath, CategoriesOutputName, getActivity());
                                 boolean CategorySuccess = backupRestoreSD.restore();
 
                                 if (MoneySuccess && CategorySuccess) {
-                                    Toast.makeText(SettingsActivity.this, "Restore Done Succesfully!", Toast.LENGTH_LONG)
+                                    Toast.makeText(getActivity(), "Restore Done Succesfully!", Toast.LENGTH_LONG)
                                             .show();
 
                                 }
@@ -635,7 +640,7 @@ public class SettingsActivity extends PreferenceActivity
     }
 
 
-    public static class ExportDialog extends DialogFragment implements RecycleExportAdapter.OnItemClickListener{
+    public static class ExportDialog extends DialogFragment implements RecycleExportAdapter.OnItemClickListener {
 
         private Dialog dialog;
         private RecyclerView rv;
@@ -668,9 +673,7 @@ public class SettingsActivity extends PreferenceActivity
 
         }
 
-             private void initListeners() {
-
-
+        private void initListeners() {
 
 
         }
@@ -683,10 +686,10 @@ public class SettingsActivity extends PreferenceActivity
         }
 
         private void initUI() {
-            rv=(RecyclerView) dialog.findViewById(R.id.recycler_view);
+            rv = (RecyclerView) dialog.findViewById(R.id.recycler_view);
             rv.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-            rv.setAdapter(new RecycleExportAdapter(getActivity(),items,this));
+            rv.setAdapter(new RecycleExportAdapter(getActivity(), items, this));
 
 
         }
@@ -694,8 +697,9 @@ public class SettingsActivity extends PreferenceActivity
 
         @Override
         public void onItemClick(int position) {
-
-            switch (position){
+            String filename = "PocketWalletExport.xls";
+            ExportExcel exportExcel;
+            switch (position) {
                 case 0:
                     AppKeyPair appKeyPair = new AppKeyPair(APP_KEY, APP_SECRET);
                     AndroidAuthSession session = new AndroidAuthSession(appKeyPair);
@@ -706,12 +710,14 @@ public class SettingsActivity extends PreferenceActivity
                     break;
 
                 case 1:
+                    exportExcel = new ExportExcel(filename, getActivity().getBaseContext(), (SettingsActivity) getActivity());
+                    dialog.dismiss();
 
                     break;
 
                 case 2:
-                    String filename ="PocketWalletExport.xls";
-                    ExportExcel exportExcel=new ExportExcel(filename,getActivity());
+
+                    exportExcel = new ExportExcel(filename, getActivity());
                     exportExcel.exportExcelToSD();
                     break;
 

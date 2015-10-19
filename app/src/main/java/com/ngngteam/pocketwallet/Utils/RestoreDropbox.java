@@ -3,11 +3,13 @@ package com.ngngteam.pocketwallet.Utils;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.dropbox.client2.DropboxAPI;
 import com.dropbox.client2.android.AndroidAuthSession;
 import com.dropbox.client2.exception.DropboxException;
+import com.dropbox.client2.exception.DropboxServerException;
 import com.ngngteam.pocketwallet.Activities.SettingsActivity;
 
 import java.io.FileNotFoundException;
@@ -19,17 +21,20 @@ import java.io.OutputStream;
  * Created by Nick Zisis on 03-Oct-15.
  * Class RestoreDropbox perform a restore on Money and Categories Database that is saved on Dropbox.
  */
-public class RestoreDropbox extends AsyncTask<String,String,String> {
+public class RestoreDropbox extends AsyncTask<String, String, String> {
 
     private DropboxAPI<AndroidAuthSession> api;
     private Context context;
+    private boolean exists;
 
 
-    public RestoreDropbox(DropboxAPI<AndroidAuthSession> api,Context context,SettingsActivity.BackupRestoreDialog dialog ){
-        this.api=api;
-        this.context=context;
+    public RestoreDropbox(DropboxAPI<AndroidAuthSession> api, Context context, SettingsActivity.BackupRestoreDialog dialog) {
+        this.api = api;
+        this.context = context;
+        exists = true;
 
         dialog.dismiss();
+
     }
 
     @Override
@@ -37,14 +42,16 @@ public class RestoreDropbox extends AsyncTask<String,String,String> {
 
 
         try {
-            String MoneyDBpath = "/data/" +context.getPackageName() + "/databases/MoneyDatabase";
+            String MoneyDBpath = "/data/" + context.getPackageName() + "/databases/MoneyDatabase";
             String CategoriesDBpath = "/data/" + context.getPackageName() + "/databases/categories";
 
-            OutputStream MoneyOutput=new FileOutputStream(Environment.getDataDirectory()+MoneyDBpath);
-            OutputStream CategoriesOutput=new FileOutputStream(Environment.getDataDirectory()+CategoriesDBpath);
+            OutputStream MoneyOutput = new FileOutputStream(Environment.getDataDirectory() + MoneyDBpath);
+            OutputStream CategoriesOutput = new FileOutputStream(Environment.getDataDirectory() + CategoriesDBpath);
 
-            DropboxAPI.DropboxInputStream input=api.getFileStream("TransactionsBackup",null);
-            DropboxAPI.DropboxInputStream Cinput=api.getFileStream("CategoriesBackup",null);
+            DropboxAPI.DropboxInputStream input = api.getFileStream("TransactionsBackup", null);
+            DropboxAPI.DropboxInputStream Cinput = api.getFileStream("CategoriesBackup", null);
+
+            //input.
 
 
             byte[] buffer = new byte[1024];
@@ -59,7 +66,7 @@ public class RestoreDropbox extends AsyncTask<String,String,String> {
 
             buffer = new byte[1024];
             while ((size = Cinput.read(buffer)) > 0) {
-               CategoriesOutput.write(buffer, 0, size);
+                CategoriesOutput.write(buffer, 0, size);
             }
 
             CategoriesOutput.flush();
@@ -67,12 +74,13 @@ public class RestoreDropbox extends AsyncTask<String,String,String> {
             Cinput.close();
 
 
-
         } catch (DropboxException e) {
             e.printStackTrace();
-        }catch (FileNotFoundException e){
+            exists = false;
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
-        }catch (IOException e){
+            exists = false;
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -85,7 +93,11 @@ public class RestoreDropbox extends AsyncTask<String,String,String> {
         super.onPostExecute(s);
 
         api.getSession().unlink();
-        Toast.makeText(context, "Restore was done successfully to your device", Toast.LENGTH_LONG).show();
+        if (exists) {
+            Toast.makeText(context, "Restore was done successfully to your device", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(context, "No backup found on Dropbox", Toast.LENGTH_LONG).show();
+        }
     }
 
 }

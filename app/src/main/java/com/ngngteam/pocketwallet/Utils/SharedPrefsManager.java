@@ -31,6 +31,7 @@ public class SharedPrefsManager {
     private static final String PREFS_DRIVER_FOLDER_ID = "folderID";
     private static final String PREFS_TRANSACTIONS_DRIVER_FILE_ID = "transactionsFileID";
     private static final String PREFS_CATEGORIES_DRIVER_FILE_ID = "categoriesFileID";
+    private static final String PREFS_DROPBOX_ACCESS_TOKEN = "dropboxAccessToken";
 
 
     //the SharedPreferences and Editor objects
@@ -55,6 +56,11 @@ public class SharedPrefsManager {
     /**
      * Below are the setters and getters for each attribute
      */
+
+
+    public String getPrefsDropboxAccessToken(){
+        return prefs.getString(PREFS_DROPBOX_ACCESS_TOKEN,"-1");
+    }
 
     public String getPrefsTransactionsDriverFileId() {
         return prefs.getString(PREFS_TRANSACTIONS_DRIVER_FILE_ID, "-1");
@@ -131,6 +137,11 @@ public class SharedPrefsManager {
 
     public int getPrefsVersion() {
         return prefs.getInt(PREFS_VERSION, 1);
+    }
+
+
+    public void setPrefsDropboxAccessToken(String token){
+        editor.putString(PREFS_DROPBOX_ACCESS_TOKEN,token);
     }
 
     public void setPrefsIsProfile(boolean isProfile) {

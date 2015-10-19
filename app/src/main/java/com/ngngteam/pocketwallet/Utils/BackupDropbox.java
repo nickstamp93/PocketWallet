@@ -34,7 +34,8 @@ public class BackupDropbox extends AsyncTask<String,String,String> {
         this.api=api;
         this.context=context;
 
-        dialog.dismiss();
+            dialog.dismiss();
+
     }
 
     /**

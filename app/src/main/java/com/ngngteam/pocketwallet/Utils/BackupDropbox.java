@@ -1,15 +1,18 @@
 package com.ngngteam.pocketwallet.Utils;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dropbox.client2.DropboxAPI;
 import com.dropbox.client2.android.AndroidAuthSession;
 import com.dropbox.client2.exception.DropboxException;
 import com.ngngteam.pocketwallet.Activities.SettingsActivity;
+import com.ngngteam.pocketwallet.R;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -29,6 +32,8 @@ public class BackupDropbox extends AsyncTask<String,String,String> {
     private DropboxAPI<AndroidAuthSession> api;
     private Context context;
 
+    private ProgressDialog progressDialog;
+    private TextView tvCommand;
 
     public BackupDropbox(DropboxAPI<AndroidAuthSession> api,Context context,SettingsActivity.BackupRestoreDialog dialog ){
         this.api=api;
@@ -36,6 +41,18 @@ public class BackupDropbox extends AsyncTask<String,String,String> {
 
             dialog.dismiss();
 
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setCancelable(false);
+        progressDialog.setIndeterminate(false);
+        progressDialog.show();
+        progressDialog.setContentView(R.layout.custom_progress_bar);
+        tvCommand = (TextView) progressDialog.findViewById(R.id.tvCommand);
+        tvCommand.setText("Uploading..");
     }
 
     /**
@@ -123,7 +140,7 @@ public class BackupDropbox extends AsyncTask<String,String,String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-
+        progressDialog.dismiss();
         api.getSession().unlink();
         Toast.makeText(context,"Backup was done successfully on Dropbox",Toast.LENGTH_LONG).show();
     }

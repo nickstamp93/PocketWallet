@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,6 +22,7 @@ import android.preference.SwitchPreference;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -49,7 +51,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class SettingsActivity extends PreferenceActivity
-        implements SharedPreferences.OnSharedPreferenceChangeListener{
+        implements SharedPreferences.OnSharedPreferenceChangeListener {
 
 
     private final int REQUEST_CODE_RESOLUTION = 1;
@@ -70,7 +72,6 @@ public class SettingsActivity extends PreferenceActivity
     private ExportDialog exportDialog;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -85,6 +86,8 @@ public class SettingsActivity extends PreferenceActivity
         initSummaries(getPreferenceScreen());
 
         setPreferenceActions();
+
+
 
     }
 
@@ -260,7 +263,7 @@ public class SettingsActivity extends PreferenceActivity
             @Override
             public boolean onPreferenceClick(Preference preference) {
 
-                export=false;
+                export = false;
                 backup = true;
                 dialog = new BackupRestoreDialog().newInstance(backup);
                 dialog.show(getFragmentManager(), "dialog");
@@ -277,7 +280,7 @@ public class SettingsActivity extends PreferenceActivity
             @Override
             public boolean onPreferenceClick(Preference preference) {
 
-                export=false;
+                export = false;
                 backup = false;
                 dialog = new BackupRestoreDialog().newInstance(backup);
                 dialog.show(getFragmentManager(), "dialog");
@@ -347,8 +350,9 @@ public class SettingsActivity extends PreferenceActivity
             drive.saveIDOfTransactionsDriveFile();
         } else if (requestCode == CATEGORIES_CODE && resultCode == RESULT_OK) {
             drive.saveIDOfCategoriesDriveFile();
+            Toast.makeText(SettingsActivity.this, "Backup was uploaded successfully to your Google Drive", Toast.LENGTH_LONG).show();
         } else if (requestCode == EXPORT_CODE && resultCode == RESULT_OK) {
-            Toast.makeText(SettingsActivity.this, "Excel exported successfully to your Google Drive", Toast.LENGTH_LONG).show();
+            Toast.makeText(SettingsActivity.this, "Excel was exported successfully to your Google Drive", Toast.LENGTH_LONG).show();
         } else if (requestCode == EXPORT_CODE) {
             Log.i("ResultCode", resultCode + "");
         }
@@ -391,8 +395,8 @@ public class SettingsActivity extends PreferenceActivity
                     ExportExcel exportExcel = new ExportExcel(filename, SettingsActivity.this, api, exportDialog);
                 }
 
-            }else if(api.getSession().isLinked()){
-                Log.d("Linked","Session has already linked");
+            } else if (api.getSession().isLinked()) {
+                Log.d("Linked", "Session has already linked");
                 if (backup && !export) {
                     new BackupDropbox(api, SettingsActivity.this, dialog).execute();
                 } else if (!backup && !export) {
@@ -405,8 +409,6 @@ public class SettingsActivity extends PreferenceActivity
         }
 
     }
-
-
 
 
     @Override
@@ -544,7 +546,6 @@ public class SettingsActivity extends PreferenceActivity
         private boolean backup;
 
 
-
         public BackupRestoreDialog() {
         }
 
@@ -563,11 +564,11 @@ public class SettingsActivity extends PreferenceActivity
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
+
             dialog = new Dialog(getActivity());
             dialog.setContentView(R.layout.backup_dialog);
 
             backup = getArguments().getBoolean("backup");
-
 
 
             if (backup) dialog.setTitle("Backup Destination");
@@ -589,8 +590,10 @@ public class SettingsActivity extends PreferenceActivity
 
         private void init() {
             items = new ArrayList<>();
-            if(backup)items.add(new GridItem(BitmapFactory.decodeResource(getResources(), R.drawable.dropbox), "Add to Dropbox"));
-            else items.add(new GridItem(BitmapFactory.decodeResource(getResources(), R.drawable.dropbox), "Dropbox"));
+            if (backup)
+                items.add(new GridItem(BitmapFactory.decodeResource(getResources(), R.drawable.dropbox), "Add to Dropbox"));
+            else
+                items.add(new GridItem(BitmapFactory.decodeResource(getResources(), R.drawable.dropbox), "Dropbox"));
 
             items.add(new GridItem(BitmapFactory.decodeResource(getResources(), R.drawable.drive), "Google Drive"));
             items.add(new GridItem(BitmapFactory.decodeResource(getResources(), R.drawable.sd), "SD card"));
@@ -618,8 +621,8 @@ public class SettingsActivity extends PreferenceActivity
                             if (!accessToken.equals("-1")) {
                                 api.getSession().setOAuth2AccessToken(accessToken);
 
-                                ((SettingsActivity)getActivity() ).onResume();
-                               // listener.onLinked();
+                                ((SettingsActivity) getActivity()).onResume();
+                                // listener.onLinked();
                             } else {
                                 api.getSession().startOAuth2Authentication(getActivity());
                             }
@@ -667,7 +670,7 @@ public class SettingsActivity extends PreferenceActivity
 
                                 }
                             }
-
+                           dialog.dismiss();
 
                     }
 
@@ -751,7 +754,7 @@ public class SettingsActivity extends PreferenceActivity
                     if (!accessToken.equals("-1")) {
                         api.getSession().setOAuth2AccessToken(accessToken);
 
-                        ((SettingsActivity)getActivity() ).onResume();
+                        ((SettingsActivity) getActivity()).onResume();
 
                     } else {
                         api.getSession().startOAuth2Authentication(getActivity());
@@ -770,7 +773,7 @@ public class SettingsActivity extends PreferenceActivity
                     exportExcel = new ExportExcel(filename, getActivity());
                     exportExcel.exportExcelToSD();
                     dialog.dismiss();
-                    Toast.makeText(getActivity(),"Export was done successfully on the sd card.",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Export was done successfully on the sd card.", Toast.LENGTH_LONG).show();
                     break;
 
             }

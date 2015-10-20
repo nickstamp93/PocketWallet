@@ -1,5 +1,6 @@
 package com.ngngteam.pocketwallet.Utils;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.IntentSender;
 import android.database.Cursor;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -72,6 +74,12 @@ public class ExportExcel {
     private SettingsActivity activity;
     private GoogleApiClient client;
 
+    private ProgressDialog progressDialog;
+    private TextView tvCommand;
+
+
+
+
 
     public ExportExcel(String filename, Context context) {
         this.filename = filename;
@@ -100,6 +108,15 @@ public class ExportExcel {
         this.activity = act;
 
         init();
+
+        progressDialog = new ProgressDialog(act);
+        progressDialog.setCancelable(false);
+        progressDialog.setIndeterminate(false);
+        progressDialog.show();
+        progressDialog.setContentView(R.layout.custom_progress_bar);
+        tvCommand = (TextView) progressDialog.findViewById(R.id.tvCommand);
+        tvCommand.setText("Connecting..");
+
 
         client = new GoogleApiClient.Builder(context).addApi(Drive.API).addScope(Drive.SCOPE_FILE).addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
             @Override
@@ -227,6 +244,7 @@ public class ExportExcel {
                     exportExcelToDrive();
                     Log.i("Query", "fail");
                 }
+                progressDialog.dismiss();
 
             }
         });
@@ -535,6 +553,20 @@ public class ExportExcel {
 
     public class UploadExcelToDropBox extends AsyncTask<String, String, String> {
 
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(context);
+            progressDialog.setCancelable(false);
+            progressDialog.setIndeterminate(false);
+            progressDialog.show();
+            progressDialog.setContentView(R.layout.custom_progress_bar);
+            tvCommand = (TextView) progressDialog.findViewById(R.id.tvCommand);
+            tvCommand.setText("Uploading..");
+        }
+
         @Override
         protected String doInBackground(String... params) {
 
@@ -583,7 +615,7 @@ public class ExportExcel {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-
+            progressDialog.dismiss();
             api.getSession().unlink();
             Toast.makeText(context, "Export to DropBox was done successfully ", Toast.LENGTH_LONG).show();
         }

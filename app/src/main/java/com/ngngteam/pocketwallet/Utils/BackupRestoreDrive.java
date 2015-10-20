@@ -1,12 +1,14 @@
 package com.ngngteam.pocketwallet.Utils;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.IntentSender;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -28,6 +30,7 @@ import com.google.android.gms.drive.query.Filters;
 import com.google.android.gms.drive.query.Query;
 import com.google.android.gms.drive.query.SearchableField;
 import com.ngngteam.pocketwallet.Activities.SettingsActivity;
+import com.ngngteam.pocketwallet.R;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -48,11 +51,28 @@ public class BackupRestoreDrive {
     private final int TRANSACTIONS_CODE=2,CATEGORIES_CODE=3;
     private boolean backup;
 
+    private ProgressDialog progressDialog;
+    private TextView tvCommand;
+
+
+
     public BackupRestoreDrive(final Context context,SettingsActivity act, final boolean backup){
 
         this.context=context;
         this.activity=act;
         this.backup=backup;
+
+
+        progressDialog = new ProgressDialog(activity);
+        progressDialog.setCancelable(false);
+        progressDialog.setIndeterminate(false);
+
+        if(backup){
+            progressDialog.show();
+            progressDialog.setContentView(R.layout.custom_progress_bar);
+            tvCommand = (TextView) progressDialog.findViewById(R.id.tvCommand);
+            tvCommand.setText("Uploading..");
+        }
 
         client =new GoogleApiClient.Builder(context).addApi(Drive.API).addScope(Drive.SCOPE_FILE).addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
             @Override
@@ -195,35 +215,36 @@ public class BackupRestoreDrive {
                     Log.i("Query", "fail");
                 }
 
+
             }
         });
 
          key=new CustomPropertyKey("pocket_categories",CustomPropertyKey.PRIVATE);
          query=new Query.Builder().addFilter(Filters.and(Filters.eq(key, "pocket_categories"), Filters.eq(SearchableField.MIME_TYPE, "application/x-sqlite"), Filters.eq(SearchableField.TRASHED, false))).build();
          Drive.DriveApi.query(client, query).setResultCallback(new ResultCallback<DriveApi.MetadataBufferResult>() {
-            @Override
-            public void onResult(DriveApi.MetadataBufferResult metadataBufferResult) {
-                if(!metadataBufferResult.getStatus().isSuccess()){
-                    Log.i("File","No contents with this query");
-                    return;
-                }
+             @Override
+             public void onResult(DriveApi.MetadataBufferResult metadataBufferResult) {
+                 if (!metadataBufferResult.getStatus().isSuccess()) {
+                     Log.i("File", "No contents with this query");
+                     return;
+                 }
 
-                MetadataBuffer mbuffer=metadataBufferResult.getMetadataBuffer();
-                if(mbuffer.getCount() > 0){
-                    Log.i("Query","Success");
-                    Metadata metadata=mbuffer.get(0);
-                    String fileID=metadata.getDriveId().encodeToString();
-                    Drive.DriveApi.getFile(client,DriveId.decodeFromString(fileID)).delete(client);
-                    saveCategoriesDBToDrive();
+                 MetadataBuffer mbuffer = metadataBufferResult.getMetadataBuffer();
+                 if (mbuffer.getCount() > 0) {
+                     Log.i("Query", "Success");
+                     Metadata metadata = mbuffer.get(0);
+                     String fileID = metadata.getDriveId().encodeToString();
+                     Drive.DriveApi.getFile(client, DriveId.decodeFromString(fileID)).delete(client);
+                     saveCategoriesDBToDrive();
 
-                }else{
-                    saveCategoriesDBToDrive();
-                    Log.i("Query", "fail");
-                }
+                 } else {
+                     saveCategoriesDBToDrive();
+                     Log.i("Query", "fail");
+                 }
 
+                 progressDialog.dismiss();
             }
         });
-
 
 
     }
@@ -524,14 +545,17 @@ public class BackupRestoreDrive {
 
         boolean restore;
 
-
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
 
             saveIDOfTransactionsDriveFile();
             saveIDOfCategoriesDriveFile();
+
+            progressDialog.show();
+            progressDialog.setContentView(R.layout.custom_progress_bar);
+            tvCommand = (TextView) progressDialog.findViewById(R.id.tvCommand);
+            tvCommand.setText("Downloading..");
 
         }
 
@@ -563,6 +587,7 @@ public class BackupRestoreDrive {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            progressDialog.dismiss();
             if(restore){
                 Toast.makeText(context,"Restore performed successfully",Toast.LENGTH_LONG).show();
             }else{

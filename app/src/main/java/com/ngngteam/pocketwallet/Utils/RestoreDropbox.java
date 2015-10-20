@@ -1,31 +1,38 @@
 package com.ngngteam.pocketwallet.Utils;
 
+
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Environment;
-import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
-
 import com.dropbox.client2.DropboxAPI;
 import com.dropbox.client2.android.AndroidAuthSession;
 import com.dropbox.client2.exception.DropboxException;
-import com.dropbox.client2.exception.DropboxServerException;
 import com.ngngteam.pocketwallet.Activities.SettingsActivity;
+import com.ngngteam.pocketwallet.R;
+
+
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+
 /**
  * Created by Nick Zisis on 03-Oct-15.
  * Class RestoreDropbox perform a restore on Money and Categories Database that is saved on Dropbox.
  */
-public class RestoreDropbox extends AsyncTask<String, String, String> {
+public class RestoreDropbox extends AsyncTask<String, Integer, String> {
 
     private DropboxAPI<AndroidAuthSession> api;
     private Context context;
     private boolean exists;
+
+    private ProgressDialog progressDialog;
+    private TextView tvCommand;
 
 
     public RestoreDropbox(DropboxAPI<AndroidAuthSession> api, Context context, SettingsActivity.BackupRestoreDialog dialog) {
@@ -33,8 +40,22 @@ public class RestoreDropbox extends AsyncTask<String, String, String> {
         this.context = context;
         exists = true;
 
+
         dialog.dismiss();
 
+    }
+
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setCancelable(false);
+        progressDialog.setIndeterminate(false);
+        progressDialog.show();
+        progressDialog.setContentView(R.layout.custom_progress_bar);
+        tvCommand = (TextView) progressDialog.findViewById(R.id.tvCommand);
+        tvCommand.setText("Downloading..");
     }
 
     @Override
@@ -48,21 +69,24 @@ public class RestoreDropbox extends AsyncTask<String, String, String> {
             OutputStream MoneyOutput = new FileOutputStream(Environment.getDataDirectory() + MoneyDBpath);
             OutputStream CategoriesOutput = new FileOutputStream(Environment.getDataDirectory() + CategoriesDBpath);
 
+
             DropboxAPI.DropboxInputStream input = api.getFileStream("TransactionsBackup", null);
             DropboxAPI.DropboxInputStream Cinput = api.getFileStream("CategoriesBackup", null);
-
-            //input.
 
 
             byte[] buffer = new byte[1024];
             int size;
+
+
             while ((size = input.read(buffer)) > 0) {
                 MoneyOutput.write(buffer, 0, size);
+
             }
 
             MoneyOutput.flush();
             MoneyOutput.close();
             input.close();
+
 
             buffer = new byte[1024];
             while ((size = Cinput.read(buffer)) > 0) {
@@ -77,11 +101,14 @@ public class RestoreDropbox extends AsyncTask<String, String, String> {
         } catch (DropboxException e) {
             e.printStackTrace();
             exists = false;
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             exists = false;
+
         } catch (IOException e) {
             e.printStackTrace();
+
         }
 
 
@@ -92,6 +119,7 @@ public class RestoreDropbox extends AsyncTask<String, String, String> {
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
 
+        progressDialog.dismiss();
         api.getSession().unlink();
         if (exists) {
             Toast.makeText(context, "Restore was done successfully to your device", Toast.LENGTH_LONG).show();

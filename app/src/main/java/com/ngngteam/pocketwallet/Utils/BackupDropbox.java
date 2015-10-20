@@ -52,7 +52,7 @@ public class BackupDropbox extends AsyncTask<String,String,String> {
         progressDialog.show();
         progressDialog.setContentView(R.layout.custom_progress_bar);
         tvCommand = (TextView) progressDialog.findViewById(R.id.tvCommand);
-        tvCommand.setText("Uploading..");
+        tvCommand.setText(context.getString(R.string.uploading));
     }
 
     /**
@@ -142,6 +142,6 @@ public class BackupDropbox extends AsyncTask<String,String,String> {
         super.onPostExecute(s);
         progressDialog.dismiss();
         api.getSession().unlink();
-        Toast.makeText(context,"Backup was done successfully on Dropbox",Toast.LENGTH_LONG).show();
+        Toast.makeText(context,context.getString(R.string.dropbox_backup),Toast.LENGTH_LONG).show();
     }
 }

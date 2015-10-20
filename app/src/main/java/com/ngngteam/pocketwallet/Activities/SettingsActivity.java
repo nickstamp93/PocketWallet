@@ -350,11 +350,9 @@ public class SettingsActivity extends PreferenceActivity
             drive.saveIDOfTransactionsDriveFile();
         } else if (requestCode == CATEGORIES_CODE && resultCode == RESULT_OK) {
             drive.saveIDOfCategoriesDriveFile();
-            Toast.makeText(SettingsActivity.this, "Backup was uploaded successfully to your Google Drive", Toast.LENGTH_LONG).show();
+            Toast.makeText(SettingsActivity.this, getResources().getString(R.string.drive_backup), Toast.LENGTH_LONG).show();
         } else if (requestCode == EXPORT_CODE && resultCode == RESULT_OK) {
-            Toast.makeText(SettingsActivity.this, "Excel was exported successfully to your Google Drive", Toast.LENGTH_LONG).show();
-        } else if (requestCode == EXPORT_CODE) {
-            Log.i("ResultCode", resultCode + "");
+            Toast.makeText(SettingsActivity.this, getResources().getString(R.string.drive_export), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -571,8 +569,8 @@ public class SettingsActivity extends PreferenceActivity
             backup = getArguments().getBoolean("backup");
 
 
-            if (backup) dialog.setTitle("Backup Destination");
-            else dialog.setTitle("Restore");
+            if (backup) dialog.setTitle(getActivity().getResources().getString(R.string.destination));
+            else dialog.setTitle(getActivity().getResources().getString(R.string.restore));
 
 
             initUI();
@@ -622,7 +620,7 @@ public class SettingsActivity extends PreferenceActivity
                                 api.getSession().setOAuth2AccessToken(accessToken);
 
                                 ((SettingsActivity) getActivity()).onResume();
-                                // listener.onLinked();
+
                             } else {
                                 api.getSession().startOAuth2Authentication(getActivity());
                             }
@@ -649,7 +647,7 @@ public class SettingsActivity extends PreferenceActivity
 
 
                                 if (MoneySuccess && CategorySuccess) {
-                                    Toast.makeText(getActivity(), "Backup Done Succesfully!", Toast.LENGTH_LONG)
+                                    Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.sd_backup), Toast.LENGTH_LONG)
                                             .show();
 
                                 }
@@ -665,7 +663,7 @@ public class SettingsActivity extends PreferenceActivity
                                 boolean CategorySuccess = backupRestoreSD.restore();
 
                                 if (MoneySuccess && CategorySuccess) {
-                                    Toast.makeText(getActivity(), "Restore Done Succesfully!", Toast.LENGTH_LONG)
+                                    Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.sd_restore), Toast.LENGTH_LONG)
                                             .show();
 
                                 }
@@ -707,7 +705,7 @@ public class SettingsActivity extends PreferenceActivity
             dialog.setContentView(R.layout.export_dialog);
 
 
-            dialog.setTitle("Spreadsheet export");
+            dialog.setTitle(getActivity().getResources().getString(R.string.export));
 
             init();
             initUI();
@@ -773,7 +771,7 @@ public class SettingsActivity extends PreferenceActivity
                     exportExcel = new ExportExcel(filename, getActivity());
                     exportExcel.exportExcelToSD();
                     dialog.dismiss();
-                    Toast.makeText(getActivity(), "Export was done successfully on the sd card.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.sd_export), Toast.LENGTH_LONG).show();
                     break;
 
             }

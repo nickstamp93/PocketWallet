@@ -238,4 +238,25 @@
     <string name="text_tomorrow">Άυριο</string>
     <string name="textview_headline_budget">Οριο Εξόδων</string>
 
+    <!-- Backup/Restore -->
+    <string name="destination">Προορισμός Αντιγράφου Ασφαλείας</string>
+    <string name="restore">Επαναφορά Δεδομένων</string>
+    <string name="uploading">Ανεβαίνει..</string>
+    <string name="connecting">Συνδέεται..</string>
+    <string name="downloading">Κατεβαίνει..</string>
+    <string name="dropbox_backup">Η δημιουργία αντιγράφου ασφαλείας στο Dropbox πραγματοποιήθηκε με επιτυχία</string>
+    <string name="no_dropbox_backup">Δεν βρέθηκε αντίγραφο ασφαλείας στο Dropbox</string>
+    <string name="drive_backup">Η δημιουργία αντιγράφου ασφαλείας στο Google Drive πραγματοποιήθηκε με επιτυχία</string>
+    <string name="no_drive_backup">Δεν βρέθηκε αντίγραφο ασφαλείας στο Google Drive</string>
+    <string name="sd_backup">Η δημιουργία αντιγράφου ασφαλείας στην SD κάρτα πραγματοποιήθηκε με επιτυχία</string>
+    <string name="dropbox_restore">Η επαναφορά δεδομένων από το Dropbox πραγματοποιήθηκε με επιτυχία στην συσκευή σας</string>
+    <string name="drive_restore">Η επαναφορά δεδομένων από το Google Drive πραγματοποιήθηκε με επιτυχία στην συσκευή σας</string>
+    <string name="sd_restore">Η επαναφορά δεδομένων από την SD κάρτα πραγματοποιήθηκε με επιτυχία στην συσκευή σας</string>
+
+    <!-- Export -->
+    <string name="export">Εξαγωγή Excel αρχείου</string>
+    <string name="dropbox_export">Η εξαγωγή excel αρχείου στο Dropbox πραγματοποιήθηκε με επιτυχία</string>
+    <string name="drive_export">Η εξαγωγή excel αρχείου στο Google Drive πραγματοποιήθηκε με επιτυχία</string>
+    <string name="sd_export">Η εξαγωγή excel αρχείου στην  SD κάρτα πραγματοποιήθηκε με επιτυχία</string>
+
 </resources>

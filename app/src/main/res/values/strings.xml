@@ -29,7 +29,7 @@
     <!--dialog titles-->
     <string name="dialog_title_categories">Categories</string>
     <string name="dialog_title_currency">Currency</string>
-    <string name="dialog_title_price">Price Orde</string>
+    <string name="dialog_title_price">Price Order</string>
     <string name="dialog_title_amount">Amount order</string>
     <string name="dialog_title_about">About Us</string>
     <string name="dialog_title_caution">Caution</string>
@@ -239,6 +239,29 @@
     <string name="title_activity_add_recurrent">AddRecurrentActivity</string>
     <string name="text_tomorrow">Tomorrow</string>
     <string name="textview_headline_budget">Budget Limit</string>
+
+    <!-- Backup/Restore -->
+    <string name="destination">Backup Destination</string>
+    <string name="restore">Restore</string>
+    <string name="uploading">Uploading..</string>
+    <string name="connecting">Connecting..</string>
+    <string name="downloading">Downloading..</string>
+    <string name="dropbox_backup">Backup was uploaded successfully to your Dropbox</string>
+    <string name="no_dropbox_backup">No backup found on Dropbox</string>
+    <string name="drive_backup">Backup was uploaded successfully to your Google Drive</string>
+    <string name="no_drive_backup">No backup found on Google Drive</string>
+    <string name="sd_backup">Backup was done successfully to your SD card</string>
+    <string name="dropbox_restore">Restore from Dropbox was executed successfully in your device</string>
+    <string name="drive_restore">Restore from Google Drive was executed successfully in your device</string>
+    <string name="sd_restore">Restore from SD card was executed successfully in your device</string>
+
+    <!-- Export -->
+    <string name="export">Spreadsheet export</string>
+    <string name="dropbox_export">Spreadsheet export to DropBox was executed successfully</string>
+    <string name="drive_export">Spreadsheet export to Google Drive was executed successfully</string>
+    <string name="sd_export">Spreadsheet export to SD card was executed successfully</string>
+
+
 
 
 </resources>

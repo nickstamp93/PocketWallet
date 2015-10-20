@@ -55,7 +55,7 @@ public class RestoreDropbox extends AsyncTask<String, Integer, String> {
         progressDialog.show();
         progressDialog.setContentView(R.layout.custom_progress_bar);
         tvCommand = (TextView) progressDialog.findViewById(R.id.tvCommand);
-        tvCommand.setText("Downloading..");
+        tvCommand.setText(context.getResources().getString(R.string.downloading));
     }
 
     @Override
@@ -122,9 +122,9 @@ public class RestoreDropbox extends AsyncTask<String, Integer, String> {
         progressDialog.dismiss();
         api.getSession().unlink();
         if (exists) {
-            Toast.makeText(context, "Restore was done successfully to your device", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, context.getResources().getString(R.string.dropbox_restore), Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(context, "No backup found on Dropbox", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, context.getResources().getString(R.string.no_dropbox_backup), Toast.LENGTH_LONG).show();
         }
     }
 

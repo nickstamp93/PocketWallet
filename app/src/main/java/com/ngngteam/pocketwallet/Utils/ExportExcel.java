@@ -115,7 +115,7 @@ public class ExportExcel {
         progressDialog.show();
         progressDialog.setContentView(R.layout.custom_progress_bar);
         tvCommand = (TextView) progressDialog.findViewById(R.id.tvCommand);
-        tvCommand.setText("Connecting..");
+        tvCommand.setText(context.getResources().getString(R.string.connecting));
 
 
         client = new GoogleApiClient.Builder(context).addApi(Drive.API).addScope(Drive.SCOPE_FILE).addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
@@ -564,7 +564,7 @@ public class ExportExcel {
             progressDialog.show();
             progressDialog.setContentView(R.layout.custom_progress_bar);
             tvCommand = (TextView) progressDialog.findViewById(R.id.tvCommand);
-            tvCommand.setText("Uploading..");
+            tvCommand.setText(context.getResources().getString(R.string.uploading));
         }
 
         @Override
@@ -617,7 +617,7 @@ public class ExportExcel {
             super.onPostExecute(s);
             progressDialog.dismiss();
             api.getSession().unlink();
-            Toast.makeText(context, "Export to DropBox was done successfully ", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, context.getResources().getString(R.string.dropbox_export), Toast.LENGTH_LONG).show();
         }
     }
 

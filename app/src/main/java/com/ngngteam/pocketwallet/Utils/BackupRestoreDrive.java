@@ -71,7 +71,7 @@ public class BackupRestoreDrive {
             progressDialog.show();
             progressDialog.setContentView(R.layout.custom_progress_bar);
             tvCommand = (TextView) progressDialog.findViewById(R.id.tvCommand);
-            tvCommand.setText("Uploading..");
+            tvCommand.setText(activity.getResources().getString(R.string.connecting));
         }
 
         client =new GoogleApiClient.Builder(context).addApi(Drive.API).addScope(Drive.SCOPE_FILE).addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
@@ -555,7 +555,7 @@ public class BackupRestoreDrive {
             progressDialog.show();
             progressDialog.setContentView(R.layout.custom_progress_bar);
             tvCommand = (TextView) progressDialog.findViewById(R.id.tvCommand);
-            tvCommand.setText("Downloading..");
+            tvCommand.setText(context.getResources().getString(R.string.downloading));
 
         }
 
@@ -589,9 +589,9 @@ public class BackupRestoreDrive {
             super.onPostExecute(aVoid);
             progressDialog.dismiss();
             if(restore){
-                Toast.makeText(context,"Restore performed successfully",Toast.LENGTH_LONG).show();
+                Toast.makeText(context,context.getResources().getString(R.string.drive_restore),Toast.LENGTH_LONG).show();
             }else{
-                Toast.makeText(context,"No backup found in Google Drive",Toast.LENGTH_LONG).show();
+                Toast.makeText(context,context.getResources().getString(R.string.no_drive_backup),Toast.LENGTH_LONG).show();
             }
         }
     }

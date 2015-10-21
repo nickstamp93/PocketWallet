@@ -634,12 +634,12 @@ public class SettingsActivity extends PreferenceActivity
                         case 2:
                             if (backup) {
                                 String MoneyDBpath = "/data/" + getActivity().getPackageName() + "/databases/MoneyDatabase";
-                                String MoneyOutputName = "/MoneyDatabase";
+                                String MoneyOutputName = "/TransactionsBackup";
                                 BackupRestoreSD backupRestoreSD = new BackupRestoreSD(MoneyDBpath, MoneyOutputName, getActivity());
                                 boolean MoneySuccess = backupRestoreSD.backup();
 
                                 String CategoriesDBpath = "/data/" + getActivity().getPackageName() + "/databases/categories";
-                                String CategoriesOutputName = "/CategoryDatabase";
+                                String CategoriesOutputName = "/CategoriesBackup";
 
 
                                 backupRestoreSD = new BackupRestoreSD(CategoriesDBpath, CategoriesOutputName, getActivity());
@@ -653,12 +653,12 @@ public class SettingsActivity extends PreferenceActivity
                                 }
                             } else {
                                 String MoneyDBpath = "/data/" + getActivity().getPackageName() + "/databases/MoneyDatabase";
-                                String MoneyOutputName = "/MoneyDatabase";
+                                String MoneyOutputName = "/TransactionsBackup";
                                 BackupRestoreSD backupRestoreSD = new BackupRestoreSD(MoneyDBpath, MoneyOutputName, getActivity());
                                 boolean MoneySuccess = backupRestoreSD.restore();
 
                                 String CategoriesDBpath = "/data/" + getActivity().getPackageName() + "/databases/categories";
-                                String CategoriesOutputName = "/CategoryDatabase";
+                                String CategoriesOutputName = "/CategoriesBackup";
                                 backupRestoreSD = new BackupRestoreSD(CategoriesDBpath, CategoriesOutputName, getActivity());
                                 boolean CategorySuccess = backupRestoreSD.restore();
 

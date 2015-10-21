@@ -42,7 +42,7 @@ public class BackupRestoreSD {
             input = new FileInputStream(Environment.getDataDirectory() + DBPath);
             //Set the output folder on the SD card
 
-            File directory = new File(SDPath + "/Cash");
+            File directory = new File(SDPath + "/Pocket-Wallet");
             //If this directory doesn't exist create it
             if (!directory.exists()) {
                 directory.mkdir();
@@ -82,7 +82,7 @@ public class BackupRestoreSD {
             output = new FileOutputStream(Environment.getDataDirectory() + DBPath);
 
 
-            File directory = new File(SDPath + "/Cash");
+            File directory = new File(SDPath + "/Pocket-Wallet");
 
 
             input = new FileInputStream(directory.getPath() + outputName);

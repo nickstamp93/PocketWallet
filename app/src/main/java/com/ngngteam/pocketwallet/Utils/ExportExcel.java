@@ -265,7 +265,7 @@ public class ExportExcel {
     public void exportExcelToSD() {
 
         File sdCard = Environment.getExternalStorageDirectory();
-        File directory = new File(sdCard.getAbsolutePath());
+        File directory = new File(sdCard.getAbsolutePath()+"/Pocket-Wallet");
 
         if (!directory.isDirectory()) {
             directory.mkdirs();
@@ -572,7 +572,7 @@ public class ExportExcel {
 
             exportExcelToSD();
             File sdCard = Environment.getExternalStorageDirectory();
-            File file = new File(sdCard.getAbsolutePath() + "/" + filename);
+            File file = new File(sdCard.getAbsolutePath() + "/Pocket-Wallet/" + filename);
 
             try {
                 InputStream inputStream = new FileInputStream(file);

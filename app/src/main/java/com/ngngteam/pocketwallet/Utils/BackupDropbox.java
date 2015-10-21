@@ -66,19 +66,19 @@ public class BackupDropbox extends AsyncTask<String,String,String> {
     protected String doInBackground(String... params) {
 
         String MoneyDBpath = "/data/" +context.getPackageName() + "/databases/MoneyDatabase";
-        String MoneyOutputName = "/MoneyDatabase";
+        String MoneyOutputName = "/TransactionsBackup";
         BackupRestoreSD backupRestoreSD = new BackupRestoreSD(MoneyDBpath, MoneyOutputName, context);
         backupRestoreSD.backup();
 
-        File MoneyBackup = new File(backupRestoreSD.getSDPath() + "/Cash/MoneyDatabase");
+        File MoneyBackup = new File(backupRestoreSD.getSDPath() + "/Pocket-Wallet/TransactionsBackup");
 
         String CategoriesDBpath = "/data/" + context.getPackageName() + "/databases/categories";
-        String CategoriesOutputName = "/CategoryDatabase";
+        String CategoriesOutputName = "/CategoriesBackup";
         backupRestoreSD = new BackupRestoreSD(CategoriesDBpath, CategoriesOutputName, context);
         backupRestoreSD.backup();
 
 
-        File CategoryBackup = new File(backupRestoreSD.getSDPath() + "/Cash/CategoryDatabase");
+        File CategoryBackup = new File(backupRestoreSD.getSDPath() + "/Pocket-Wallet/CategoriesBackup");
 
         try {
 

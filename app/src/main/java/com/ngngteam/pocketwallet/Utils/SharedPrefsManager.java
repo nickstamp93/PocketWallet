@@ -88,7 +88,7 @@ public class SharedPrefsManager {
     }
 
     public float getPrefsBudget() {
-        return prefs.getFloat(PREFS_BUDGET, 0);
+        return prefs.getFloat(PREFS_BUDGET, 500);
     }
 
     public float getPrefsBalance() {

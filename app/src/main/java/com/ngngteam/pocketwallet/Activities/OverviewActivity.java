@@ -326,6 +326,7 @@ public class OverviewActivity extends AppCompatActivity {
             totalExpenses = mdb.getDailyTotal(true);
             totalIncomes = mdb.getDailyTotal(false);
         } else {
+            tvBudgetMessage.setVisibility(View.GONE);
             totalExpenses = mdb.getTotal(true);
             totalIncomes = mdb.getTotal(false);
         }
@@ -339,9 +340,7 @@ public class OverviewActivity extends AppCompatActivity {
 
         double budget = manager.getPrefsBudget();
         double dif;
-        if(budget == totalExpenses){
-            tvBudgetMessage.setVisibility(View.GONE);
-        }else if (budget < totalExpenses) {
+        if (budget < totalExpenses) {
             dif = totalExpenses - budget;
             tvBudgetMessage.setText(dif + " " + profile.getCurrency() + " below budget");
             tvBudgetMessage.setTextColor(getResources().getColor(R.color.red));
@@ -350,9 +349,6 @@ public class OverviewActivity extends AppCompatActivity {
             tvBudgetMessage.setText(dif + " " + profile.getCurrency() + " until you reach your budget limit");
         }
 
-//        if(manager.getPrefsGrouping().equalsIgnoreCase(getResources().getString(R.string.pref_grouping_none))){
-//            balance += profile.getSavings();
-//        }
         double savings = mdb.getTotal(false) - mdb.getTotal(true) - balance + profile.getSavings();
 
         //round to 2 decimal digits

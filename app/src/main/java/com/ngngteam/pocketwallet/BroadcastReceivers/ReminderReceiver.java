@@ -36,6 +36,7 @@ public class ReminderReceiver extends BroadcastReceiver {
             PendingIntent pendingNotificationIntent = PendingIntent.getActivity(context, 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
             notification.flags |= Notification.FLAG_AUTO_CANCEL;
 
+
             //add the notification details
             notification.setLatestEventInfo(context, context.getResources().getString(R.string.app_name), context.getResources().getString(R.string.text_reminder_content), pendingNotificationIntent);
 

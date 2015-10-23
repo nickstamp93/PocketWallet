@@ -300,13 +300,10 @@
     <!-- The navigation drawer -->
     <ListView
         android:id="@+id/nav_drawer"
-        android:layout_width="240dp"
+        android:layout_width="280dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@drawable/ab_solid_appcompat_custom_light"
-        android:choiceMode="singleChoice"
-        android:divider="@drawable/line_seperator_solid"
-        android:dividerHeight="1dp"
-        android:padding="5dp" />
+        android:choiceMode="singleChoice"/>
 
 </android.support.v4.widget.DrawerLayout>

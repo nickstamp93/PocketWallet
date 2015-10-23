@@ -36,7 +36,6 @@ public class DeviceBootReceiver extends BroadcastReceiver {
 
         RecurrentUtils.startRecurrentService(context);
 
-        Log.i("nikos", "alarm set");
 
     }
 }

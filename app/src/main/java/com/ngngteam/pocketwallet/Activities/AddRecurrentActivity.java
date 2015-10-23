@@ -3,10 +3,9 @@ package com.ngngteam.pocketwallet.Activities;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.text.format.DateUtils;
 import android.text.format.Time;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,7 +40,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 public class AddRecurrentActivity extends AppCompatActivity implements NumberPickerDialogFragment.NumberPickerDialogHandler
         , CalendarDatePickerDialog.OnDateSetListener, RecurrencePickerDialog.OnRecurrenceSetListener {
@@ -450,6 +448,11 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_menu_toggle) {
+            if (isExpense)
+                item.setTitle(getString(R.string.action_expense));
+            else
+                item.setTitle(getString(R.string.action_income));
+
             isExpense = !isExpense;
             populateSpinnerCategories();
         }

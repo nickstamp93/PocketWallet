@@ -31,7 +31,6 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
         if (action != null) {
             //insert into db , one regular transaction
             //and update the next date for the recurrent
-            Log.i("nikos", "done " + id);
             item.addOneTransaction(context);
             db.updateRecurrent(item);
 
@@ -39,7 +38,6 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
             //cancel
             //do nothing , the nextDate remains the same , it will be
             //displayed until it is done
-            Log.i("nikos", "cancel " + id);
         }
         db.close();
 

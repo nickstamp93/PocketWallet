@@ -7,8 +7,6 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
-import android.text.format.DateUtils;
-import android.util.Log;
 
 import com.ngngteam.pocketwallet.Activities.RecurrentTransactionsActivity;
 import com.ngngteam.pocketwallet.BroadcastReceivers.NotificationBroadcastReceiver;
@@ -16,12 +14,6 @@ import com.ngngteam.pocketwallet.Data.MoneyDatabase;
 import com.ngngteam.pocketwallet.Model.RecurrentTransaction;
 import com.ngngteam.pocketwallet.R;
 import com.ngngteam.pocketwallet.Utils.MyDateUtils;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.prefs.PreferenceChangeEvent;
 
 /**
  * Created by nickstamp on 7/22/2015.
@@ -50,7 +42,6 @@ public class RecurrentTransactionsService extends IntentService {
 
         //open db
         MoneyDatabase db = new MoneyDatabase(this);
-        Log.i("nikos", "Today:" + db.getRecurrentsNotification().size() + " transactions");
         //for every transaction that is set for today or for a previous date and is not done
         for (RecurrentTransaction t : db.getRecurrentsNotification()) {
             //create a notification

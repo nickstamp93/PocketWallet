@@ -4,8 +4,7 @@
     tools:context="com.ngngteam.pocketwallet.Activities.AddRecurrentActivity">
     <item
         android:id="@+id/action_menu_toggle"
-        android:icon="@android:drawable/ic_menu_recent_history"
         android:orderInCategory="10"
-        android:title="@string/action_delete"
+        android:title="@string/action_income"
         app:showAsAction="always" />
 </menu>

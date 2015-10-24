@@ -49,31 +49,31 @@ public class DrawerAdapter extends ArrayAdapter<String> {
         switch (position) {
 
             case 0:
-                holder.ivActivity.setImageResource(R.drawable.ic_action_database);
+                holder.ivActivity.setImageResource(R.drawable.ic_history);
                 break;
             case 1:
-                holder.ivActivity.setImageResource(android.R.drawable.ic_menu_rotate);
+                holder.ivActivity.setImageResource(R.drawable.ic_repeat);
                 break;
             case 2:
-                holder.ivActivity.setImageResource(R.drawable.ic_action_creditcard);
+                holder.ivActivity.setImageResource(R.drawable.ic_card);
                 break;
             case 3:
-                holder.ivActivity.setImageResource(R.drawable.ic_action_cart);
+                holder.ivActivity.setImageResource(R.drawable.ic_shop);
                 break;
             case 4:
-                holder.ivActivity.setImageResource(R.drawable.ic_action_pie_chart);
+                holder.ivActivity.setImageResource(R.drawable.ic_pie);
                 break;
             case 5:
-                holder.ivActivity.setImageResource(R.drawable.ic_action_bargraph);
+                holder.ivActivity.setImageResource(R.drawable.ic_bars);
                 break;
             case 6:
-                holder.ivActivity.setImageResource(R.drawable.ic_action_tiles_large);
+                holder.ivActivity.setImageResource(R.drawable.ic_categories);
                 break;
             case 7:
-                holder.ivActivity.setImageResource(R.drawable.ic_action_gear);
+                holder.ivActivity.setImageResource(R.drawable.ic_settings);
                 break;
             case 8:
-                holder.ivActivity.setImageResource(R.drawable.ic_action_exit);
+                holder.ivActivity.setImageResource(R.drawable.ic_exit);
                 break;
 
         }
@@ -102,31 +102,31 @@ public class DrawerAdapter extends ArrayAdapter<String> {
         switch (position) {
 
             case 0:
-                holder.ivActivity.setImageResource(R.drawable.ic_action_database);
+                holder.ivActivity.setImageResource(R.drawable.ic_history);
                 break;
             case 1:
-                holder.ivActivity.setImageResource(android.R.drawable.ic_menu_rotate);
+                holder.ivActivity.setImageResource(R.drawable.ic_repeat);
                 break;
             case 2:
-                holder.ivActivity.setImageResource(R.drawable.ic_action_creditcard);
+                holder.ivActivity.setImageResource(R.drawable.ic_card);
                 break;
             case 3:
-                holder.ivActivity.setImageResource(R.drawable.ic_action_cart);
+                holder.ivActivity.setImageResource(R.drawable.ic_shop);
                 break;
             case 4:
-                holder.ivActivity.setImageResource(R.drawable.ic_action_pie_chart);
+                holder.ivActivity.setImageResource(R.drawable.ic_pie);
                 break;
             case 5:
-                holder.ivActivity.setImageResource(R.drawable.ic_action_bargraph);
+                holder.ivActivity.setImageResource(R.drawable.ic_bars);
                 break;
             case 6:
-                holder.ivActivity.setImageResource(R.drawable.ic_action_tiles_large);
+                holder.ivActivity.setImageResource(R.drawable.ic_categories);
                 break;
             case 7:
-                holder.ivActivity.setImageResource(R.drawable.ic_action_gear);
+                holder.ivActivity.setImageResource(R.drawable.ic_settings);
                 break;
             case 8:
-                holder.ivActivity.setImageResource(R.drawable.ic_action_exit);
+                holder.ivActivity.setImageResource(R.drawable.ic_exit);
                 break;
 
 

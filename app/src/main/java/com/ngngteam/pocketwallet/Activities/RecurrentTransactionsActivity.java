@@ -3,22 +3,16 @@ package com.ngngteam.pocketwallet.Activities;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.widget.CursorAdapter;
-import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
 import com.ngngteam.pocketwallet.Data.CategoryDatabase;
@@ -121,28 +115,6 @@ public class RecurrentTransactionsActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_recurrent_transactions, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     //inner class , implementation of our custom cursor adapter
     class CustomCursorAdapter extends CursorAdapter {
 
@@ -226,7 +198,7 @@ public class RecurrentTransactionsActivity extends AppCompatActivity {
     }
 
     //method to return a string based on the days left between today and the next date of each item
-    private String daysToEvent(String nextDate, String expiration , int isValid) {
+    private String daysToEvent(String nextDate, String expiration, int isValid) {
 
         try {
             Date nDate = new SimpleDateFormat("yyyy-MM-dd").parse(nextDate);
@@ -254,8 +226,8 @@ public class RecurrentTransactionsActivity extends AppCompatActivity {
                         return "Completed " + event + "/" + total;
                     }
                     returnString = "Event " + (event + 1) + "/" + total + "\n";
-                }else if(expiration.split(":")[0].equalsIgnoreCase("date")){
-                    if(isValid == 0){
+                } else if (expiration.split(":")[0].equalsIgnoreCase("date")) {
+                    if (isValid == 0) {
                         return "Completed";
                     }
                 }

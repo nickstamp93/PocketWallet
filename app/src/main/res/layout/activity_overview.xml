@@ -303,6 +303,9 @@
         android:layout_width="280dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:paddingTop="8dp"
+        android:paddingBottom="16dp"
+        android:divider="@android:color/transparent"
         android:background="@drawable/ab_solid_appcompat_custom_light"
         android:choiceMode="singleChoice"/>
 

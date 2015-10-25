@@ -23,7 +23,7 @@ import java.util.Date;
  */
 public class MoneyDatabase extends SQLiteOpenHelper {
 
-    private static final int Database_Version = 2;
+    private static final int Database_Version = 3;
     private static final String Database_Name = "MoneyDatabase";
 
     private static final String Table_Expense = "Expense";
@@ -93,6 +93,8 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         switch (oldVersion) {
             case 1:
                 sqLiteDatabase.execSQL("ALTER TABLE " + Table_Income + " ADD COLUMN " + Key_INotes + " TEXT");
+            case 2:
+                sqLiteDatabase.execSQL(Create_Expense_Recurrent);
         }
 
         onCreate(sqLiteDatabase);

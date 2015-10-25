@@ -233,11 +233,12 @@ public class RecurrentTransactionsActivity extends AppCompatActivity {
                 }
             }
 
-            if (elapsedDays == 0)
+            if (elapsedDays == 0) {
                 return returnString + "Today";
-            if (elapsedDays == 1)
+            }
+            if (elapsedDays == 1) {
                 return returnString + "Tomorrow";
-
+            }
             if (nDate.before(today)) {
                 return -elapsedDays + " days ago";
             }

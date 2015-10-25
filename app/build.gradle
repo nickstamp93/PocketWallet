@@ -10,7 +10,6 @@ android {
         targetSdkVersion 23
         versionCode 6
         versionName "1.2.0"
-      //  multiDexEnabled true
 
     }
     buildTypes {

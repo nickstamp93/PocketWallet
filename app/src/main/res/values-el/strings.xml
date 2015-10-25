@@ -258,5 +258,7 @@
     <string name="dropbox_export">Η εξαγωγή excel αρχείου στο Dropbox πραγματοποιήθηκε με επιτυχία</string>
     <string name="drive_export">Η εξαγωγή excel αρχείου στο Google Drive πραγματοποιήθηκε με επιτυχία</string>
     <string name="sd_export">Η εξαγωγή excel αρχείου στην  SD κάρτα πραγματοποιήθηκε με επιτυχία</string>
+    <string name="title_activity_add_recurrent">Νεα Περιοδικι Συναλλαγη</string>
+    <string name="title_activity_recurrent_transactions">Περιοδικες Συναλλαγες</string>
 
 </resources>

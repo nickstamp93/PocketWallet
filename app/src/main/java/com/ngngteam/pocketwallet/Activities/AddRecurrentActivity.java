@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.Time;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -399,32 +398,9 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
             etDate.setText(getString(R.string.text_tomorrow));
 
         } else {
-
+            etDate.setText(date);
         }
 
-        /*try {
-            Calendar today = Calendar.getInstance();
-
-            Calendar yesterday = Calendar.getInstance();
-            yesterday.add(Calendar.DAY_OF_YEAR, -1);
-
-            Calendar itemDate = Calendar.getInstance();
-            itemDate.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(date));
-
-            boolean isToday = today.get(Calendar.YEAR) == itemDate.get(Calendar.YEAR) &&
-                    today.get(Calendar.DAY_OF_YEAR) == itemDate.get(Calendar.DAY_OF_YEAR);
-
-            boolean isYesterday = yesterday.get(Calendar.YEAR) == itemDate.get(Calendar.YEAR) &&
-                    yesterday.get(Calendar.DAY_OF_YEAR) == itemDate.get(Calendar.DAY_OF_YEAR);
-            if (isToday) {
-            } else if (isYesterday) {
-                etDate.setText(getString(R.string.text_yesterday));
-            } else {
-                etDate.setText(this.date);
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }*/
     }
 
     @Override
@@ -501,11 +477,6 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
             recurrenceEvent.setStartDate(new Time("" + Calendar.getInstance().getTimeInMillis()));
             recurrenceEvent.parse(s);
 
-            Log.i("nikos", "Freq:" + recurrenceEvent.freq);
-            Log.i("nikos", "Interval:" + recurrenceEvent.interval);
-            Log.i("nikos", "Day:" + recurrenceEvent.byday);
-            Log.i("nikos", "Expiration-count:" + recurrenceEvent.count);
-            Log.i("nikos", "Expiration-until:" + recurrenceEvent.until);
             freq = recurrenceEvent.freq - 4;
             interval = recurrenceEvent.interval;
             if (recurrenceEvent.byday != null)

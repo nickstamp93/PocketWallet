@@ -2,79 +2,94 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     card_view:cardBackgroundColor="?cardCustomBackground">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/layout_padding_small">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <com.ngngteam.pocketwallet.Extra.LetterImageView
-            android:id="@+id/livhistory"
-            android:layout_width="@dimen/category_icon_width"
-            android:layout_height="@dimen/category_icon_height"
-            android:layout_centerVertical="true"
-            android:layout_margin="5dp" />
-
-        <TextView
-            android:id="@+id/tvPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:padding="@dimen/layout_padding_small"
-            android:text="20.5 €"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="?textCustomColor"
-            android:textSize="@dimen/text_size_price_history_item"
-            android:textStyle="bold" />
-
-        <me.grantland.widget.AutofitTextView
-            android:id="@+id/tvDaysLeft"
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_toRightOf="@id/tvCategory"
-            android:layout_below="@+id/tvPrice"
-            android:padding="@dimen/layout_padding_small"
-            android:gravity="end|center_horizontal"
-            android:text="In 3 days"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#ff7f00"
-            android:textSize="@dimen/text_size_date_history_item"
-            android:textStyle="bold" />
+            android:padding="@dimen/layout_padding_small">
 
-        <me.grantland.widget.AutofitTextView
-            android:id="@+id/tvName"
-            android:layout_width="wrap_content"
+            <com.ngngteam.pocketwallet.Extra.LetterImageView
+                android:id="@+id/livhistory"
+                android:layout_width="@dimen/category_icon_width"
+                android:layout_height="@dimen/category_icon_height"
+                android:layout_centerVertical="true"
+                android:layout_margin="5dp" />
+
+            <TextView
+                android:id="@+id/tvPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:padding="@dimen/layout_padding_small"
+                android:text="20.5 €"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="?textCustomColor"
+                android:textSize="@dimen/text_size_price_history_item"
+                android:textStyle="bold" />
+
+            <me.grantland.widget.AutofitTextView
+                android:id="@+id/tvDaysLeft"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/tvPrice"
+                android:layout_toRightOf="@id/tvCategory"
+                android:gravity="end|center_horizontal"
+                android:padding="@dimen/layout_padding_small"
+                android:text="In 3 days"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#ff7f00"
+                android:textSize="@dimen/text_size_date_history_item"
+                android:textStyle="bold" />
+
+            <me.grantland.widget.AutofitTextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/tvPrice"
+                android:layout_toRightOf="@+id/livhistory"
+                android:padding="@dimen/layout_padding_small"
+                android:singleLine="true"
+                android:text="Rent"
+                android:textAppearance="?android:textAppearanceLarge"
+                android:textSize="@dimen/text_size_category_history_item"
+                android:textStyle="bold" />
+
+            <me.grantland.widget.AutofitTextView
+                android:id="@+id/tvCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvName"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/livhistory"
+                android:ellipsize="end"
+                android:gravity="start"
+                android:padding="@dimen/layout_padding_small"
+                android:text="Category"
+                android:textColor="?textCustomColor"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tvAdd"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@+id/tvPrice"
-            android:layout_toRightOf="@+id/livhistory"
-            android:padding="@dimen/layout_padding_small"
-            android:singleLine="true"
-            android:text="Rent"
-            android:textAppearance="?android:textAppearanceLarge"
-            android:textSize="@dimen/text_size_category_history_item"
-            android:textStyle="bold" />
+            android:background="?android:attr/selectableItemBackground"
+            android:padding="8dp"
+            android:text="ADD TRANSACTION NOW"
+            android:textAppearance="?android:textAppearanceLarge" />
 
-        <me.grantland.widget.AutofitTextView
-            android:id="@+id/tvCategory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvName"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/livhistory"
-            android:ellipsize="end"
-            android:gravity="start"
-            android:padding="@dimen/layout_padding_small"
-            android:text="Category"
-            android:textColor="?textCustomColor"
-            android:textStyle="bold" />
-
-    </RelativeLayout>
+    </LinearLayout>
 
 </android.support.v7.widget.CardView>

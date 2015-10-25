@@ -127,13 +127,23 @@ public class RecurrentTransactionsActivity extends AppCompatActivity {
         //this method is called mainly when a row is changing position on the screen (e.g scrolling)
         //because when you're scrolling a view that wasn't on the screen and it is now , has to show its data
         @Override
-        public void bindView(View view, Context context, Cursor c) {
+        public void bindView(View view, Context context, final Cursor c) {
 
             //get the item's views that are saved by the holder
             final Holder holder = (Holder) view.getTag();
 
             //create the item by cursor
-            RecurrentTransaction item = new RecurrentTransaction(c);
+            final RecurrentTransaction item = new RecurrentTransaction(c);
+
+            holder.tvAdd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    item.addOneTransaction(RecurrentTransactionsActivity.this);
+                    db.updateRecurrent(item);
+                    cursor.requery();
+                    adapter.notifyDataSetChanged();
+                }
+            });
 
             //fill views with its values
             holder.tvName.setText(item.getName());
@@ -167,6 +177,7 @@ public class RecurrentTransactionsActivity extends AppCompatActivity {
             holder.tvDays = (AutofitTextView) row.findViewById(R.id.tvDaysLeft);
             holder.ivIcon = (LetterImageView) row.findViewById(R.id.livhistory);
 
+            holder.tvAdd = (TextView) row.findViewById(R.id.tvAdd);
 
             //create the item by cursor
             RecurrentTransaction item = new RecurrentTransaction(c);
@@ -191,7 +202,7 @@ public class RecurrentTransactionsActivity extends AppCompatActivity {
         class Holder {
             String id;
             AutofitTextView tvName, tvCategory, tvDays;
-            TextView tvAmount;
+            TextView tvAmount, tvAdd;
             LetterImageView ivIcon;
 
         }

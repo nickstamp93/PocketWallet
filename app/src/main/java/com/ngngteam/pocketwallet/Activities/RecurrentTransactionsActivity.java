@@ -135,15 +135,23 @@ public class RecurrentTransactionsActivity extends AppCompatActivity {
             //create the item by cursor
             final RecurrentTransaction item = new RecurrentTransaction(c);
 
-            holder.tvAdd.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    item.addOneTransaction(RecurrentTransactionsActivity.this);
-                    db.updateRecurrent(item);
-                    cursor.requery();
-                    adapter.notifyDataSetChanged();
-                }
-            });
+            if (item.getIsValid() == 1) {
+                holder.tvAdd.setVisibility(View.VISIBLE);
+                holder.tvAdd.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (item.getIsValid() == 1) {
+                            item.addOneTransaction(RecurrentTransactionsActivity.this);
+                            db.updateRecurrent(item);
+                            cursor.requery();
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+                });
+            } else {
+                holder.tvAdd.setVisibility(View.GONE);
+            }
+
 
             //fill views with its values
             holder.tvName.setText(item.getName());
@@ -239,22 +247,31 @@ public class RecurrentTransactionsActivity extends AppCompatActivity {
                     returnString = "Event " + (event + 1) + "/" + total + "\n";
                 } else if (expiration.split(":")[0].equalsIgnoreCase("date")) {
                     if (isValid == 0) {
-                        return "Completed";
+                        return "Completed at\n" + expiration.split(":")[1];
                     }
                 }
             }
 
+            String finalString = "";
             if (elapsedDays == 0) {
-                return returnString + "Today";
-            }
-            if (elapsedDays == 1) {
-                return returnString + "Tomorrow";
-            }
-            if (nDate.before(today)) {
-                return -elapsedDays + " days ago";
-            }
+                finalString = returnString + "Today";
 
-            return returnString + " in " + elapsedDays + " days";
+            } else if (elapsedDays == 1) {
+                finalString = returnString + "Tomorrow";
+            } else if (nDate.before(today)) {
+                finalString = -elapsedDays + " days ago";
+            } else
+                finalString = returnString + " in " + elapsedDays + " days";
+
+            if (expiration != null) {
+                if (expiration.split(":")[0].equalsIgnoreCase("count")) {
+                    return finalString;
+                } else if (expiration.split(":")[0].equalsIgnoreCase("date")) {
+                    return finalString + "\nuntil " + expiration.split(":")[1];
+                }
+            }else{
+                return finalString;
+            }
 
 
         } catch (ParseException e) {

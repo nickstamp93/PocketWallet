@@ -81,7 +81,7 @@
 
         </RelativeLayout>
 
-        <TextView
+        <me.grantland.widget.AutofitTextView
             android:id="@+id/tvAdd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

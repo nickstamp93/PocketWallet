@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.Time;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -178,12 +179,19 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
             @Override
             public void onClick(View v) {
                 recurrenceDialog = new RecurrencePickerDialog();
+                if (recurrenceRule == null) {
+                    recurrenceRule = "FREQ=DAILY;WKST=SU";
+                }
                 if (recurrenceRule != null && recurrenceRule.length() > 0) {
                     Bundle bundle = new Bundle();
                     bundle.putString(RecurrencePickerDialog.BUNDLE_RRULE, recurrenceRule);
+                    Calendar c = Calendar.getInstance();
+                    c.add(Calendar.MONTH , -1);
+                    bundle.putLong(RecurrencePickerDialog.BUNDLE_START_TIME_MILLIS, c.getTimeInMillis());
                     recurrenceDialog.setArguments(bundle);
                 }
                 recurrenceDialog.setOnRecurrenceSetListener(AddRecurrentActivity.this);
+
                 recurrenceDialog.show(AddRecurrentActivity.this.getSupportFragmentManager(), "Recurrence dialog");
             }
         });
@@ -477,6 +485,7 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
 
         if (recurrenceRule != null && recurrenceRule.length() > 0) {
 
+            Log.i("nikos", recurrenceRule);
             EventRecurrence recurrenceEvent = new EventRecurrence();
             recurrenceEvent.setStartDate(new Time("" + Calendar.getInstance().getTimeInMillis()));
             recurrenceEvent.parse(s);

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.ngngteam.pocketwallet.Data.MoneyDatabase;
+import com.ngngteam.pocketwallet.Utils.MyDateUtils;
 
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -122,7 +123,9 @@ public class RecurrentTransaction implements Serializable {
             if (expiration != null) {
                 if (expiration.split(":")[0].equalsIgnoreCase("date")) {
                     Date expDate = dateFormat.parse(expiration.split(":")[1]);
-                    if (today.after(expDate)) {
+                    Log.i("nikos" , MyDateUtils.dateFormat.format(expDate));
+                    Log.i("nikos" , nextDate);
+                    if (nDate.after(expDate)) {
                         isValid = 0;
                     }
                 }

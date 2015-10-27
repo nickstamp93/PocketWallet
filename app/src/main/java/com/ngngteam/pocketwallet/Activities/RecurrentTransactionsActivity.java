@@ -158,10 +158,25 @@ public class RecurrentTransactionsActivity extends AppCompatActivity {
             holder.tvCategory.setText(item.getCategory());
             holder.tvDays.setText(daysToEvent(item.getNextDate(), item.getExpiration(), item.getIsValid()));
 
+
+            boolean isExpense = item.getIsExpense() == 1 ? true : false;
+
+            if (isExpense) {
+                holder.tvAmount.setTextColor(getResources().getColor(R.color.Red));
+                holder.tvAmount.setText("+ " + item.getAmount() + " "
+                        + PreferenceManager.getDefaultSharedPreferences(context).getString(getString(R.string.pref_key_currency), "€"));
+            } else {
+                holder.tvAmount.setTextColor(getResources().getColor(R.color.green));
+                holder.tvAmount.setText("- " + item.getAmount() + " "
+                        + PreferenceManager.getDefaultSharedPreferences(context).getString(getString(R.string.pref_key_currency), "€"));
+            }
+            if(item.getIsValid() == 0)
+                holder.tvDays.setTextColor(getResources().getColor(R.color.green));
+            else
+                holder.tvDays.setTextColor(getResources().getColor(R.color.DarkOrange));
             holder.tvAmount.setText(item.getAmount() + " "
                     + PreferenceManager.getDefaultSharedPreferences(context).getString(getString(R.string.pref_key_currency), "€"));
 
-            boolean isExpense = item.getIsExpense() == 1 ? true : false;
             holder.ivIcon.setLetter(cdb.getLetterFromCategory(item.getCategory(), isExpense));
             holder.ivIcon.setmBackgroundPaint(cdb.getColorFromCategory(item.getCategory(), isExpense));
 
@@ -182,7 +197,7 @@ public class RecurrentTransactionsActivity extends AppCompatActivity {
             holder.tvName = (AutofitTextView) row.findViewById(R.id.tvName);
             holder.tvCategory = (AutofitTextView) row.findViewById(R.id.tvCategory);
             holder.tvAmount = (TextView) row.findViewById(R.id.tvPrice);
-            holder.tvDays = (AutofitTextView) row.findViewById(R.id.tvDaysLeft);
+            holder.tvDays = (TextView) row.findViewById(R.id.tvDaysLeft);
             holder.ivIcon = (LetterImageView) row.findViewById(R.id.livhistory);
 
             holder.tvAdd = (TextView) row.findViewById(R.id.tvAdd);
@@ -195,8 +210,6 @@ public class RecurrentTransactionsActivity extends AppCompatActivity {
             holder.tvCategory.setText(item.getCategory());
 
             holder.tvDays.setText(daysToEvent(item.getNextDate(), item.getExpiration(), item.getIsValid()));
-            holder.tvAmount.setText(item.getAmount() + " "
-                    + PreferenceManager.getDefaultSharedPreferences(context).getString(getString(R.string.pref_key_currency), "€"));
 
             boolean isExpense = item.getIsExpense() == 1 ? true : false;
             holder.ivIcon.setLetter(cdb.getLetterFromCategory(item.getCategory(), isExpense));
@@ -209,7 +222,8 @@ public class RecurrentTransactionsActivity extends AppCompatActivity {
         //holder class for the adapter
         class Holder {
             String id;
-            AutofitTextView tvName, tvCategory, tvDays;
+            AutofitTextView tvName, tvCategory;
+            TextView tvDays;
             TextView tvAmount, tvAdd;
             LetterImageView ivIcon;
 
@@ -247,7 +261,7 @@ public class RecurrentTransactionsActivity extends AppCompatActivity {
                     returnString = "Event " + (event + 1) + "/" + total + "\n";
                 } else if (expiration.split(":")[0].equalsIgnoreCase("date")) {
                     if (isValid == 0) {
-                        return "Completed at\n" + expiration.split(":")[1];
+                        return "Completed at\n" + new SimpleDateFormat("dd MMM yyyy").format(new SimpleDateFormat("yyyy-MM-dd").parse(expiration.split(":")[1]));
                     }
                 }
             }
@@ -269,7 +283,7 @@ public class RecurrentTransactionsActivity extends AppCompatActivity {
                 } else if (expiration.split(":")[0].equalsIgnoreCase("date")) {
                     return finalString + "\nuntil " + expiration.split(":")[1];
                 }
-            }else{
+            } else {
                 return finalString;
             }
 

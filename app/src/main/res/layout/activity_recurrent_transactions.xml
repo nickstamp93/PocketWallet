@@ -7,9 +7,9 @@
         android:id="@+id/lvRecurrentTransactions"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="16dp"
         android:divider="@color/transparent"
-        android:dividerHeight="2dp"
-        android:padding="@dimen/layout_padding_small"
+        android:dividerHeight="8dp"
         android:scrollbars="none" />
 
 
@@ -23,6 +23,6 @@
         fab:fab_colorNormal="@color/material_deep_teal_500"
         fab:fab_colorPressed="@color/material_deep_teal_200"
         fab:fab_colorRipple="@color/material_deep_teal_500"
-        fab:fab_shadow="true"/>
+        fab:fab_shadow="true" />
 
 </FrameLayout>

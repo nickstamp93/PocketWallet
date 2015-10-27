@@ -90,10 +90,8 @@ public class HistoryAdapter extends BaseExpandableListAdapter {
 
         AutofitTextView tvGroupName = (AutofitTextView) view.findViewById(R.id.tvGroupName);
         AutofitTextView tvGroupAmount = (AutofitTextView) view.findViewById(R.id.tvGroupAmount);
-        AutofitTextView tvGroupYear = (AutofitTextView) view.findViewById(R.id.tvGroupYear);
 
-        tvGroupName.setText(parent.getMonth());
-        tvGroupYear.setText(parent.getYear() + "");
+        tvGroupName.setText(parent.getMonth() + " " + parent.getYear());
         double total = Math.round(parent.getTotalAmount() * 100) / 100.0;
         tvGroupAmount.setText(total + " " + currency);
 

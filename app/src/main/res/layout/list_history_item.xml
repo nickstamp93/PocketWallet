@@ -2,14 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/layout_padding_small">
+    android:paddingBottom="16dp"
+    android:paddingRight="16dp">
 
     <com.ngngteam.pocketwallet.Extra.LetterImageView
         android:id="@+id/livhistory"
-        android:layout_width="@dimen/category_icon_width"
-        android:layout_height="@dimen/category_icon_height"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
         android:layout_centerVertical="true"
-        android:layout_margin="5dp" />
+        android:layout_marginLeft="16dp" />
 
     <TextView
         android:id="@+id/tvPrice"
@@ -17,25 +18,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:padding="@dimen/layout_padding_small"
+        android:paddingLeft="8dp"
+        android:paddingTop="16dp"
         android:text="20.5 €"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#ff0000"
-        android:textSize="@dimen/text_size_price_history_item"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/tvDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/tvPrice"
-        android:padding="@dimen/layout_padding_small"
-        android:text="20/11/2014"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#ff7f00"
-        android:textSize="@dimen/text_size_date_history_item"
+        android:textColor="?textCustomColor"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <me.grantland.widget.AutofitTextView
@@ -45,26 +33,41 @@
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/tvPrice"
         android:layout_toRightOf="@+id/livhistory"
-        android:padding="@dimen/layout_padding_small"
+        android:paddingLeft="20dp"
+        android:paddingTop="16dp"
         android:singleLine="true"
-        android:text="Category"
-        android:textAppearance="?android:textAppearanceLarge"
-        android:textSize="@dimen/text_size_category_history_item"
+        android:text="Category Name"
+        android:textSize="20sp"
         android:textStyle="bold" />
+
+    <me.grantland.widget.AutofitTextView
+        android:id="@+id/tvDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tvPrice"
+        android:gravity="end|center_horizontal"
+        android:paddingLeft="8dp"
+        android:singleLine="true"
+        android:text="21 May , 2014"
+        android:textColor="@color/DarkOrange"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/tvNotes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginRight="20dp"
+        android:layout_alignLeft="@id/tvCategory"
+        android:layout_below="@id/tvCategory"
         android:layout_toLeftOf="@id/tvDate"
         android:layout_toRightOf="@+id/livhistory"
         android:ellipsize="end"
-        android:gravity="center_vertical"
-        android:lines="2"
-        android:padding="@dimen/layout_padding_small"
+        android:gravity="start"
+        android:maxLines="2"
+        android:paddingLeft="24dp"
         android:text="These are some notes"
-        android:textColor="?textCustomColor"
-        android:textStyle="bold" />
+        android:textColor="?android:textColorSecondary"
+        android:textSize="14sp" />
+
+
 </RelativeLayout>

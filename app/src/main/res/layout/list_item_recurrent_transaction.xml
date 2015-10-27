@@ -9,19 +9,20 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingRight="16dp">
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/layout_padding_small">
+            android:paddingBottom="8dp">
 
             <com.ngngteam.pocketwallet.Extra.LetterImageView
                 android:id="@+id/livhistory"
-                android:layout_width="@dimen/category_icon_width"
-                android:layout_height="@dimen/category_icon_height"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
                 android:layout_centerVertical="true"
-                android:layout_margin="5dp" />
+                android:layout_marginLeft="16dp" />
 
             <TextView
                 android:id="@+id/tvPrice"
@@ -29,27 +30,26 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:padding="@dimen/layout_padding_small"
+                android:paddingTop="16dp"
                 android:text="20.5 €"
+                android:paddingLeft="8dp"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="?textCustomColor"
-                android:textSize="@dimen/text_size_price_history_item"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <me.grantland.widget.AutofitTextView
+            <TextView
                 android:id="@+id/tvDaysLeft"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/tvPrice"
-                android:layout_toRightOf="@id/tvCategory"
                 android:gravity="end|center_horizontal"
-                android:padding="@dimen/layout_padding_small"
                 android:text="In 3 days"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#ff7f00"
-                android:textSize="@dimen/text_size_date_history_item"
-                android:textStyle="bold" />
+                android:maxLines="2"
+                android:textColor="@color/DarkOrange"
+                android:textSize="14sp" />
 
             <me.grantland.widget.AutofitTextView
                 android:id="@+id/tvName"
@@ -58,37 +58,38 @@
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/tvPrice"
                 android:layout_toRightOf="@+id/livhistory"
-                android:padding="@dimen/layout_padding_small"
+                android:paddingLeft="20dp"
+                android:paddingTop="16dp"
                 android:singleLine="true"
                 android:text="Rent"
-                android:textAppearance="?android:textAppearanceLarge"
-                android:textSize="@dimen/text_size_category_history_item"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <me.grantland.widget.AutofitTextView
                 android:id="@+id/tvCategory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/tvName"
                 android:layout_below="@id/tvName"
-                android:layout_marginLeft="10dp"
+                android:layout_toLeftOf="@id/tvDaysLeft"
                 android:layout_toRightOf="@+id/livhistory"
                 android:ellipsize="end"
                 android:gravity="start"
-                android:padding="@dimen/layout_padding_small"
+                android:paddingLeft="24dp"
                 android:text="Category"
-                android:textColor="?textCustomColor"
-                android:textStyle="bold" />
+                android:maxLines="2"
+                android:textColor="?android:textColorSecondary"
+                android:textSize="14sp" />
 
         </RelativeLayout>
 
         <me.grantland.widget.AutofitTextView
             android:id="@+id/tvAdd"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
             android:padding="8dp"
-            android:text="ADD TRANSACTION NOW"
-            android:textAppearance="?android:textAppearanceLarge" />
+            android:text="ADD TRANSACTION NOW" />
 
     </LinearLayout>
 

@@ -126,6 +126,7 @@
                 <me.grantland.widget.AutofitTextView
                     style="@style/Headline"
                     android:layout_weight="2.5"
+                    android:layout_gravity="center"
                     android:text="Repeat" />
 
 

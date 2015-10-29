@@ -13,32 +13,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/layout_padding_small"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:text="@string/dialog_delete_category_text" />
+            android:text="@string/dialog_delete_category_text"
+            android:textAppearance="?android:textAppearanceMedium" />
 
         <LinearLayout
+            android:id="@+id/llMoveTo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/bottom_margin_headlines_small"
             android:orientation="horizontal"
-            android:id="@+id/llMoveTo"
-            android:weightSum="2"
-            android:layout_marginBottom="@dimen/bottom_margin_headlines_small">
+            android:weightSum="2">
 
             <CheckBox
+                android:id="@+id/cbancat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/cbancat"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
                 android:checked="false"
                 android:text="@string/dialog_delete_category_move"
-                android:textSize="@dimen/text_size_checkbox_move"
-                android:layout_weight="1"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp" />
+                android:textSize="@dimen/text_size_checkbox_move" />
 
             <Spinner
+                android:id="@+id/sdCategories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/sdCategories"
                 android:layout_weight="1" />
 
         </LinearLayout>

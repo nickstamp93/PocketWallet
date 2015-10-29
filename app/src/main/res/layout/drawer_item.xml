@@ -4,6 +4,7 @@
     android:layout_height="48dp"
     android:orientation="horizontal"
     android:paddingBottom="8dp"
+    android:background="?android:attr/selectableItemBackground"
     android:paddingTop="8dp">
 
     <ImageView
@@ -18,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:paddingLeft="72dp"
         android:text="Dummy Text" />
 

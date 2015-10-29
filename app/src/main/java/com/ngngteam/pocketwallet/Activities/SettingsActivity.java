@@ -6,7 +6,6 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,7 +21,6 @@ import android.preference.SwitchPreference;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -86,7 +84,6 @@ public class SettingsActivity extends PreferenceActivity
         initSummaries(getPreferenceScreen());
 
         setPreferenceActions();
-
 
 
     }
@@ -191,19 +188,20 @@ public class SettingsActivity extends PreferenceActivity
 
         //when user clicks on "delete income" preference item
         //ask for confirmation and delete the income data records
-        screen = findPreference(getResources().getString(R.string.pref_key_delete_income));
+        screen = findPreference(getResources().getString(R.string.pref_key_delete_history));
         screen.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
 
-                builder.setMessage(getResources().getString(R.string.dialog_text_delete_income_confirm));
-                builder.setPositiveButton(getResources().getString(R.string.button_ok), new DialogInterface.OnClickListener() {
+                builder.setMessage(getResources().getString(R.string.dialog_text_delete_history_confirm));
+                builder.setPositiveButton(getResources().getString(R.string.action_delete), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //call delete income method from database
+                        //call delete income-expense methods from database
                         MoneyDatabase db = new MoneyDatabase(getApplicationContext());
                         db.deleteAllIncome();
+                        db.deleteAllExpense();
                         db.close();
                         dialog.dismiss();
                     }
@@ -224,21 +222,21 @@ public class SettingsActivity extends PreferenceActivity
 
         //when user clicks on "delete expense" preference item
         //ask for confirmation and delete the expense data records
-        screen = findPreference(getResources().getString(R.string.pref_key_delete_expense));
+        screen = findPreference(getResources().getString(R.string.pref_key_delete_recurrents));
         screen.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
 
-                builder.setMessage(getResources().getString(R.string.dialog_text_delete_expense_confirm))
+                builder.setMessage(getResources().getString(R.string.dialog_text_delete_recurrents_confirm))
                         .setTitle(getResources().getString(R.string.dialog_title_caution));
-                builder.setPositiveButton(getResources().getString(R.string.button_ok), new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(getResources().getString(R.string.action_delete), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //call delete expense method from database
 
                         MoneyDatabase db = new MoneyDatabase(SettingsActivity.this);
-                        db.deleteAllExpense();
+                        db.deleteAllRecurrents();
                         db.close();
                         dialog.dismiss();
                     }
@@ -569,7 +567,8 @@ public class SettingsActivity extends PreferenceActivity
             backup = getArguments().getBoolean("backup");
 
 
-            if (backup) dialog.setTitle(getActivity().getResources().getString(R.string.destination));
+            if (backup)
+                dialog.setTitle(getActivity().getResources().getString(R.string.destination));
             else dialog.setTitle(getActivity().getResources().getString(R.string.restore));
 
 
@@ -647,7 +646,7 @@ public class SettingsActivity extends PreferenceActivity
 
 
                                 if (MoneySuccess && CategorySuccess) {
-                                    Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.sd_backup), Toast.LENGTH_LONG)
+                                    Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.sd_backup), Toast.LENGTH_LONG)
                                             .show();
 
                                 }
@@ -663,12 +662,12 @@ public class SettingsActivity extends PreferenceActivity
                                 boolean CategorySuccess = backupRestoreSD.restore();
 
                                 if (MoneySuccess && CategorySuccess) {
-                                    Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.sd_restore), Toast.LENGTH_LONG)
+                                    Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.sd_restore), Toast.LENGTH_LONG)
                                             .show();
 
                                 }
                             }
-                           dialog.dismiss();
+                            dialog.dismiss();
 
                     }
 

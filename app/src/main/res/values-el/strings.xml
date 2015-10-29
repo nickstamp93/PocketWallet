@@ -119,8 +119,7 @@
         \n-AutofitTextView από Grantland Chew
     </string>
 
-    <string name="dialog_text_delete_income_confirm">Διαγραφή όλων των συναλλαγών εσόδου από την βάση δεδομένων?</string>
-    <string name="dialog_text_delete_expense_confirm">Διαγραφή όλων των συναλλαγών εξόδου από την βάση δεδομένων?</string>
+    <string name="dialog_text_delete_history_confirm">Διαγραφή του ιστορικού συναλλαγών από την βάση δεδομένων?</string>
 
     <string name="toast_text_password_on">Κλείδωμα με μοτίβο ενεργοποιήθηκε</string>
     <string name="toast_text_password_off">Κλείδωμα με μοτίβο απενεργοποιήθηκε</string>
@@ -260,5 +259,10 @@
     <string name="sd_export">Η εξαγωγή excel αρχείου στην  SD κάρτα πραγματοποιήθηκε με επιτυχία</string>
     <string name="title_activity_add_recurrent">Νεα Περιοδικι Συναλλαγη</string>
     <string name="title_activity_recurrent_transactions">Περιοδικες Συναλλαγες</string>
+    <string name="pref_title_delete_recurrents">Διαγραφή περιοδικών συναλλαγών</string>
+    <string name="pref_key_delete_recurrents">pref_key_delete_rucurrents</string>
+    <string name="pref_key_delete_history">pref_key_delete_history</string>
+    <string name="dialog_text_delete_recurrents_confirm">Διαγραφή των περιοδικών συναλλαγών?</string>
+    <string name="pref_title_delete_history">Διαγραφή ιστορικού συναλλαγών</string>
 
 </resources>

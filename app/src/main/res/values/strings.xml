@@ -118,8 +118,7 @@
         \n-MagnificentChart by Ahmed Sulaiman
         \n-AutofitTextView by Grantland Chew</string>
 
-    <string name="dialog_text_delete_income_confirm">Delete ALL income transactions?</string>
-    <string name="dialog_text_delete_expense_confirm">Delete ALL expense transactions?</string>
+    <string name="dialog_text_delete_history_confirm">Delete ALL history transactions?</string>
 
     <string name="toast_text_password_on">Pattern lock enabled</string>
     <string name="toast_text_password_off">Pattern lock disabled</string>
@@ -259,8 +258,11 @@
     <string name="dropbox_export">Spreadsheet export to DropBox was executed successfully</string>
     <string name="drive_export">Spreadsheet export to Google Drive was executed successfully</string>
     <string name="sd_export">Spreadsheet export to SD card was executed successfully</string>
-
-
+    <string name="pref_title_delete_recurrents">Delete recurrent transactions</string>
+    <string name="pref_key_delete_recurrents">pref_key_delete_rucurrents</string>
+    <string name="pref_key_delete_history">pref_key_delete_history</string>
+    <string name="dialog_text_delete_recurrents_confirm">Delete ALL recurrent transactions?</string>
+    <string name="pref_title_delete_history">Delete history</string>
 
 
 </resources>

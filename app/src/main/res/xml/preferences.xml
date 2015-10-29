@@ -51,12 +51,12 @@
             android:title="@string/pref_title_data">
 
             <Preference
-                android:key="@string/pref_key_delete_income"
-                android:title="@string/pref_title_delete_income" />
+                android:key="@string/pref_key_delete_history"
+                android:title="@string/pref_title_delete_history" />
 
             <Preference
-                android:key="@string/pref_key_delete_expense"
-                android:title="@string/pref_title_delete_expense" />
+                android:key="@string/pref_key_delete_recurrents"
+                android:title="@string/pref_title_delete_recurrents" />
 
         </PreferenceScreen>
 

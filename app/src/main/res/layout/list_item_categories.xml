@@ -1,34 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:orientation="horizontal"
     android:padding="@dimen/layout_padding_small">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <com.ngngteam.pocketwallet.Extra.LetterImageView
+        android:id="@+id/livcat"
+        android:layout_width="@dimen/category_icon_size"
+        android:layout_height="@dimen/category_icon_size"
+        android:layout_marginLeft="16dp" />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <com.ngngteam.pocketwallet.Extra.LetterImageView
-            android:id="@+id/livcat"
-            android:layout_width="@dimen/category_icon_width"
-            android:layout_height="@dimen/category_icon_height"
-            android:layout_marginLeft="15dp" />
-
-        <TextView
-            android:id="@+id/tvName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.8"
-            android:gravity="center"
-            android:padding="@dimen/layout_padding"
-            android:text="Category Name"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="?textCustomColor" />
-    </LinearLayout>
-
-</LinearLayout>
+        android:layout_centerVertical="true"
+        android:paddingLeft="80dp"
+        android:text="Category Name"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="?textCustomColor" />
+</RelativeLayout>

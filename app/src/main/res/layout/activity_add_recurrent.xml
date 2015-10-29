@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:isScrollContainer="false"
-        android:paddingBottom="50dp"
+        android:paddingBottom="48dp"
         android:paddingLeft="@dimen/layout_padding"
         android:paddingRight="@dimen/layout_padding"
         android:paddingTop="@dimen/layout_padding"
@@ -125,8 +125,8 @@
 
                 <me.grantland.widget.AutofitTextView
                     style="@style/Headline"
-                    android:layout_weight="2.5"
                     android:layout_gravity="center"
+                    android:layout_weight="2.5"
                     android:text="Repeat" />
 
 
@@ -137,7 +137,7 @@
                     android:layout_weight="2.7"
                     android:gravity="center"
                     android:lines="2"
-                    android:text="not set"
+                    android:text="No Repeat"
                     android:textColor="?textCustomColor" />
 
                 <ImageButton

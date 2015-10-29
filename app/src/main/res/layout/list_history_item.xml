@@ -7,8 +7,8 @@
 
     <com.ngngteam.pocketwallet.Extra.LetterImageView
         android:id="@+id/livhistory"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
+        android:layout_width="@dimen/category_icon_size"
+        android:layout_height="@dimen/category_icon_size"
         android:layout_centerVertical="true"
         android:layout_marginLeft="16dp" />
 

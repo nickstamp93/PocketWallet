@@ -5,39 +5,36 @@
     <dimen name="bottom_margin_headlines">35dp</dimen>
 
     <!--create category-->
-    <dimen name="layout_inner_padding">25dp</dimen>
-    <dimen name="preview_icon_width">150dp</dimen>
-    <dimen name="preview_icon_height">150dp</dimen>
+    <dimen name="preview_icon_size">150dp</dimen>
 
     <!--delete category-->
-    <dimen name="text_size_checkbox_move">25sp</dimen>
+    <dimen name="text_size_checkbox_move">24sp</dimen>
 
     <!--history items-->
-    <dimen name="category_icon_width">80dp</dimen>
-    <dimen name="category_icon_height">80dp</dimen>
-    <dimen name="text_size_price_history_item">40sp</dimen>
-    <dimen name="text_size_date_history_item">24sp</dimen>
-    <dimen name="text_size_category_history_item">32sp</dimen>
+    <dimen name="category_icon_size">72dp</dimen>
+    <dimen name="text_size_category_history_item">28sp</dimen>
 
-    <dimen name="category_icon_width_spinner">55dp</dimen>
-    <dimen name="category_icon_height_spinner">55dp</dimen>
+    <dimen name="category_icon_size_spinner">64dp</dimen>
 
     <dimen name="text_size_spinner">20sp</dimen>
 
-    <dimen name="text_size_username">40sp</dimen>
-    <dimen name="text_size_headlines">30sp</dimen>
-    <dimen name="card_margin">15dp</dimen>
-    <dimen name="value_size_big">35sp</dimen>
+    <dimen name="text_size_username">36sp</dimen>
+    <dimen name="text_size_headlines">28sp</dimen>
+    <dimen name="card_margin">16dp</dimen>
+    <dimen name="value_size_big">36sp</dimen>
 
-    <dimen name="pie_view_width">180dp</dimen>
-    <dimen name="pie_view_height">180dp</dimen>
-    <dimen name="text_size_bar_heading">30sp</dimen>
+    <dimen name="pie_view_width">220dp</dimen>
+    <dimen name="pie_view_height">220dp</dimen>
+    <dimen name="text_size_bar_heading">28sp</dimen>
 
-    <dimen name="bottom_margin_headlines_small">22dp</dimen>
+    <dimen name="layout_padding">20dp</dimen>
+    <dimen name="layout_padding_small">16dp</dimen>
 
-    <dimen name="layout_padding">15dp</dimen>
-    <dimen name="layout_padding_small">10dp</dimen>
-    <dimen name="pattern_view_size" >320dp</dimen>
+    <dimen name="bottom_margin_headlines_small">16dp</dimen>
+
+    <dimen name="pattern_view_size">320dp</dimen>
+    <dimen name="text_size_radio_grouping">24sp</dimen>
+    <dimen name="export_image_size">72dp</dimen>
 
 
 </resources>

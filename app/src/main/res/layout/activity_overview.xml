@@ -20,9 +20,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="4dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginLeft="@dimen/layout_padding"
+                android:layout_marginRight="@dimen/layout_padding"
+                android:layout_marginTop="@dimen/layout_padding"
                 card_view:cardBackgroundColor="?cardCustomBackground"
                 card_view:cardCornerRadius="4dp">
 
@@ -111,8 +111,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="4dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginLeft="@dimen/layout_padding"
+                android:layout_marginRight="@dimen/layout_padding"
                 android:layout_marginTop="4dp"
                 android:visibility="gone"
                 card_view:cardBackgroundColor="?cardCustomBackground"
@@ -143,8 +143,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="4dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginLeft="@dimen/layout_padding"
+                android:layout_marginRight="@dimen/layout_padding"
                 android:layout_marginTop="4dp"
                 card_view:cardBackgroundColor="?cardCustomBackground"
                 card_view:cardCornerRadius="4dp">
@@ -182,8 +182,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="4dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginLeft="@dimen/layout_padding"
+                android:layout_marginRight="@dimen/layout_padding"
                 android:layout_marginTop="4dp"
                 card_view:cardBackgroundColor="?cardCustomBackground"
                 card_view:cardCornerRadius="4dp">
@@ -274,8 +274,8 @@
                             android:layout_gravity="center_horizontal"
                             android:background="?android:attr/selectableItemBackground"
                             android:gravity="center"
-                            android:padding="4dp"
                             android:orientation="horizontal"
+                            android:padding="4dp"
                             android:weightSum="3">
 
                             <com.ngngteam.pocketwallet.Extra.LetterImageView

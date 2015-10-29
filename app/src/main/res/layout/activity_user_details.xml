@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:isScrollContainer="false"
-        android:paddingBottom="50dp"
+        android:paddingBottom="48dp"
         android:paddingLeft="@dimen/layout_padding"
         android:paddingRight="@dimen/layout_padding"
         android:paddingTop="@dimen/layout_padding"
@@ -71,11 +71,11 @@
                         android:id="@+id/rbDaily"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:checked="true"
                         android:gravity="left|center_vertical"
                         android:text="@string/pref_grouping_daily"
-                        android:checked="true"
                         android:textColor="?textCustomColor"
-                        android:textSize="20sp" />
+                        android:textSize="@dimen/text_size_radio_grouping" />
 
                     <RadioButton
                         android:id="@+id/rbWeekly"
@@ -84,7 +84,7 @@
                         android:gravity="left|center_vertical"
                         android:text="@string/pref_grouping_weekly"
                         android:textColor="?textCustomColor"
-                        android:textSize="20sp" />
+                        android:textSize="@dimen/text_size_radio_grouping" />
 
                     <RadioButton
                         android:id="@+id/rbMonthly"
@@ -93,7 +93,7 @@
                         android:gravity="left|center_vertical"
                         android:text="@string/pref_grouping_monthly"
                         android:textColor="?textCustomColor"
-                        android:textSize="20sp" />
+                        android:textSize="@dimen/text_size_radio_grouping" />
 
                     <RadioButton
                         android:id="@+id/rbNoGrouping"
@@ -102,7 +102,7 @@
                         android:gravity="left|center_vertical"
                         android:text="@string/pref_grouping_none"
                         android:textColor="?textCustomColor"
-                        android:textSize="20sp" />
+                        android:textSize="@dimen/text_size_radio_grouping" />
                 </RadioGroup>
 
             </TableRow>
@@ -130,6 +130,7 @@
                     android:id="@+id/tvDayStart"
                     style="@style/userDetails_headline"
                     android:layout_weight="1"
+                    android:layout_gravity="center"
                     android:text="@string/textview_headline_week_start" />
 
                 <Spinner
@@ -144,94 +145,6 @@
             </TableRow>
 
         </TableLayout>
-
-        <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:orientation="vertical">-->
-
-        <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:weightSum="2">-->
-
-        <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_weight="1"-->
-        <!--android:orientation="vertical">-->
-
-        <!--<me.grantland.widget.AutofitTextView-->
-        <!--android:id="@+id/textView"-->
-        <!--style="@style/Headline"-->
-        <!--android:text="@string/textview_headline_username" />-->
-
-        <!--<me.grantland.widget.AutofitTextView-->
-
-        <!--android:id="@+id/textView2"-->
-        <!--style="@style/Headline"-->
-        <!--android:text="@string/textview_headline_savings" />-->
-
-        <!--<me.grantland.widget.AutofitTextView-->
-        <!--android:id="@+id/textView3"-->
-        <!--style="@style/Headline"-->
-        <!--android:text="@string/textview_headline_grouping" />-->
-
-
-        <!--</LinearLayout>-->
-
-        <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_weight="1"-->
-        <!--android:orientation="vertical">-->
-
-        <!--<EditText-->
-        <!--android:id="@+id/etUsername"-->
-        <!--style="@style/UserDetailsEditText"-->
-        <!--android:layout_marginBottom="@dimen/bottom_margin_headlines_small"-->
-        <!--android:inputType="textPersonName" />-->
-
-        <!--<EditText-->
-        <!--android:id="@+id/etSavings"-->
-        <!--style="@style/UserDetailsEditText"-->
-        <!--android:layout_marginBottom="@dimen/bottom_margin_headlines_small"-->
-        <!--android:inputType="numberDecimal" />-->
-
-        <!--<RadioGroup-->
-        <!--android:id="@+id/rgGrouping"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginBottom="@dimen/bottom_margin_headlines_small"-->
-        <!--android:layout_weight="1">-->
-
-        <!--<RadioButton-->
-        <!--android:id="@+id/rbWeekly"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:checked="false"-->
-        <!--android:text="@string/pref_grouping_weekly"-->
-        <!--android:textColor="?textCustomColor"-->
-        <!--android:textSize="20sp" />-->
-
-        <!--<RadioButton-->
-        <!--android:id="@+id/rbMonthly"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:checked="true"-->
-        <!--android:text="@string/pref_grouping_monthly"-->
-        <!--android:textColor="?textCustomColor"-->
-        <!--android:textSize="20sp" />-->
-        <!--</RadioGroup>-->
-
-        <!--</LinearLayout>-->
-
-
-        <!--</LinearLayout>-->
-
-
-        <!--</LinearLayout>-->
 
     </ScrollView>
 

@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/ivGridItem"
-        android:layout_width="50dp"
-        android:layout_height="50dp">
+        android:layout_width="@dimen/export_image_size"
+        android:layout_height="@dimen/export_image_size">
 
     </ImageView>
 
@@ -17,6 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:textSize="15sp"></TextView>
+        android:text="Grid Item"
+        android:textSize="@dimen/text_size_headlines" />
 
 </LinearLayout>

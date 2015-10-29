@@ -31,7 +31,7 @@
                 android:id="@+id/switchIsExpense"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="10dp" />
+                android:padding="8dp" />
 
             <TextView
                 android:layout_width="wrap_content"

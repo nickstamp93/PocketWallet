@@ -4,6 +4,5 @@
     android:layout_height="wrap_content"
     android:divider="@color/secondary_text_default_material_light"
     android:dividerHeight="1dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
+    android:padding="@dimen/layout_padding"
     android:scrollbars="none" />

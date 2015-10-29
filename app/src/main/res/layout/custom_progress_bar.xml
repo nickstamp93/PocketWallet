@@ -19,7 +19,7 @@
     <fr.castorflex.android.circularprogressbar.CircularProgressBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:indeterminate="true"
         app:cpb_color="#CF000F"
         app:cpb_max_sweep_angle="300"

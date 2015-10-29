@@ -7,8 +7,8 @@
 
     <com.ngngteam.pocketwallet.Extra.LetterImageView
         android:id="@+id/livSpinner"
-        android:layout_width="@dimen/category_icon_width_spinner"
-        android:layout_height="@dimen/category_icon_height_spinner"
+        android:layout_width="@dimen/category_icon_size_spinner"
+        android:layout_height="@dimen/category_icon_size_spinner"
         android:layout_centerVertical="true"
         android:padding="@dimen/layout_padding_small" />
 
@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:textStyle="bold"
-        android:textSize="@dimen/text_size_spinner" />
+        android:textSize="@dimen/text_size_spinner"
+        android:textStyle="bold" />
 
 </LinearLayout>

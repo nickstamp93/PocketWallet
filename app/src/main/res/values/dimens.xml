@@ -38,12 +38,13 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="pattern_view_size">200dp</dimen>
     <dimen name="text_size_radio_grouping">16sp</dimen>
-    <dimen name="export_image_size">48dp</dimen>
+    <dimen name="export_image_size">36dp</dimen>
 
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="color_swatch_large">64dip</dimen>
     <dimen name="color_swatch_small">48dip</dimen>
     <dimen name="color_swatch_margins_large">8dip</dimen>
     <dimen name="color_swatch_margins_small">4dip</dimen>
+    <dimen name="text_size_history_item">20sp</dimen>
 
 </resources>

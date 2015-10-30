@@ -16,7 +16,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:paddingLeft="80dp"
+        android:layout_toRightOf="@id/livcat"
+        android:paddingLeft="16dp"
         android:text="Category Name"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="?textCustomColor" />

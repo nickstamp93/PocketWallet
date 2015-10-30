@@ -34,7 +34,8 @@
 
     <dimen name="pattern_view_size">320dp</dimen>
     <dimen name="text_size_radio_grouping">24sp</dimen>
-    <dimen name="export_image_size">72dp</dimen>
+    <dimen name="export_image_size">48dp</dimen>
+    <dimen name="text_size_history_item">24sp</dimen>
 
 
 </resources>

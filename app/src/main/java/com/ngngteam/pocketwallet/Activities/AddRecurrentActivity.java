@@ -186,7 +186,7 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
                     Bundle bundle = new Bundle();
                     bundle.putString(RecurrencePickerDialog.BUNDLE_RRULE, recurrenceRule);
                     Calendar c = Calendar.getInstance();
-                    c.add(Calendar.MONTH , -1);
+                    c.add(Calendar.MONTH, -1);
                     bundle.putLong(RecurrencePickerDialog.BUNDLE_START_TIME_MILLIS, c.getTimeInMillis());
                     recurrenceDialog.setArguments(bundle);
                 }
@@ -242,6 +242,7 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
                     //set the id of the newly created  item as the item passed in the intent
                     //in order to update its values
                     item.setId(itemToUpdate.getId());
+                    item.setIsValid(1);
 
                     //if recurrent string has not been changed , copy the old values
                     //from the object that is passed through the intent

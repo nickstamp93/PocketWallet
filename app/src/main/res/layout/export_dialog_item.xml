@@ -1,19 +1,22 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="72dp"
-    android:layout_margin="8dp"
-    android:foreground="?android:attr/selectableItemBackground">
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingBottom="16dp"
+        android:paddingTop="16dp"
+        android:foreground="?android:attr/selectableItemBackground">
 
         <ImageView
             android:id="@+id/ivExport"
-            android:layout_width="@dimen/export_image_size"
-            android:layout_height="@dimen/export_image_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
+            android:paddingLeft="16dp"
             android:scaleType="centerCrop" />
 
         <TextView
@@ -23,7 +26,7 @@
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/ivExport"
             android:maxLines="1"
-            android:paddingLeft="72dp"
+            android:paddingLeft="16dp"
             android:text="Export Item"
             android:textColor="?textCustomColor"
             android:textSize="@dimen/text_size_headlines" />

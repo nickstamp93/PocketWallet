@@ -1,6 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:focusable="false"
+    android:focusableInTouchMode="true">
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -129,8 +131,8 @@
                 <me.grantland.widget.AutofitTextView
                     android:id="@+id/tvDayStart"
                     style="@style/userDetails_headline"
-                    android:layout_weight="1"
                     android:layout_gravity="center"
+                    android:layout_weight="1"
                     android:text="@string/textview_headline_week_start" />
 
                 <Spinner

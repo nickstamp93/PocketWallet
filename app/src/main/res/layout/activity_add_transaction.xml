@@ -7,8 +7,8 @@
         android:layout_height="match_parent"
         android:isScrollContainer="false"
         android:paddingBottom="48dp"
-        android:paddingLeft="@dimen/layout_padding"
-        android:paddingRight="@dimen/layout_padding"
+        android:paddingLeft="@dimen/layout_padding_small"
+        android:paddingRight="@dimen/layout_padding_small"
         android:paddingTop="@dimen/layout_padding"
         android:scrollbars="none">
 
@@ -37,7 +37,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/bottom_margin_headlines_small"
+                android:layout_marginBottom="@dimen/bottom_margin_headlines"
                 android:weightSum="6">
 
                 <me.grantland.widget.AutofitTextView
@@ -100,7 +100,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/bottom_margin_headlines_small"
+                android:layout_marginBottom="@dimen/bottom_margin_headlines"
                 android:orientation="horizontal"
                 android:weightSum="6">
 
@@ -114,10 +114,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="2.5"
-                    android:textColor="?textCustomColor"
                     android:ellipsize="end"
                     android:hint="@string/textview_hint_notes"
-                    android:lines="2" />
+                    android:lines="2"
+                    android:textColor="?textCustomColor" />
 
             </LinearLayout>
 

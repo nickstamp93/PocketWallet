@@ -100,7 +100,7 @@
         <item name="android:textColor">?textCustomColor</item>
         <item name="android:singleLine">true</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:layout_margin">8dp</item>
+        <item name="android:layout_margin">12dp</item>
     </style>
 
     <style name="userDetails_headline" parent="Headline">

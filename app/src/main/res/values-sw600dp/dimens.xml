@@ -27,7 +27,7 @@
     <dimen name="pie_view_height">220dp</dimen>
     <dimen name="text_size_bar_heading">28sp</dimen>
 
-    <dimen name="layout_padding">20dp</dimen>
+    <dimen name="layout_padding">16dp</dimen>
     <dimen name="layout_padding_small">16dp</dimen>
 
     <dimen name="bottom_margin_headlines_small">16dp</dimen>
@@ -36,6 +36,7 @@
     <dimen name="text_size_radio_grouping">24sp</dimen>
     <dimen name="export_image_size">48dp</dimen>
     <dimen name="text_size_history_item">24sp</dimen>
+    <dimen name="text_size_grid">20sp</dimen>
 
 
 </resources>

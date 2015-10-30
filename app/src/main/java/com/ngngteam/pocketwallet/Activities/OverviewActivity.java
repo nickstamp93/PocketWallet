@@ -314,15 +314,18 @@ public class OverviewActivity extends AppCompatActivity {
 
         //get the prefs grouping and initialize total expense-income
         if (profile.getGrouping().equalsIgnoreCase(getResources().getString(R.string.pref_grouping_monthly))) {
+            tvBudgetMessage.setVisibility(View.VISIBLE);
             firstDayTable = new int[]{1, 5, 10, 15, 20, 25};
             totalExpenses = mdb.getTotalForCurrentMonth(true);
             totalIncomes = mdb.getTotalForCurrentMonth(false);
         } else if (profile.getGrouping().equalsIgnoreCase(getResources().getString(R.string.pref_grouping_weekly))) {
+            tvBudgetMessage.setVisibility(View.VISIBLE);
             firstDayTable = new int[]{Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.THURSDAY,
                     Calendar.FRIDAY, Calendar.SATURDAY, Calendar.SUNDAY};
             totalExpenses = mdb.getTotalForCurrentWeek(firstDayTable[profile.getDayStart()], true);
             totalIncomes = mdb.getTotalForCurrentWeek(firstDayTable[profile.getDayStart()], false);
         } else if (profile.getGrouping().equalsIgnoreCase(getResources().getString(R.string.pref_grouping_daily))) {
+            tvBudgetMessage.setVisibility(View.VISIBLE);
             totalExpenses = mdb.getDailyTotal(true);
             totalIncomes = mdb.getDailyTotal(false);
         } else {

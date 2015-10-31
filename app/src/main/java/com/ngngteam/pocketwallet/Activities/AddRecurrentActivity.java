@@ -374,23 +374,23 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
     private void fillRepeatText() {
         String strFreq = "";
         if (itemToUpdate.getFreq() == 0) {
-            strFreq = " day(s)";
+            strFreq = getResources().getString(R.string.day);
         } else if (itemToUpdate.getFreq() == 1) {
-            strFreq = " week(s)";
+            strFreq = getResources().getString(R.string.week);
         } else if (itemToUpdate.getFreq() == 2) {
-            strFreq = " month(s)";
+            strFreq = getResources().getString(R.string.month);
         } else if (itemToUpdate.getFreq() == 3) {
-            strFreq = " year(s)";
+            strFreq = getResources().getString(R.string.year);
         }
         String strExpire;
         if (itemToUpdate.getExpiration() == null) {
-            strExpire = " forever";
+            strExpire = getResources().getString(R.string.forever);
         } else if (itemToUpdate.getExpiration().split(":")[0].equalsIgnoreCase("count")) {
-            strExpire = " for " + itemToUpdate.getExpiration().split(":")[1].split("/")[1] + " times";
+            strExpire = " "+getResources().getString(R.string.for_) + " " + itemToUpdate.getExpiration().split(":")[1].split("/")[1] + " "+ getResources().getString(R.string.times);
         } else {
-            strExpire = " until " + itemToUpdate.getExpiration().split(":")[1];
+            strExpire = " " + getResources().getString(R.string.until) +" " + itemToUpdate.getExpiration().split(":")[1];
         }
-        String strDisplay = "Every " + itemToUpdate.getInterval() + strFreq + strExpire;
+        String strDisplay = getResources().getString(R.string.every)+" " + itemToUpdate.getInterval() + strFreq + strExpire;
         tvRepeat.setText(strDisplay);
     }
 

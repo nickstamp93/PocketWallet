@@ -345,11 +345,11 @@ public class OverviewActivity extends AppCompatActivity {
         double dif;
         if (budget < totalExpenses) {
             dif = totalExpenses - budget;
-            tvBudgetMessage.setText(dif + " " + profile.getCurrency() + " below budget");
+            tvBudgetMessage.setText(dif + " " + profile.getCurrency() + " " +getResources().getString(R.string.below_budget) );
             tvBudgetMessage.setTextColor(getResources().getColor(R.color.red));
         } else {
             dif = budget - totalExpenses;
-            tvBudgetMessage.setText(dif + " " + profile.getCurrency() + " until you reach your budget limit");
+            tvBudgetMessage.setText(dif + " " + profile.getCurrency() + " " + getResources().getString(R.string.until_budget) );
         }
 
         double savings = mdb.getTotal(false) - mdb.getTotal(true) - balance + profile.getSavings();

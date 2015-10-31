@@ -264,5 +264,18 @@
     <string name="pref_key_delete_history">pref_key_delete_history</string>
     <string name="dialog_text_delete_recurrents_confirm">Διαγραφή των περιοδικών συναλλαγών?</string>
     <string name="pref_title_delete_history">Διαγραφή ιστορικού συναλλαγών</string>
+    <string name="headline_name">Όνομα</string>
+    <string name="headline_repeat">Επανάληψη</string>
+    <string name="day">μέρα(ες)</string>
+    <string name="every">Κάθε</string>
+    <string name="for_">για</string>
+    <string name="forever">πάντα</string>
+    <string name="month">Μήνας(ες)</string>
+    <string name="times">φορές</string>
+    <string name="until">μέχρι</string>
+    <string name="week">βδομάδα(ες)</string>
+    <string name="year">χρόνο(ια)</string>
+    <string name="below_budget">κάτω προυπολογισμού</string>
+    <string name="until_budget">μέχρι να φτάσεις τον προυπολογισμό σου</string>
 
 </resources>

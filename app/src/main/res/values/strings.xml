@@ -161,6 +161,22 @@
     <string name="textview_headline_date">Date</string>
     <string name="textview_headline_notes">Notes</string>
 
+    <!-- AddRecurrentActivity -->
+    <string name="headline_name">Name</string>
+    <string name="headline_repeat">Repeat</string>
+    <string name="day">day(s)</string>
+    <string name="week">week(s)</string>
+    <string name="month">month(s)</string>
+    <string name="year">year(s)</string>
+    <string name="forever">forever</string>
+    <string name="for_">for</string>
+    <string name="times">times</string>
+    <string name="until">until</string>
+    <string name="every">Every</string>
+
+
+
+
     <!-- AddIncomeActivity -->
     <string name="textview_headline_source">Source</string>
 
@@ -264,5 +280,8 @@
     <string name="dialog_text_delete_recurrents_confirm">Delete ALL recurrent transactions?</string>
     <string name="pref_title_delete_history">Delete history</string>
 
+    <!-- Budget -->
+    <string name="below_budget">below budget</string>
+    <string name="until_budget">until you reach your budget limit</string>
 
 </resources>

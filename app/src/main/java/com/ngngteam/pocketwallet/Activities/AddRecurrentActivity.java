@@ -24,7 +24,6 @@ import com.doomonafireball.betterpickers.numberpicker.NumberPicker;
 import com.doomonafireball.betterpickers.numberpicker.NumberPickerBuilder;
 import com.doomonafireball.betterpickers.numberpicker.NumberPickerDialogFragment;
 import com.doomonafireball.betterpickers.recurrencepicker.EventRecurrence;
-import com.doomonafireball.betterpickers.recurrencepicker.EventRecurrenceFormatter;
 import com.doomonafireball.betterpickers.recurrencepicker.RecurrencePickerDialog;
 import com.ngngteam.pocketwallet.Adapters.CategorySpinnerAdapter;
 import com.ngngteam.pocketwallet.Data.CategoryDatabase;
@@ -383,7 +382,7 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
         }
         String strExpire;
         if (itemToUpdate.getExpiration() == null) {
-            strExpire = getResources().getString(R.string.forever);
+            strExpire = " " + getResources().getString(R.string.forever);
         } else if (itemToUpdate.getExpiration().split(":")[0].equalsIgnoreCase("count")) {
             strExpire = " " + getResources().getString(R.string.for_) + " " + itemToUpdate.getExpiration().split(":")[1].split("/")[1] + " " + getResources().getString(R.string.times);
         } else {
@@ -512,8 +511,15 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
                 expiration = "count:0/" + recurrenceEvent.count;
             }
 
-            String srt = EventRecurrenceFormatter.getRepeatString(AddRecurrentActivity.this, getResources(), recurrenceEvent, true);
-            tvRepeat.setText(srt);
+
+            itemToUpdate.setFreq(freq);
+            itemToUpdate.setInterval(interval + 1);
+            itemToUpdate.setExpiration(expiration);
+            itemToUpdate.setDay(day);
+
+            fillRepeatText();
+//            String srt = EventRecurrenceFormatter.getRepeatString(AddRecurrentActivity.this, getResources(), recurrenceEvent, true);
+//            tvRepeat.setText(srt);
         } else {
             tvRepeat.setText(getString(R.string.not_set));
         }

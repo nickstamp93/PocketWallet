@@ -279,7 +279,7 @@
     <string name="pref_title_delete_history">Delete history</string>
 
     <!-- Budget -->
-    <string name="below_budget">below budget</string>
+    <string name="over_budget">over budget</string>
     <string name="until_budget">until you reach your budget limit</string>
     <string name="not_set">Not Set</string>
     <string name="toast_set_repeat">Please set a recurrency mode</string>

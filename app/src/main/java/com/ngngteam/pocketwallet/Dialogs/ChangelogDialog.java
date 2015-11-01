@@ -25,10 +25,10 @@ public class ChangelogDialog extends DialogFragment {
 
         LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
-        ChangeLogRecyclerView chgList= (ChangeLogRecyclerView) layoutInflater.inflate(R.layout.changelog_layout, null);
+        ChangeLogRecyclerView chgList = (ChangeLogRecyclerView) layoutInflater.inflate(R.layout.changelog_layout, null);
 
-        return new AlertDialog.Builder(getActivity() , R.style.AppCompatAlertDialogStyle)
-                .setTitle("Title")
+        return new AlertDialog.Builder(getActivity(), R.style.AppCompatAlertDialogStyle)
+                .setTitle("Version")
                 .setView(chgList)
                 .setPositiveButton(R.string.button_ok,
                         new DialogInterface.OnClickListener() {

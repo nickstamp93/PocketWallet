@@ -345,7 +345,7 @@ public class OverviewActivity extends AppCompatActivity {
         double dif;
         if (budget < totalExpenses) {
             dif = totalExpenses - budget;
-            tvBudgetMessage.setText(dif + " " + profile.getCurrency() + " " +getResources().getString(R.string.below_budget) );
+            tvBudgetMessage.setText(dif + " " + profile.getCurrency() + " " +getResources().getString(R.string.over_budget) );
             tvBudgetMessage.setTextColor(getResources().getColor(R.color.red));
         } else {
             dif = budget - totalExpenses;

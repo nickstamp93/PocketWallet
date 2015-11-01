@@ -259,7 +259,7 @@ public class MoneyDatabase extends SQLiteOpenHelper {
     //return a cursor which contains the whole table recurrents (select *)
     public Cursor getAllRecurrents() {
         return getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_RECURRENT
-                        + " ORDER BY " +KEY_ISVALID + " DESC," + KEY_NEXT_DATE + " ASC" ,
+                        + " ORDER BY " + KEY_ISVALID + " DESC," + KEY_NEXT_DATE + " ASC",
                 null);
     }
 
@@ -548,7 +548,6 @@ public class MoneyDatabase extends SQLiteOpenHelper {
                 }
             }
 
-            Log.i("nikos", "Total income for " + category + " : " + total);
         }
 
 
@@ -573,8 +572,6 @@ public class MoneyDatabase extends SQLiteOpenHelper {
         c.add(Calendar.DAY_OF_YEAR, -1);
 
         String lastOfMonth = new SimpleDateFormat("dd-MM-yyyy").format(new Date(c.getTimeInMillis()));
-
-        Log.i("nikos", "Current month period:" + firstOfMonth + " to " + lastOfMonth);
 
         if (isExpense) {
             cursor = this.getExpensesByDateToDate(firstOfMonth, lastOfMonth);
@@ -703,8 +700,6 @@ public class MoneyDatabase extends SQLiteOpenHelper {
 
         String lastOfMonth = new SimpleDateFormat("dd-MM-yyyy").format(new Date(c.getTimeInMillis()));
 
-        Log.i("nikos", "Current month period:" + firstOfMonth + " to " + lastOfMonth);
-
         if (isExpense) {
             cursor = this.getExpensesByDateToDate(firstOfMonth, lastOfMonth, category);
 
@@ -715,7 +710,6 @@ public class MoneyDatabase extends SQLiteOpenHelper {
                     total += Double.parseDouble(cursor.getString(3));
                 }
             }
-            Log.i("nikos", "Total expense for " + category + " : " + total);
         } else {
             cursor = this.getIncomesByDateToDate(firstOfMonth, lastOfMonth, category);
 
@@ -726,8 +720,6 @@ public class MoneyDatabase extends SQLiteOpenHelper {
                     total += Double.parseDouble(cursor.getString(1));
                 }
             }
-
-            Log.i("nikos", "Total income for " + category + " : " + total);
         }
 
 
@@ -986,7 +978,6 @@ public class MoneyDatabase extends SQLiteOpenHelper {
                     }
                 }
             }
-//            Log.i("nikos", "Expense for : " + startDate + " to " + endDate + " is " + total);
         } else {
             cursor = this.getIncomesByDateToDate(firstOfWeek, lastOfWeek);
 
@@ -997,8 +988,6 @@ public class MoneyDatabase extends SQLiteOpenHelper {
                     }
                 }
             }
-
-//            Log.i("nikos", "Income for : " + startDate + " to " + endDate + " is " + total);
         }
 
         return total;

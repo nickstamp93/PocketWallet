@@ -120,7 +120,7 @@ public class UserDetailsActivity extends AppCompatActivity {
         } else if (manager.getPrefsGrouping().equalsIgnoreCase(getResources().getString(R.string.pref_grouping_daily))) {
             radioGroup.check(R.id.rbDaily);
             rowDayStart.setVisibility(View.GONE);
-            rowBudget.setVisibility(View.GONE);
+            rowBudget.setVisibility(View.VISIBLE);
         } else {
             radioGroup.check(R.id.rbNoGrouping);
             rowDayStart.setVisibility(View.GONE);

@@ -12,7 +12,7 @@
 
     </changelogversion>
 
-    <changelogversion changeDate="Ιουλ 26,2013" versionName="1.2.0">
+    <changelogversion changeDate="Ιουλ 26,2015" versionName="1.2.0">
         <changelogtext>[b]New![/font][/b] Πίτα κατανομής συναλλαγών</changelogtext>
         <changelogtext>[b]New![/font][/b] Στατιστικά συναλλαγών</changelogtext>
         <changelogtext>[b]New![/font][/b] Ομαδοποίηση Ιστορικού συναλλαγών ανά μήνα
@@ -32,7 +32,7 @@
         <changelogtext>Διορθώσεις σφαλμάτων</changelogtext>
     </changelogversion>
 
-    <changelogversion changeDate="Μαΐου 14,2015" versionName="1.1.0">
+    <changelogversion changeDate="Μαι 14,2015" versionName="1.1.0">
         <changelogtext>[b]New![/b] Δυνατότητα κλειδώματος εφαρμογής με μοτίβο</changelogtext>
         <changelogtext>[b]New![/b] Επιλογή μεταξύ 2 θεμάτων (σκούρο / ανοικτό)</changelogtext>
         <changelogtext>Διορθώσεις σφαλμάτων</changelogtext>

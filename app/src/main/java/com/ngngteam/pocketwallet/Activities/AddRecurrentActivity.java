@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.Time;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -283,8 +282,8 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
         View eulaLayout = adbInflater.inflate(R.layout.checkbox, null);
         final CheckBox dontShowAgain = (CheckBox) eulaLayout.findViewById(R.id.skip);
         builder.setView(eulaLayout);
-        builder.setMessage("If you change the date or the repeat only future transactions will be affected")
-                .setTitle("Attention");
+        builder.setMessage(getString(R.string.dialog_date_repeat_change))
+                .setTitle(getString(R.string.attention));
         builder.setPositiveButton(getResources().getString(R.string.button_ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -305,17 +304,17 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
     private boolean isFormComplete() {
 
         if (etName.getText().toString().trim().length() == 0) {
-            Toast.makeText(AddRecurrentActivity.this, "Please enter a name for the transaction", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddRecurrentActivity.this, getString(R.string.toast_set_name), Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (tvRepeat.getText().toString().equals("not set")) {
-            Toast.makeText(AddRecurrentActivity.this, "Please set a recurrency mode", Toast.LENGTH_SHORT).show();
+        if (tvRepeat.getText().toString().equals(getString(R.string.not_set))) {
+            Toast.makeText(AddRecurrentActivity.this, getString(R.string.toast_set_repeat), Toast.LENGTH_SHORT).show();
             return false;
         }
         int currencyLength = currency.length();
         double amount = Double.parseDouble(tvAmount.getText().subSequence(0, tvAmount.getText().length() - currencyLength).toString());
         if (amount <= 0) {
-            Toast.makeText(AddRecurrentActivity.this, "Please enter a non zero amount for the transaction", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddRecurrentActivity.this, getString(R.string.toast_set_amount), Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -386,11 +385,11 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
         if (itemToUpdate.getExpiration() == null) {
             strExpire = getResources().getString(R.string.forever);
         } else if (itemToUpdate.getExpiration().split(":")[0].equalsIgnoreCase("count")) {
-            strExpire = " "+getResources().getString(R.string.for_) + " " + itemToUpdate.getExpiration().split(":")[1].split("/")[1] + " "+ getResources().getString(R.string.times);
+            strExpire = " " + getResources().getString(R.string.for_) + " " + itemToUpdate.getExpiration().split(":")[1].split("/")[1] + " " + getResources().getString(R.string.times);
         } else {
-            strExpire = " " + getResources().getString(R.string.until) +" " + itemToUpdate.getExpiration().split(":")[1];
+            strExpire = " " + getResources().getString(R.string.until) + " " + itemToUpdate.getExpiration().split(":")[1];
         }
-        String strDisplay = getResources().getString(R.string.every)+" " + itemToUpdate.getInterval() + strFreq + strExpire;
+        String strDisplay = getResources().getString(R.string.every) + " " + itemToUpdate.getInterval() + " " + strFreq + strExpire;
         tvRepeat.setText(strDisplay);
     }
 
@@ -469,7 +468,7 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
             adj = 365;
         //if day of year selected is former than the today , set date to today and inform the user
         if (cNewDate.get(Calendar.DAY_OF_YEAR) < calendar.get(Calendar.DAY_OF_YEAR) + adj) {
-            Toast.makeText(AddRecurrentActivity.this, "You can't select a past date for a recurrent transaction"
+            Toast.makeText(AddRecurrentActivity.this, getString(R.string.toast_date_must_be_future)
                     , Toast.LENGTH_LONG).show();
             date = dateFormat.format(Calendar.getInstance().getTime());
         } else {
@@ -486,7 +485,6 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
 
         if (recurrenceRule != null && recurrenceRule.length() > 0) {
 
-            Log.i("nikos", recurrenceRule);
             EventRecurrence recurrenceEvent = new EventRecurrence();
             recurrenceEvent.setStartDate(new Time("" + Calendar.getInstance().getTimeInMillis()));
             recurrenceEvent.parse(s);
@@ -517,7 +515,7 @@ public class AddRecurrentActivity extends AppCompatActivity implements NumberPic
             String srt = EventRecurrenceFormatter.getRepeatString(AddRecurrentActivity.this, getResources(), recurrenceEvent, true);
             tvRepeat.setText(srt);
         } else {
-            tvRepeat.setText("not set");
+            tvRepeat.setText(getString(R.string.not_set));
         }
 
 

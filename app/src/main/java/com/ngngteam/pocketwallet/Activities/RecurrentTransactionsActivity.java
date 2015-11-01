@@ -170,7 +170,7 @@ public class RecurrentTransactionsActivity extends AppCompatActivity {
                 holder.tvAmount.setText("- " + item.getAmount() + " "
                         + PreferenceManager.getDefaultSharedPreferences(context).getString(getString(R.string.pref_key_currency), "€"));
             }
-            if(item.getIsValid() == 0)
+            if (item.getIsValid() == 0)
                 holder.tvDays.setTextColor(getResources().getColor(R.color.green));
             else
                 holder.tvDays.setTextColor(getResources().getColor(R.color.DarkOrange));
@@ -256,32 +256,32 @@ public class RecurrentTransactionsActivity extends AppCompatActivity {
                     int event = Integer.valueOf(expiration.split(":")[1].split("/")[0]);
                     int total = Integer.valueOf(expiration.split(":")[1].split("/")[1]);
                     if (event == total) {
-                        return "Completed " + event + "/" + total;
+                        return getString(R.string.completed) + " " + event + "/" + total;
                     }
-                    returnString = "Event " + (event + 1) + "/" + total + "\n";
+                    returnString = getString(R.string.event) + " " + (event + 1) + "/" + total + "\n";
                 } else if (expiration.split(":")[0].equalsIgnoreCase("date")) {
                     if (isValid == 0) {
-                        return "Completed at\n" + new SimpleDateFormat("dd MMM yyyy").format(new SimpleDateFormat("yyyy-MM-dd").parse(expiration.split(":")[1]));
+                        return getString(R.string.completed) + " \n" + new SimpleDateFormat("dd MMM yyyy").format(new SimpleDateFormat("yyyy-MM-dd").parse(expiration.split(":")[1]));
                     }
                 }
             }
 
             String finalString = "";
             if (elapsedDays == 0) {
-                finalString = returnString + "Today";
+                finalString = returnString + getString(R.string.text_today);
 
             } else if (elapsedDays == 1) {
-                finalString = returnString + "Tomorrow";
+                finalString = returnString + getString(R.string.text_tomorrow);
             } else if (nDate.before(today)) {
-                finalString = -elapsedDays + " days ago";
+                finalString = returnString + -elapsedDays + " " + getString(R.string.text_days_ago);
             } else
-                finalString = returnString + " in " + elapsedDays + " days";
+                finalString = returnString + " " + getString(R.string.in) + " " + elapsedDays + getString(R.string.days);
 
             if (expiration != null) {
                 if (expiration.split(":")[0].equalsIgnoreCase("count")) {
                     return finalString;
                 } else if (expiration.split(":")[0].equalsIgnoreCase("date")) {
-                    return finalString + "\nuntil " + expiration.split(":")[1];
+                    return finalString + "\n" + getString(R.string.until) + " " + expiration.split(":")[1];
                 }
             } else {
                 return finalString;

@@ -89,7 +89,7 @@
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
             android:padding="8dp"
-            android:text="ADD TRANSACTION NOW" />
+            android:text="@string/add_transaction_now" />
 
     </LinearLayout>
 

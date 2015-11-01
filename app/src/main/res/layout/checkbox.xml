@@ -10,5 +10,5 @@
         android:id="@+id/skip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Do not show again" />
+        android:text="@string/dont_show_again" />
 </LinearLayout>

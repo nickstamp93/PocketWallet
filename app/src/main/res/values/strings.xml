@@ -175,8 +175,6 @@
     <string name="every">Every</string>
 
 
-
-
     <!-- AddIncomeActivity -->
     <string name="textview_headline_source">Source</string>
 
@@ -283,5 +281,19 @@
     <!-- Budget -->
     <string name="below_budget">below budget</string>
     <string name="until_budget">until you reach your budget limit</string>
+    <string name="not_set">Not Set</string>
+    <string name="toast_set_repeat">Please set a recurrency mode</string>
+    <string name="toast_set_name">Please set a name for the transaction</string>
+    <string name="toast_set_amount">Please enter a non zero amount for the transaction</string>
+    <string name="toast_date_must_be_future">You can\'t select a past date for a recurrent transaction</string>
+    <string name="text_days_ago"> days ago</string>
+    <string name="days">days</string>
+    <string name="completed">Completed</string>
+    <string name="event">Event</string>
+    <string name="in">in</string>
+    <string name="dialog_date_repeat_change">If you change the date or the repeat only future transactions will be affected</string>
+    <string name="attention">Attention</string>
+    <string name="dont_show_again">Don\'t show again</string>
+    <string name="add_transaction_now">ADD TRANSACTION NOW</string>
 
 </resources>

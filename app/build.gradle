@@ -43,7 +43,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-v4'
     }
     compile 'org.jraf:android-switch-backport:1.4.0@aar'
-    compile("com.doomonafireball.betterpickers:library:1.6.0") {
+    compile("com.doomonafireball.betterpickers:library:1.5.5") {
         exclude group: 'com.android.support', module: 'support-v4'
     }
     compile 'com.eftimoff:android-patternview:1.0.1@aar'

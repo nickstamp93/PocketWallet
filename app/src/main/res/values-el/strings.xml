@@ -202,7 +202,7 @@
     <string name="filter_amount">Ανά Ποσό</string>
 
     <string name="text_from">Από :</string>
-    <string name="text_to">To :</string>
+    <string name="text_to">Μέχρι :</string>
 
     <!--ColorPickerLibrary-->
     <string name="color_picker_default_title">Διάλεξε χρώμα</string>
@@ -277,5 +277,20 @@
     <string name="year">χρόνο(ια)</string>
     <string name="below_budget">κάτω προυπολογισμού</string>
     <string name="until_budget">μέχρι να φτάσεις τον προυπολογισμό σου</string>
+    <string name="not_set">Δεν έχει οριστεί</string>
+    <string name="toast_set_repeat">Δεν έχετε ορίσει την περιοδικότητα της συναλλαγής</string>
+    <string name="toast_set_name">Δεν έχετε ορίσει όνομα για την συναλλαγή</string>
+    <string name="toast_set_amount">Δεν έχετε ορίσει το ποσό της συναλλαγής</string>
+    <string name="toast_date_must_be_future">Η ημερομηνία πρέπει να είναι η σημερινή ή μελλοντική</string>
+    <string name="text_days_ago"> ημέρα(ες) πριν</string>
+    <string name="days">μέρες</string>
+    <string name="completed">Ολοκληρώθηκε</string>
+    <string name="event">Συναλλαγή</string>
+    <string name="in">σε</string>
+    <string name="dialog_date_repeat_change">Αν αλλάξετε την
+        ημερομηνία ή την περιοδικότητα της συναλλαγής θα επηρεαστούν μονο οι μελλοντικές συναλλαγές</string>
+    <string name="attention">Προσοχή</string>
+    <string name="dont_show_again">Να μην εμφανιστεί ξανά</string>
+    <string name="add_transaction_now">ΠΡΑΓΜΑΤΟΠΟΙΗΣΗ ΣΥΝΑΛΛΑΓΗΣ</string>
 
 </resources>

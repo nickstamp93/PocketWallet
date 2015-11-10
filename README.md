@@ -13,22 +13,23 @@ You can be always informed about all your latest transactions and be aware of wh
 3. Record expense transactions
 4. Full transactions history
 5. Filters for advanced transactions search
-6. Monthly/weekly transactions grouping
+6. Monthly/weekly/daily/yearly transactions grouping
 7. Quick overview with info such as last transactions , balance , savings etc
 8. Reminder notifications
 9. Add/remove/create custom transaction categories
-10. 5 different color themes
+10. Dark/Light theme
 11. 6 currencies
-12. Password protection(default pass:1234)
+12. Pattern Lock
 13. Initial saved amount of money
+14. Repeating Transactions with Reminders
+15. Budget Limit
+16. Backup/Restore data (Google Drive , Dropbox , Sd)
+17. Spreadsheet export (Google Drive , Dropbox , Sd)
 
 ## Under Development
-1. Lock app with pattern instead of number password
-2. Recurrent expenses-incomes(such as salary , bills etc)
-3. Advanced visual analysis of transactions in a particular period
-4. Data synchronization between devices
-5. Multiple Accounts
-
+1. Data sync between devices
+2. Multiple Accounts
+3. Print Transactions
 ## Screenshots 
 
 <div>

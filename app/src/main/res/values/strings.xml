@@ -109,14 +109,17 @@
     <string name="pref_grouping_daily">daily</string>
     <string name="pref_grouping_none">total</string>
 
-    <string name="text_about">The application Pocket Wallet was developed by the development team NG^2
+    <string name="text_about">The application Pocket Wallet was developed by the development team NGNG Studio
         , by Nick Stampoulis and Nick Zissis.
         \n\nLibraries used:
         \n-Google Color Picker
         \n-LetterImageView by Melnykov Oleksandr
         \n-AndroidBetterPickers by Derek Brameyer
         \n-MagnificentChart by Ahmed Sulaiman
-        \n-AutofitTextView by Grantland Chew</string>
+        \n-AutofitTextView by Grantland Chew
+        \n-FloatingActionButton by Melnykov Oleksandr
+        \n-SmoothProgressBar by Antoine Merle
+        \n\nContact us: ngngteam2014@gmail.com</string>
 
     <string name="dialog_text_delete_history_confirm">Delete ALL history transactions?</string>
 
@@ -246,9 +249,9 @@
     <string name="text_change_savings_toast">The new savings is </string>
     <string name="text_change_savings_warning">If you change your initial money , savings value will be affected</string>
     <string name="no_data_text">No data for this period</string>
-    <string name="title_activity_recurrent_transactions">RecurrentTransactionsActivity</string>
+    <string name="title_activity_recurrent_transactions">Recurrent Transactions</string>
 
-    <string name="title_activity_add_recurrent">AddRecurrentActivity</string>
+    <string name="title_activity_add_recurrent">New Recurrent Transaction</string>
     <string name="text_tomorrow">Tomorrow</string>
     <string name="textview_headline_budget">Budget Limit</string>
 
@@ -282,7 +285,7 @@
     <string name="over_budget">over budget</string>
     <string name="until_budget">until you reach your budget limit</string>
     <string name="not_set">Not Set</string>
-    <string name="toast_set_repeat">Please set a recurrency mode</string>
+    <string name="toast_set_repeat">Please set a repeat mode</string>
     <string name="toast_set_name">Please set a name for the transaction</string>
     <string name="toast_set_amount">Please enter a non zero amount for the transaction</string>
     <string name="toast_date_must_be_future">You can\'t select a past date for a recurrent transaction</string>

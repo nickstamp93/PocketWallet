@@ -109,14 +109,17 @@
     <string name="pref_grouping_daily">Ανά μέρα</string>
     <string name="pref_grouping_none">Συνολικά</string>
 
-    <string name="text_about">Η εφαρμογή Pocket Wallet αναπτύχθηκε από την προγραμματιστική ομάδα NG^2
+    <string name="text_about">Η εφαρμογή Pocket Wallet αναπτύχθηκε από την προγραμματιστική ομάδα NGNG Studio
         , από τους Νίκο Σταμπουλή και Νίκο Ζήση.
         \n\nΒιβλιοθήκες που χρησιμοποιήθηκαν:
         \n-Google Color Picker
         \n-LetterImageView από τον Melnykov Oleksandr
         \n-AndroidBetterPickers από τον Derek Brameyer
         \n-MagnificentChart από τον Ahmed Sulaiman
-        \n-AutofitTextView από Grantland Chew
+        \n-AutofitTextView από τον Grantland Chew
+        \n-FloatingActionButton από τον Melnykov Oleksandr
+        \n-SmoothProgressBar από τον Antoine Merle
+        \n\nΕπικοινωνία: ngngteam2014@gmail.com
     </string>
 
     <string name="dialog_text_delete_history_confirm">Διαγραφή του ιστορικού συναλλαγών από την βάση δεδομένων?</string>
@@ -257,7 +260,7 @@
     <string name="dropbox_export">Η εξαγωγή excel αρχείου στο Dropbox πραγματοποιήθηκε με επιτυχία</string>
     <string name="drive_export">Η εξαγωγή excel αρχείου στο Google Drive πραγματοποιήθηκε με επιτυχία</string>
     <string name="sd_export">Η εξαγωγή excel αρχείου στην  SD κάρτα πραγματοποιήθηκε με επιτυχία</string>
-    <string name="title_activity_add_recurrent">Νεα Περιοδικι Συναλλαγη</string>
+    <string name="title_activity_add_recurrent">Νεα Περιοδική Συναλλαγη</string>
     <string name="title_activity_recurrent_transactions">Περιοδικες Συναλλαγες</string>
     <string name="pref_title_delete_recurrents">Διαγραφή περιοδικών συναλλαγών</string>
     <string name="pref_key_delete_recurrents">pref_key_delete_rucurrents</string>
